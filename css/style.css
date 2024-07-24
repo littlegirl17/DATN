@@ -1,0 +1,279 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e3e4ec;
+}
+
+.nav_box {
+    background-color: #FFD602;
+    width: 100%;
+}
+
+.nav-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.nav_box_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    line-height: 70px;
+}
+
+.nav_box_menu {
+    min-width: 600px;
+    margin: 0 320px 0 0;
+}
+
+.nav_box_menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+
+.nav_box_menu li {
+    margin-right: 40px;
+    /* Thêm một số khoảng cách giữa các mục menu */
+}
+
+.nav_box_menu a {
+    text-decoration: none;
+    /* Xóa đường gạch dưới mặc định */
+    color: #FFFFFF;
+}
+
+.main_bar_menu {
+    background-color: #fff;
+    width: 400px;
+    height: 100%;
+}
+
+.main_bar_menu.submenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #f1f1f1;
+    display: none;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.main_bar_menu.submenu .main_bar_menu_title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.main_bar_menu.submenu .main_bar_menu_title li {
+    padding: 20px 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.main_bar_menu.submenu .main_bar_menu_title li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.nav_box_menu ul li a {
+    color: #000;
+}
+
+.main_bar_menu.submenu .main_bar_menu_list ul {
+    display: block;
+    padding-top: 80px;
+    padding-left: 35px;
+}
+
+.main_bar_menu.submenu.show {
+    display: block;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.submenu_close {
+    display: flex;
+    justify-content: end;
+}
+
+.submenu_close p {
+    padding: 5px 12px;
+    margin: 0 0;
+    background-color: #FFD602;
+    color: #000;
+    cursor: pointer;
+}
+
+.toggle-menu {
+    display: none;
+    font-size: 24px;
+    color: #000;
+    text-decoration: none;
+}
+
+/**/
+
+.nav_box_menu_right {
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.nav_box_menu_right div i {
+    font-size: 20px;
+}
+
+/**/
+
+.containerInput {
+    position: relative;
+    box-sizing: border-box;
+    width: fit-content;
+}
+
+.mainbox {
+    box-sizing: border-box;
+    position: relative;
+    width: 230px;
+    height: 40px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    border-radius: 160px;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.checkbox:focus {
+    border: none;
+    outline: none;
+}
+
+.checkbox:checked {
+    right: 10px;
+}
+
+.checkbox:checked~.mainbox {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox:checked~.mainbox .search_input {
+    width: 0;
+    height: 0px;
+}
+
+.checkbox:checked~.mainbox .iconContainer {
+    padding-right: 8px;
+    margin-top: -8px;
+}
+
+.checkbox {
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 17px;
+    top: 10px;
+    z-index: 9;
+    cursor: pointer;
+    appearance: none;
+}
+
+.search_input {
+    box-sizing: border-box;
+    height: 100%;
+    width: 170px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    font-size: 1em;
+    color: white;
+    transition: all 0.3s ease;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.search_input::placeholder {
+    color: #000;
+}
+
+.iconContainer {
+    box-sizing: border-box;
+    padding-top: 5px;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.search_icon {
+    box-sizing: border-box;
+    fill: #000;
+    font-size: 1.3em;
+}
+
+
+@media (max-width: 1196px) {
+    .nav_box_menu {
+        min-width: 600px;
+        margin: 0;
+    }
+
+    .nav_box_menu {
+        display: none;
+    }
+
+    .nav_box_menu.show {
+        display: block;
+    }
+
+    .toggle-menu {
+        display: block;
+    }
+}
+
+
+
+@media only screen and (max-width: 576px) {
+    .main_bar_menu.submenu {
+        display: none;
+    }
+
+    .main_bar_menu.submenu.show {
+        display: block;
+    }
+
+    .toggle-menu {
+        display: block;
+    }
+
+    .main_bar_menu {
+        background-color: #fff;
+        width: 576px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
