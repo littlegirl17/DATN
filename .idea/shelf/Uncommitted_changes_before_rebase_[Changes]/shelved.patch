@@ -1,0 +1,59 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"eba16fab-9b7e-4ece-9222-006c47912ef4\" name=\"Changes\" comment=\"hahahhaha\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"nghipham\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"C:\\xampp\\php\\php.exe\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2kEI8gkPxFZQWtFyyjYZ2u14LrX\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Xampp/htdocs/DATN\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-PS-241.14494.237\" />\r\n        <option value=\"bundled-php-predefined-ba97393d7c68-8f0632a2a215-com.jetbrains.php.sharedIndexes-PS-241.14494.237\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"eba16fab-9b7e-4ece-9222-006c47912ef4\" name=\"Changes\" comment=\"\" />\r\n      <created>1722842151958</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1722842151958</updated>\r\n      <workItem from=\"1722842153003\" duration=\"5028000\" />\r\n      <workItem from=\"1723108989505\" duration=\"613000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722842252870</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722842252870</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722842478439</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722842478439</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722842661816</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722842661816</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722842736396</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722842736396</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722843486744</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722843486744</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722843551527</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722843551527</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"checkkkk\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1722845085442</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1722845085442</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"hahahhaha\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1723109035671</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1723109035671</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"checkkkk\" />\r\n    <MESSAGE value=\"hahahhaha\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"hahahhaha\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision babed4a2e5dfe066b85b05efcbc0c582df12ca68)
++++ b/.idea/workspace.xml	(date 1723114521500)
+@@ -20,12 +20,14 @@
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++    <option name="UPDATE_TYPE" value="REBASE" />
+   </component>
+   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 0
+ }</component>
+   <component name="ProjectId" id="2kEI8gkPxFZQWtFyyjYZ2u14LrX" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+@@ -33,6 +35,7 @@
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
+     "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "main",
+     "last_opened_file_path": "C:/Xampp/htdocs/DATN",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+@@ -40,6 +43,9 @@
+     "node.js.selected.package.tslint": "(autodetect)",
+     "nodejs_package_manager_path": "npm",
+     "vue.rearranger.settings.migration": "true"
++  },
++  "keyToStringList": {
++    "ChangesTree.GroupingKeys": []
+   }
+ }]]></component>
+   <component name="SharedIndexes">
+@@ -53,13 +59,14 @@
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="eba16fab-9b7e-4ece-9222-006c47912ef4" name="Changes" comment="" />
++      <changelist id="63195855-4b34-4bc6-843a-7edffa56a6a3" name="Changes" comment="hahahhaha" />
+       <created>1722842151958</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1722842151958</updated>
+       <workItem from="1722842153003" duration="5028000" />
+       <workItem from="1723108989505" duration="613000" />
++      <workItem from="1723114188178" duration="330000" />
+     </task>
+     <task id="LOCAL-00001" summary="checkkkk">
+       <option name="closed" value="true" />
