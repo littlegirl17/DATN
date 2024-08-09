@@ -42,27 +42,29 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ------------------------- DETAIL PRODUCT IMAGES -----------------------
-// document
-//   .querySelectorAll(".detail_product_left_img_item ul li img")
-//   .forEach((smallImg) => {
-//     smallImg.addEventListener("click", function () {
-//       const largeImg = document.querySelector(".detail_product_left_img img");
-//       largeImg.computedStyleMap.opacity = 0;
-//       setTimeout(() => {
-//         largeImg.src = this.src;
-//         largeImg.computedStyleMap.opacity = 1;
-//       }, 100);
-//     });
-//   });
+let detailImages = []; // Sử dụng let để có thể gán lại giá trị
 
-const detailImages = document.querySelectorAll(
+// Lưu trữ tất cả ảnh nhỏ từ phần tử đầu tiên
+const images1 = document.querySelectorAll(
   ".detail_product_left_img_item ul li img"
 );
-const largeImg = document.querySelector(".detail_product_left_img img");
-let currentIndex = 0;
+detailImages = [...images1]; // Chuyển đổi NodeList thành mảng
+
+// Lưu trữ tất cả ảnh nhỏ từ phần tử thứ hai
+const images2 = document.querySelectorAll(
+  ".detail_product_left_img_item_res ul li img"
+);
+detailImages = detailImages.concat([...images2]); // nội dung của detailImages (đã chứa hình ảnh từ images1) với hình ảnh từ images2.Kết quả là detailImages sẽ chứa tất cả các hình ảnh từ cả hai nguồn,
+
+const largeImg = document.querySelector(".detail_product_left_img img"); // Lưu trữ ảnh lớn
+
+let currentIndex = 0; // biến theo dõi chỉ số của hình ảnh hiện tại
+
 // hàm cập nhật ảnh lớn
 function updateLargeImage(i) {
   largeImg.style.opacity = 0; // ẩn ảnh lớn
+
+  // sau 1s nó thay đổi nguồn src của ảnh lớn và hiện lại ảnh lớn bằng opacity 1
   setTimeout(() => {
     largeImg.src = detailImages[i].src; // Thay đổi hình ảnh lớn
     largeImg.style.opacity = 1; // ẩn ảnh lớn
@@ -71,6 +73,7 @@ function updateLargeImage(i) {
 
 // Sự kiện click vào hình ảnh nhỏ
 detailImages.forEach((smallImg, i) => {
+  // lặp qua từng ảnh nhỏ và thêm sự kiện click
   smallImg.addEventListener("click", function () {
     currentIndex = i; // Cập nhật chỉ số hình ảnh hiện tại
     updateLargeImage(currentIndex);
@@ -86,4 +89,29 @@ document.getElementById("prevBtn").addEventListener("click", function () {
 document.getElementById("nextBtn").addEventListener("click", function () {
   currentIndex = currentIndex < detailImages.length - 1 ? currentIndex + 1 : 0;
   updateLargeImage(currentIndex);
+});
+
+// ------------------------- DETAIL PRODUCT IMAGES MODAL -----------------------
+
+const detailBtnImgs = document.querySelectorAll(".product_review_imgbtn");
+const deatilModalReviewImg = document.getElementById("modal_review");
+const detailModalMain = document.getElementById("modal_review_box_img");
+const closeBtn = document.querySelector(".close");
+
+detailBtnImgs.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    const img = this.querySelector("img").src;
+    detailModalMain.innerHTML = `<img src="${img}" alt="" />`;
+    deatilModalReviewImg.style.display = "block";
+  });
+});
+
+closeBtn.addEventListener("click", function () {
+  deatilModalReviewImg.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+  if (event.target === deatilModalReviewImg) {
+    deatilModalReviewImg.style.display = "none";
+  }
 });
