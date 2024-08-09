@@ -34,7 +34,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "nghipham",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Xampp/htdocs/DATN",
     "node.js.detected.package.eslint": "true",
@@ -68,6 +68,7 @@
       <workItem from="1723108989505" duration="613000" />
       <workItem from="1723114188178" duration="330000" />
       <workItem from="1723114531447" duration="133000" />
+      <workItem from="1723204052752" duration="293000" />
     </task>
     <task id="LOCAL-00001" summary="checkkkk">
       <option name="closed" value="true" />
