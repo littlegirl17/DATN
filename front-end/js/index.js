@@ -1,11 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
   const toggleSubmenuButtons = document.querySelectorAll(".toggle-submenu");
-  const toggleMenuButton = document.querySelector(".toggle-menu");
+  const buttonBars = document.querySelector(".toggle-menu");
   const submenu = document.querySelector(".main_bar_menu.submenu");
   const submenuCloseButton = document.querySelector(".submenu_close");
-  const menuTitleItems = document.querySelectorAll(".main_bar_menu_title li");
+  const menuTitleItems = document.querySelectorAll(
+    ".main_bar_menu_title .main_bar_menu_title_item"
+  );
   const menuList = document.querySelector(".main_bar_menu_list");
   const backButton = document.querySelector(".back-button");
+
+  const toggleSubmenuButtonscon = document.querySelectorAll(
+    ".main_bar_menu_list .main_bar_menu_list_item  "
+  );
+  const menuListcon = document.querySelector(".main_bar_submenu_list");
 
   toggleSubmenuButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -14,13 +21,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  if (toggleMenuButton) {
-    toggleMenuButton.addEventListener("click", (event) => {
+  // show ra submenu khi click vào icon bars
+  if (buttonBars) {
+    buttonBars.addEventListener("click", (event) => {
       event.preventDefault();
       submenu.classList.toggle("show");
     });
   }
 
+  // đóng submenu lại khi click vào dấu X
   submenuCloseButton.addEventListener("click", (event) => {
     event.preventDefault();
     submenu.classList.remove("show");
@@ -34,10 +43,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  toggleSubmenuButtonscon.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      event.preventDefault();
+      const categoryId = item
+        .querySelector("a")
+        .getAttribute("data-category-id");
+
+      // Ẩn tất cả danh mục con trước
+      document.querySelectorAll(".submenu-category").forEach((submenu) => {
+        submenu.style.display = "none"; // Ẩn tất cả danh mục con
+      });
+
+      // Hiện danh mục con tương ứng với danh mục cha được nhấp
+      const selectedSubmenu = document.querySelector(
+        `.submenu-category[data-category-id="${categoryId}"]`
+      );
+      if (selectedSubmenu) {
+        selectedSubmenu.style.display = "block"; // Hiển thị danh mục con tương ứng
+      }
+
+      menuList.classList.remove("show"); // Ẩn menu list
+      menuListcon.classList.add("show"); // Hiển thị menu list con
+      submenu.querySelector(".main_bar_menu_list").classList.add("hide"); // Ẩn menu title
+    });
+  });
   backButton.addEventListener("click", (event) => {
     event.preventDefault();
     menuList.classList.remove("show"); // Ẩn menu list
     submenu.querySelector(".main_bar_menu_title").classList.remove("hide"); // Hiển thị menu title
+
+    menuListcon.classList.remove("show"); // Hiển thị menu list
+    submenu.querySelector(".main_bar_menu_list").classList.remove("hide"); // Ẩn menu title
   });
 });
 
