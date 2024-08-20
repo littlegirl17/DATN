@@ -1967,6 +1967,55 @@ section {
     padding: 10px 10px;
 }
 
+.contact_left_img {
+    width: 400px;
+    height: 400px;
+}
+
+.contact_left_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner_contact {
+    width: 100%;
+    background-color: #FFD602;
+    display: grid;
+    grid-template-columns: 1fr 1000px 1fr;
+    position: relative;
+}
+
+.banner_contact_img {
+    display: flex;
+    /* Thêm dòng này */
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    width: 250px;
+    height: 250px;
+}
+
+
+.banner_contact_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner_contact_title {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.banner_contact_img_one {
+    display: flex;
+    justify-content: center;
+}
+
 /*-------------------------------END CONTACT---------------------------------------*/
 
 /*------------------------------- START ---------------------------------------*/
@@ -2367,6 +2416,18 @@ section {
         font-size: 0.8rem;
     }
 
+    .banner_contact {
+        background-color: #FFD602;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+    }
+
+    .input_form_contact {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+        padding: 10px 0;
+    }
 }
 
 
@@ -2632,6 +2693,90 @@ section {
     .btn_checkout {
         font-size: 1.15rem;
     }
+
+    .banner_contact {
+        background-color: #FFD602;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .banner_contact_img {
+        display: flex;
+        /* Thêm dòng này */
+        justify-content: center;
+        /* Căn giữa theo chiều ngang */
+        align-items: center;
+        /* Căn giữa theo chiều dọc */
+        width: 200px;
+        height: 200px;
+    }
+
+
+    .banner_contact_img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+    }
+
+    .banner_contact_title {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        padding-top: 30px;
+    }
+
+    .contact_left_img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .contact_left_img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .input_form_contact {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+        padding: 10px 0;
+    }
+
+    .banner_contact_title {
+        padding: 0 10px;
+    }
+
+    .banner_contact_title h2 {
+        font-size: 1.3rem;
+        line-height: 2rem;
+    }
+
+    .contact_left_content ul {
+        padding: 0 0;
+    }
+
+    .contact_left_content h2 {
+        font-size: 1.3rem;
+        line-height: 1rem;
+    }
+
+    .contact_right_title h2 {
+        font-size: 1.3rem;
+        line-height: 1.3rem;
+    }
+
+    .contact_left_content ul li {
+        font-size: 0.8rem;
+        line-height: 1.5rem;
+    }
+
+    .contact_right {
+        background-color: #fff;
+        padding: 20px 20px 10px 20px;
+        margin-top: 20px;
+    }
 }
 
 @media only screen and (max-width: 300px) {
@@ -2639,4 +2784,6 @@ section {
         display: flex;
         flex-direction: column;
     }
+
+
 }
