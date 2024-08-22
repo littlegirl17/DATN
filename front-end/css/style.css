@@ -2102,10 +2102,38 @@ section {
 
 /*-------------------------------END CONTACT---------------------------------------*/
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START POLICY---------------------------------------*/
+.container-policy {
+    width: 800px;
+    margin: 0 auto;
+}
 
+.policy_main {
+    padding: 30px 0 30px 0;
+}
 
-/*-------------------------------END ---------------------------------------*/
+.policy_title_header {
+    padding: 0 0 10px 0;
+}
+
+.policy_title_header h2 {
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+}
+
+.policy_main_title {
+    padding: 0 0 5px 0;
+}
+
+.policy_main_title h4 {
+    font-size: 1.3rem;
+}
+
+.policy_main_item span {
+    padding-top: 20px;
+}
+
+/*-------------------------------END POLICY---------------------------------------*/
 
 /*------------------------------- START ---------------------------------------*/
 
