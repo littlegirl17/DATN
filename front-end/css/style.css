@@ -314,6 +314,56 @@ body {
     display: block;
 }
 
+
+
+.header_user_click {
+    position: relative;
+}
+
+.header_user_content_moc_item {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    z-index: 3;
+}
+
+.header_user_content_moc_item img {
+    object-fit: cover;
+    width: 12px;
+}
+
+.header_user_content_moc_one {
+    position: absolute;
+    background-color: #000000;
+    width: 10px;
+    top: 10px;
+    z-index: 100;
+    content: "";
+}
+
+.header_user_content {
+    position: absolute;
+    top: 130%;
+    right: 0;
+    background: #fff;
+    box-shadow: 0px 6px 4px rgba(179, 179, 179, .25);
+    padding: 5px 10px 0 10px;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    width: 200px;
+    opacity: 0;
+}
+
+.header_user_content div {
+    margin: 0 auto;
+    padding: 0 0;
+    margin: 0 0;
+}
+
 /*------------------------------- START BANNER---------------------------------------*/
 .banner_home_mobile {
     display: none;
@@ -2270,6 +2320,139 @@ section {
 
 /*-------------------------------END ARTICLE---------------------------------------*/
 
+/*------------------------------- START BUTTON---------------------------------------*/
+.btn_login {
+
+    padding: 0 0;
+    text-decoration: none;
+    margin: 0 0;
+}
+
+.btn_login a {
+    padding: 10px 40px;
+    text-decoration: none;
+    background-color: #005c99;
+    color: #fff;
+}
+
+/* From Uiverse.io by joe-watson-sbf */
+.btn_register_div {
+    padding: 0 0;
+    text-decoration: none;
+    margin: 0 0;
+}
+
+.btn-register {
+    font-size: 17px;
+    background: transparent;
+    border: none;
+    width: 167px;
+    height: 50px;
+    line-height: 50px;
+    color: #ffc506;
+    position: relative;
+    transition: 0.5s ease;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
+.btn-register::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #ffc506;
+    transition: 0.5s ease;
+}
+
+.btn-register:hover {
+    color: #1e1e2b;
+    transition-delay: 0.5s;
+}
+
+.btn-register:hover::before {
+    width: 100%;
+}
+
+.btn-register::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background-color: #ffc506;
+    transition: 0.4s ease;
+    z-index: -1;
+}
+
+.btn-register:hover::after {
+    height: 100%;
+    transition-delay: 0.4s;
+    color: aliceblue;
+}
+
+/**/
+
+.btn-login {
+    font-size: 17px;
+    background: transparent;
+    border: none;
+    width: 167px;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    background-color: #005c99;
+    position: relative;
+    transition: 0.5s ease;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
+.btn-login::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #e96f14;
+    transition: 0.5s ease;
+}
+
+.btn-login:hover {
+    background-color: #e96f14;
+    color: #FFFFFF;
+    transition-delay: 0.5s;
+}
+
+.btn-login:hover::before {
+    width: 100%;
+}
+
+.btn-login::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background-color: #e96f14;
+    transition: 0.4s ease;
+    z-index: -1;
+}
+
+.btn-login:hover::after {
+    height: 100%;
+    transition-delay: 0.4s;
+    color: aliceblue;
+
+}
+
+/*-------------------------------END BUTTON---------------------------------------*/
+
 /*------------------------------- START ---------------------------------------*/
 
 
@@ -2279,6 +2462,60 @@ section {
 
 
 /*-------------------------------END ---------------------------------------*/
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+
+
+
+
+
+
 .main_bar_menu.submenu .main_bar_menu_list.show {
     display: block;
 }

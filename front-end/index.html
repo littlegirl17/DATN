@@ -84,12 +84,27 @@
                 </div>
               </div>
             </div>
+            <div class="header_user_click">
+              <div class="header_user_img">
+                <img src="img/user.svg" alt="" />
+              </div>
+              <div class="header_user_content">
+                <div class="header_user_content_moc_item">
+                  <img src="img/legomini.svg" alt="" />
+                </div>
+                <div class="m-0 p-0">
+                  <div class="btn_contain">
+                    <button class="btn-login">Đăng nhập</button>
+                  </div>
+                  <div class="btn_contain">
+                    <button class="btn-register">Đăng ký</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="">
-              <i class="fa-solid fa-user text-light"></i>
-            </div>
-            <div class="">
-              <i class="fa-solid fa-bag-shopping text-light"></i>
+              <img src="img/cart.svg" alt="" />
             </div>
           </div>
         </div>
@@ -1090,6 +1105,21 @@
             },
           },
         });
+      });
+    </script>
+    <script>
+      const userImg = document.querySelector(".header_user_img");
+      const userContent = document.querySelector(".header_user_content");
+      const headerUserClick = document.querySelector(".header_user_click");
+      userImg.addEventListener("click", function () {
+        userContent.style.opacity = 1;
+      });
+
+      window.addEventListener("click", function (event) {
+        if (!headerUserClick.contains(event.target)) {
+          //Hàm này kiểm tra xem phần tử được nhấp chuột có nằm trong header_user_click hay không. Nếu không, tức là bạn đã nhấp ra ngoài, và userContent sẽ được ẩn đi.
+          userContent.style.opacity = 0;
+        }
       });
     </script>
   </body>

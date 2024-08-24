@@ -152,3 +152,5 @@ window.addEventListener("click", function (event) {
     deatilModalReviewImg.style.display = "none";
   }
 });
+
+// ------------------------- CLICK HEADER USER -----------------------
