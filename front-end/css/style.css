@@ -2225,10 +2225,50 @@ section {
 
 /*-------------------------------END ORDER---------------------------------------*/
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START ARTICLE---------------------------------------*/
+.background_article {
+    background-color: #0065a7;
+}
 
+.article_main {}
 
-/*-------------------------------END ---------------------------------------*/
+.article_main_one {
+    position: relative;
+}
+
+.article_main_one_desktop {
+    padding: 0 0 0 150px;
+    margin: 0 auto;
+}
+
+.article_main_one_img img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article_main_one_content {
+    max-width: 35%;
+    position: absolute;
+    top: 30%;
+    color: #ffffff;
+}
+
+.article_main_one_content h2 {
+    font-size: 2.5rem;
+    line-height: 3.125rem;
+}
+
+.article_main_one_content p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.article_main_one_mobile {
+    display: none;
+}
+
+/*-------------------------------END ARTICLE---------------------------------------*/
 
 /*------------------------------- START ---------------------------------------*/
 
@@ -2711,6 +2751,21 @@ section {
         margin: 0 auto;
     }
 
+    /**/
+    .article_main_one_desktop {
+        padding: 0 0 0 50px;
+        margin: 0 auto;
+    }
+
+    .article_main_one_content h2 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    .article_main_one_content p {
+        font-size: 0.8rem;
+        line-height: 1.1875rem;
+    }
 }
 
 
@@ -3206,6 +3261,38 @@ section {
         display: none;
     }
 
+    /**/
+    .article_main_one_desktop {
+        display: none;
+    }
+
+    .article_main_one_mobile {
+        display: block;
+        width: 100%;
+    }
+
+    .article_main_one_img_mobile img {
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .article_main_one_content_mobile {
+        text-align: center;
+        background-color: #005c99;
+        color: #ffffff;
+        padding: 25px 30px 10px 30px;
+    }
+
+    .article_main_one_img_mobile h2 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    .article_main_one_content_mobile p {
+        font-size: 0.8rem;
+        line-height: 1.1875rem;
+    }
 }
 
 @media only screen and (max-width: 300px) {
