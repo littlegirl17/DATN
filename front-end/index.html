@@ -338,7 +338,12 @@
                   <div class="product_box_tag">Nổi bật</div>
                   <div class="product_box_icon">
                     <i class="fa-regular fa-heart"></i>
-                    <i class="fa-regular fa-eye"></i>
+                    <button
+                      class="outline-0 border-0 bg-light"
+                      onclick="showModalProduct()"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
                     <i class="fa-solid fa-bag-shopping"></i>
                   </div>
                   <div class="product_box_image">
@@ -428,7 +433,14 @@
         </div>
       </section>
       <!-- END PRODUCT NỔI BẬT -->
-
+      <div id="modal_home" class="modal_product_main">
+        <div class="modal_product_content">
+          <div id="close_modal" class="modal_product_content_one">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <p>Thông tin sản phẩm ở đây.</p>
+        </div>
+      </div>
       <!-- START PRODUCT GIẢM GIÁ -->
       <section class="product">
         <div class="container">
@@ -1108,6 +1120,8 @@
       });
     </script>
     <script>
+      // ------------------------- CLICK HEADER USER -----------------------
+
       const userImg = document.querySelector(".header_user_img");
       const userContent = document.querySelector(".header_user_content");
       const headerUserClick = document.querySelector(".header_user_click");
@@ -1119,6 +1133,28 @@
         if (!headerUserClick.contains(event.target)) {
           //Hàm này kiểm tra xem phần tử được nhấp chuột có nằm trong header_user_click hay không. Nếu không, tức là bạn đã nhấp ra ngoài, và userContent sẽ được ẩn đi.
           userContent.style.opacity = 0;
+        }
+      });
+    </script>
+    <script>
+      function showModalProduct() {
+        const modalHome = document.getElementById("modal_home");
+        modalHome.style.opacity = 1;
+        modalHome.style.pointerEvents = "auto"; // Cho phép tương tác khi hiển thị
+
+        const closeModal = document.getElementById("close_modal");
+        closeModal.onclick = function () {
+          modalHome.style.opacity = 0;
+        };
+      }
+
+      window.addEventListener("click", function (event) {
+        const modalHome = document.getElementById("modal_home");
+
+        // Kiểm tra nếu modalHome tồn tại và sự kiện xảy ra ngoài modal (chính modalHome)
+        if (event.target === modalHome) {
+          modalHome.style.opacity = 0;
+          modalHome.style.pointerEvents = "none"; // Ngăn tương tác khi ẩn
         }
       });
     </script>

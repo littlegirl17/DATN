@@ -153,4 +153,4 @@ window.addEventListener("click", function (event) {
   }
 });
 
-// ------------------------- CLICK HEADER USER -----------------------
+// ------------------------- CLICK MODAL PRODUCT-----------------------
