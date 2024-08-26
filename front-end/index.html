@@ -339,7 +339,7 @@
                   <div class="product_box_icon">
                     <i class="fa-regular fa-heart"></i>
                     <button
-                      class="outline-0 border-0 bg-light"
+                      class="outline-0 border-0 bg-white"
                       onclick="showModalProduct()"
                     >
                       <i class="fa-regular fa-eye"></i>
@@ -366,7 +366,12 @@
                   <div class="product_box_tag">Nổi bật</div>
                   <div class="product_box_icon">
                     <i class="fa-regular fa-heart"></i>
-                    <i class="fa-regular fa-eye"></i>
+                    <button
+                      class="outline-0 border-0 bg-white"
+                      onclick="showModalProduct()"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
                     <i class="fa-solid fa-bag-shopping"></i>
                   </div>
                   <div class="product_box_image">
@@ -389,7 +394,12 @@
                   <div class="product_box_tag">Nổi bật</div>
                   <div class="product_box_icon">
                     <i class="fa-regular fa-heart"></i>
-                    <i class="fa-regular fa-eye"></i>
+                    <button
+                      class="outline-0 border-0 bg-white"
+                      onclick="showModalProduct()"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
                     <i class="fa-solid fa-bag-shopping"></i>
                   </div>
                   <div class="product_box_image">
@@ -412,7 +422,12 @@
                   <div class="product_box_tag">Nổi bật</div>
                   <div class="product_box_icon">
                     <i class="fa-regular fa-heart"></i>
-                    <i class="fa-regular fa-eye"></i>
+                    <button
+                      class="outline-0 border-0 bg-white"
+                      onclick="showModalProduct()"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
                     <i class="fa-solid fa-bag-shopping"></i>
                   </div>
                   <div class="product_box_image">
@@ -445,9 +460,19 @@
             <div class="modal_product_content_two_content">
               <div class=""><h2>Mô hình lego thành phố</h2></div>
               <div class="product_box_price"><span>100.000đ</span>90.000đ</div>
-              <div class="right_five_bnt">
-                <button class="detail_btn">Mua ngay</button>
-                <button class="detail_btn">Thêm vào giỏ hàng</button>
+              <div class="detail_product_right_four py-3">
+                <div class="detail_product_right_four_item">
+                  <button class="right_four_item_decrease">-</button>
+                  <input type="text" class="right_four_item_number" value="1" />
+                  <button class="right_four_item_increase">+</button>
+                </div>
+                <div class="detail_product_right_four_span">
+                  <span>Giới hạn 5</span>
+                </div>
+              </div>
+              <div class="modal_btn">
+                <button class="modal_btn_item">Mua ngay</button>
+                <button class="modal_btn_item">Thêm vào giỏ hàng</button>
               </div>
             </div>
           </div>
