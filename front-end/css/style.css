@@ -2597,10 +2597,113 @@ section {
 
 /*-------------------------------END MODAL---------------------------------------*/
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START MEMBER---------------------------------------*/
 
 
-/*-------------------------------END ---------------------------------------*/
+/*-------------------------------END MEMBER---------------------------------------*/
+.layout_member {
+    display: flex;
+    flex-direction: row;
+    padding: 50px 0 30px 0;
+}
+
+.layout_member_left {
+    width: 25%;
+}
+
+.layout_member_right {
+    width: 75%;
+}
+
+.layout_member_left_aside {
+    display: flex;
+    flex-direction: column;
+    display: block;
+    max-width: 20rem;
+}
+
+.layout_member_left_nav {}
+
+.layout_member_left_nav ul {
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.layout_member_left_nav ul li {
+    list-style: none;
+    padding: 15px 15px;
+    border: 1px solid #e3e3e3;
+
+}
+
+.layout_member_left_nav ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.layout_member_left_nav_li {
+    background-color: #005c99;
+}
+
+.layout_member_left_nav_li a {
+    color: #fff;
+}
+
+
+.accordion_member {
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.accordion-header_member {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #eff0f1;
+    color: #000;
+    transition: background-color 0.3s;
+    border-bottom: 0.5px solid #e5e3e3;
+}
+
+.accordion-header_member i {
+    font-weight: 600;
+}
+
+.accordion-header_member:hover {
+    background-color: #ddd;
+}
+
+.accordion-content_member {
+    display: block;
+    margin: 0 0;
+    padding: 0 0;
+    background-color: white;
+}
+
+.accordion-content_member ul {
+    padding: 0 0;
+    margin: 0 0;
+}
+
+.accordion-content_member li {
+    list-style: none;
+    padding: 15px 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.accordion-content_member li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.accordion-header_member:target+.accordion-content_member {
+    display: none;
+    /* Ẩn khi click */
+}
+
+
 
 /*------------------------------- START ---------------------------------------*/
 
@@ -3674,6 +3777,29 @@ section {
     .modal_product_content_two {
         display: flex;
         flex-direction: column;
+        width: 100%;
+    }
+
+    /**/
+    .layout_member_left_aside {
+        display: none;
+    }
+
+    .accordion_member {
+        display: block;
+    }
+
+    .layout_member {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0 30px 0;
+    }
+
+    .layout_member_left {
+        width: 100%;
+    }
+
+    .layout_member_right {
         width: 100%;
     }
 
