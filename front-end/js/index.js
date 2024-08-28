@@ -191,3 +191,16 @@ function memberSubmenu(element) {
     }
   }
 }
+
+function memberSubmenuMobile(element) {
+  const memberSubmenuLeftMobile = document.querySelector(
+    ".layout_member_left_submenu_mobile"
+  );
+  if (memberSubmenuLeftMobile) {
+    if (memberSubmenuLeftMobile.style.display === "none") {
+      memberSubmenuLeftMobile.style.display = "block";
+    } else {
+      memberSubmenuLeftMobile.style.display = "none";
+    }
+  }
+}

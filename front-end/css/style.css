@@ -2769,6 +2769,13 @@ section {
     padding-right: 10px;
 }
 
+
+.layout_member_left_submenu_mobile {
+    display: none;
+}
+
+
+
 /*------------------------------- START PURCHASE---------------------------------------*/
 .account_purchase {
     padding: 10px 10px;
