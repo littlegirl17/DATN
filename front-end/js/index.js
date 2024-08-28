@@ -177,3 +177,17 @@ function setActiveAccount(element) {
     ).style.color = "#000";
   }
 }
+
+function memberSubmenu(element) {
+  const memberSubmenuLeft = document.querySelector(
+    ".layout_member_left_submenu"
+  );
+
+  if (memberSubmenuLeft) {
+    if (memberSubmenuLeft.style.display === "none") {
+      memberSubmenuLeft.style.display = "block";
+    } else {
+      memberSubmenuLeft.style.display = "none";
+    }
+  }
+}

@@ -2751,6 +2751,23 @@ section {
 }
 
 
+.layout_member_left_submenu {
+    list-style-type: none;
+    padding: 0 0 0px 10px;
+    margin: 10px 0 0 0;
+    display: none;
+}
+
+.layout_member_left_submenu .layout_member_left_submenu_li {
+    border: none;
+    margin: 15px 0;
+    padding: 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.layout_member_left_submenu .layout_member_left_submenu_li i {
+    padding-right: 10px;
+}
 
 /*------------------------------- START PURCHASE---------------------------------------*/
 .account_purchase {
