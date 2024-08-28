@@ -153,4 +153,27 @@ window.addEventListener("click", function (event) {
   }
 });
 
-// ------------------------- CLICK MODAL PRODUCT-----------------------
+// ------------------------- CLICK ACTIVE MY ACCOUNT-----------------------
+function setActiveAccount(element) {
+  // Tìm tất cả các mục accordion
+  const items = document.querySelectorAll(".accordion-item");
+
+  // Xóa lớp active khỏi tất cả mục
+  items.forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  // Thêm lớp active cho mục được nhấp
+  element.classList.add("active");
+
+  // Nếu mục đầu tiên được nhấp, giữ màu nền cho nó
+  if (element.classList.contains("layout_member_left_nav_li")) {
+    element.style.backgroundColor = "#005c99"; // Giữ màu xanh cho mục đầu tiên
+  } else {
+    document.querySelector(".layout_member_left_nav_li").style.backgroundColor =
+      "transparent";
+    document.querySelector(
+      ".layout_member_left_nav_li .layout_member_left_nav_li_a"
+    ).style.color = "#000";
+  }
+}

@@ -2612,6 +2612,7 @@ section {
 }
 
 .layout_member_right {
+    position: relative;
     width: 75%;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -2650,13 +2651,13 @@ section {
     background-color: #005c99;
 }
 
-.layout_member_left_nav_li a {
+.layout_member_left_nav_li .layout_member_left_nav_li_a {
     color: #fff;
 }
 
 .form-control-input {
     display: block;
-    width: 50%;
+    width: 100%;
     margin-top: 5px;
     padding: 10px 10px;
     outline: none;
@@ -2683,7 +2684,6 @@ section {
 .member_image_inputfile {
     width: 50%;
     padding: 10px 0;
-
 }
 
 .accordion_member {
@@ -2694,6 +2694,16 @@ section {
     display: none;
 }
 
+
+.accordion-item.active {
+    background-color: #005c99;
+    color: #fff;
+}
+
+.accordion-item.active a {
+    color: #fff;
+    /* Màu chữ trắng cho liên kết khi active */
+}
 
 .accordion-header_member {
     padding: 10px;
@@ -2742,17 +2752,89 @@ section {
 
 
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START PURCHASE---------------------------------------*/
+.account_purchase {
+    padding: 10px 10px;
+    margin: 10px 0;
+    background-color: #FFFFFF;
+    border-top: 1px solid #eaeaea;
+}
 
 
-/*-------------------------------END ---------------------------------------*/
+.account_purchase_thanhtien .col-md-12 {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.account_purchase_thanhtien .col-md-12 p {
+    padding: 0 0;
+    margin: 0 0;
+}
+
+.account_purchase_thanhtien .col-md-12 h4 {
+    padding: 0 0;
+    margin: 0 0;
+    color: #FF0000;
+    font-weight: 400;
+}
+
+.price_purchase {
+    display: flex;
+    justify-content: end;
+    padding-right: 34px;
+}
+
+.account_purchase_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid #eaeaea;
+
+}
+
+.account_purchase_header_right {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+
+.account_purchase_header_right .account_purchase_header_right_1 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_2 {
+    color: #FF0000;
+    padding: 0 5px;
+
+}
+
+/*-------------------------------END PURCHASE---------------------------------------*/
 
 
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START PASSWORD---------------------------------------*/
+.form-control-input-pw {
+    margin-top: 5px;
+    padding: 10px 10px;
+    display: block;
+    width: 50%;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
 
+.btn_row {
+    width: 150px;
+    padding-top: 20px;
+    float: left;
+}
 
-/*-------------------------------END ---------------------------------------*/
+/*-------------------------------END PASSWORD---------------------------------------*/
 
 
 
@@ -3312,6 +3394,26 @@ section {
         border: none;
         box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     }
+
+    /**/
+    .account_purchase_header {}
+
+    .account_purchase_header_left h5 {
+        font-size: 0.8rem;
+    }
+
+    .account_purchase_header_right .account_purchase_header_right_1 {
+        font-size: 0.8rem;
+        padding: 0 0;
+    }
+
+    .account_purchase_header_right .account_purchase_header_right_2 {
+        font-size: 0.8rem;
+        padding-left: 10px;
+
+    }
+
+
 }
 
 
@@ -3729,6 +3831,7 @@ section {
     }
 
     .pricecheckout_mobile {
+        display: block;
         line-height: 18px;
         font-size: 18px;
         font-weight: 700;

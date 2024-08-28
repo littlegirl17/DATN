@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tài khoản của tôi</title>
+    <title>Đơn hàng của tôi</title>
     <link rel="icon" type="image/png" href="{{ asset('uploads/HK.png') }}" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
@@ -131,9 +131,7 @@
                   class="layout_member_left_nav_li accordion-item"
                   onclick="setActiveAccount(this)"
                 >
-                  <a href="#" class="layout_member_left_nav_li_a"
-                    >Tổng quan về tài khoản</a
-                  >
+                  <a href="#">Tổng quan về tài khoản</a>
                 </li>
                 <li class="accordion-item" onclick="setActiveAccount(this)">
                   <a href="#">Đơn hàng của tôi</a>
@@ -175,133 +173,51 @@
         </div>
         <div class="layout_member_right">
           <form action="">
-            <div class="">
-              <div class="member_img_user">
-                <div class="member_image">
-                  <img src="../img/city-product-1.webp" alt="" />
-                </div>
-
-                <div class="member_image_inputfile">
-                  <label for="file-upload" class="custom-file-upload">
-                    Chọn ảnh
-                  </label>
-                  <input
-                    type="file"
-                    id="file-upload"
-                    class="form-control"
-                    name="HinhAnh"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div class="row member_profile">
-                <div class="col-md-12 py-2">
-                  <div class="form-group">
-                    <label for="">Tên đăng nhập:</label>
-
-                    <input
-                      type="text"
-                      class="form-control-input"
-                      name=""
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div class="col-md-12 py-2">
-                  <div class="form-group">
-                    <label for="">Email:</label>
-                    <input
-                      type="email"
-                      class="form-control-input"
-                      name=""
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div class="col-md-12 py-2">
-                  <div class="form-group">
-                    <label for="">Số điện thoại:</label>
-                    <input
-                      type="number"
-                      class="form-control-input"
-                      name=""
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div class="checkout_main_left_one_item_2 pb-3">
-                  <div class="checkout_left_one_input">
-                    <label for="">Tỉnh</label>
-                    <select
-                      class="select_checkout"
-                      aria-label="Default select example"
-                      name="province"
-                      id="province"
-                    >
-                      <option selected disabled>Tỉnh/Thành phố</option>
-                    </select>
-                  </div>
-                  <div class="checkout_left_one_input">
-                    <label for="">Quận/Huyện</label>
-                    <select
-                      class="select_checkout"
-                      aria-label="Default select example"
-                      name="province"
-                      id="province"
-                    >
-                      <option selected disabled>Tỉnh/Thành phố</option>
-                    </select>
-                  </div>
-                  <div class="checkout_left_one_input">
-                    <label for="">Phường/Xã</label>
-                    <select
-                      class="select_checkout"
-                      aria-label="Default select example"
-                      name="province"
-                      id="province"
-                    >
-                      <option selected disabled>Tỉnh/Thành phố</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-12 py-2">
-                  <div class="d-flex">
-                    <label class="pe-3" for="">Giới tính:</label>
-                    <div class="form-check d-flex">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="flexRadioDefault1"
-                      />
-                      <p class="pe-3" for="">Nam</p>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id=""
-                      />
-                      <p class="pe-3">Nữ</p>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id=""
-                      />
-                      <p class="pe-3">Khác</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="container-account-right-item">
               <div class="row">
-                <div class="col-md-4 col-sm-4">
-                  <button class="btn_checkout">Lưu</button>
+                <h4 class="m-0 ps-3">Tất cả đơn hàng đã mua</h4>
+              </div>
+              <div class="">
+                <div class="account_purchase">
+                  <div class="account_purchase_header">
+                    <div class="account_purchase_header_left">
+                      <h5>Mã đơn hàng: #46363637</h5>
+                    </div>
+                    <div class="account_purchase_header_right">
+                      <p class="account_purchase_header_right_1">
+                        Giao hàng thành công
+                      </p>
+                      <p class="account_purchase_header_right_2">HOÀN THÀNH</p>
+                    </div>
+                  </div>
+                  <div class="row checkout_row_right">
+                    <div class="col-md-3 col-sm-3 col-4">
+                      <div class="img_checkout_product">
+                        <img src="../img/city-product-1.webp" alt="" />
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-9 col-8">
+                      <h5>Bộ Lego thành phố</h5>
+                      <p class="">Số lượng: 1</p>
+                      <p class="pricecheckout_mobile">
+                        <span>100.000đ</span>90.000đ
+                      </p>
+                    </div>
+                    <div class="col-md-3 col-12 checkout_right_price">
+                      <div class="product_box_price">
+                        <span>100.000đ</span>90.000đ
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr />
+                  <div class="row account_purchase_thanhtien">
+                    <div class="col-md-12">
+                      <p class="px-1">Thành tiền:</p>
+                      <h4>1.000.000đ</h4>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8 col-sm-8"></div>
               </div>
             </div>
           </form>
