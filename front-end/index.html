@@ -37,7 +37,34 @@
 
   <body>
     <!-- START NAV -->
-    <header class="header_top"></header>
+    <header class="header_top">
+      <div class="container">
+        <div class="header_top_main">
+          <div class="header_top_item">
+            <div class="header_top_item_child">
+              <span class="header_top_item_span"
+                ><i class="fa-regular fa-clock pe-1" style="color: #ffffff"></i
+                >7:00 - 22:00</span
+              >
+              <span class="ps-2"
+                ><i class="fa-solid fa-phone pe-1" style="color: #ffffff"></i
+                >0353123771</span
+              >
+            </div>
+          </div>
+
+          <div class="header_top_item">
+            <span
+              ><i
+                class="fa-solid fa-location-dot pe-1"
+                style="color: #ffffff"
+              ></i
+              >Hệ thông cửa hàng</span
+            >
+          </div>
+        </div>
+      </div>
+    </header>
     <nav class="nav_box">
       <div class="container">
         <div class="nav_box_item">
@@ -460,8 +487,66 @@
             <i class="fa-solid fa-xmark"></i>
           </div>
           <div class="modal_product_content_two">
-            <div class="modal_product_content_two_img">
-              <img src="img/city-product-1.webp" alt="" />
+            <div class="" style="max-width: 400px">
+              <div class="modal_product_content_two_img">
+                <img src="img/city-product-1.webp" alt="" />
+              </div>
+              <div class="modal_product_left_img">
+                <div class="modal_product_left_img_item_res">
+                  <ul>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-3.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-1.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-4.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                    <li>
+                      <div class="modal_product_left_img">
+                        <img src="img/city-product-5.webp" alt="" />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="modal_product_content_two_content">
               <div class=""><h2>Mô hình lego thành phố</h2></div>
@@ -1199,6 +1284,31 @@
           modalHome.style.opacity = 0;
           modalHome.style.pointerEvents = "none"; // Ngăn tương tác khi ẩn
         }
+      });
+    </script>
+    <script>
+      const largeImgHome = document.querySelector(
+        ".modal_product_content_two_img img"
+      );
+      const smallImgHome = document.querySelectorAll(
+        ".modal_product_left_img_item_res ul li img"
+      );
+
+      function updateLargeImageHome(i) {
+        largeImgHome.style.opacity = 0; // ẩn ảnh lớn
+
+        setTimeout(() => {
+          largeImgHome.src = smallImgHome[i].src; // Thay đổi hình ảnh lớn
+          largeImgHome.style.opacity = 1; // hiện ảnh lớn
+        }, 100);
+      }
+
+      // Sự kiện click vào hình ảnh nhỏ
+      smallImgHome.forEach((smallImg, i) => {
+        smallImg.addEventListener("click", function () {
+          console.log(`Clicked on image index: ${i}`); // Kiểm tra chỉ số hình ảnh
+          updateLargeImageHome(i);
+        });
       });
     </script>
   </body>

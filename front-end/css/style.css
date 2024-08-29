@@ -25,9 +25,27 @@ body {
     color: #fff;
 }
 
+.header_top_main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header_top_item_span {
+    border-right: 1px solid #fff;
+    padding-right: 12px;
+}
+
+.header_top_item i {
+    font-size: 10px;
+}
+
+.header_top_item span {
+    font-size: 12px;
+}
+
 /*---------------------------------------------------------------------------------*/
 .nav_box {
-    background-color: #FFD602;
+    background-color: #ffc506;
     width: 100%;
 }
 
@@ -65,6 +83,7 @@ body {
     align-items: center;
     height: 70px;
     line-height: 70px;
+    position: relative;
 }
 
 .nav_box_menu {
@@ -2440,7 +2459,7 @@ section {
     height: 50px;
     line-height: 50px;
     color: #fff;
-    background-color: #005c99;
+    background-color: #b90202;
     position: relative;
     transition: 0.5s ease;
     cursor: pointer;
@@ -2454,12 +2473,12 @@ section {
     bottom: 0;
     height: 2px;
     width: 0;
-    background-color: #e96f14;
+    background-color: #ffc506;
     transition: 0.5s ease;
 }
 
 .btn-login:hover {
-    background-color: #e96f14;
+    background-color: #ffc506;
     color: #FFFFFF;
     transition-delay: 0.5s;
 }
@@ -2628,6 +2647,51 @@ section {
     transition-delay: 0.4s;
     color: aliceblue;
 }
+
+/**/
+.modal_product_left_img {
+    width: 100%;
+    /* Đảm bảo khung chứa ảnh rộng 100% */
+    overflow: hidden;
+    /* Ẩn các phần tử tràn ra ngoài khung */
+}
+
+.modal_product_left_img_item_res ul {
+    display: flex;
+    /* Sử dụng flexbox để sắp xếp các phần tử theo hàng */
+    overflow-x: scroll;
+    /* Cho phép cuộn theo chiều ngang */
+    width: 100%;
+    /* Chiều rộng 100% của phần tử chứa */
+    padding: 0;
+    white-space: nowrap;
+    /* Ngăn chặn xuống dòng */
+    margin-top: 20px;
+}
+
+.modal_product_left_img_item_res ul li {
+    width: 100%;
+    list-style: none;
+}
+
+.modal_product_left_img_item_res .modal_product_left_img {
+    width: 80px;
+}
+
+.modal_product_left_img_item_res .modal_product_left_img img {
+    width: 100%;
+    height: auto;
+    /* Để giữ tỷ lệ khung hình */
+    object-fit: cover;
+    /* Giữ tỷ lệ khung hình cho ảnh */
+    cursor: pointer;
+}
+
+.modal_product_content_two_img img {
+    transition: opacity 0.5s ease;
+    /* Thêm hiệu ứng chuyển đổi */
+}
+
 
 /*-------------------------------END MODAL---------------------------------------*/
 
@@ -4077,6 +4141,11 @@ section {
         border: none;
         outline: none;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    }
+
+    /**/
+    .header_top_item span {
+        font-size: 9px;
     }
 
 }

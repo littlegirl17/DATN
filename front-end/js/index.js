@@ -127,6 +127,7 @@ document.getElementById("nextBtn").addEventListener("click", function () {
   currentIndex = currentIndex < detailImages.length - 1 ? currentIndex + 1 : 0;
   updateLargeImage(currentIndex);
 });
+// -------------------------  -----------------------
 
 // ------------------------- DETAIL PRODUCT IMAGES MODAL -----------------------
 
