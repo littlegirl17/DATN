@@ -20,9 +20,9 @@ body {
 .nav_box {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo thanh điều hướng nằm trên các phần tử khác */
+    padding: 10px; /* Tùy chỉnh padding theo nhu cầu */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng cho thanh điều hướng */
     background-color: #FFD602;
     width: 100%;
 }
