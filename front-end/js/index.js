@@ -78,6 +78,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+window.addEventListener("click", function (event) {
+  const submenu = document.querySelector(".main_bar_menu.submenu");
+  if (
+    submenu.classList.contains("show") &&
+    !submenu.contains(event.target) &&
+    !event.target.matches(".toggle-submenu")
+  ) {
+    submenu.classList.remove("show");
+  }
+});
+
 // ------------------------- DETAIL PRODUCT IMAGES -----------------------
 let detailImages = []; // Sử dụng let để có thể gán lại giá trị
 

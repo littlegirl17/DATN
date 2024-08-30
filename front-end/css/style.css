@@ -108,10 +108,13 @@ body {
     color: #FFFFFF;
 }
 
+.main_bar_menu_bg {}
+
 .main_bar_menu {
     background-color: #ffffff;
     width: 400px;
     height: 100%;
+
 }
 
 .main_bar_menu.submenu {
@@ -337,7 +340,8 @@ body {
 
 .main_bar_menu.submenu.show {
     display: block;
-    /* Hiển thị menu con khi có lớp show */
+    position: fixed;
+    z-index: 100;
 }
 
 .main_bar_menu_list {
