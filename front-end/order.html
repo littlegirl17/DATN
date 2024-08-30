@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Đơn hàng</title>
     <link rel="icon" type="image/png" href="{{ asset('uploads/HK.png') }}" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
@@ -16,7 +16,6 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
       rel="stylesheet"
@@ -120,95 +119,96 @@
     <!-- END NAV -->
 
     <!-- START MAIN -->
-    <div class="background_home">
-      <div class="banner_contact">
-        <div class="banner_contact_img_one">
-          <div class="banner_contact_img">
-            <img src="img/bannercontact.webp" alt="" />
+    <div class="container_order">
+      <div class="order_main">
+        <div class="row px-3">
+          <div class="" style="border-bottom: 0.5px solid #e8e8e8">
+            <h3>Order ID: #LEGO3746493</h3>
+            <p>Order date: 23/08/2024 - 12:36</p>
           </div>
         </div>
-        <div class="banner_contact_title">
-          <h2>Xin chào! Chúng tôi có thể giúp gì cho bạn?</h2>
-        </div>
-        <div class=""></div>
-      </div>
-      <div class="container">
-        <div class="row contact_main">
-          <div class="col-md-6 col-12">
-            <div class="contact_left">
-              <div class="contact_left_content">
-                <h2>Đồ chơi LEGO Việt Nam</h2>
-              </div>
-              <div class="contact_left_content">
-                <ul>
-                  <li>
-                    <i class="fa-solid fa-location-dot"></i>Quận Gò Vấp, TP Hồ
-                    Chí Minh
-                  </li>
-                  <li>
-                    <i class="fa-solid fa-mobile-screen-button"></i>Điện thoại:
-                    0353123771
-                  </li>
-                  <li>
-                    <i class="fa-regular fa-envelope"></i>Email:
-                    legoloft@gmail.com
-                  </li>
-                </ul>
-              </div>
-              <div class="contact_left_img">
-                <img src="img/contact.webp" alt="" />
-              </div>
+        <div class="row mt-3 px-3">
+          <h4>Thông tin đặt hàng</h4>
+          <div class="" style="border-bottom: 0.5px solid #e8e8e8">
+            <div class="px-4">
+              <p>Người đặt: Huỳnh Kha</p>
+              <p>SĐT: 0353123771</p>
+              <p>Địa chỉ: Thiện Chánh 2, Tam Quan Bắc, Hoài Nhơn, Bình Định</p>
+              <p>Phương thức thanh toán: Chuyển khoản MoMo</p>
+              <p>
+                Tổng tiền:
+                <strong>1.000.000đ</strong>
+              </p>
             </div>
           </div>
-          <div class="col-md-6 col-12">
-            <div class="contact_right">
-              <div class="contact_right_title">
-                <h2>Gửi liên hệ cho chúng tôi</h2>
-              </div>
-              <form action="">
-                <div class="input_form_contact">
-                  <input
-                    type="text"
-                    class="contact_input"
-                    id=""
-                    placeholder="Họ và tên"
-                    name="name"
-                    value=""
-                  />
-                  <input
-                    type="email"
-                    class="contact_input"
-                    id=""
-                    placeholder="Email"
-                    name="name"
-                    value=""
-                  />
-                </div>
-                <div class="row input_form_contact_2">
-                  <input
-                    type="number"
-                    class="contact_input"
-                    id=""
-                    placeholder="Số điện thoại"
-                    name="name"
-                    value=""
-                  />
-                </div>
-                <div class="row input_form_contact_2">
-                  <textarea
-                    placeholder="Nội dung"
-                    class="contact_textarea"
-                    id="exampleFormControlTextarea1"
-                    rows="5"
-                  ></textarea>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-md-6">
-                    <button class="btn_checkout">Gửi liên hệ</button>
-                  </div>
-                </div>
-              </form>
-            </div>
+        </div>
+        <div class="row mt-3 m-0">
+          <h4>Sản phẩm đã đặt</h4>
+          <div class="" style="border-bottom: 0.5px solid #e8e8e8">
+            <table class="table table_order_product">
+              <tbody>
+                <tr class="">
+                  <td class="m-0 td_order_name" style="border-style: unset">
+                    <div class="d-flex">
+                      <div class="table_order_product_img">
+                        <img src="img/city-product-1.webp" class="" alt="" />
+                      </div>
+                      <p class="name_order_desktop">Lego Thành Phố</p>
+
+                      <div class="order_content_product_mobile">
+                        <p class="">Lego Thành Phố</p>
+                        <div class="product_box_price">
+                          <span>100.000đ</span>90.000đ
+                        </div>
+                        <p class="quantity_order_mobile">số lượng 2</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    class="right_order_price px-4 m-0"
+                    style="border-style: unset"
+                  >
+                    <div class="product_box_price">
+                      <span>100.000đ</span>90.000đ
+                    </div>
+                    <p>số lượng 2</p>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="m-0 td_order_name" style="border-style: unset">
+                    <div class="d-flex">
+                      <div class="table_order_product_img">
+                        <img src="img/city-product-1.webp" class="" alt="" />
+                      </div>
+                      <p class="name_order_desktop">Lego Thành Phố</p>
+
+                      <div class="order_content_product_mobile">
+                        <p class="">Lego Thành Phố</p>
+                        <div class="product_box_price">
+                          <span>100.000đ</span>90.000đ
+                        </div>
+                        <p class="quantity_order_mobile">số lượng 2</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    class="right_order_price px-4 m-0"
+                    style="border-style: unset"
+                  >
+                    <div class="product_box_price">
+                      <span>100.000đ</span>90.000đ
+                    </div>
+                    <p>số lượng 2</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-8"></div>
+          <div class="col-md-4 d-flex justify-content-end">
+            <a href="/" class="btn_checkout">Tiếp tục mua sắm</a>
           </div>
         </div>
       </div>
@@ -271,11 +271,6 @@
         </div>
       </div>
     </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
     <script src="js/index.js"></script>
   </body>
 </html>

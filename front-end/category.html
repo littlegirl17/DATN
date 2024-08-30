@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Danh mục sản phẩm</title>
     <link rel="icon" type="image/png" href="{{ asset('uploads/HK.png') }}" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
@@ -130,10 +130,11 @@
           </div>
           <div class="col-md-6 theme_category_summary_right">
             <select class="form-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected>Sắp xếp</option>
+              <option value="1">Từ A -> Z</option>
+              <option value="1">Từ Z -> A</option>
+              <option value="1">Giá giảm dần</option>
+              <option value="1">Giá tăng dần</option>
             </select>
           </div>
         </div>
@@ -141,18 +142,59 @@
           <aside>
             <div class="category_product_main_left">
               <div class="category_product_main_left_1">
-                <h4>Tất cả chủ đề</h4>
-                <div class="">
-                  <ul>
-                    <li>
-                      <a href="">Thành phố</a>
-                    </li>
-                    <li><a href="">Thành phố</a></li>
-                    <li><a href="">Thành phố</a></li>
-                    <li><a href="">Thành phố</a></li>
-                    <li><a href="">Thành phố</a></li>
-                    <li><a href="">Thành phố</a></li>
-                  </ul>
+                <div class="accordion">
+                  <div
+                    class="accordion-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="m-0 p-0">Tất cả chủ đề</p>
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="">
+                      <ul>
+                        <li>
+                          <a href="">Thành phố</a>
+                        </li>
+                        <li><a href="">Thành phố</a></li>
+                        <li><a href="">Thành phố</a></li>
+                        <li><a href="">Thành phố</a></li>
+                        <li><a href="">Thành phố</a></li>
+                        <li><a href="">Thành phố</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="category_product_main_left_1">
+                <div class="accordion">
+                  <div
+                    class="accordion-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="m-0 p-0">Lọc giá</p>
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="accordion-content-item">
+                      <input type="checkbox" name="" id="" />
+                      <span>Dưới 100.000đ</span>
+                    </div>
+                    <div class="accordion-content-item">
+                      <input type="checkbox" name="" id="" />
+                      <span> 100.000đ - 200.000đ</span>
+                    </div>
+                    <div class="accordion-content-item">
+                      <input type="checkbox" name="" id="" />
+                      <span> 200.000đ - 300.000đ</span>
+                    </div>
+                    <div class="accordion-content-item">
+                      <input type="checkbox" name="" id="" />
+                      <span> 300.000đ - 400.000đ</span>
+                    </div>
+                    <div class="accordion-content-item">
+                      <input type="checkbox" name="" id="" />
+                      <span> Trên 500.000đ</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -379,5 +421,16 @@
       </div>
     </footer>
     <script src="js/index.js"></script>
+    <script>
+      /*---------------------ACCORDING-------------- */
+      const headers = document.querySelectorAll(".accordion-header");
+      headers.forEach((header) => {
+        header.addEventListener("click", () => {
+          const content = header.nextElementSibling;
+          content.style.display =
+            content.style.display === "block" ? "none" : "block";
+        });
+      });
+    </script>
   </body>
 </html>

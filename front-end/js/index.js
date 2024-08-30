@@ -78,6 +78,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+window.addEventListener("click", function (event) {
+  const submenu = document.querySelector(".main_bar_menu.submenu");
+  if (
+    submenu.classList.contains("show") &&
+    !submenu.contains(event.target) &&
+    !event.target.matches(".toggle-submenu")
+  ) {
+    submenu.classList.remove("show");
+  }
+});
+
 // ------------------------- DETAIL PRODUCT IMAGES -----------------------
 let detailImages = []; // Sử dụng let để có thể gán lại giá trị
 
@@ -127,6 +138,7 @@ document.getElementById("nextBtn").addEventListener("click", function () {
   currentIndex = currentIndex < detailImages.length - 1 ? currentIndex + 1 : 0;
   updateLargeImage(currentIndex);
 });
+// -------------------------  -----------------------
 
 // ------------------------- DETAIL PRODUCT IMAGES MODAL -----------------------
 
@@ -152,3 +164,55 @@ window.addEventListener("click", function (event) {
     deatilModalReviewImg.style.display = "none";
   }
 });
+
+// ------------------------- CLICK ACTIVE MY ACCOUNT-----------------------
+function setActiveAccount(element) {
+  // Tìm tất cả các mục accordion
+  const items = document.querySelectorAll(".accordion-item");
+
+  // Xóa lớp active khỏi tất cả mục
+  items.forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  // Thêm lớp active cho mục được nhấp
+  element.classList.add("active");
+
+  // Nếu mục đầu tiên được nhấp, giữ màu nền cho nó
+  if (element.classList.contains("layout_member_left_nav_li")) {
+    element.style.backgroundColor = "#005c99"; // Giữ màu xanh cho mục đầu tiên
+  } else {
+    document.querySelector(".layout_member_left_nav_li").style.backgroundColor =
+      "transparent";
+    document.querySelector(
+      ".layout_member_left_nav_li .layout_member_left_nav_li_a"
+    ).style.color = "#000";
+  }
+}
+
+function memberSubmenu(element) {
+  const memberSubmenuLeft = document.querySelector(
+    ".layout_member_left_submenu"
+  );
+
+  if (memberSubmenuLeft) {
+    if (memberSubmenuLeft.style.display === "none") {
+      memberSubmenuLeft.style.display = "block";
+    } else {
+      memberSubmenuLeft.style.display = "none";
+    }
+  }
+}
+
+function memberSubmenuMobile(element) {
+  const memberSubmenuLeftMobile = document.querySelector(
+    ".layout_member_left_submenu_mobile"
+  );
+  if (memberSubmenuLeftMobile) {
+    if (memberSubmenuLeftMobile.style.display === "none") {
+      memberSubmenuLeftMobile.style.display = "block";
+    } else {
+      memberSubmenuLeftMobile.style.display = "none";
+    }
+  }
+}
