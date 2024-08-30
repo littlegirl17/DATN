@@ -2170,7 +2170,7 @@ section {
 
 .contact_right {
     background-color: #fff;
-    padding: 20px 20px 10px 20px;
+    padding: 20px 20px 154px 20px;
 }
 
 .contact_right_title h2 {
@@ -2216,7 +2216,7 @@ section {
 
 .banner_contact {
     width: 100%;
-    background-color: #FFD602;
+    background-color: #ffc506;
     display: grid;
     grid-template-columns: 1fr 1000px 1fr;
     position: relative;
@@ -3545,6 +3545,30 @@ section {
 
     }
 
+    /**/
+    .contact_right {
+        background-color: #fff;
+        padding: 20px 20px 20px 20px;
+    }
+
+    .contact_left_content h2 {
+        font-size: 1.3rem;
+        line-height: 1.5rem;
+    }
+
+    .contact_right_title h2 {
+        font-size: 1.3rem;
+        line-height: 1.5rem;
+    }
+
+    .contact_left_content ul li {
+        font-size: 0.8rem;
+        line-height: 1.5rem;
+    }
+
+    .contact_left_img {
+        height: 342px;
+    }
 
 }
 
