@@ -74,6 +74,10 @@ body {
     margin-top: -1px;
 }
 
+.nav_box_menu_right_mobile.shrink {
+    display: none;
+}
+
 /* *
 .nav_box {
     background-image: url('../img/header.png');
@@ -2308,6 +2312,12 @@ section {
     display: none;
 }
 
+.map_contact {
+    width: 100%;
+    height: 400px;
+    padding: 25px 0 0 0;
+}
+
 /*-------------------------------END CONTACT---------------------------------------*/
 
 /*------------------------------- START POLICY---------------------------------------*/
@@ -3016,11 +3026,14 @@ section {
 
 
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START SYSTEM---------------------------------------*/
 
 
-/*-------------------------------END ---------------------------------------*/
-
+/*-------------------------------END SYSTEM---------------------------------------*/
+.system_title h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
 
 
 /*------------------------------- START ---------------------------------------*/
@@ -4211,7 +4224,9 @@ section {
 
     .nav_box_menu_right_mobile {
         display: block;
+        width: 100%;
         padding: 15px 10px;
+        background-color: #ffc506;
     }
 
     .nav_box_menu_right_mobile input {
@@ -4232,6 +4247,29 @@ section {
         margin-top: -2px;
     }
 
+    /**/
+    .map_contact {
+        width: 100%;
+        height: 200px;
+        padding: 25px 0 0 0;
+    }
+
+    .system_right {
+        padding-top: 30px;
+    }
+
+    .system_title h2 {
+        font-size: 1.3rem;
+    }
+
+    .system_content p {
+        font-size: 0.9rem;
+    }
+
+    .map_system {
+        width: 100%;
+        display: block;
+    }
 }
 
 @media only screen and (max-width: 300px) {

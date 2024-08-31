@@ -140,9 +140,9 @@
             </div>
           </div>
         </div>
-        <div class="nav_box_menu_right_mobile">
-          <input type="text" placeholder="Tìm kiếm tại đây..." />
-        </div>
+      </div>
+      <div class="nav_box_menu_right_mobile">
+        <input type="text" placeholder="Tìm kiếm tại đây..." />
       </div>
       <div class="main_bar_menu_bg">
         <div class="main_bar_menu submenu">
@@ -1322,6 +1322,9 @@
         const navbar = document.querySelector(".nav_box");
         const navbarItem = document.querySelector(".nav_box_item");
         const navImgLogo = document.querySelector(".nav_img_logo");
+        const searchMobile = document.querySelector(
+          ".nav_box_menu_right_mobile"
+        );
 
         if (
           document.body.scrollTop > 50 ||
@@ -1330,11 +1333,13 @@
           navbar.classList.add("shrink");
           navbarItem.classList.add("shrink");
           navImgLogo.classList.add("shrink");
+          searchMobile.classList.add("shrink");
         } else {
           navbar.classList.remove("shrink");
           navbar.classList.remove("shrink");
           navbarItem.classList.remove("shrink");
           navImgLogo.classList.remove("shrink");
+          searchMobile.classList.remove("shrink");
         }
       };
     </script>
