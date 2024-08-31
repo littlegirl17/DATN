@@ -80,12 +80,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 window.addEventListener("click", function (event) {
   const submenu = document.querySelector(".main_bar_menu.submenu");
-  if (
-    submenu.classList.contains("show") &&
-    !submenu.contains(event.target) &&
-    !event.target.matches(".toggle-submenu")
-  ) {
-    submenu.classList.remove("show");
+  const buttonBars = document.querySelector(".toggle-menu");
+  // Kiểm tra nếu submenu đang mở và click bên ngoài
+  if (submenu.classList.contains("show") && !submenu.contains(event.target)) {
+    if (
+      !event.target.matches(".toggle-submenu") &&
+      !buttonBars.contains(event.target)
+    ) {
+      submenu.classList.remove("show");
+    }
   }
 });
 

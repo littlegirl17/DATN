@@ -72,7 +72,6 @@ body {
     height: 50px;
     line-height: 50px;
     margin-top: -1px;
-
 }
 
 /* *
@@ -122,18 +121,46 @@ body {
     margin: 0;
 }
 
-.nav_box_menu li {
+.nav_box_menu_item li {
     padding-right: 30px;
     /* Thêm một số khoảng cách giữa các mục menu */
 }
 
-.nav_box_menu a {
+.nav_box_menu_item li a {
+    position: relative;
+    /* Để có thể sử dụng pseudo-element */
     text-decoration: none;
-    /* Xóa đường gạch dưới mặc định */
-    color: #FFFFFF;
+    /* Bỏ gạch chân mặc định */
+    color: #000;
+    /* Màu chữ mặc định */
 }
 
-.main_bar_menu_bg {}
+.nav_box_menu_item li a::after {
+    content: "";
+    /* Tạo một pseudo-element */
+    position: absolute;
+    /* Đặt vị trí tuyệt đối */
+    left: 0;
+    /* Căn trái */
+    bottom: -5px;
+    /* Đặt khoảng cách từ dưới lên */
+    width: 100%;
+    /* Chiều rộng bằng chiều rộng của thẻ a */
+    height: 2px;
+    /* Chiều cao đường gạch */
+    background-color: #b90202;
+    /* Màu của đường gạch */
+    transform: scaleX(0);
+    /* Bắt đầu với chiều rộng bằng 0 */
+    transition: transform 0.3s ease;
+    /* Hiệu ứng chuyển đổi */
+}
+
+.nav_box_menu_item li a:hover::after {
+    transform: scaleX(1);
+    /* Mở rộng chiều rộng khi hover */
+}
+
 
 .main_bar_menu {
     background-color: #ffffff;
@@ -342,7 +369,7 @@ body {
 }
 
 .search_input::placeholder {
-    color: #000;
+    color: #000000;
 }
 
 .iconContainer {
@@ -3058,7 +3085,7 @@ section {
         display: block;
         background-color: #b90202;
         color: #fff;
-        padding: 0 0 4px 15px;
+        padding: 0 0 0px 15px;
     }
 
     .toggle-menu i {
@@ -3604,7 +3631,7 @@ section {
         display: block;
         background-color: #b90202;
         color: #fff;
-        padding: 0 0 3px 15px;
+        padding: 0 0 0px 15px;
     }
 
     .toggle-menu i {
@@ -4199,6 +4226,10 @@ section {
     /**/
     .header_top_item span {
         font-size: 9px;
+    }
+
+    .nav_img_logo.shrink {
+        margin-top: -2px;
     }
 
 }
