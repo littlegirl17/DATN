@@ -46,10 +46,33 @@ body {
 /*---------------------------------------------------------------------------------*/
 .nav_box {
     position: sticky;
-    top: 0;
+    top: -1px;
     z-index: 1000;
     background-color: #ffc506;
     width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 70px;
+    transition: height 0.3s ease, line-height 0.3s ease;
+    /* Hiệu ứng chuyển đổi cho chiều cao và line-height */
+}
+
+.nav_box.shrink {
+    height: 50px;
+    line-height: 50px;
+    /* Chiều cao khi cuộn */
+}
+
+.nav_box_item.shrink {
+    height: 50px;
+    line-height: 50px;
+
+}
+
+.nav_img_logo.shrink {
+    height: 50px;
+    line-height: 50px;
+    margin-top: -1px;
+
 }
 
 /* *
@@ -67,11 +90,10 @@ body {
 }
 
 .nav_img_logo {
-    padding: 0 0;
-    margin: 0 0;
+    margin-top: -4px;
     width: 200px;
-    height: 72px;
-
+    height: 69px;
+    transition: height 0.3s ease, line-height 0.3s ease;
 }
 
 .nav_img_logo img {

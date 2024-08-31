@@ -1315,5 +1315,26 @@
         });
       });
     </script>
+    <script>
+      window.onscroll = function () {
+        const navbar = document.querySelector(".nav_box");
+        const navbarItem = document.querySelector(".nav_box_item");
+        const navImgLogo = document.querySelector(".nav_img_logo");
+
+        if (
+          document.body.scrollTop > 50 ||
+          document.documentElement.scrollTop > 50
+        ) {
+          navbar.classList.add("shrink");
+          navbarItem.classList.add("shrink");
+          navImgLogo.classList.add("shrink");
+        } else {
+          navbar.classList.remove("shrink");
+          navbar.classList.remove("shrink");
+          navbarItem.classList.remove("shrink");
+          navImgLogo.classList.remove("shrink");
+        }
+      };
+    </script>
   </body>
 </html>
