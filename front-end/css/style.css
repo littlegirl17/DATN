@@ -3028,18 +3028,189 @@ section {
 
 /*------------------------------- START SYSTEM---------------------------------------*/
 
-
-/*-------------------------------END SYSTEM---------------------------------------*/
 .system_title h2 {
     font-size: 1.5rem;
     line-height: 2rem;
 }
 
+/*-------------------------------END SYSTEM---------------------------------------*/
 
-/*------------------------------- START ---------------------------------------*/
 
+/*------------------------------- START 404---------------------------------------*/
+.bg-404 {
+    background-color: #60a4bf;
+    margin: 0 0;
+    padding: 0 0;
+    height: 500px;
+}
 
-/*-------------------------------END ---------------------------------------*/
+.container-404 {
+    text-align: center;
+    font-size: 180px;
+    font-family: "Catamaran", sans-serif;
+    font-weight: 800;
+}
+
+.container-404>span {
+    display: inline-block;
+    line-height: 0.7;
+    position: relative;
+    color: #ffb485;
+}
+
+.container-404>span {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.container-404>span:nth-of-type(1) {
+    color: #d1f2a5;
+    animation: colordancing 4s infinite;
+}
+
+.container-404>span:nth-of-type(3) {
+    color: #f56991;
+    animation: colordancing2 4s infinite;
+}
+
+.container-404>span:nth-of-type(2) {
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+}
+
+.container-404>span:nth-of-type(2):before,
+.container-404>span:nth-of-type(2):after {
+    border-radius: 0%;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: 999px;
+    box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+        inset 0 30px 0 rgba(239, 250, 180, 0.4),
+        inset -30px 0 0 rgba(255, 196, 140, 0.4),
+        inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+    animation: shadowsdancing 4s infinite;
+}
+
+.container-404>span:nth-of-type(2):before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.screen-reader-text {
+    position: absolute;
+    top: -9999em;
+    left: -9999em;
+}
+
+@keyframes shadowsdancing {
+    0% {
+        box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+            inset 0 30px 0 rgba(239, 250, 180, 0.4),
+            inset -30px 0 0 rgba(255, 196, 140, 0.4),
+            inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+    }
+
+    25% {
+        box-shadow: inset 30px 0 0 rgba(245, 105, 145, 0.4),
+            inset 0 30px 0 rgba(209, 242, 165, 0.4),
+            inset -30px 0 0 rgba(239, 250, 180, 0.4),
+            inset 0 -30px 0 rgba(255, 196, 140, 0.4);
+    }
+
+    50% {
+        box-shadow: inset 30px 0 0 rgba(255, 196, 140, 0.4),
+            inset 0 30px 0 rgba(245, 105, 145, 0.4),
+            inset -30px 0 0 rgba(209, 242, 165, 0.4),
+            inset 0 -30px 0 rgba(239, 250, 180, 0.4);
+    }
+
+    75% {
+        box-shadow: inset 30px 0 0 rgba(239, 250, 180, 0.4),
+            inset 0 30px 0 rgba(255, 196, 140, 0.4),
+            inset -30px 0 0 rgba(245, 105, 145, 0.4),
+            inset 0 -30px 0 rgba(209, 242, 165, 0.4);
+    }
+
+    100% {
+        box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+            inset 0 30px 0 rgba(239, 250, 180, 0.4),
+            inset -30px 0 0 rgba(255, 196, 140, 0.4),
+            inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+    }
+}
+
+@keyframes colordancing {
+    0% {
+        color: #d1f2a5;
+    }
+
+    25% {
+        color: #f56991;
+    }
+
+    50% {
+        color: #ffc48c;
+    }
+
+    75% {
+        color: #effab4;
+    }
+
+    100% {
+        color: #d1f2a5;
+    }
+}
+
+@keyframes colordancing2 {
+    0% {
+        color: #ffc48c;
+    }
+
+    25% {
+        color: #effab4;
+    }
+
+    50% {
+        color: #d1f2a5;
+    }
+
+    75% {
+        color: #f56991;
+    }
+
+    100% {
+        color: #ffc48c;
+    }
+}
+
+.content_404 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content_404 h2 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.btn_404 {
+    text-decoration: none;
+    color: #000;
+    background-color: #ffffff;
+    padding: 15px 15px;
+}
+
+/*-------------------------------END 404---------------------------------------*/
 
 
 /*------------------------------- START ---------------------------------------*/
@@ -4270,6 +4441,30 @@ section {
         width: 100%;
         display: block;
     }
+
+    /**/
+    .bg-404 {
+        background-color: #60a4bf;
+        margin: 0 0;
+        padding: 0 0;
+        height: 400px;
+        padding-top: 80px;
+    }
+
+    .container-404 {
+        text-align: center;
+        font-size: 120px;
+        font-family: "Catamaran", sans-serif;
+        font-weight: 800;
+    }
+
+    .content_404 h2 {
+        font-size: 1rem;
+    }
+
+    .btn_404 {
+        padding: 10px 10px;
+    }
 }
 
 @media only screen and (max-width: 300px) {
@@ -4285,6 +4480,7 @@ section {
         max-width: 100%;
         margin: 0 auto;
     }
+
 
 
 }
