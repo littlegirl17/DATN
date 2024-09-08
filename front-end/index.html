@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>LegoLoft</title>
     <link rel="icon" type="image/png" href="{{ asset('uploads/HK.png') }}" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
@@ -54,12 +54,14 @@
           </div>
 
           <div class="header_top_item">
-            <span
-              ><i
-                class="fa-solid fa-location-dot pe-1"
-                style="color: #ffffff"
-              ></i
-              >Hệ thông cửa hàng</span
+            <a href="system.html" class="text-light text-decoration-none"
+              ><span
+                ><i
+                  class="fa-solid fa-location-dot pe-1"
+                  style="color: #ffffff"
+                ></i
+                >Hệ thông cửa hàng</span
+              ></a
             >
           </div>
         </div>
@@ -79,16 +81,16 @@
           <div class="nav_box_menu">
             <ul class="nav_box_menu_item show-menu">
               <li>
-                <a href="#" class="">Trang chủ </a>
+                <a href="index.html" class="">Trang chủ </a>
               </li>
               <li class="parent-menu">
                 <a href="category.html" class="toggle-submenu"
                   >Bộ theo chủ đề</a
                 >
               </li>
-              <li><a href="#">Về chúng tôi</a></li>
-              <li><a href="#">Liên hệ</a></li>
-              <li><a href="#">Bài viết </a></li>
+              <li><a href="">Về chúng tôi</a></li>
+              <li><a href="contact.html">Liên hệ</a></li>
+              <li><a href="article.html">Bài viết </a></li>
             </ul>
           </div>
           <div class="nav_box_menu_right">
@@ -136,7 +138,7 @@
             </div>
 
             <div class="">
-              <img src="img/cart.svg" alt="" />
+              <a href="cart.html"> <img src="img/cart.svg" alt="" /></a>
             </div>
           </div>
         </div>
@@ -1163,18 +1165,19 @@
       </section>
       <!-- END BÀI VIẾT -->
     </div>
+
     <footer class="footer_home">
       <div class="footer_home_main">
         <div class="footer_main_column">
           <div class="footer_main_column_item">
             <div class="footer_main_column_item_img">
-              <img src="img/legoloft.png" alt="" />
+              <a href="index.html"><img src="img/legoloft.png" alt="" /></a>
             </div>
             <div class="footer_main_column_item_content">
-              <a href="">Trang chủ</a>
-              <a href="">Sản phẩm</a>
-              <a href="">Tin tức</a>
-              <a href="">Liên hệ</a>
+              <a href="index.html">Trang chủ</a>
+              <a href="category.html">Sản phẩm</a>
+              <a href="article.html">Tin tức</a>
+              <a href="contact.html">Liên hệ</a>
             </div>
           </div>
         </div>
@@ -1312,7 +1315,6 @@
       // Sự kiện click vào hình ảnh nhỏ
       smallImgHome.forEach((smallImg, i) => {
         smallImg.addEventListener("click", function () {
-          console.log(`Clicked on image index: ${i}`); // Kiểm tra chỉ số hình ảnh
           updateLargeImageHome(i);
         });
       });
