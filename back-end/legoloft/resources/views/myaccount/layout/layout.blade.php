@@ -26,15 +26,15 @@
 <body>
     <div>
         <header>
-            @include('layout.header')
+            @include('myaccount.layout.header')
         </header>
 
         <main>
-            @yield('content')
+            @yield('content_myaccount')
         </main>
 
         <footer>
-            @include('layout.footer')
+            @include('myaccount.layout.footer')
         </footer>
     </div>
 

@@ -11,6 +11,10 @@ body {
     background-color: #191c24;
 }
 
+.container-content-admin {
+    margin-left: 230px;
+}
+
 .alertDanger {
     background-color: #FF5370;
     color: #FFFFFF;

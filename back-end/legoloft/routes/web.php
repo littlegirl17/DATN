@@ -15,5 +15,8 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
 
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
 
 Route::get('/', [HomeController::class, 'index']);
