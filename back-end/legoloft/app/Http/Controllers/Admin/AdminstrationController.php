@@ -52,12 +52,38 @@ class AdminstrationController extends Controller
         return view('admin.administrationGroupAdd');
     }
 
-    public function adminstrationGroupEdit()
+    public function adminstrationGroupEdit($id)
     {
-        return view('admin.administrationGroupEdit');
+        $administrationGroup = $this->administrationGroupModel->findOrFail($id);
+        $permissionGroupGet = json_decode($administrationGroup->permission, true) ?? [];
+        return view('admin.administrationGroupEdit', compact('administrationGroup', 'permissionGroupGet')); // Giai mã một chuôi JSON thành 1 mảng liên kết or đối tượng PHP
+
     }
 
-    public function adminstrationGroupUpdate() {}
+    public function adminstrationGroupUpdate(Request $request, $id)
+    {
+        $administrationGroup = $this->administrationGroupModel->findOrFail($id);
+        $administrationGroup->name = $request->name;
+        $administrationGroup->permission = json_encode($request->permission);
+        $administrationGroup->save();
+        return redirect()->route('adminstrationGroup');
+    }
 
-    public function adminstrationGroupDeleteCheckbox() {}
+    public function adminstrationGroupDeleteCheckbox(Request $request)
+    {
+        $administrationGroup_id = $request->input('administrationGroup_id');
+        if ($administrationGroup_id) {
+            foreach ($administrationGroup_id as $itemID) {
+                $administrationGroup = $this->administrationGroupModel->findOrFail($itemID);
+                $countAdministrationGroup = $this->administrationModel->countAdministrationGroup($itemID);
+                if ($countAdministrationGroup > 0) {
+                    return redirect()->route('adminstrationGroup')->with('danger', ' Cảnh báo: Nhóm người dùng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countAdministrationGroup . ' người dùng!');
+                } else {
+                    $administrationGroup->delete();
+                    return redirect()->route('adminstrationGroup')->with('success', ' Thành công: Nhóm người dùng này đã được xóa');
+                }
+            }
+        }
+        return redirect()->route('adminstrationGroup')->with('success', 'Xóa nhóm người dùng thành công.');
+    }
 }

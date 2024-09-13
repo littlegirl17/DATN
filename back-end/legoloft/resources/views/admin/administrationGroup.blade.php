@@ -10,13 +10,15 @@
              <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
          @endif
 
-         <form id="submitFormAdmin" method="">
+         <form id="submitFormAdmin">
+             @csrf
              <div class="buttonProductForm">
                  <button class="btn btnF1">
                      <a href="{{ route('addAdminstrationGroup') }}" class="text-decoration-none text-light"><i
                              class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo Nhóm người dùng</a>
                  </button>
-                 <button class="btn btnF2" type="button" onclick="">
+                 <button class="btn btnF2" type="button"
+                     onclick="submitForm('{{ route('deleteAdminstrationGroup') }}','post')">
                      <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa
                  </button>
 
@@ -33,24 +35,28 @@
                          </tr>
                      </thead>
                      <tbody class="">
-                         <tr class="">
-                             <td>
-                                 <input type="checkbox" name="" id="" value="">
-                             </td>
-                             <td class="nameAdmin">
-                                 <p></p>
-                             </td>
-                             <td class="m-0 p-0">
-                                 <div class="actionAdminProduct m-0 py-3">
-                                     <button class="btnActionProductAdmin2">
-                                         {{-- <a href="{{ route('editAdminstrationGroup') }}"
-                                             class="text-decoration-none text-light">
-                                             <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa
-                                             nhóm người dùng</a> --}}
-                                     </button>
-                                 </div>
-                             </td>
-                         </tr>
+                         @foreach ($administrationGroup as $item)
+                             <tr class="">
+                                 <td>
+                                     <input type="checkbox" name="administrationGroup_id[]" id=""
+                                         value="{{ $item->id }}">
+                                 </td>
+                                 <td class="nameAdmin">
+                                     <p>{{ $item->name }}</p>
+                                 </td>
+                                 <td class="m-0 p-0">
+                                     <div class="actionAdminProduct m-0 py-3">
+                                         <button class="btnActionProductAdmin2">
+                                             <a href="{{ route('editAdminstrationGroup', $item->id) }}"
+                                                 class="text-decoration-none text-light">
+                                                 <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa
+                                                 nhóm người dùng</a>
+                                         </button>
+                                     </div>
+                                 </td>
+                             </tr>
+                         @endforeach
+
                      </tbody>
                  </table>
              </div>
@@ -62,5 +68,12 @@
          </nav>
      </div>
 
-
+     <script>
+         function submitForm(action, method) {
+             var form = document.getElementById('submitFormAdmin');
+             form.action = action;
+             form.method = method;
+             form.submit();
+         }
+     </script>
  @endsection

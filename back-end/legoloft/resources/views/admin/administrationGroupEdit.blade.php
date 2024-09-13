@@ -14,7 +14,10 @@
 
          </div>
 
-         <form action="" method="post" class="formAdmin" enctype="multipart/form-data">
+         <form action="{{ route('editAdminstrationGroup', $administrationGroup->id) }}" method="post" class="formAdmin"
+             enctype="multipart/form-data">
+             @csrf
+             @method('PUT')
              <div class="buttonProductForm ">
                  <button class="btn btnF3">
                      Lưu
@@ -23,7 +26,7 @@
 
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Tên nhóm người dùng</label>
-                 <input type="text" class="form-control" name="name" value="">
+                 <input type="text" class="form-control" name="name" value="{{ $administrationGroup->name }}">
              </div>
 
              <div class="row">
@@ -33,7 +36,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="banner" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="banner" id=""
+                                     {{ in_array('banner', $permissionGroupGet) ? 'checked' : '' }}><!-- Kiểm tra xem giá trị "banner" có trong mảng $permissionGroupGet hay không-->
                                  <span class="checkmark"></span>
                              </label>
                              <p>Banner</p>
@@ -41,7 +45,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="category" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="category" id=""
+                                     {{ in_array('category', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Category</p>
@@ -49,7 +54,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="product" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="product" id=""
+                                     {{ in_array('product', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Product</p>
@@ -57,7 +63,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="coupon" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="coupon" id=""
+                                     {{ in_array('coupon', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Coupon</p>
@@ -65,7 +72,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="order" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="order" id=""
+                                     {{ in_array('order', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Order</p>
@@ -73,7 +81,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="user" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="user" id=""
+                                     {{ in_array('user', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>User</p>
@@ -81,7 +90,8 @@
                          <div class="d-flex">
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
-                                 <input type="checkbox" class="" name="permission[]" value="userGroup" id="">
+                                 <input type="checkbox" class="" name="permission[]" value="userGroup" id=""
+                                     {{ in_array('userGroup', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>UserGroup</p>
@@ -90,7 +100,7 @@
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
                                  <input type="checkbox" class="" name="permission[]" value="administration"
-                                     id="">
+                                     id="" {{ in_array('administration', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Administration</p>
@@ -99,7 +109,8 @@
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
                                  <input type="checkbox" class="" name="permission[]" value="administrationGroup"
-                                     id="">
+                                     id=""
+                                     {{ in_array('administrationGroup', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>AdministrationGroup</p>
@@ -108,7 +119,7 @@
                              <label class="checkbox-btnGroup">
                                  <label for="checkbox"></label>
                                  <input type="checkbox" class="" name="permission[]" value="comment"
-                                     id="">
+                                     id="" {{ in_array('comment', $permissionGroupGet) ? 'checked' : '' }}>
                                  <span class="checkmark"></span>
                              </label>
                              <p>Comment</p>
@@ -123,7 +134,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="bannerAdd"
-                                         id="">
+                                         id="" {{ in_array('bannerAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -132,7 +143,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="bannerEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('bannerEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -141,7 +153,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="bannerCheckboxDelete" id="">
+                                         value="bannerCheckboxDelete" id=""
+                                         {{ in_array('bannerCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -152,7 +165,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="categoryAdd"
-                                         id="">
+                                         id=""
+                                         {{ in_array('categoryAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -161,7 +175,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="categoryEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('categoryEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -170,7 +185,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="categoryCheckboxDelete" id="">
+                                         value="categoryCheckboxDelete" id=""
+                                         {{ in_array('categoryCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -181,7 +197,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="productAdd"
-                                         id="">
+                                         id=""
+                                         {{ in_array('productAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -190,7 +207,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="productEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('productEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -199,7 +217,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="productCheckboxDelete" id="">
+                                         value="productCheckboxDelete" id=""
+                                         {{ in_array('productCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -210,7 +229,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="commentAdd"
-                                         id="">
+                                         id=""
+                                         {{ in_array('commentAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -219,7 +239,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="commentEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('commentEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -228,7 +249,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="commentCheckboxDelete" id="">
+                                         value="commentCheckboxDelete" id=""
+                                         {{ in_array('commentCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -239,7 +261,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="couponAdd"
-                                         id="">
+                                         id="" {{ in_array('couponAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -248,7 +270,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="couponEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('couponEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -257,7 +280,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="couponCheckboxDelete" id="">
+                                         value="couponCheckboxDelete" id=""
+                                         {{ in_array('couponCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -268,7 +292,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="orderAdd"
-                                         id="">
+                                         id="" {{ in_array('orderAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -277,7 +301,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="orderEdit"
-                                         id="">
+                                         id="" {{ in_array('orderEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -286,7 +310,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="orderCheckboxDelete" id="">
+                                         value="orderCheckboxDelete" id=""
+                                         {{ in_array('orderCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -297,7 +322,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="userAdd"
-                                         id="">
+                                         id="" {{ in_array('userAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -306,7 +331,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="userEdit"
-                                         id="">
+                                         id="" {{ in_array('userEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -315,7 +340,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="userCheckboxDelete" id="">
+                                         value="userCheckboxDelete" id=""
+                                         {{ in_array('userCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -326,7 +352,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="userGroupAdd"
-                                         id="">
+                                         id=""
+                                         {{ in_array('userGroupAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -335,7 +362,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="userGroupEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('userGroupEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -344,7 +372,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="userGroupCheckboxDelete" id="">
+                                         value="userGroupCheckboxDelete" id=""
+                                         {{ in_array('userGroupCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -355,7 +384,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]" value="adminstrationAdd"
-                                         id="">
+                                         id=""
+                                         {{ in_array('adminstrationAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -364,7 +394,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]" value="adminstrationEdit"
-                                         id="">
+                                         id=""
+                                         {{ in_array('adminstrationEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -373,7 +404,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="adminstrationCheckboxDelete" id="">
+                                         value="adminstrationCheckboxDelete" id=""
+                                         {{ in_array('adminstrationCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>
@@ -384,7 +416,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input id="checkbox" type="checkbox" name="permission[]"
-                                         value="adminstrationGroupAdd" id="">
+                                         value="adminstrationGroupAdd" id=""
+                                         {{ in_array('adminstrationGroupAdd', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -393,7 +426,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="adminstrationGroupEdit" id="">
+                                         value="adminstrationGroupEdit" id=""
+                                         {{ in_array('adminstrationGroupEdit', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -402,7 +436,8 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="adminstrationGroupCheckboxDelete" id="">
+                                         value="adminstrationGroupCheckboxDelete" id=""
+                                         {{ in_array('adminstrationGroupCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>

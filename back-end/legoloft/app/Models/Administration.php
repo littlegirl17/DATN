@@ -21,4 +21,9 @@ class Administration extends Authenticatable
         'image',
         'status',
     ];
+
+    public function countAdministrationGroup($administrationGroup_id)
+    {
+        return $this->where('admin_group_id', $administrationGroup_id)->count();
+    }
 }
