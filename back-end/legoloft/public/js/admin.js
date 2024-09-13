@@ -10,4 +10,16 @@ if (alertMessage) {
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+const sidebarItems = document.querySelectorAll(".sidebar-item");
+
+sidebarItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        // Xóa lớp active từ tất cả các mục
+        sidebarItems.forEach((el) => el.classList.remove("active"));
+
+        // Thêm lớp active cho mục hiện tại
+        item.classList.add("active");
+    });
+});
+
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/

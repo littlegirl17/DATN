@@ -26,4 +26,15 @@ class Administration extends Authenticatable
     {
         return $this->where('admin_group_id', $administrationGroup_id)->count();
     }
+
+    public function administrationAll()
+    {
+        return $this->orderBy('id', 'desc')->get();
+    }
+
+    /*---------------------- CONNECT TABLE -----------------------------------*/
+    public function administrationGroup()
+    {
+        return $this->belongsTo(AdministrationGroup::class, 'admin_group_id');
+    }
 }

@@ -1,5 +1,5 @@
 @extends('admin.layout.layout')
-@Section('title', 'Admin|Thêm thành viên')
+@Section('title', 'Admin | Thêm thành viên')
 @Section('content')
 
 
@@ -11,13 +11,16 @@
         <div class="row " style="margin-left: 1100px;">
 
         </div>
-        <form action="" method="post" class="formAdmin" enctype="multipart/form-data">
-            <button class="btnFormAdd ">
-                Lưu
-            </button>
+        <form action="{{ route('addAdminstration') }}" method="post" class="formAdmin" enctype="multipart/form-data">
+            @csrf
+            <div class="buttonProductForm">
+                <button type="submit" class="btnFormAdd">
+                    <p class="text m-0 p-0">Lưu</p>
+                </button>
+            </div>
             <div class="form-group mt-3">
                 <label for="title" class="form-label">Tên đăng nhập</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="username" name="username">
             </div>
             <div class="form-group mt-3">
                 <label for="description" class="form-label">Chọn nhóm người dùng</label>

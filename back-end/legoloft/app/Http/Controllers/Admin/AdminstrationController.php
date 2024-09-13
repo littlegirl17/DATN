@@ -18,13 +18,61 @@ class AdminstrationController extends Controller
         $this->administrationGroupModel = new AdministrationGroup();
     }
 
-    public function adminstration() {}
-    public function adminstrationAdd() {}
-    public function adminstrationEdit() {}
+    public function adminstration()
+    {
+        $administration = $this->administrationModel->administrationAll();
+
+        return view('admin.administration', compact('administration'));
+    }
+    public function adminstrationAdd(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'fullname' => 'required | string | max:255',
+                'username' => 'required | string | unique:administrations,username',
+                'admin_group_id' => 'required | exists:administration_groups,id',
+                'email' => 'required | email | unique:administrations,email',
+                'password' => 'required | string | confirmed',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'status' => 'required | in:0,1',
+            ]);
+            try {
+                $administration = $this->administrationModel;
+                $administration->fullname = $request->fullname;
+                $administration->username = $request->username;
+                $administration->admin_group_id = $request->admin_group_id;
+                $administration->email = $request->email;
+                $administration->password = bcrypt($request->password);
+                $administration->image = '';
+                $administration->status = $request->status;
+                $administration->save();
+
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = "{$administration->id}.{$image->getClientOriginalExtension()}";
+                    $image->move(public_path('img/'), $imageName);
+                    $administration->image = $imageName;
+                    $administration->save();
+                }
+
+                return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
+            } catch (\Throwable $th) {
+                $error = $th->getMessage();
+                return redirect()->back()->with(['error' => $error]);
+            }
+        }
+        return view('admin.administrationAdd');
+    }
+    public function adminstrationEdit()
+    {
+        return view('admin.administrationEdit');
+    }
+
     public function adminstrationUpdate() {}
+
     public function adminstrationDeleteCheckbox() {}
 
-    /* Quản trị nhóm người dùng */
+    /* ----------------------------------------------------------------------Quản trị nhóm người dùng-----------------------------------------------------------------*/
     public function adminstrationGroup()
     {
         $administrationGroup = $this->administrationGroupModel->administrationGroupAll();

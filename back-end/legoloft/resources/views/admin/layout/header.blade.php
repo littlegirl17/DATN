@@ -113,7 +113,7 @@
                         </a>
                         <ul class="submenu">
                             <li class="">
-                                <a class="sidebar-link" href="" aria-expanded="false">
+                                <a class="sidebar-link" href="{{ route('adminstration') }}" aria-expanded="false">
                                     <span style="width:20px">
                                         <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                     </span>
@@ -123,7 +123,8 @@
 
 
                             <li class="">
-                                <a class="sidebar-link" href="" aria-expanded="false">
+                                <a class="sidebar-link" href="{{ route('adminstrationGroup') }}"
+                                    aria-expanded="false">
                                     <span style="width:20px">
                                         <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                     </span>
