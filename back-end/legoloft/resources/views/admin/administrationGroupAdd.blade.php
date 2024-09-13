@@ -7,16 +7,17 @@
         <h3 class="title-page ">
             Thêm nhóm người dùng
         </h3>
-        <div class="formAdminAlert">
+        {{-- <div class="formAdminAlert">
             <div class="alert alert-danger py-2"></div>
-        </div>
+        </div> --}}
 
         <form action="{{ route('addFormAdminstrationGroup') }}" method="post" class="formAdmin">
             @csrf
-            <button type="submit" class="btnFormAdd ">
-                Lưu
-            </button>
-
+            <div class="buttonProductForm">
+                <button type="submit" class="btnFormAdd">
+                    <p class="text m-0 p-0">Lưu</p>
+                </button>
+            </div>
             <div class="form-group mt-3">
                 <label for="title" class="form-label">Tên nhóm người dùng</label>
                 <input type="text" class="form-control" name="name" placeholder="Nhập tên nhóm người dùng">

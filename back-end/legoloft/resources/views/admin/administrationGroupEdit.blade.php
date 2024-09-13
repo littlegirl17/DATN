@@ -9,7 +9,7 @@
                  Chỉnh sửa nhóm người dùng
              </h3>
              <div>
-                 <a class="text-decoration-none text-light bg-31629e py-2 px-2" href="">Quay lại</a>
+                 <a class="text-decoration-none text-light bg-return py-2 px-2" href="">Quay lại</a>
              </div>
 
          </div>
@@ -18,9 +18,9 @@
              enctype="multipart/form-data">
              @csrf
              @method('PUT')
-             <div class="buttonProductForm ">
-                 <button class="btn btnF3">
-                     Lưu
+             <div class="buttonProductForm">
+                 <button type="submit" class="btnFormAdd">
+                     <p class="text m-0 p-0">Lưu</p>
                  </button>
              </div>
 
