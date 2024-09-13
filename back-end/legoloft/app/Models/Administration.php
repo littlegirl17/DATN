@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Adminstration extends Authenticatable
+class Administration extends Authenticatable
 //kế thừa Authenticatable mục đích là xác thực người dùng
 {
     use HasFactory, Notifiable;

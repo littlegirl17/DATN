@@ -45,6 +45,8 @@
     <script src="libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/index.js') }} "></script>
     <script src="{{ asset('js/sidebarmenu.js') }} "></script>
+    <script src="{{ asset('js/admin.js') }} "></script>
+
 </body>
 
 </html>

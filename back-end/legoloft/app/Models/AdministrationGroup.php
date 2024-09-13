@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminstrationGroup extends Model
+class AdministrationGroup extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,10 @@ class AdminstrationGroup extends Model
         'name',
         'permission',
     ];
+
+
+    public function administrationGroupAll()
+    {
+        return $this->orderBy('id', 'desc')->get();
+    }
 }

@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\AdminstrationGroup;
+use App\Models\Administration;
+use App\Models\AdministrationGroup;
 use App\Http\Controllers\Controller;
-use App\Models\Adminstration;
 
 class AdminstrationController extends Controller
 {
-    private $adminstration;
-    private $adminstrationGroup;
+    private $administrationModel;
+    private $administrationGroupModel;
 
     public function __construct()
     {
-        $this->adminstration = new Adminstration();
-        $this->adminstration = new AdminstrationGroup();
+        $this->administrationModel = new Administration();
+        $this->administrationGroupModel = new AdministrationGroup();
     }
 
     public function adminstration() {}
@@ -25,9 +25,39 @@ class AdminstrationController extends Controller
     public function adminstrationDeleteCheckbox() {}
 
     /* Quản trị nhóm người dùng */
-    public function adminstrationGroup() {}
-    public function adminstrationGroupAdd() {}
-    public function adminstrationGroupEdit() {}
+    public function adminstrationGroup()
+    {
+        $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
+        return view('admin.administrationGroup', compact('administrationGroup'));
+    }
+
+    public function adminstrationGroupAdd(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'name' => 'required | string',
+                'permission' => 'required',
+            ]);
+
+            try {
+                $adminstrationGroup = $this->administrationGroupModel;
+                $adminstrationGroup->name  = $request->name;
+                $adminstrationGroup->permission  = json_encode($request->permission); // chuyển array thành string
+                $adminstrationGroup->save();
+                return redirect()->route('adminstrationGroup')->with('success', 'Thêm nhóm người dùng thành công.');
+            } catch (\Throwable $th) {
+                return back()->withErrors(['error' => 'Có lỗi xảy ra, vui lòng thử lại.']);
+            }
+        }
+        return view('admin.administrationGroupAdd');
+    }
+
+    public function adminstrationGroupEdit()
+    {
+        return view('admin.administrationGroupEdit');
+    }
+
     public function adminstrationGroupUpdate() {}
+
     public function adminstrationGroupDeleteCheckbox() {}
 }
