@@ -49,7 +49,7 @@
             form.submit();
         }
     </script>
-
+    @yield('administrationScript')
 </body>
 
 </html>

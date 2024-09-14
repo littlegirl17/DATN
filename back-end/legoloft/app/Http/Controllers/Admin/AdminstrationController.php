@@ -18,10 +18,21 @@ class AdminstrationController extends Controller
         $this->administrationGroupModel = new AdministrationGroup();
     }
 
+    public function administrationSearch(Request $request)
+    {
+        $fillter_name = $request->input('filter_name');
+        $filter_adminGroup = $request->input('filter_adminGroup');
+        $administration = $this->administrationModel->searchAdministration($fillter_name, $filter_adminGroup);
+        $administrationGroup = $this->administrationGroupModel->administrationGroupAll(); //lấy ra tên nhóm người dùng để lọc
+        return view('admin.administration', compact('administration', 'administrationGroup'));
+    }
+
     public function adminstration()
     {
         $administration = $this->administrationModel->administrationAll();
-        return view('admin.administration', compact('administration'));
+        $administrationGroup = $this->administrationGroupModel->administrationGroupAll(); //lấy ra tên nhóm người dùng để lọc
+
+        return view('admin.administration', compact('administration', 'administrationGroup'));
     }
     public function adminstrationAdd(Request $request)
     {
@@ -102,6 +113,14 @@ class AdminstrationController extends Controller
         $administration->save();
 
         return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
+    }
+
+    public function adminstrationUpdateStatus(Request $request, $id)
+    {
+        $administration = $this->administrationModel->findOrFail($id);
+        $administration->status = $request->status;
+        $administration->save();
+        return response()->json(['success' => true]);
     }
 
     public function adminstrationDeleteCheckbox(Request $request)

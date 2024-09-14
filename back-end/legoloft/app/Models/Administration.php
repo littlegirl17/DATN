@@ -32,6 +32,19 @@ class Administration extends Authenticatable
         return $this->orderBy('id', 'desc')->get();
     }
 
+    public function searchAdministration($fillter_name, $filter_adminGroup)
+    {
+        $query = $this->query();
+        if (!is_null($fillter_name)) {
+            $query->where('username', 'LIKE', "%{$fillter_name}%");
+        }
+        if (!is_null($filter_adminGroup)) {
+            $query->where('admin_group_id', $filter_adminGroup);
+        }
+
+        return $query->paginate(10);
+    }
+
     /*---------------------- CONNECT TABLE -----------------------------------*/
     public function administrationGroup()
     {
