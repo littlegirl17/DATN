@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_group_id');
             $table->foreign('admin_group_id')->references('id')->on('administration_groups')->onUpdate('restrict')->onDelete('restrict');
-            $table->string('fullName');
+            $table->string('fullname');
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');

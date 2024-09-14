@@ -11,7 +11,7 @@
         <div class="row " style="margin-left: 1100px;">
 
         </div>
-        <form action="{{ route('addAdminstration') }}" method="post" class="formAdmin" enctype="multipart/form-data">
+        <form action="{{ route('addFormAdminstration') }}" method="post" class="formAdmin" enctype="multipart/form-data">
             @csrf
             <div class="buttonProductForm">
                 <button type="submit" class="btnFormAdd">
@@ -26,7 +26,9 @@
                 <label for="description" class="form-label">Chọn nhóm người dùng</label>
                 <select class="form-select " name="admin_group_id">
                     <option value="0">Mặc định</option>
-                    <option value="">Nhóm người dùng</option>
+                    @foreach ($administrationGroup as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mt-3">

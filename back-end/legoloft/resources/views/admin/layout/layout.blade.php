@@ -41,7 +41,14 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/api63Tinh.js') }}"></script>
-
+    <script>
+        function submitForm(action, method) {
+            var form = document.getElementById('submitFormAdmin');
+            form.action = action;
+            form.method = method;
+            form.submit();
+        }
+    </script>
 
 </body>
 

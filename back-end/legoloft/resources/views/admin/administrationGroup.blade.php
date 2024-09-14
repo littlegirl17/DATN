@@ -72,14 +72,6 @@
      </div>
 
      <script>
-         function submitForm(action, method) {
-             var form = document.getElementById('submitFormAdmin');
-             form.action = action;
-             form.method = method;
-             form.submit();
-         }
-     </script>
-     <script>
          document.addEventListener("DOMContentLoaded", function() {
              const alertBox = document.getElementById("alertAction");
              const progressBar = document.getElementById("progress-bar");

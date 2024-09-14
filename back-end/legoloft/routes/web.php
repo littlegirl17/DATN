@@ -39,9 +39,9 @@ Route::post('deleteCategory', [Category::class, 'categoryDeleteCheckbox'])->name
 
 Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');
 Route::get('addAdminstration', [AdminstrationController::class, 'adminstrationAdd'])->name('addAdminstration');
-Route::post('add-Adminstration', [AdminstrationController::class, 'adminstrationAdd']);
+Route::post('add-Adminstration', [AdminstrationController::class, 'adminstrationAdd'])->name('addFormAdminstration');
 Route::get('editAdminstration/{id}', [AdminstrationController::class, 'adminstrationEdit'])->name('editAdminstration');
-Route::put('editAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdate'])->name('UpdateAdminstration');
+Route::put('editAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdate']);
 Route::post('deleteAdminstration', [AdminstrationController::class, 'adminstrationDeleteCheckbox'])->name('deleteAdminstration');
 
 

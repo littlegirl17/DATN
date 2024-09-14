@@ -21,7 +21,6 @@ class AdminstrationController extends Controller
     public function adminstration()
     {
         $administration = $this->administrationModel->administrationAll();
-
         return view('admin.administration', compact('administration'));
     }
     public function adminstrationAdd(Request $request)
@@ -54,23 +53,68 @@ class AdminstrationController extends Controller
                     $administration->image = $imageName;
                     $administration->save();
                 }
-
                 return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
             } catch (\Throwable $th) {
                 $error = $th->getMessage();
                 return redirect()->back()->with(['error' => $error]);
             }
         }
-        return view('admin.administrationAdd');
+        $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
+        return view('admin.administrationAdd', compact('administrationGroup'));
     }
-    public function adminstrationEdit()
+    public function adminstrationEdit($id)
     {
-        return view('admin.administrationEdit');
+        $administration = $this->administrationModel->findOrFail($id);
+        $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
+        return view('admin.administrationEdit', compact('administration', 'administrationGroup'));
     }
 
-    public function adminstrationUpdate() {}
+    public function adminstrationUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'fullname' => 'required|string|max:255',
+            'username' => 'required|string|unique:administrations,username,' . $id,
+            'admin_group_id' => 'required|exists:administration_groups,id',
+            'email' => 'required|email|unique:administrations,email,' . $id,
+            'password' => 'nullable|string|confirmed',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:0,1',
+        ]);
+        $administration = $this->administrationModel->findOrFail($id);
+        $administration->fullname = $request->fullname;
+        $administration->username = $request->username;
+        $administration->admin_group_id = $request->admin_group_id;
+        $administration->email = $request->email;
+        $administration->status = $request->status;
+        if ($request->filled('password')) {        // Chỉ cập nhật mật khẩu nếu người dùng đã nhập mật khẩu mới
+            $administration->password = bcrypt($request->password);
+        }
 
-    public function adminstrationDeleteCheckbox() {}
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = "{$administration->id}.{$image->getClientOriginalExtension()}";
+            $image->move(public_path('img/'), $imageName);
+            $administration->image = $imageName;
+        } else {
+            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+            $administration->image = $administration->image;
+        }
+        $administration->save();
+
+        return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
+    }
+
+    public function adminstrationDeleteCheckbox(Request $request)
+    {
+        $administration_id = $request->input('administration_id');
+        if ($administration_id) {
+            foreach ($administration_id as $itemID) {
+                $administration = $this->administrationModel->findOrFail($itemID);
+                $administration->delete();
+            }
+        }
+        return redirect()->route('adminstration')->with('success', 'Xóa người dùng thành công.');
+    }
 
     /* ----------------------------------------------------------------------Quản trị nhóm người dùng-----------------------------------------------------------------*/
     public function adminstrationGroup()
@@ -125,7 +169,7 @@ class AdminstrationController extends Controller
                 $administrationGroup = $this->administrationGroupModel->findOrFail($itemID);
                 $countAdministrationGroup = $this->administrationModel->countAdministrationGroup($itemID);
                 if ($countAdministrationGroup > 0) {
-                    return redirect()->route('adminstrationGroup')->with('danger', ' Cảnh báo: Nhóm người dùng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countAdministrationGroup . ' người dùng!');
+                    return redirect()->route('adminstrationGroup')->with('error', ' Cảnh báo: Nhóm người dùng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countAdministrationGroup . ' người dùng!');
                 } else {
                     $administrationGroup->delete();
                     return redirect()->route('adminstrationGroup')->with('success', ' Thành công: Nhóm người dùng này đã được xóa');

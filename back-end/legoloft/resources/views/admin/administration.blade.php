@@ -1,39 +1,9 @@
  @extends('admin.layout.layout')
  @Section('title', 'Admin | Thành viên')
  @Section('content')
-
      <div class="container-fluid">
 
-         <div class="searchAdmin">
-             <form id="filterFormAdministration" action="{{ route('searchAdministration') }}" method="GET">
-                 <div class="row d-flex flex-row justify-content-between align-items-center">
-                     <div class="col-sm-6">
-                         <div class="form-group mt-3">
-                             <label for="title" class="form-label">Lọc theo tên đăng nhập</label>
-                             <input class="form-control rounded-0" name="filter_name" placeholder="Tên đăng nhập"
-                                 type="text" value="">
-                         </div>
-                     </div>
 
-                     <div class="col-sm-6">
-                         <div class="form-group mt-3">
-                             <label for="title" class="form-label">Lọc theo nhóm người dùng</label>
-                             <select class="form-select rounded-0" aria-label="Default select example"
-                                 name="filter_adminGroupId">
-                                 <option value="">Tất cả</option>
-                                 <option value="">
-                                 </option>
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="d-flex justify-content-end align-items-end">
-                     <button type="submit" class="btn borrder-0 rounded-0 text-light my-3 " style="background: #4099FF"><i
-                             class="fa-solid fa-filter pe-2" style="color: #ffffff;"></i>Lọc người dùng
-                     </button>
-                 </div>
-             </form>
-         </div>
 
          <form id="submitFormAdmin">
              @csrf
@@ -41,8 +11,8 @@
                  <button type="button" class="btn btnF1" onclick="window.location.href='{{ route('addAdminstration') }}'">
                      <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo mới người dùng
                  </button>
-                 <button class="btn btnF2" type="button" onclick="submitForm"><i class="pe-2 fa-solid fa-trash"
-                         style="color: #ffffff;"></i>Xóa
+                 <button class="btn btnF2" type="button" onclick="submitForm('{{ route('deleteAdminstration') }}','post')"><i
+                         class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa
                      người dùng</button>
              </div>
              <div class="border p-2">
@@ -62,7 +32,11 @@
                          @foreach ($administration as $item)
                              <tr class="">
                                  <td>
-                                     <input type="checkbox" name="administration_id[]" value="{{ $item->id }}">
+                                     <div class="d-flex justify-content-center align-items-center">
+                                         <input type="checkbox" id="cbx" class="hidden-xs-up"
+                                             name="administration_id[]" value="{{ $item->id }}">
+                                         <label for="cbx" class="cbx"></label>
+                                     </div>
                                  </td>
                                  <td>{{ $item->username }}</td>
                                  <td class="">
@@ -75,8 +49,8 @@
                                  <td>{{ $item->administrationGroup->name }}</td>
                                  <td class="m-0 p-0">
                                      <div class="actionAdminProduct m-0 py-3">
-                                         <button class="btnActionProductAdmin2"><a
-                                                 href="{{ route('administrationEdit', $item->id) }}"
+                                         <button type="button" class="btnActionProductAdmin2"><a
+                                                 href="{{ route('editAdminstration', $item->id) }}"
                                                  class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
                                                      style="color: #ffffff;"></i>Chỉnh sửa người dùng</a></button>
                                      </div>
@@ -89,26 +63,4 @@
              </div>
          </form>
      </div>
- @endsection
-
- @section('scriptAdministration')
-     <script>
-         $(document).ready(function() {
-             $('#filterFormAdministration').on('submit', function() {
-                 var formData = $(this).serialize();
-
-                 $.ajax({
-                     url: '{{ route('searchAdministration') }}',
-                     type: 'GET',
-                     data: formData,
-                     success: function(response) {
-                         $('.table-body').html(response.html);
-                     },
-                     error: function(error) {
-                         console.error('Lỗi khi lọc' + error);
-                     }
-                 })
-             })
-         })
-     </script>
  @endsection
