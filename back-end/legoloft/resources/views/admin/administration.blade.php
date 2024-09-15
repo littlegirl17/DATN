@@ -35,17 +35,33 @@
                  </div>
              </form>
          </div>
-
+         @if (session('danger'))
+             <div id="alert-message" class="alertDanger">{{ session('danger') }}</div>
+         @endif
+         @if (session('success'))
+             <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
+         @endif
          <form id="submitFormAdmin">
              @csrf
              <div class="buttonProductForm mt-3">
-                 <button type="button" class="btn btnF1" onclick="window.location.href='{{ route('addAdminstration') }}'">
-                     <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo mới người dùng
-                 </button>
-                 <button class="btn btnF2" type="button"
-                     onclick="submitForm('{{ route('deleteAdminstration') }}','post')"><i class="pe-2 fa-solid fa-trash"
-                         style="color: #ffffff;"></i>Xóa
-                     người dùng</button>
+                 <div class="m-0 p-0">
+                     @if (session('danger'))
+                         <div id="alert-message" class="alertDanger">{{ session('danger') }}</div>
+                     @endif
+                     @if (session('success'))
+                         <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
+                     @endif
+                 </div>
+                 <div class="m-0 p-0">
+                     <button type="button" class="btn btnF1"
+                         onclick="window.location.href='{{ route('addAdminstration') }}'">
+                         <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo mới người dùng
+                     </button>
+                     <button class="btn btnF2" type="button"
+                         onclick="submitForm('{{ route('deleteAdminstration') }}','post')"><i class="pe-2 fa-solid fa-trash"
+                             style="color: #ffffff;"></i>Xóa
+                         người dùng</button>
+                 </div>
              </div>
              <div class="border p-2">
                  <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách người dùng</h4>
@@ -145,7 +161,8 @@
                      data: formData,
                      success: function(response) {
                          $('.table-body').html(response
-                         .html); //.html() sẽ thay thế nội dung HTML hiện tại của phần tử được chọn bằng nội dung mới  // response.html là dữ liệu mà server trả về sau khi thực hiện yêu cầu AJAX.
+                             .html
+                         ); //.html() sẽ thay thế nội dung HTML hiện tại của phần tử được chọn bằng nội dung mới  // response.html là dữ liệu mà server trả về sau khi thực hiện yêu cầu AJAX.
                      }
                      error: function(error) {
                          console.error('Lỗi khi lọc' + error);

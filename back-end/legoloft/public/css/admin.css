@@ -20,8 +20,8 @@ body {
     color: #FFFFFF;
     display: inline-block;
     border-radius: 5px;
-    margin: 10px 0px;
-    padding: 10px 10px;
+    margin: 0px 0px;
+    padding: 7px 10px;
 }
 
 .alertSuccess {
@@ -29,8 +29,8 @@ body {
     color: #FFFFFF;
     display: inline-block;
     border-radius: 5px;
-    margin: 10px 0px;
-    padding: 10px 10px;
+    margin: 0px 0px;
+    padding: 7px 10px;
 }
 
 .bg-31629e {
@@ -282,7 +282,7 @@ table tbody tr:nth-child(even) {
 /**/
 .buttonProductForm {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     column-gap: 0px;
     margin-bottom: 20px;
 }
@@ -1028,4 +1028,105 @@ table tbody tr:nth-child(even) {
 
 .hidden-xs-up {
     display: none !important;
+}
+
+/**/
+.bg_admin_login {
+    background-color: #f3f4f9;
+    height: 100vh;
+    /* Chiều cao bằng 100% chiều cao của viewport */
+}
+
+.form_admin {
+    margin: 0 auto;
+    width: 400px;
+    padding-top: 150px;
+}
+
+.form_admin_content {
+    background-color: #ffffff;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+        rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 30px 50px;
+}
+
+.form_admin_content .title h2 {
+    padding-bottom: 15px;
+    text-align: center;
+    background: linear-gradient(to right,
+            #ffc506,
+            #967f41);
+    /* Phối hợp hai màu */
+    -webkit-background-clip: text;
+    /* Cắt nền theo chữ */
+    -webkit-text-fill-color: transparent;
+    /* Làm cho chữ trong suốt */
+}
+
+.form_admin_item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.form_admin_item label {
+    color: #8e8c8c;
+    font-size: 1rem;
+    padding-bottom: 5px;
+}
+
+.form_admin_item input {
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 5px;
+}
+
+.btn_admin_login {
+    width: 100%;
+    background-color: #ffc506;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+    /* Để ẩn phần hiệu ứng ra ngoài nút */
+    font-weight: bold;
+    /* Làm cho chữ đậm hơn */
+    transition: color 0.3s ease;
+    /* Thêm hiệu ứng chuyển tiếp cho màu chữ */
+}
+
+.btn_admin_login::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    /* Bắt đầu từ dưới */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e0a800;
+    /* Màu vàng đậm */
+    transition: top 0.3s ease;
+    /* Thời gian chuyển tiếp */
+    z-index: 0;
+    /* Đặt ở dưới cùng */
+}
+
+.btn_admin_login:hover::before {
+    top: 0;
+    /* Di chuyển lên trên khi hover */
+    z-index: -1;
+}
+
+.btn_admin_login:hover {
+    color: #ffffff;
+    /* Giữ màu chữ khi hover */
+    z-index: 1;
+    /* Đặt nút lên trên cùng */
 }

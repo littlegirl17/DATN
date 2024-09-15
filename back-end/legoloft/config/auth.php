@@ -70,7 +70,7 @@ return [
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Adminstration::class),
+            'model' => env('AUTH_MODEL', App\Models\Administration::class),
         ],
         // 'users' => [
         //     'driver' => 'database',

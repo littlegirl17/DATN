@@ -42,7 +42,7 @@ class AdminstrationController extends Controller
                 'username' => 'required | string | unique:administrations,username',
                 'admin_group_id' => 'required | exists:administration_groups,id',
                 'email' => 'required | email | unique:administrations,email',
-                'password' => 'required | string | confirmed',
+                'password' => 'required | confirmed',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'status' => 'required | in:0,1',
             ]);
@@ -87,7 +87,7 @@ class AdminstrationController extends Controller
             'username' => 'required|string|unique:administrations,username,' . $id,
             'admin_group_id' => 'required|exists:administration_groups,id',
             'email' => 'required|email|unique:administrations,email,' . $id,
-            'password' => 'nullable|string|confirmed',
+            'password' => 'nullable|confirmed',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:0,1',
         ]);
@@ -100,7 +100,7 @@ class AdminstrationController extends Controller
         if ($request->filled('password')) {        // Chỉ cập nhật mật khẩu nếu người dùng đã nhập mật khẩu mới
             $administration->password = bcrypt($request->password);
         }
-
+        $administration->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = "{$administration->id}.{$image->getClientOriginalExtension()}";
@@ -110,6 +110,7 @@ class AdminstrationController extends Controller
             // Nếu không có ảnh mới, giữ nguyên ảnh cũ
             $administration->image = $administration->image;
         }
+
         $administration->save();
 
         return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');

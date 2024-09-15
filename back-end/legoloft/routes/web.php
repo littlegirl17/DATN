@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Category;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\Adminstration;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\Admin\LoginController;
 
 Route::get('/contact', function () {
     return view('contact');
@@ -25,6 +25,10 @@ Route::get('/dashboard', function () {
 Route::get('/', [HomeController::class, 'index']);
 
 
+Route::get('admin/login', function () {
+    return view('admin.login');
+})->name('adminLogin');
+Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
 
 

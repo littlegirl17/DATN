@@ -12,9 +12,12 @@
              @csrf
              @method('PUT')
              <div class="buttonProductForm">
-                 <button type="submit" class="btnFormAdd">
-                     <p class="text m-0 p-0">Lưu</p>
-                 </button>
+                 <div class=""></div>
+                 <div class="">
+                     <button type="submit" class="btnFormAdd">
+                         <p class="text m-0 p-0">Lưu</p>
+                     </button>
+                 </div>
              </div>
 
              <div class="row">
@@ -72,24 +75,6 @@
                          <option value="1" {{ $administration->status == 1 ? 'selected' : '' }}>Kích hoạt</option>
                      </select>
                  </div>
-             </div>
-
-
-
-             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                 <div id="alert-message" class="alert alert-danger mt-3 py-2">
-                 </div>
-
-                 <div class="form-group mt-3">
-                     <label for="password" class="form-label">Mật khẩu mới</label>
-                     <input type="password" class="form-control" id="password" name="password">
-                 </div>
-
-                 <div class="form-group mt-3">
-                     <label for="" class="form-label">Xác nhận lại mật khẩu mới</label>
-                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-                 </div>
-
              </div>
          </form>
      </div>

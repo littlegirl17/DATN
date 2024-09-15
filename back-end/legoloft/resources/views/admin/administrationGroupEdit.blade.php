@@ -19,9 +19,12 @@
              @csrf
              @method('PUT')
              <div class="buttonProductForm">
-                 <button type="submit" class="btnFormAdd">
-                     <p class="text m-0 p-0">Lưu</p>
-                 </button>
+                 <div class=""></div>
+                 <div class="">
+                     <button type="submit" class="btnFormAdd">
+                         <p class="text m-0 p-0">Lưu</p>
+                     </button>
+                 </div>
              </div>
 
              <div class="form-group mt-3">

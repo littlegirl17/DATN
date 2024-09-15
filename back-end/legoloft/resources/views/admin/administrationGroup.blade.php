@@ -3,25 +3,27 @@
  @Section('content')
 
      <div class="container-fluid">
-         @if (session('error'))
-             <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
-         @endif
-         @if (session('success'))
-             <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
-         @endif
-
          <form id="submitFormAdmin" onsubmit="event.preventDefault();">
              @csrf
              <div class="buttonProductForm">
-                 <button type="button" class="btn btnF1"
-                     onclick="window.location.href='{{ route('addAdminstrationGroup') }}'">
-                     <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo Nhóm người dùng
-                 </button>
-                 <button class="btn btnF2" type="button"
-                     onclick="submitForm('{{ route('deleteAdminstrationGroup') }}','post')">
-                     <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa
-                 </button>
-
+                 <div class="m-0 p-0">
+                     @if (session('error'))
+                         <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
+                     @endif
+                     @if (session('success'))
+                         <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
+                     @endif
+                 </div>
+                 <div class="m-0 p-0">
+                     <button type="button" class="btn btnF1"
+                         onclick="window.location.href='{{ route('addAdminstrationGroup') }}'">
+                         <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo Nhóm người dùng
+                     </button>
+                     <button class="btn btnF2" type="button"
+                         onclick="submitForm('{{ route('deleteAdminstrationGroup') }}','post')">
+                         <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa
+                     </button>
+                 </div>
              </div>
 
              <div class="border p-2">
