@@ -2,91 +2,156 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập | admin</title>
-    <link rel="icon" type="image/png" href="/uploads/HK.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ hàng</title>
+    <link rel="icon" type="image/png" href="{{ asset('uploads/HK.png') }}" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/admin.css">
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+        integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+        crossorigin="anonymous" />
+    <style>
+        .bg_admin_login {
+            background-color: #f3f4f9;
+            height: 100vh;
+            /* Chiều cao bằng 100% chiều cao của viewport */
+        }
 
+        .form_admin {
+            margin: 0 auto;
+            width: 400px;
+            padding-top: 150px;
+        }
+
+        .form_admin_content {
+            background-color: #ffffff;
+            box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+                rgba(17, 17, 26, 0.05) 0px 8px 32px;
+            padding: 30px 50px;
+        }
+
+        .form_admin_content .title h2 {
+            padding-bottom: 15px;
+            text-align: center;
+            background: linear-gradient(to right,
+                    #ffc506,
+                    #3b4242);
+            /* Phối hợp hai màu */
+            -webkit-background-clip: text;
+            /* Cắt nền theo chữ */
+            -webkit-text-fill-color: transparent;
+            /* Làm cho chữ trong suốt */
+        }
+
+        .form_admin_item {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 20px;
+        }
+
+        .form_admin_item label {
+            color: #8e8c8c;
+            font-size: 1rem;
+            padding-bottom: 5px;
+        }
+
+        .form_admin_item input {
+            padding: 8px 10px;
+            border: none;
+            outline: none;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+                rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+            border-radius: 5px;
+        }
+
+        .btn_admin_login {
+            width: 100%;
+            background-color: #ffc506;
+            color: #ffffff;
+            outline: none;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            /* Để ẩn phần hiệu ứng ra ngoài nút */
+            font-weight: bold;
+            /* Làm cho chữ đậm hơn */
+            transition: color 0.3s ease;
+            /* Thêm hiệu ứng chuyển tiếp cho màu chữ */
+        }
+
+        .btn_admin_login::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            /* Bắt đầu từ dưới */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e0a800;
+            /* Màu vàng đậm */
+            transition: top 0.3s ease;
+            /* Thời gian chuyển tiếp */
+            z-index: 0;
+            /* Đặt ở dưới cùng */
+        }
+
+        .btn_admin_login:hover::before {
+            top: 0;
+            /* Di chuyển lên trên khi hover */
+            z-index: -1;
+        }
+
+        .btn_admin_login:hover {
+            color: #ffffff;
+            /* Giữ màu chữ khi hover */
+            z-index: 1;
+            /* Đặt nút lên trên cùng */
+        }
+    </style>
 </head>
 
-<body style="background-color:#fff">
-
-
-
-    <div class="container ">
-        <div class="formadmin">
-            <div class="d-flex  justify-content-center align-items-center">
-                <img src="/uploads/LoGo.png" class="" alt="img-fluid">
-            </div>
-
-            <div class="mt-3">
-                <div class="d-flex justify-content-center align-items-center">
-                        <div id="alert-message" class="alert alert-danger ">
-                        </div>
-                </div>
-
-                <div class=" d-flex  justify-content-center align-items-center">
-                    <form action="{{ route('admin.loginManage') }}" method="post" class="form_main">
-                        <p class="heading">Đăng nhập </p>
-                        <div class="inputContainer">
-                            <svg class="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="#2e2e2e" viewBox="0 0 16 16">
-                                <path
-                                    d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z">
-                                </path>
-                            </svg>
-                            <input type="text" class="inputField" name="name" id="name"
-                                placeholder="Nhập name của bạn">
-                        </div>
-
-                        <div class="inputContainer">
-                            <svg class="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="#2e2e2e" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z">
-                                </path>
-                            </svg>
-                            <input type="password" class="inputField" name="password" id="password"
-                                placeholder="Password">
-                        </div>
-                        <button id="button_admin">Đăng nhập</button>
-                    </form>
+<body>
+    <div class="bg_admin_login">
+        <div class="container">
+            <div class="form_admin">
+                <div class="form_admin_content">
+                    <div class="title">
+                        <h2>Đăng nhập</h2>
+                    </div>
+                    <div class="form_admin_item">
+                        <label for="">Tên đăng nhập</label>
+                        <input type="text" placeholder="Nhập tên đăng nhập" />
+                    </div>
+                    <div class="form_admin_item">
+                        <label for="">Mật khẩu</label>
+                        <input type="password" placeholder="Nhập mật khẩu" />
+                    </div>
+                    <button type="submit" class="btn_admin_login">Đăng nhập</button>
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        var alertMessage = document.getElementById('alert-message');
-        if (alertMessage) {
-            setTimeout(function() {
-                alertMessage.classList.add('fade-out-left');
-                setTimeout(function() {
-                    alertMessage.style.display = 'none';
-                }, 500)
-            }, 3000);
-        }
-    </script>
+    <!-- Jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"></script>
+    <!-- Owl Carousel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

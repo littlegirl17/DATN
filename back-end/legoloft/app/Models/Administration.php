@@ -45,6 +45,10 @@ class Administration extends Authenticatable
         return $query->paginate(10);
     }
 
+    public function administrationCheckLogin($username)
+    {
+        return $this->where('username', $username)->first();
+    }
     /*---------------------- CONNECT TABLE -----------------------------------*/
     public function administrationGroup()
     {
