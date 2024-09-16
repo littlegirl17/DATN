@@ -27,15 +27,14 @@
 <body>
     <div class="bg_admin_login">
         <div class="container">
-            <div class="d-flex justify-content-center align-items-center">
-                @if (session()->has('error'))
-                    <div id="alert-message" class="alert alert-danger ">{{ session('error') }}
-                    </div>
-                @endif
-            </div>
             <form action="{{ route('adminLoginForm') }}" method="post">
                 @csrf
                 <div class="form_admin">
+                    <div class="form_admin_alrt">
+                        @if (session('error'))
+                            <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
+                        @endif
+                    </div>
                     <div class="form_admin_content">
                         <div class="title">
                             <h2>Đăng nhập</h2>
@@ -62,6 +61,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
+
 </body>
 
 </html>

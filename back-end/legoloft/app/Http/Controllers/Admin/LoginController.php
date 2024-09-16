@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Administration;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -42,5 +43,14 @@ class LoginController extends Controller
         if (!$adminCheckAccount) {
             return redirect()->back()->with(['error' => 'Tài khoản không tồn tại!']);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout(); // xóa thông tin xác thực của người dùng khỏi phiên làm việc.
+        $request->session()->invalidate();  // xóa tất cả dữ liệu trong session ngăn chặn sự dụng phiên cũ
+        $request->session()->regenerateToken(); // tạo một CSRF token mới
+        $request->session()->flush(); // xóa tất cả dữ liệu trong phiên hiện tại.
+        return redirect()->route('adminLoginForm');
     }
 }

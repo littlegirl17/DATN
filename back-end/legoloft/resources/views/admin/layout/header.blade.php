@@ -103,39 +103,42 @@
 
                         </ul>
                     </li>
+                    @if (in_array('administration', $permission) || in_array('administrationGroup', $permission))
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="fa-solid fa-users" style="color: #ffffff;"></i>
-                            </span>
-                            <span class="hide-menu">Người dùng</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="">
-                                <a class="sidebar-link" href="{{ route('adminstration') }}" aria-expanded="false">
-                                    <span style="width:20px">
-                                        <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
-                                    </span>
-                                    <span class="hide-menu">Người dùng</span>
-                                </a>
-                            </li>
-
-
-                            <li class="">
-                                <a class="sidebar-link" href="{{ route('adminstrationGroup') }}"
-                                    aria-expanded="false">
-                                    <span style="width:20px">
-                                        <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
-                                    </span>
-                                    <span class="hide-menu">Nhóm Người dùng</span>
-                                </a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="fa-solid fa-users" style="color: #ffffff;"></i>
+                                </span>
+                                <span class="hide-menu">Người dùng</span>
+                            </a>
+                            <ul class="submenu">
+                                @if (in_array('administration', $permission))
+                                    {{-- vế 1 giá trị bạn muốn kiểm tra, vế 2 là mảng chứa các quyền --}}
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('adminstration') }}"
+                                            aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Người dùng</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (in_array('administrationGroup', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('adminstrationGroup') }}"
+                                            aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Nhóm Người dùng</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
 
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="" aria-expanded="false">
@@ -149,7 +152,7 @@
 
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('adminLogout') }}" aria-expanded="false">
                             <span style="width:20px">
                                 <i class="ti fa-solid fa-right-from-bracket ico-side" style="color: #ffffff;"></i>
                             </span>

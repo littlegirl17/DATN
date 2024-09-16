@@ -1130,3 +1130,10 @@ table tbody tr:nth-child(even) {
     z-index: 1;
     /* Đặt nút lên trên cùng */
 }
+
+/**/
+.form_admin_alrt {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 15px;
+}

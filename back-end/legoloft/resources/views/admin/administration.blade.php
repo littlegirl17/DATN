@@ -35,18 +35,13 @@
                  </div>
              </form>
          </div>
-         @if (session('danger'))
-             <div id="alert-message" class="alertDanger">{{ session('danger') }}</div>
-         @endif
-         @if (session('success'))
-             <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
-         @endif
+
          <form id="submitFormAdmin">
              @csrf
              <div class="buttonProductForm mt-3">
                  <div class="m-0 p-0">
-                     @if (session('danger'))
-                         <div id="alert-message" class="alertDanger">{{ session('danger') }}</div>
+                     @if (session('error'))
+                         <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
                      @endif
                      @if (session('success'))
                          <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>

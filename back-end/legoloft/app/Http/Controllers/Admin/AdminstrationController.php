@@ -36,6 +36,10 @@ class AdminstrationController extends Controller
     }
     public function adminstrationAdd(Request $request)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         if ($request->isMethod('post')) {
             $request->validate([
                 'fullname' => 'required | string | max:255',
@@ -75,6 +79,10 @@ class AdminstrationController extends Controller
     }
     public function adminstrationEdit($id)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         $administration = $this->administrationModel->findOrFail($id);
         $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
         return view('admin.administrationEdit', compact('administration', 'administrationGroup'));
@@ -126,6 +134,10 @@ class AdminstrationController extends Controller
 
     public function adminstrationDeleteCheckbox(Request $request)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         $administration_id = $request->input('administration_id');
         if ($administration_id) {
             foreach ($administration_id as $itemID) {
@@ -136,7 +148,7 @@ class AdminstrationController extends Controller
         return redirect()->route('adminstration')->with('success', 'Xóa người dùng thành công.');
     }
 
-    /* ----------------------------------------------------------------------Quản trị nhóm người dùng-----------------------------------------------------------------*/
+    /* -----------------------------Quản trị nhóm người dùng-----------------------------------------------------------------*/
     public function adminstrationGroup()
     {
         $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
@@ -145,6 +157,10 @@ class AdminstrationController extends Controller
 
     public function adminstrationGroupAdd(Request $request)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         if ($request->isMethod('post')) {
             $request->validate([
                 'name' => 'required | string',
@@ -166,6 +182,10 @@ class AdminstrationController extends Controller
 
     public function adminstrationGroupEdit($id)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         $administrationGroup = $this->administrationGroupModel->findOrFail($id);
         $permissionGroupGet = json_decode($administrationGroup->permission, true) ?? [];
         return view('admin.administrationGroupEdit', compact('administrationGroup', 'permissionGroupGet')); // Giai mã một chuôi JSON thành 1 mảng liên kết or đối tượng PHP
@@ -183,6 +203,10 @@ class AdminstrationController extends Controller
 
     public function adminstrationGroupDeleteCheckbox(Request $request)
     {
+        $response = $this->adminstrationGroupCrud();
+        if ($response) {
+            return $response;
+        }
         $administrationGroup_id = $request->input('administrationGroup_id');
         if ($administrationGroup_id) {
             foreach ($administrationGroup_id as $itemID) {
@@ -197,5 +221,31 @@ class AdminstrationController extends Controller
             }
         }
         return redirect()->route('adminstrationGroup')->with('success', 'Xóa nhóm người dùng thành công.');
+    }
+
+    /* ----------------------------- Kiểm tra Quản trị nhóm người dùng-----------------------------------------------------------------*/
+    public function adminstrationGroupCrud()
+    {
+        $admin = auth()->guard('admin')->user();
+        $permissionGet = json_decode($admin->administrationGroup->permission, true);
+        if (array_search('adminstrationAdd', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền thêm người dùng.');
+        }
+        if (array_search('adminstrationEdit', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền chỉnh sửa người dùng.');
+        }
+        if (array_search('adminstrationCheckboxDelete', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền xóa người dùng.');
+        }
+
+        if (array_search('adminstrationGroupAdd', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền thêm nhóm người dùng.');
+        }
+        if (array_search('adminstrationGroupEdit', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền chỉnh sửa nhóm người dùng.');
+        }
+        if (array_search('adminstrationGroupCheckboxDelete', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền xóa nhóm người dùng.');
+        }
     }
 }

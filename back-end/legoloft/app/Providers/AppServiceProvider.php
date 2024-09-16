@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // View::composer là một cơ chế để chia sẻ dữ liệu giữa các view một cách dễ dàng
+        view()->composer('*', function ($view) {
+            $admin = auth()->guard('admin')->user();
+            $permission = $admin ? json_decode($admin->administrationGroup->permission) : [];
+            $view->with(compact('permission'));
+        });
     }
 }
