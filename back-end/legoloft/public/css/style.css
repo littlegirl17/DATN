@@ -3262,6 +3262,16 @@ section {
     border-radius: 5px;
 }
 
+.login_forgetpw {
+    padding-top: 5px;
+}
+
+.login_forgetpw a {
+    text-decoration: none;
+    color: #8e8c8c;
+    font-size: 0.8rem;
+}
+
 .btn_login {
     width: 100%;
     background-color: #ffc506;
@@ -3270,7 +3280,6 @@ section {
     border: none;
     padding: 10px;
     border-radius: 10px;
-    margin-top: 15px;
     position: relative;
     overflow: hidden;
     /* Để ẩn phần hiệu ứng ra ngoài nút */
@@ -3307,6 +3316,47 @@ section {
     /* Giữ màu chữ khi hover */
     z-index: 1;
     /* Đặt nút lên trên cùng */
+}
+
+.border-container-login {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0 15px 0;
+}
+
+.border-left,
+.border-right {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #000;
+    /* Màu sắc của đường viền */
+    margin: 0 10px;
+    /* Khoảng cách giữa đường viền và chữ "Hoặc" */
+}
+
+.border-left,
+.border-right {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #000;
+    /* Màu sắc của đường viền */
+    margin: 0 10px;
+    /* Khoảng cách giữa đường viền và chữ "Hoặc" */
+}
+
+.login_regis span {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.login_regis a {
+    color: #000;
+    text-decoration: none;
+}
+
+.login_regis a:hover {
+    text-decoration: underline;
 }
 
 /*-------------------------------END LOGIN---------------------------------------*/
