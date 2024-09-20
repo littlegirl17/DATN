@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\Category;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 Route::get('/contact', function () {
     return view('contact');
@@ -30,21 +32,16 @@ Route::get('admin/login', function () {
 })->name('adminLogin');
 Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
+Route::get('login', function () {
+    return view('login');
+})->name('login');
+Route::post('login', [UserController::class, 'login'])->name('loginForm');
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 
-/* ROUTE ADMIN */
-Route::get('category', [Category::class, 'index'])->name('category');
-Route::get('addCategory', [Category::class, 'categoryAdd'])->name('addCategory');
-Route::post('add-Category', [Category::class, 'categoryAdd']);
-Route::get('editCategory/{id}', [Category::class, 'categoryEdit'])->name('editCategory');
-Route::put('editCategory/{id}', [Category::class, 'categoryUpdate'])->name('UpdateCategory');
-Route::post('deleteCategory', [Category::class, 'categoryDeleteCheckbox'])->name('deleteCategory');
-
-
-
+/* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 
 Route::prefix('admin')->middleware('admin')->group(function () { // prefix: được sử dụng để nhóm các route lại với nhau dưới một tiền tố chung.
-
 
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');

@@ -68,12 +68,21 @@
                             <img src="img/legomini.svg" alt="" />
                         </div>
                         <div class="m-0 p-0">
-                            <div class="btn_contain">
-                                <button class="btn-login">Đăng nhập</button>
-                            </div>
-                            <div class="btn_contain">
-                                <button class="btn-register">Đăng ký</button>
-                            </div>
+                            @auth
+                                <div class="btn_contain">
+                                    <button class="btn-login" onclick="window.location.href='{{ route('logout') }}'">Đăng
+                                        xuất</button>
+                                </div>
+                            @else
+                                <div class="btn_contain">
+                                    <button class="btn-login" onclick="window.location.href='{{ route('login') }}'">Đăng
+                                        nhập</button>
+                                </div>
+                                <div class="btn_contain">
+                                    <button class="btn-register">Đăng ký</button>
+                                </div>
+                            @endauth
+
                         </div>
                     </div>
                 </div>

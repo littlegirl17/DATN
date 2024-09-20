@@ -2564,6 +2564,21 @@ section {
 
 }
 
+.form_admin_alrt {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 15px;
+}
+
+.alertDanger {
+    background-color: #FF5370;
+    color: #FFFFFF;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 0px 0px;
+    padding: 7px 10px;
+}
+
 /*-------------------------------END BUTTON---------------------------------------*/
 
 /*------------------------------- START MODAL---------------------------------------*/
@@ -3207,7 +3222,7 @@ section {
 
 /*------------------------------- START LOGIN---------------------------------------*/
 .bg_login {
-    background-image: url("img/bg1.jpg");
+    background-image: url("../img/bg1.jpg");
     /* Thay 'link_to_your_image.jpg' bằng đường dẫn đến hình ảnh của bạn */
     background-size: cover;
     /* Để hình ảnh phủ toàn bộ */
@@ -3357,6 +3372,36 @@ section {
 
 .login_regis a:hover {
     text-decoration: underline;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+}
+
+.alertErrors {
+    background-color: #FF5370;
+    color: #FFFFFF;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 0px 0px;
+    padding: 7px 10px;
+    margin: 3px 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    /* Thêm hiệu ứng chuyển động */
+}
+
+
+.fade-out-left {
+    opacity: 0;
+    /* Đặt độ mờ thành 0 khi ẩn */
+    transform: translateX(-20px);
+    /* Di chuyển sang trái */
 }
 
 /*-------------------------------END LOGIN---------------------------------------*/
