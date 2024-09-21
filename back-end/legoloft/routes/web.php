@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\Category;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
 Route::get('/contact', function () {

@@ -118,26 +118,21 @@
             </ul>
             <ul class="main_bar_menu_list">
                 <li><a href="category.html">Xem tất cả chủ đề</a></li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
+                @foreach ($categories as $category)
+                    <li class="main_bar_menu_list_item">
+                        <a href="#" data-category-id="{{ $category->id }}">{{ $category->name }}</a>
+                    </li>
+                @endforeach
             </ul>
             <ul class="main_bar_submenu_list">
-                <div class="submenu-category" style="display: none">
-                    <li><a href="#">danh muc con1</a></li>
-                </div>
+                @foreach ($categories as $category)
+                    <div class="submenu-category" style="display: none" data-category-id="{{ $category->id }}">
+                        @foreach ($category->categories_children as $item)
+                            <li><a href="#">{{ $item->name }}</a></li>
+                        @endforeach
+                    </div>
+                @endforeach
+
             </ul>
         </div>
     </div>
