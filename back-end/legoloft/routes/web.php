@@ -27,10 +27,7 @@ Route::get('/dashboard', function () {
 Route::get('/', [HomeController::class, 'index']);
 
 
-Route::get('admin/login', function () {
-    return view('admin.login');
-})->name('adminLogin');
-Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
+
 
 Route::get('login', function () {
     return view('login');
@@ -38,8 +35,28 @@ Route::get('login', function () {
 Route::post('login', [UserController::class, 'login'])->name('loginForm');
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
+Route::get('forgetPassword', function () {
+    return view('forgetPassword');
+})->name('forgetPassword');
+Route::post('forgetPassword', [UserController::class, 'forgetPassword'])->name('forgetPasswordForm');
+
+
+Route::get('confirmation', function () {
+    return view('confirmationCodePassword');
+})->name('confirmationCodePassword');
+Route::post('confirmation', [UserController::class, 'confirmationPassword'])->name('confirmationPasswordForm');
+
+Route::get('resetPassword', function () {
+    return view('reenterPassword');
+})->name('resetPassword');
+Route::post('resetPassword', [UserController::class, 'resetPassword'])->name('resetPassword');
+
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
+Route::get('admin/login', function () {
+    return view('admin.login');
+})->name('adminLogin');
+Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
 Route::prefix('admin')->middleware('admin')->group(function () { // prefix: được sử dụng để nhóm các route lại với nhau dưới một tiền tố chung.
 

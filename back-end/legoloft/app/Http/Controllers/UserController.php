@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginValidate;
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use App\Mail\VerificationCode;
+use App\Http\Requests\LoginValidate;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\VerifyCodeRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\ForgetPasswordRequest;
 
 class UserController extends Controller
 {
@@ -41,5 +45,41 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerate();
         return redirect()->route('login')->with('success', 'Đăng nhập tại đây');
+    }
+
+    public function forgetPassword(ForgetPasswordRequest  $request)
+    {
+        //Tạo mã ranđom code
+        $code = rand(100000, 999999);
+        // kiểm tra tài khoản email trong system
+        $user = $this->userModel->checkAccount($request->email);
+        //tiến hành update mã code
+        $user->verification_code = $code;
+        $user->save();
+        // gửi mail
+        Mail::to($user->email)->send(new VerificationCode($code));
+        return redirect()->route('confirmationCodePassword')->with('email', $request->email);
+    }
+
+    public function confirmationPassword(VerifyCodeRequest  $request)
+    {
+        // Kiểm tra tài khoản email trong hệ thống
+        $user = $this->userModel->checkAccount($request->email);
+
+        if ($user->verification_code == $request->verification_code) {
+            return redirect()->route('resetPassword')->with('email', $request->email);
+        } else {
+            return redirect()->route('confirmationCodePassword')->with('error', 'Mã xác nhận không hợp lệ');
+        }
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        // kiểm tra tài khoản email trong system
+        $user = $this->userModel->checkAccount($request->email);
+        $user->password = bcrypt($request->password);
+        $user->verification_code = null;
+        $user->save();
+        return redirect()->route('login')->with('success', 'Mật khẩu đã được thay đổi thành công');
     }
 }

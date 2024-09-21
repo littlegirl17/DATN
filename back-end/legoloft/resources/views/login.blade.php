@@ -6,7 +6,8 @@
         <div class="container">
             <div class="login_main">
                 <form action="{{ route('loginForm') }}" method="post">
-                    @csrf <div class="form_admin_alrt">
+                    @csrf
+                    <div class="form_admin_alrt">
                         @if (session('error'))
                             <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
                         @endif
@@ -31,7 +32,8 @@
                         <div class="login_item">
                             <label for="">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" />
-                            <label for="" class="login_forgetpw"><a href="" class="">Quên mật
+                            <label for="" class="login_forgetpw"><a href="{{ route('forgetPassword') }}"
+                                    class="">Quên mật
                                     khẩu</a></label>
                         </div>
                         <div>

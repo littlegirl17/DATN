@@ -46,7 +46,8 @@ class User extends Authenticatable
     }
 
     /*----------------------------------------------------------------------------------------------------------------------*/
-    public function checkAccount($email){
-        return $this->where('email',$email)->first();
+    public function checkAccount($email)
+    {
+        return $this->where('email', $email)->first();
     }
 }
