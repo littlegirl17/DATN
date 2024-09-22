@@ -44,16 +44,17 @@
                             <span class="hide-menu">Danh mục</span>
                         </a>
                     </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="fa-brands fa-product-hunt  ico-side"
-                                    style="color: #ffffff;font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Sản phẩm</span>
-                        </a>
-                    </li>
+                    @if (in_array('product', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('product') }}" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="fa-brands fa-product-hunt  ico-side"
+                                        style="color: #ffffff;font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Sản phẩm</span>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="" aria-expanded="false">

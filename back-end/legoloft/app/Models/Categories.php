@@ -22,4 +22,10 @@ class Categories extends Model
     {
         return $this->hasMany(Categories::class, 'parent_id');
     }
+
+
+    public function categoryAll()
+    {
+        return $this->orderBy('id', 'desc')->get();
+    }
 }

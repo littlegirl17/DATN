@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Category;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AdminstrationController;
-use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\ProductAdminController;
 
 Route::get('/contact', function () {
     return view('contact');
@@ -58,7 +59,16 @@ Route::get('admin/login', function () {
 Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
 Route::prefix('admin')->middleware('admin')->group(function () { // prefix: được sử dụng để nhóm các route lại với nhau dưới một tiền tố chung.
-
+    Route::middleware(['admin:product'])->group(function () {
+        Route::get('product', [ProductAdminController::class, 'product'])->name('product');
+        Route::get('addProduct', [ProductAdminController::class, 'productAdd'])->name('addProduct');
+        Route::post('add-Product', [ProductAdminController::class, 'productAdd'])->name('addFormProduct');
+        // Route::get('editProduct/{id}', [ProductAdminController::class, 'productEdit'])->name('editProduct');
+        // Route::put('editProduct/{id}', [ProductAdminController::class, 'productUpdate']);
+        // Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
+        // Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
+        // Route::get('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
+    });
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');
         Route::get('addAdminstration', [AdminstrationController::class, 'adminstrationAdd'])->name('addAdminstration');
