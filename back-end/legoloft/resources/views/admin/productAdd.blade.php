@@ -10,7 +10,13 @@
          <form action="{{ route('addFormProduct') }}" method="post" class="formAdmin" enctype="multipart/form-data">
              @csrf
              <div class="buttonProductForm">
-                 <div class=""></div>
+                 <div class="">
+                     @if ($errors->any())
+                         @foreach ($errors->all() as $error)
+                             <div id="alert-message" class="alertDanger">{{ $error }}</div>
+                         @endforeach
+                     @endif
+                 </div>
                  <div class="">
                      <button type="submit" class="btnFormAdd">
                          <p class="text m-0 p-0">Lưu</p>

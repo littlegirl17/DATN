@@ -20,4 +20,14 @@ class Product extends Model
         'view',
         'outstanding'
     ];
+
+    public function productAll()
+    {
+        return $this->orderBy('id', 'desc')->get();
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(categories::class, 'category_id');
+    }
 }

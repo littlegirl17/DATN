@@ -63,11 +63,11 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('product', [ProductAdminController::class, 'product'])->name('product');
         Route::get('addProduct', [ProductAdminController::class, 'productAdd'])->name('addProduct');
         Route::post('add-Product', [ProductAdminController::class, 'productAdd'])->name('addFormProduct');
-        // Route::get('editProduct/{id}', [ProductAdminController::class, 'productEdit'])->name('editProduct');
-        // Route::put('editProduct/{id}', [ProductAdminController::class, 'productUpdate']);
-        // Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
-        // Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
-        // Route::get('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
+         Route::get('editProduct/{id}', [ProductAdminController::class, 'productEdit'])->name('editProduct');
+         Route::put('editProduct/{id}', [ProductAdminController::class, 'productUpdate']);
+         Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
+         Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
+         Route::get('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
     });
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');

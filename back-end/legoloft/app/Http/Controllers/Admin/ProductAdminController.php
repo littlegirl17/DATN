@@ -20,18 +20,15 @@ class ProductAdminController extends Controller
 
     public function product()
     {
+        $products = $this->productModel->productAll();
         $categories = $this->categoryModel->categoryAll();
-        return view('admin.product', compact('categories'));
+        return view('admin.product', compact('categories', 'products'));
     }
+
     public function productAdd(ProductAdminRequest $request)
     {
-        $controller = new AdminstrationController;
-        $response = $controller->adminstrationGroupCrud();
 
-        if ($response) {
-            return $response;
-        }
-        try {
+        if ($request->isMethod('post')) {
             $product = $this->productModel;
             $product->name = $request->name;
             $product->slug = $request->slug;
@@ -55,13 +52,18 @@ class ProductAdminController extends Controller
                 // lưu
                 $product->save();
             }
-
             return redirect()->route('product')->with('success', 'Thêm sản phẩm thành công');
-        } catch (\Throwable $th) {
-            return back()->withErrors(['error' => 'Có lỗi xảy ra, vui lòng thử lại.']);
         }
 
         $categories = $this->categoryModel->categoryAll();
         return view('admin.productAdd', compact('categories'));
+    }
+
+    public function productUpdateStatus(Request $request, $id)
+    {
+        $product = $this->productModel->findOrFail($id);
+        $product->status = $request->status;
+        $product->save();
+        return response()->json(['success' => true]);
     }
 }

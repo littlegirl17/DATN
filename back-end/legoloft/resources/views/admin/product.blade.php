@@ -90,38 +90,43 @@
                      </thead>
 
                      <tbody class="table-body">
-                         <tr class="">
-                             <td class="text-center" style="width:20px">
-                                 <input class="" type="checkbox" name="product_id[]" value="">
-                                 <p class=""></p>
-                             </td>
-                             <td class="">
-                                 <img src="" alt="" style="width: 80px; height: 80px; object-fit: cover;">
-                             </td>
-                             <td class="nameAdmin">
-                                 <p></p>
-                             </td>
-                             <td class=""></td>
-                             <td class="">
-                                 <div class="form-check form-switch">
-                                     <input class="form-check-input" type="checkbox" role="switch" data-id=""
-                                         id="flexSwitchCheckChecked">
-                                     <label class="form-check-label" for="flexSwitchCheckChecked">Bật</label>
-                                 </div>
-                             </td>
-                             <td class="m-0 p-0">
-                                 <div class="actionAdminProduct m-0 py-3">
-                                     <button class="btnActionProductAdmin1"><a href=""
-                                             class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-eye"
-                                                 style="color: #ffffff;"></i>
-                                             Xem SP trên web</a></button>
-                                     <button class="btnActionProductAdmin2"><a href=""
-                                             class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
-                                                 style="color: #ffffff;"></i>Sửa lại
-                                             sản phẩm</a></button>
-                                 </div>
-                             </td>
-                         </tr>
+                         @foreach ($products as $item)
+                             <tr class="">
+                                 <td class="text-center" style="width:20px">
+                                     <input class="" type="checkbox" name="product_id[]" value="">
+                                     <p class=""></p>
+                                 </td>
+                                 <td class="">
+                                     <img src="{{ asset('img/' . $item->image) }}" alt=""
+                                         style="width: 80px; height: 80px; object-fit: cover;">
+                                 </td>
+                                 <td class="nameAdmin">
+                                     <p>{{ $item->name }}</p>
+                                 </td>
+                                 <td class="">{{ $item->categories->name }}</td>
+                                 <td class="">
+                                     <div class="form-check form-switch">
+                                         <input class="form-check-input" type="checkbox" role="switch"
+                                             data-id="{{ $item->id }}" id="flexSwitchCheckChecked"
+                                             {{ $item->status == 1 ? 'checked' : 0 }}>
+                                         <label class="form-check-label"
+                                             for="flexSwitchCheckChecked">{{ $item->status == 1 ? 'Bật' : 'Tắt' }}</label>
+                                     </div>
+                                 </td>
+                                 <td class="m-0 p-0">
+                                     <div class="actionAdminProduct m-0 py-3">
+                                         <button class="btnActionProductAdmin1"><a href=""
+                                                 class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-eye"
+                                                     style="color: #ffffff;"></i>
+                                                 Xem SP trên web</a></button>
+                                         <button class="btnActionProductAdmin2"><a href=""
+                                                 class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
+                                                     style="color: #ffffff;"></i>Sửa lại
+                                                 sản phẩm</a></button>
+                                     </div>
+                                 </td>
+                             </tr>
+                         @endforeach
                      </tbody>
                  </table>
              </div>
@@ -134,6 +139,38 @@
              </ul>
          </nav>
      </div>
+ @endsection
+ @section('productAdminScript')
+     <script>
+         $(document).ready(function() {
+             $('.form-check-input').on('click', function() {
+                 // (this) tham chiếu đến phần tử html đó
+                 var product_id = $(this).data('id'); //lấy ra id danh mục thông qua data-id="item->id"
+                 var status = $(this).is(':checked') ? 1 : 0; //is() trả về true nếu phần tử khớp với bộ chọn
+                 var label = $(this).siblings('label'); // Lấy label liền kề
+                 updateProductStatus(product_id, status, label);
+             })
+         })
+
+         function updateProductStatus(product_id, status, label) {
+             $.ajax({
+                 url: '{{ route('productUpdateStatus', ':id') }}'.replace(':id', product_id),
+                 type: 'PUT',
+                 data: {
+                     '_token': '{{ csrf_token() }}', //Việc gửi mã token này cùng với mỗi request giúp xác thực rằng request đó được gửi từ ứng dụng của bạn, chứ không phải từ một nguồn khác.
+                     'status': status
+                 },
+                 success: function(response) {
+                     if (response.success) {
+                         label.text(status == 1 ? 'Bật' : 'Tắt');
+                     }
+                 },
+                 error: function(error) {
+                     console.error('Lỗi khi cập nhật trạng thái sản phẩm: ' + error);
+                 }
+             })
+         }
+     </script>
  @endsection
  {{--
  @section('scriptProduct')

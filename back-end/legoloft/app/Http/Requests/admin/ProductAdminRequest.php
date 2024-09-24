@@ -21,17 +21,20 @@ class ProductAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'slug' => 'required|unique:products,slug|max:255',
-            'description' => 'nullable',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:png,jpg|max:2048',
-            'status' => 'required',
-            'view' => 'nullable|min:0',
-            'outstanding' => 'nullable',
-        ];
+        if ($this->isMethod('post')) {
+            return [
+                'name' => 'required|string|max:255',
+                'slug' => 'required|unique:products,slug|max:255',
+                'description' => 'nullable',
+                'category_id' => 'required|exists:categories,id',
+                'price' => 'required|numeric|min:0',
+                'image' => 'nullable|max:2048',
+                'status' => 'required',
+                'view' => 'nullable|min:0',
+                'outstanding' => 'nullable',
+            ];
+        }
+        return [];
     }
     public function messages()
     {
