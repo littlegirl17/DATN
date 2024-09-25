@@ -44,10 +44,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    /*----------------------------------------------------------------------------------------------------------------------*/
-    public function checkAccount($email)
-    {
-        return $this->where('email', $email)->first();
-    }
 }

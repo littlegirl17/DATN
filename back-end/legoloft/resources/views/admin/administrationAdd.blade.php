@@ -14,11 +14,7 @@
         <form action="{{ route('addFormAdminstration') }}" method="post" class="formAdmin" enctype="multipart/form-data">
             @csrf
             <div class="buttonProductForm">
-                <div class="">
-                    @if (session('error'))
-                        <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
-                    @endif
-                </div>
+                <div class=""></div>
                 <div class="">
                     <button type="submit" class="btnFormAdd">
                         <p class="text m-0 p-0">Lưu</p>

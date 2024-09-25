@@ -68,21 +68,12 @@
                             <img src="img/legomini.svg" alt="" />
                         </div>
                         <div class="m-0 p-0">
-                            @auth
-                                <div class="btn_contain">
-                                    <button class="btn-login" onclick="window.location.href='{{ route('logout') }}'">Đăng
-                                        xuất</button>
-                                </div>
-                            @else
-                                <div class="btn_contain">
-                                    <button class="btn-login" onclick="window.location.href='{{ route('login') }}'">Đăng
-                                        nhập</button>
-                                </div>
-                                <div class="btn_contain">
-                                    <button class="btn-register">Đăng ký</button>
-                                </div>
-                            @endauth
-
+                            <div class="btn_contain">
+                                <button class="btn-login">Đăng nhập</button>
+                            </div>
+                            <div class="btn_contain">
+                                <button class="btn-register">Đăng ký</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,21 +109,26 @@
             </ul>
             <ul class="main_bar_menu_list">
                 <li><a href="category.html">Xem tất cả chủ đề</a></li>
-                @foreach ($categories as $category)
-                    <li class="main_bar_menu_list_item">
-                        <a href="#" data-category-id="{{ $category->id }}">{{ $category->name }}</a>
-                    </li>
-                @endforeach
+                <li class="main_bar_menu_list_item">
+                    <a href="#">danh muc con</a>
+                </li>
+                <li class="main_bar_menu_list_item">
+                    <a href="#">danh muc con</a>
+                </li>
+                <li class="main_bar_menu_list_item">
+                    <a href="#">danh muc con</a>
+                </li>
+                <li class="main_bar_menu_list_item">
+                    <a href="#">danh muc con</a>
+                </li>
+                <li class="main_bar_menu_list_item">
+                    <a href="#">danh muc con</a>
+                </li>
             </ul>
             <ul class="main_bar_submenu_list">
-                @foreach ($categories as $category)
-                    <div class="submenu-category" style="display: none" data-category-id="{{ $category->id }}">
-                        @foreach ($category->categories_children as $item)
-                            <li><a href="#">{{ $item->name }}</a></li>
-                        @endforeach
-                    </div>
-                @endforeach
-
+                <div class="submenu-category" style="display: none">
+                    <li><a href="#">danh muc con1</a></li>
+                </div>
             </ul>
         </div>
     </div>

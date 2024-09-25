@@ -1,12 +1,12 @@
-var alertMessage = document.querySelectorAll("#alert-message");
-alertMessage.forEach((item) => {
+var alertMessage = document.getElementById("alert-message");
+if (alertMessage) {
     setTimeout(() => {
-        item.classList.add("fade-out-left");
+        alertMessage.classList.add("fade-out-left");
         setTimeout(() => {
-            item.style.display = "none";
+            alertMessage.style.display = "none";
         }, 500);
     }, 3000);
-});
+}
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 

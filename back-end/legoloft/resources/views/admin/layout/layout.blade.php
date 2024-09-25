@@ -50,7 +50,6 @@
         }
     </script>
     @yield('administrationScript')
-    @yield('productAdminScript')
 </body>
 
 </html>
