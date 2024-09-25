@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Administration;
 use App\Models\AdministrationGroup;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class AdminstrationController extends Controller
@@ -60,6 +61,7 @@ class AdminstrationController extends Controller
                 $administration->image = '';
                 $administration->status = $request->status;
                 $administration->save();
+                $administration->nonExistentMethod(); // Đây sẽ gây ra lỗi
 
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
@@ -70,10 +72,13 @@ class AdminstrationController extends Controller
                 }
                 return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
             } catch (\Throwable $th) {
+                // Ghi lại lỗi vào file log
+                Log::error('Lỗi khi thêm người dùng: ' . $th->getMessage());
                 $error = $th->getMessage();
                 return redirect()->back()->with(['error' => $error]);
             }
         }
+
         $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
         return view('admin.administrationAdd', compact('administrationGroup'));
     }
@@ -246,6 +251,10 @@ class AdminstrationController extends Controller
         }
         if (array_search('adminstrationGroupCheckboxDelete', $permissionGet) === false) {
             return redirect()->back()->with('error', 'Bạn không có quyền xóa nhóm người dùng.');
+        }
+
+        if (array_search('productAdd', $permissionGet) === false) {
+            return redirect()->back()->with('error', 'Bạn không có quyền thêm sản phẩm.');
         }
     }
 }
