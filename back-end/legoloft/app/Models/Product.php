@@ -21,13 +21,36 @@ class Product extends Model
         'outstanding'
     ];
 
+    public function categories()
+    {
+        return $this->belongsTo(categories::class, 'category_id');
+    }
+
     public function productAll()
     {
         return $this->orderBy('id', 'desc')->get();
     }
 
-    public function categories()
+    public function searchProduct($filter_iddm, $filter_name, $filter_price, $filter_status)
     {
-        return $this->belongsTo(categories::class, 'category_id');
+        $query = $this->query();
+
+        if (!is_null($filter_iddm)) {
+            $query->where('category_id', $filter_iddm);
+        }
+
+        if (!is_null($filter_name)) {
+            $query->where('name', "LIKE", "%{$filter_name}%");
+        }
+
+        if (!is_null($filter_price)) {
+            $query->where('price', '=', (int)$filter_price);
+        }
+
+        if (!is_null($filter_status)) {
+            $query->where('status', '=', (int)$filter_status);
+        }
+
+        return $query->paginate(10);
     }
 }

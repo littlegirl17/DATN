@@ -5,15 +5,23 @@
      <div class="container-fluid">
 
          <div class="searchAdmin">
-             <form id="filterFormProduct" action="" method="GET">
+             <form id="filterFormProduct" action="{{ route('searchProduct') }}" method="POST">
+                 @csrf
                  <div class="row d-flex flex-row justify-content-between align-items-center">
                      <div class="col-sm-3">
                          <div class="form-group mt-3">
                              <label for="title" class="form-label">Lọc sản phẩm theo danh mục</label>
                              <select class="form-select  rounded-0" aria-label="Default select example" name="filter_iddm">
                                  <option value="">Tất cả</option>
-                                 <option value="">
-                                 </option>
+                                 @foreach ($categories as $category)
+                                     @foreach ($category->categories_children as $item)
+                                         <option value="{{ $item->id }}"
+                                             {{ !empty($filter_iddm) ? ($item->id == $filter_iddm ? 'selected' : '') : '' }}>
+                                             {{ $item->name }}
+                                         </option>
+                                     @endforeach
+                                 @endforeach
+
                              </select>
                          </div>
                      </div>
@@ -21,14 +29,14 @@
                          <div class="form-group mt-3">
                              <label for="title" class="form-label">Tên sản phẩm</label>
                              <input class="form-control rounded-0" name="filter_name" placeholder="Tên sản phẩm"
-                                 type="text" value="">
+                                 type="text" value="{{ $filter_name ?? '' }}">
                          </div>
                      </div>
                      <div class="col-sm-3">
                          <div class="form-group mt-3">
                              <label for="title" class="form-label">Giá sản phẩm</label>
                              <input class="form-control rounded-0" name="filter_price" placeholder="Giá sản phẩm"
-                                 type="number">
+                                 type="number" value="{{ $filter_price ?? '' }}">
                          </div>
                      </div>
                      <div class="col-sm-3">
@@ -37,9 +45,11 @@
                              <select class="form-select  rounded-0" aria-label="Default select example"
                                  name="filter_status">
                                  <option value="">Tất cả</option>
-                                 <option value="1">Kích hoạt
+                                 <option value="1"
+                                     {{ !empty($filter_status) ? ($filter_status == 1 ? 'selected' : '') : '' }}>Kích hoạt
                                  </option>
-                                 <option value="0">Vô hiệu hóa
+                                 <option value="0"
+                                     {{ !empty($filter_status) ? ($filter_status == 0 ? 'selected' : '') : '' }}>Vô hiệu hóa
                                  </option>
                              </select>
                          </div>
@@ -171,56 +181,16 @@
              })
          }
      </script>
- @endsection
- {{--
- @section('scriptProduct')
-     <script>
-         $(document).ready(function() {
-             $('.form-check-input').on('click', function() {
-                 // (this) tham chiếu đến phần tử html đó
-                 var product_id = $(this).data(
-                     'id'); //lấy ra id danh mục thông qua data-id="item->id"
-                 var status = $(this).is(':checked') ? 1 : 0; //is() trả về true nếu phần tử khớp với bộ chọn
-                 var label = $(this).siblings('label'); // Lấy label liền kề
-                 updateProductStatus(product_id, status, label);
-             });
-
-         })
-
-         function updateProductStatus(product_id, status, label) {
-             $.ajax({
-                 url: '{{ route('', ':id') }}'.replace(':id', product_id),
-                 type: 'PUT',
-                 data: {
-                     '_token': '{{ csrf_token() }}', //Việc gửi mã token này cùng với mỗi request giúp xác thực rằng request đó được gửi từ ứng dụng của bạn, chứ không phải từ một nguồn khác.
-                     'status': status
-                 },
-                 success: function(response) {
-                     console.log('Cập nhật trạng thái thành công');
-
-                     if (status == 1) {
-                         label.text('Bật');
-                     } else {
-                         label.text('Tắt');
-                     }
-                 },
-                 error: function(xhr, status, error) {
-                     console.error('Lỗi khi cập nhật trạng thái sản phẩm: ' + error);
-                 }
-             })
-         }
-     </script>
 
      <script>
          $(document).ready(function() {
-             $('#filterFormProduct').on('submit', function() {
+             $('.filterFormProduct').on('submit', function() {
                  var formData = $(this).serialize();
-
+                 //$(this): tham chiếu đến biểu mẫu mà sự kiện submit đang được kích hoạt .serialize(): phương thức này sẽ chuyển đổi tất cả các trường đầu vào của biểu mẫu thành một chuỗi truy vấn URL (query string), bao gồm tên và giá trị của các trường.
                  $.ajax({
-                     url: '',
-                     type: 'GET',
-                     data: formData,
-                     success: function(response) {
+                     url: 'productSearch',
+                     type: 'POST',
+                     data: success: function(response) {
                          $('.table-body').html(response.html);
                      },
                      error: function(error) {
@@ -230,4 +200,4 @@
              })
          })
      </script>
- @endsection --}}
+ @endsection

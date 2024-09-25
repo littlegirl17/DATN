@@ -18,11 +18,22 @@ class ProductAdminController extends Controller
         $this->categoryModel = new Categories();
     }
 
+    public function productSearch(Request $request)
+    {
+        $filter_iddm = $request->input('filter_iddm');
+        $filter_name = $request->input('filter_name');
+        $filter_price = $request->input('filter_price');
+        $filter_status = $request->input('filter_status');
+
+        $products = $this->productModel->searchProduct($filter_iddm, $filter_name, $filter_price, $filter_status);
+
+        return view('admin.product', compact('products', 'filter_iddm', 'filter_name', 'filter_price', 'filter_status'));
+    }
+
     public function product()
     {
         $products = $this->productModel->productAll();
-        $categories = $this->categoryModel->categoryAll();
-        return view('admin.product', compact('categories', 'products'));
+        return view('admin.product', compact('products'));
     }
 
     public function productAdd(ProductAdminRequest $request)
