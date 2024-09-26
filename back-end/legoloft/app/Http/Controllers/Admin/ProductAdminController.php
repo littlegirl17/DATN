@@ -70,11 +70,60 @@ class ProductAdminController extends Controller
         return view('admin.productAdd', compact('categories'));
     }
 
+    public function productEdit($id)
+    {
+        $product = $this->productModel->findOrFail($id);
+        return view('admin.productEdit', compact('product'));
+    }
+
+    public function productUpdate(ProductAdminRequest $request, $id)
+    {
+        $product = $this->productModel->findOrFail($id);
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        // $product->image = '';
+        $product->status = $request->status;
+        $product->view = $request->view;
+        $product->outstanding = $request->outstanding;
+        $product->save();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = "{$product->id}.{$image->getClientOriginalExtension()}";
+            $image->move(public_path('img/'), $imageName);
+            $product->image = $imageName;
+        } else {
+            $product->image = $product->image;
+        }
+        $product->save();
+        return redirect()->route('product')->with('success', 'Câp nhật sản phẩm thành công');
+    }
+
     public function productUpdateStatus(Request $request, $id)
     {
         $product = $this->productModel->findOrFail($id);
         $product->status = $request->status;
         $product->save();
         return response()->json(['success' => true]);
+    }
+
+    public function productDeleteCheckbox(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        if ($product_id) {
+            foreach ($product_id as $itemID) {
+                $product = $this->productModel->findOrFail($itemID);
+                $countProduct = $this->productModel->countProduct($itemID);
+                if ($countProduct > 0) {
+                    return redirect()->route('product')->with('error', 'Cảnh báo: Sản phẩm này không thể bị xóa vì nó hiện được chỉ định cho ' . $countProduct . ' danh mục!');
+                } else {
+                    $product->delete();
+                    return redirect()->route('product')->with('success', 'Xóa sản phẩm thành công');
+                }
+            }
+        }
     }
 }

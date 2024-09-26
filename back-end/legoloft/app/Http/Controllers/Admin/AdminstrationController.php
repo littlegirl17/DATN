@@ -58,7 +58,6 @@ class AdminstrationController extends Controller
                 $administration->admin_group_id = $request->admin_group_id;
                 $administration->email = $request->email;
                 $administration->password = bcrypt($request->password);
-                $administration->image = '';
                 $administration->status = $request->status;
                 $administration->save();
                 $administration->nonExistentMethod(); // Đây sẽ gây ra lỗi

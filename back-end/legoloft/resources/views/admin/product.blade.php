@@ -80,7 +80,8 @@
                      </button>
                      <button class="btn btnF3" type="button" onclick=""><i class="pe-2 fa-solid fa-copy"
                              style="color: #ffffff;"></i>Copy sản phẩm</button>
-                     <button class="btn btnF2" type="button" onclick=""><i class="pe-2 fa-solid fa-trash"
+                     <button class="btn btnF2" type="button"
+                         onclick="submitForm('{{ route('deleteProduct') }}','post')"><i class="pe-2 fa-solid fa-trash"
                              style="color: #ffffff;"></i>Xóa
                          sản phẩm</button>
                  </div>
@@ -102,9 +103,12 @@
                      <tbody class="table-body">
                          @foreach ($products as $item)
                              <tr class="">
-                                 <td class="text-center" style="width:20px">
-                                     <input class="" type="checkbox" name="product_id[]" value="">
-                                     <p class=""></p>
+                                 <td>
+                                     <div class="d-flex justify-content-center align-items-center">
+                                         <input type="checkbox" id="cbx_{{ $item->id }}" class="hidden-xs-up"
+                                             name="product_id[]" value="{{ $item->id }}">
+                                         <label for="cbx_{{ $item->id }}" class="cbx"></label>
+                                     </div>
                                  </td>
                                  <td class="">
                                      <img src="{{ asset('img/' . $item->image) }}" alt=""
@@ -129,10 +133,10 @@
                                                  class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-eye"
                                                      style="color: #ffffff;"></i>
                                                  Xem SP trên web</a></button>
-                                         <button class="btnActionProductAdmin2"><a href=""
-                                                 class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
-                                                     style="color: #ffffff;"></i>Sửa lại
-                                                 sản phẩm</a></button>
+                                         <button type="button" class="btnActionProductAdmin2"
+                                             onclick="window.location.href='{{ 'editProduct/' . $item->id }}'">
+                                             <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa lại
+                                             sản phẩm</button>
                                      </div>
                                  </td>
                              </tr>

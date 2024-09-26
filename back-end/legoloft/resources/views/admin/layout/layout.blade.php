@@ -51,6 +51,8 @@
     </script>
     @yield('administrationScript')
     @yield('productAdminScript')
+    @yield('productEditAdminScript')
+
 </body>
 
 </html>

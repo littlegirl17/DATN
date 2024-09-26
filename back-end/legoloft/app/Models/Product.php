@@ -53,4 +53,9 @@ class Product extends Model
 
         return $query->paginate(10);
     }
+
+    public function countProduct($itemID)
+    {
+        return $this->where('id', $itemID)->count();
+    }
 }
