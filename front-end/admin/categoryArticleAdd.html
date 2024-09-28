@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <h3 class="title-page">Thêm danh mục bài viết</h3>
+  <form
+    action="/admin/add-category"
+    method="post"
+    class="formAdmin"
+    enctype="multipart/form-data"
+  >
+    <button class="btnFormAdd">Lưu</button>
+
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Tiêu đề danh mục bài viết</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        onkeyup="ChangeToSlug();"
+        id="slug"
+        aria-describedby="title"
+        placeholder="Nhập danh mục bài viết"
+      />
+    </div>
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Danh mục bài viết cha</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="status"
+      >
+        <option value=""></option>
+      </select>
+    </div>
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Trạng thái</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="status"
+      >
+        <option selected>Trang thái</option>
+        <option value="1">Kích hoạt</option>
+        <option value="0">Vô hiệu hóa</option>
+      </select>
+    </div>
+  </form>
+</div>

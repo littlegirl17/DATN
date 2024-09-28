@@ -988,6 +988,16 @@ section {
     text-decoration: none;
 }
 
+.footer_main_column_item_img {
+    width: 200px;
+}
+
+.footer_main_column_item_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /*-------------------------------END FOOTER---------------------------------------*/
 
 
