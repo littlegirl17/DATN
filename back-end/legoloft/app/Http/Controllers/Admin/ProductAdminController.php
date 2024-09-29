@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\ProductAdminRequest;
 use App\Models\Categories;
 use App\Models\Product;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 
 class ProductAdminController extends Controller
 {
     private $productModel;
     private $categoryModel;
+    private $productImageModel;
     public function __construct()
     {
         $this->productModel = new Product();
         $this->categoryModel = new Categories();
+        $this->productImageModel = new ProductImages();
     }
 
     public function productSearch(Request $request)
@@ -63,6 +66,10 @@ class ProductAdminController extends Controller
                 // lưu
                 $product->save();
             }
+
+            // Thêm nhiều ảnh con của sản phẩm
+            $this->productImages($request, $product);
+
             return redirect()->route('product')->with('success', 'Thêm sản phẩm thành công');
         }
 
@@ -73,7 +80,8 @@ class ProductAdminController extends Controller
     public function productEdit($id)
     {
         $product = $this->productModel->findOrFail($id);
-        return view('admin.productEdit', compact('product'));
+        $productImages = $this->productImageModel->productImages($id);
+        return view('admin.productEdit', compact('product', 'productImages'));
     }
 
     public function productUpdate(ProductAdminRequest $request, $id)
@@ -98,8 +106,55 @@ class ProductAdminController extends Controller
         } else {
             $product->image = $product->image;
         }
+
+        // Thêm và chỉnh sửa nhiều ảnh con của sản phẩm
+        $this->productImages($request, $product);
+
         $product->save();
         return redirect()->route('product')->with('success', 'Câp nhật sản phẩm thành công');
+    }
+
+    public function productImages($request, $product)
+    {
+        // Kiểm tra nếu có tệp tin được gửi lên
+        if ($request->hasFile('images')) {
+            $productImages = $this->productImageModel->productImages($product->id);
+
+            // Cập nhật ảnh phụ đã có
+            foreach ($productImages as $key => $image) {
+                if ($request->hasFile("images.{$key}")) {
+                    $imagesRequest = $request->file("images.{$key}");
+                    if ($imagesRequest->isValid()) {
+                        // Tạo tên cho tệp tin
+                        $imageName = "{$product->id}_" . uniqid() . ".{$imagesRequest->getClientOriginalExtension()}";
+                        // Di chuyển tệp tin
+                        $imagesRequest->move(public_path('img'), $imageName);
+                        // Cập nhật tên tệp tin vào cơ sở dữ liệu
+                        $image->images = $imageName;
+                        $image->save();
+                    } else {
+                        return response()->json(['error' => 'Invalid file uploaded.'], 422);
+                    }
+                }
+            }
+
+            // Thêm ảnh mới nếu có
+            if ($request->hasFile('images')) {
+                $images = $request->file('images');
+                foreach ($images as $image) {
+                    if ($image->isValid()) {
+                        $imageName = "{$product->id}_" . uniqid() . ".{$image->getClientOriginalExtension()}";
+                        $image->move(public_path('img'), $imageName);
+                        $this->productImageModel->create([
+                            'product_id' => $product->id,
+                            'images' => $imageName,
+                        ]);
+                    } else {
+                        return response()->json(['error' => 'Invalid file uploaded.'], 422);
+                    }
+                }
+            }
+        }
     }
 
     public function productUpdateStatus(Request $request, $id)
@@ -125,5 +180,12 @@ class ProductAdminController extends Controller
                 }
             }
         }
+    }
+
+    public function productDeleteImages($id)
+    {
+        $productImages = $this->productImageModel->findOrFail($id);
+        $productImages->delete();
+        return redirect()->back()->with('success', 'Xóa ảnh thành công');
     }
 }

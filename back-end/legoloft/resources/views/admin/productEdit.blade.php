@@ -137,47 +137,83 @@
                      <div class="form-group  mt-3">
                          <h4 class="label_admin">Ảnh sản phẩm</h4>
                          <div class="custom-file imageAdd p-3 ">
-                             <input type="file" name="image" id="HinhAnh" class="inputFile">
-                             <img src="{{ asset('img/' . $product->image) }}" alt=""
-                                 style="width:80px; height:80px; object-fit:cover;">
+                             <div class="imageFile">
+                                 <img src="{{ asset('img/' . $product->image) }}" alt="">
+                             </div>
+                             <div class="">
+                                 <input type="file" name="image" id="HinhAnh" class="inputFile">
+                             </div>
                          </div>
-
                      </div>
                      <div class="form-group mt-3">
                          <h4>Hình ảnh bổ sung</h4>
-                         <div class="row bannnerImagesEdit">
-                             <div class="col-md-12 productImagePut">
-                                 <div class="row row_product">
-                                     <div class="col-md-6 col-sm-12 col-12">
-                                         <label for="exampleInputFile" class="label_admin">Ảnh banner</label>
-                                         <div class="custom-file">
-                                             <input type="file" name="image[]" id="HinhAnh" multiple
-                                                 class="inputFile">
-                                             <div id="preview"></div>
+                         @if (count($productImages))
+                             <div class="row bannnerImagesEdit">
+                                 <div class="col-md-12 productImagePut">
+                                     @foreach ($productImages as $key => $item)
+                                         <div class="row_product my-3">
+                                             <div class="custom-file imageAdd p-3">
+                                                 <div class="imageFile">
+                                                     <img src="{{ asset('img/' . $item->images) }}" alt="">
+                                                 </div>
+                                                 <div class="d-flex flex-column">
+                                                     <div class="">
+                                                         <input type="file" name="images[{{ $key }}]"
+                                                             id="HinhAnh" class="inputFile">
+                                                     </div>
+                                                     <div class="mt-3">
+                                                         <button class="remove_bannerImages_add remove_productImages"
+                                                             onclick="window.location.href='{{ route('productDeleteImages', $item->id) }}'">Xóa</button>
+                                                     </div>
+                                                 </div>
+                                             </div>
                                          </div>
-                                     </div>
-                                     <div class="col-md-3 col-sm-12 col-12">
-                                         <label for="title" class="form-label">Tiêu đề</label>
-                                         <input type="text" class="form-control" name="title"
-                                             aria-describedby="title" placeholder="Nhập tiêu đề hình ảnh ">
-                                     </div>
-                                     <div class="col-md-2 col-sm-12 col-12">
-                                         <label for="title" class="form-label">Thứ tự xuất hiện</label>
-                                         <input type="number" class="form-control" name="sort_order" id=""
-                                             aria-describedby="" placeholder="">
-                                     </div>
-                                     <div class="col-md-1 col-sm-12 col-12">
-                                         <button class="remove_bannerImages_add remove_productImages"
-                                             href="">Xóa</button>
-                                     </div>
+                                     @endforeach
                                  </div>
                              </div>
-
-                             <div class="row m-0 p-0">
-                                 <button type="button" class="btn btn-primary  btn-ProductImagesAdd">Thêm hình
-                                     ảnh</button>
+                             <div class="row mt-3  p-0">
+                                 <div class="col-md-3 col-12 px-2">
+                                     <button type="button" class="btn-ProductImagesAdd">Thêm
+                                         hình
+                                         ảnh</button>
+                                 </div>
+                                 <div class="col-md-9  col-12"></div>
                              </div>
-                         </div>
+                         @else
+                             <div class="row bannnerImagesEdit">
+                                 <div class="col-md-12 productImagePut">
+                                     <div class="row_product my-3">
+                                         <div class="custom-file imageAdd p-3">
+                                             <div class="imageFile">
+                                                 <div class="previewImages"><img src="{{ asset('img/lf.png') }}"
+                                                         alt="">
+                                                 </div>
+                                             </div>
+                                             <div class="d-flex flex-column">
+                                                 <div class="">
+                                                     <input type="file" name="images[]"
+                                                         class="inputFile imageInputJS">
+                                                 </div>
+                                                 <div class="mt-3">
+                                                     <button
+                                                         class="remove_bannerImages_add remove_productImages">Xóa</button>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                             </div>
+                             <div class="row mt-3  p-0">
+                                 <div class="col-md-3 col-12">
+                                     <button type="button" class="btn-ProductImagesAdd">Thêm
+                                         hình
+                                         ảnh</button>
+                                 </div>
+                                 <div class="col-md-9  col-12"></div>
+                             </div>
+                         @endif
+
                      </div>
                  </div>
              </div>
@@ -191,26 +227,21 @@
          $(document).ready(function() {
              let productImages = `
          <div class="col-md-12 productImagePut">
-            <div class="row row_product">
-                <div class="col-md-6 col-sm-12 col-12">
-                    <label for="exampleInputFile" class="label_admin">Ảnh banner</label>
-                    <div class="custom-file">
-                        <input type="file" name="image[]" id="HinhAnh" multiple class="inputFile">
-                        <div id="preview"></div>
+           <div class="row_product my-3">
+                <div class="custom-file imageAdd p-3">
+                    <div class="imageFile">
+                        <div class="previewImages"><img src="{{ asset('img/lf.png') }}" alt=""></div>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-12 col-12">
-                    <label for="title" class="form-label">Tiêu đề</label>
-                    <input type="text" class="form-control" name="title"
-                        aria-describedby="title" placeholder="Nhập tiêu đề hình ảnh ">
-                </div>
-                <div class="col-md-2 col-sm-12 col-12">
-                    <label for="title" class="form-label">Thứ tự xuất hiện</label>
-                    <input type="number" class="form-control" name="sort_order" id=""
-                        aria-describedby="" placeholder="">
-                </div>
-               <div class="col-md-1 col-sm-12 col-12">
-                    <button class="remove_bannerImages_add remove_productImages" href="">Xóa</button>
+                    <div class="d-flex flex-column">
+                        <div class="">
+                            <input type="file" name="images[]"
+                                class="inputFile imageInputJS">
+                        </div>
+                        <div class="mt-3">
+                            <button
+                                class="remove_bannerImages_add remove_productImages">Xóa</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,38 +256,3 @@
          })
      </script>
  @endsection
- {{--
-@section('productDiscountUserGroup')
-    <script>
-        $(document).ready(function() {
-            let discountRowTemplate = `
-                <tr class="discount-row">
-                    <td>
-                        <select class="form-select" aria-label="Default select example" name="user_group_id[]">
-                            @foreach ($userGroup as $userGroupItem)
-                                <option value="{{ $userGroupItem->id }}">{{ $userGroupItem->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="form-control" type="number" name="quantityUserGroup[]" >
-                    </td>
-                    <td>
-                        <input class="form-control" type="number" name="priceUserGroup[]" >
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger remove-discount-btn">Xóa</button>
-                    </td>
-                </tr>
-            `;
-
-            $('.add-discount-btn').click(function() {
-                $('.discount-product').append(discountRowTemplate.trim());
-            });
-
-            $(document).on('click', '.remove-discount-btn', function() {
-                $(this).closest('.discount-row').remove();
-            });
-        });
-    </script>
-@endsection --}}

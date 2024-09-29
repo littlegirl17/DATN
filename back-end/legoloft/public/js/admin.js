@@ -30,7 +30,7 @@ function imagePreview(fileInput) {
             $("#preview").html(
                 '<img src="' +
                     event.target.result +
-                    '" width="300" height="auto"/>'
+                    '" width="300" height="300"/>'
             );
         };
         fileReader.readAsDataURL(fileInput.files[0]);
@@ -38,5 +38,29 @@ function imagePreview(fileInput) {
 }
 $("#HinhAnh").change(function () {
     imagePreview(this);
+});
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+$(document).ready(function () {
+    function imagePreview(fileInput) {
+        if (fileInput.files && fileInput.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.onload = function (event) {
+                $(fileInput)
+                    .closest(".custom-file")
+                    .find(".previewImages")
+                    .html(
+                        '<img src="' +
+                            event.target.result +
+                            '" width="300" height="300"/>'
+                    );
+            };
+            fileReader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+
+    // Gán sự kiện cho input file mới
+    $(document).on("change", ".imageInputJS", function () {
+        imagePreview(this);
+    });
 });
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/

@@ -68,6 +68,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
         Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
         Route::post('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
+        Route::get('productDeleteImages/{product_id}', [ProductAdminController::class, 'productDeleteImages'])->name('productDeleteImages');
     });
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');
