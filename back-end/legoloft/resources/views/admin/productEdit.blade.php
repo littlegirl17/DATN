@@ -98,31 +98,40 @@
                          </select>
                      </div>
                  </div>
-                 {{-- <div class="tab-pane fade" id="discount-tab-pane" role="tabpanel" aria-labelledby="discount-tab"
+                 <div class="tab-pane fade" id="discount-tab-pane" role="tabpanel" aria-labelledby="discount-tab"
                      tabindex="0">
                      <table class="table table-bordered mt-3 pt-3">
                          <thead>
                              <tr>
                                  <th>Nhóm khách hàng</th>
-                                 <th>Số lượng</th>
-                                 <th>Giá</th>
+                                 <th>Giá giảm sản phẩm</th>
+                                 <th></th>
                              </tr>
                          </thead>
                          <tbody class="discount-product">
-                             <tr>
-                                 <td>
-                                     <select class="form-select" aria-label="Default select example"
-                                         name="user_group_id[]">
-                                         <option value="{{ $userGroupItem->id }}">
-                                         </option>
-                                     </select>
-                                 </td>
-                                 <td><input class="form-control" type="number"
-                                         name="quantityUserGroup[{{ $item->user_group_id }}]" value="">
-                                 </td>
-                                 <td><input class="form-control" type="number"
-                                         name="priceUserGroup[{{ $item->user_group_id }}]" value=""></td>
-                             </tr>
+                             @foreach ($productDiscount as $key => $item)
+                                 <tr>
+                                     <td>
+                                         <select class="form-select" aria-label="Default select example"
+                                             name="user_group_id[]">
+                                             @foreach ($userGroups as $userGroup)
+                                                 <option value="{{ $userGroup->id }}"
+                                                     {{ $userGroup->id == $item->user_group_id ? 'selected' : '' }}>
+                                                     {{ $userGroup->name }}</option>
+                                             @endforeach
+                                         </select>
+                                     </td>
+                                     <td><input class="form-control" type="number"
+                                             name="priceUserGroup[{{ $key }}]" value="{{ $item->price }}">
+                                     </td>
+                                     <td>
+                                         {{-- <a href="{{ route('productDeleteDiscount', $item->id) }}">X</a> --}}
+                                         <button type="button" class="remove_bannerImages_add "
+                                             onclick="window.location.href='{{ route('productDeleteDiscount', $item->id) }}'">Xóa</button>
+                                     </td>
+                                 </tr>
+                             @endforeach
+
                          </tbody>
                      </table>
                      <div class="row mb-3">
@@ -131,7 +140,7 @@
                                  giá</button>
                          </div>
                      </div>
-                 </div> --}}
+                 </div>
                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                      tabindex="0">
                      <div class="form-group  mt-3">
@@ -254,5 +263,34 @@
                  $(this).closest('.row_product').remove();
              })
          })
+     </script>
+     <script>
+         $(document).ready(function() {
+             let discountRowTemplate = `
+                <tr class="discount-row">
+                    <td>
+                        <select class="form-select" aria-label="Default select example" name="user_group_id[]">
+                            @foreach ($userGroups as $userGroup)
+                                <option value="{{ $userGroup->id }}">{{ $userGroup->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" name="priceUserGroup[]" >
+                    </td>
+                    <td>
+                        <button type="button" class="remove_bannerImages_add remove-discount-btn">Xóa</button>
+                    </td>
+                </tr>
+            `;
+
+             $('.add-discount-btn').click(function() {
+                 $('.discount-product').append(discountRowTemplate.trim());
+             });
+
+             $(document).on('click', '.remove-discount-btn', function() {
+                 $(this).closest('.discount-row').remove();
+             });
+         });
      </script>
  @endsection

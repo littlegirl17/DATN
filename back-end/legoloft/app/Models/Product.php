@@ -26,6 +26,11 @@ class Product extends Model
         return $this->belongsTo(categories::class, 'category_id');
     }
 
+    public function productDiscount()
+    {
+        return $this->hasMany(ProductDiscount::class);
+    }
+
     public function productAll()
     {
         return $this->orderBy('id', 'desc')->get();
@@ -52,10 +57,5 @@ class Product extends Model
         }
 
         return $query->paginate(10);
-    }
-
-    public function countProduct($itemID)
-    {
-        return $this->where('id', $itemID)->count();
     }
 }

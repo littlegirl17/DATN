@@ -2,23 +2,30 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Product;
+use App\Models\UserGroup;
+use App\Models\Categories;
+use Illuminate\Http\Request;
+use App\Models\ProductImages;
+use App\Models\ProductDiscount;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\ProductAdminRequest;
-use App\Models\Categories;
-use App\Models\Product;
-use App\Models\ProductImages;
-use Illuminate\Http\Request;
 
 class ProductAdminController extends Controller
 {
     private $productModel;
     private $categoryModel;
     private $productImageModel;
+    private $productDiscountModel;
+    private $userGroupModel;
+
     public function __construct()
     {
         $this->productModel = new Product();
         $this->categoryModel = new Categories();
         $this->productImageModel = new ProductImages();
+        $this->productDiscountModel = new ProductDiscount();
+        $this->userGroupModel = new UserGroup();
     }
 
     public function productSearch(Request $request)
@@ -69,19 +76,24 @@ class ProductAdminController extends Controller
 
             // Thêm nhiều ảnh con của sản phẩm
             $this->productImages($request, $product);
+            // Thêm nhiều giá giảm sản phẩm của nhóm người dùng
+            $this->productDiscount($request, $product);
 
             return redirect()->route('product')->with('success', 'Thêm sản phẩm thành công');
         }
 
         $categories = $this->categoryModel->categoryAll();
-        return view('admin.productAdd', compact('categories'));
+        $userGroups = $this->userGroupModel->userGroupAll();
+        return view('admin.productAdd', compact('categories', 'userGroups'));
     }
 
     public function productEdit($id)
     {
         $product = $this->productModel->findOrFail($id);
         $productImages = $this->productImageModel->productImages($id);
-        return view('admin.productEdit', compact('product', 'productImages'));
+        $productDiscount = $this->productDiscountModel->productDiscountById($id);
+        $userGroups = $this->userGroupModel->userGroupAll();
+        return view('admin.productEdit', compact('product', 'productImages', 'userGroups', 'productDiscount'));
     }
 
     public function productUpdate(ProductAdminRequest $request, $id)
@@ -92,7 +104,6 @@ class ProductAdminController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->price = $request->price;
-        // $product->image = '';
         $product->status = $request->status;
         $product->view = $request->view;
         $product->outstanding = $request->outstanding;
@@ -109,6 +120,9 @@ class ProductAdminController extends Controller
 
         // Thêm và chỉnh sửa nhiều ảnh con của sản phẩm
         $this->productImages($request, $product);
+
+        // Thêm và chỉnh sửa giá giảm của sản phẩm
+        $this->productDiscount($request, $product);
 
         $product->save();
         return redirect()->route('product')->with('success', 'Câp nhật sản phẩm thành công');
@@ -157,6 +171,40 @@ class ProductAdminController extends Controller
         }
     }
 
+    public function productDiscount($request, $product)
+    {
+        //  $product->productDiscount()->delete();
+        if ($request->has('user_group_id')) {
+
+            $userGroup = $request->user_group_id;
+            $prices =  $request->priceUserGroup;
+            foreach ($userGroup as $key => $userGroupId) {
+                // Kiểm tra xem giảm giá cho nhóm người dùng đã tồn tại chưa
+                $productDiscounts = $this->productDiscountModel->productDiscount($product->id, $userGroupId);
+                if ($productDiscounts) {
+                    // Nếu đã tồn tại, cập nhật giá
+                    $productDiscounts->price = $prices[$key];
+                    $productDiscounts->save();
+                } else {
+                    // Kiểm tra xem nhóm người dùng đã tồn tại trong cơ sở dữ liệu chưa
+                    $existsUserGroup = $this->productDiscountModel->where('user_group_id', $userGroupId)->where('product_id', $product->id)->first();
+                    if ($existsUserGroup) {
+                        // Nếu đã tồn tại, thông báo lỗi và không tạo mới
+                        return redirect()->back()->with('error', 'Đã tồn tại nhóm khách hạng này.');
+                    } else {
+                        // Tạo mới giảm giá cho nhóm người dùng
+                        $productDiscount = $this->productDiscountModel;
+                        $productDiscount->user_group_id = $userGroupId;
+                        $productDiscount->product_id = $product->id;
+                        $productDiscount->price = $prices[$key];
+                        $productDiscount->save();
+                    }
+                }
+            }
+        }
+    }
+
+
     public function productUpdateStatus(Request $request, $id)
     {
         $product = $this->productModel->findOrFail($id);
@@ -170,14 +218,12 @@ class ProductAdminController extends Controller
         $product_id = $request->input('product_id');
         if ($product_id) {
             foreach ($product_id as $itemID) {
+
+                $this->productDiscountModel->where('product_id', $itemID)->delete();
+                $this->productImageModel->where('product_id', $itemID)->delete();
                 $product = $this->productModel->findOrFail($itemID);
-                $countProduct = $this->productModel->countProduct($itemID);
-                if ($countProduct > 0) {
-                    return redirect()->route('product')->with('error', 'Cảnh báo: Sản phẩm này không thể bị xóa vì nó hiện được chỉ định cho ' . $countProduct . ' danh mục!');
-                } else {
-                    $product->delete();
-                    return redirect()->route('product')->with('success', 'Xóa sản phẩm thành công');
-                }
+                $product->delete();
+                return redirect()->route('product')->with('success', 'Xóa sản phẩm thành công');
             }
         }
     }
@@ -187,5 +233,12 @@ class ProductAdminController extends Controller
         $productImages = $this->productImageModel->findOrFail($id);
         $productImages->delete();
         return redirect()->back()->with('success', 'Xóa ảnh thành công');
+    }
+
+    public function productDeleteDiscount($id)
+    {
+        $productDiscount = $this->productDiscountModel->findOrFail($id);
+        $productDiscount->delete();
+        return redirect()->back()->with('success', 'Xóa thành công');
     }
 }

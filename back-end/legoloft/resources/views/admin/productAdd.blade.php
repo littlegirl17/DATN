@@ -107,8 +107,8 @@
                          <thead>
                              <tr>
                                  <th>Nhóm khách hàng</th>
-                                 <th>Số lượng</th>
-                                 <th>Giá</th>
+                                 <th>Giá giảm sản phẩm</th>
+                                 <th></th>
                              </tr>
                          </thead>
                          {{-- <tbody>
@@ -121,8 +121,33 @@
                                 <input class="form-control" type="number" name="priceUserGroup[{{ $item->id }}]">
                             </td>
                         </tr>
-                    </tbody> --}}
+                    </tbody>  --}}
+                         <tbody class="discount-product">
+                             <tr>
+                                 <td>
+                                     <select class="form-select" aria-label="Default select example"
+                                         name="user_group_id[]">
+                                         @foreach ($userGroups as $userGroup)
+                                             <option value="{{ $userGroup->id }}">
+                                                 {{ $userGroup->name }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td><input class="form-control" type="number" name="priceUserGroup[]">
+                                 </td>
+                                 <td>
+                                     <button type="button"
+                                         class="remove_bannerImages_add remove-discount-btn">Xóa</button>
+                                 </td>
+                             </tr>
+                         </tbody>
                      </table>
+                     <div class="row mb-3">
+                         <div class="col-md-12">
+                             <button type="button" class="btn btn-primary add-discount-btn">Thêm mức giảm
+                                 giá</button>
+                         </div>
+                     </div>
                  </div>
                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                      tabindex="0">
@@ -179,35 +204,31 @@
  @section('productEditAdminScript')
      <script>
          $(document).ready(function() {
-             let productImages = `
-         <div class="col-md-12 productImagePut">
-           <div class="row_product my-3">
-                <div class="custom-file imageAdd p-3">
-                    <div class="imageFile">
-                        <div class="previewImages"> <div class="previewImages"><img src="../img/lf.png" alt="">
-                                             </div></div>
-                    </div>
-                    <div class="d-flex flex-column">
-                        <div class="">
-                            <input type="file" name="images[]"
-                                class="inputFile imageInputJS">
-                        </div>
-                        <div class="mt-3">
-                            <button
-                                class="remove_bannerImages_add remove_productImages">Xóa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
-             $('.btn-ProductImagesAdd').click(function() {
-                 $('.productImagePut').append(productImages.trim());
+             let discountRowTemplate = `
+           <tr class="discount-row">
+               <td>
+                   <select class="form-select" aria-label="Default select example" name="user_group_id[]">
+                       @foreach ($userGroups as $userGroup)
+                           <option value="{{ $userGroup->id }}">{{ $userGroup->name }}</option>
+                       @endforeach
+                   </select>
+               </td>
+               <td>
+                   <input class="form-control" type="number" name="priceUserGroup[]" >
+               </td>
+               <td>
+                   <button type="button" class="remove_bannerImages_add remove-discount-btn">Xóa</button>
+               </td>
+           </tr>
+       `;
+
+             $('.add-discount-btn').click(function() {
+                 $('.discount-product').append(discountRowTemplate.trim());
              });
-             //append  sử dụng để thêm nội dung vào cuối của một phần tử đã chọn // trim dùng để loại bỏ khoảng trắng ở đầu và cuối chuỗi // closest tìm phần tử cha gần nhất (ancestor) khớp với bộ chọn được cung cấp
-             $(document).on('click', '.remove_productImages', function() {
-                 $(this).closest('.row_product').remove();
-             })
-         })
+
+             $(document).on('click', '.remove-discount-btn', function() {
+                 $(this).closest('.discount-row').remove();
+             });
+         });
      </script>
  @endsection
