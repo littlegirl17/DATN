@@ -22,8 +22,8 @@
                 <img src="img/banner-home-mobile-1.webp" alt="" />
             </div>
             <!-- <div class="banner_home_mobile_image_logo">
-                                                                                                                                                                                                                                                                                                                                                                                                <img src="img/logo-ngang.png" alt="" />
-                                                                                                                                                                                                                                                                                                                                                                                              </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <img src="img/logo-ngang.png" alt="" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div> -->
             <div class="banner_home_mobile_text">
                 <h2 class="banner_home_mobile_text_h2">Đặt hàng trước bộ LEGO</h2>
                 <span class="banner_home_mobile_text_span">Cho đến khi hết hàng giao từ ngày 30/8</span>
@@ -175,6 +175,8 @@
                     @foreach ($productOutStanding as $item)
                         @php
                             $userGroupDefaultDiscount = $item->productDiscount->first();
+                            // ràng buộc giá default mặc định
+                            $userDefaultPrice = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                         @endphp
                         <div class="item">
@@ -184,7 +186,7 @@
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button class="outline-0 border-0 bg-white"
-                                            onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : '' }}','{{ json_encode($productImageCollect) }}')">
+                                            onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userDefaultPrice }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
                                         <i class="fa-solid fa-bag-shopping"></i>
@@ -205,7 +207,6 @@
                                                 <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
                                             </div>
                                         @endif
-
                                     </div>
                                 </div>
                             </div>
@@ -215,9 +216,7 @@
             </div>
         </section>
         <!-- END PRODUCT NỔI BẬT -->
-        <div id="modal_home" class="modal_product_main">
 
-        </div>
         <!-- START PRODUCT GIẢM GIÁ -->
         <section class="product">
             <div class="container">
@@ -225,98 +224,46 @@
                     <h2>Sản phẩm giảm giá</h2>
                 </div>
                 <div class="owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_sale">50%</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
+                    @foreach ($productDiscountSection as $item)
+                        @php
+                            $userGroupDefaultDiscount = $item->productDiscount->first();
+                            $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            // ràng buộc giá default mặc định
+                            $userDefaultPrice = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
+                            $percent = ceil((($item->price - $userDefaultPrice) / $item->price) * 100);
+                        @endphp
+                        <div class="item">
+                            <div class="product_box">
+                                <div class="product_box_effect">
+                                    <div class="product_box_tag_sale">{{ $percent }}%</div>
+                                    <div class="product_box_icon">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <button class="outline-0 border-0 bg-white"
+                                            onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userDefaultPrice }}','{{ json_encode($productImageCollect) }}')">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button> <i class="fa-solid fa-bag-shopping"></i>
                                     </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
+                                    <div class="product_box_image">
+                                        <img src="{{ asset('img/' . $item->image) }}" alt="" />
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_sale">50%</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
+                                    <div class="product_box_content_out">
+                                        <div class="product_box_content">
+                                            <h3><a href="">{{ $item->name }}</a></h3>
+                                        </div>
+                                        @if ($userGroupDefaultDiscount)
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
+                                            </div>
+                                        @else
+                                            <div class="product_box_price">
+                                                <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_sale">50%</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_sale">50%</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -464,110 +411,50 @@
                     <h2>Sản phẩm bán chạy</h2>
                 </div>
                 <div class="owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hot</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
+                    @foreach ($productBestseller as $item)
+                        @php
+                            $userGroupDefaultDiscount = $item->productDiscount->first();
+                            $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            // ràng buộc giá default mặc định
+                            $userDefaultPrice = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
+                        @endphp
+                        <div class="item">
+                            <div class="product_box">
+                                <div class="product_box_effect">
+                                    <div class="product_box_tag_soldout">Hot</div>
+                                    <div class="product_box_icon">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <button class="outline-0 border-0 bg-white"
+                                            onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userDefaultPrice }}','{{ json_encode($productImageCollect) }}')">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                        <i class="fa-solid fa-bag-shopping"></i>
                                     </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
+                                    <div class="product_box_image">
+                                        <img src="{{ asset('img/' . $item->image) }}" alt="" />
                                     </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hot</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
+                                    <div class="product_box_content_out">
+                                        <div class="product_box_content">
+                                            <h3><a href="">{{ $item->name }}</a></h3>
+                                        </div>
+                                        @if ($userGroupDefaultDiscount)
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
+                                            </div>
+                                        @else
+                                            <div class="product_box_price">
+                                                <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
+                                        @endif
+                                        <div class="product_box_content_soldout">
+                                            <p>+{{ $item->orderProduct->sum('quantity') }} Lượt mua</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hot</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hot</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </section>
@@ -783,6 +670,9 @@
             </div>
         </section>
         <!-- END BÀI VIẾT -->
+
+        <div id="modal_home" class="modal_product_main">
+        </div>
     </div>
 
 

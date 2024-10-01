@@ -31,6 +31,11 @@ class Product extends Model
         return $this->hasMany(ProductDiscount::class, 'product_id');
     }
 
+    public function orderProduct()
+    {
+        return $this->hasMany(OrderProduct::class, 'product_id');
+    }
+
     public function productImage()
     {
         return $this->hasMany(ProductImages::class, 'product_id');
@@ -70,5 +75,19 @@ class Product extends Model
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->get();
+    }
+
+    public function productDiscountSection()
+    {
+        return $this
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    public function productBestseller()
+    {
+        $quantityTotal = (new OrderProduct)->getQuantityProduct();
+        return $this->whereIn('id', $quantityTotal->pluck('product_id'))->get();
     }
 }

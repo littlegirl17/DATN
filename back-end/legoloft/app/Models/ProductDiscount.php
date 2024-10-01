@@ -35,10 +35,4 @@ class ProductDiscount extends Model
     {
         return $this->where('user_group_id', 1)->first();
     }
-
-    // hàm show section giá giảm
-    public function productDiscountDiscount()
-    {
-        return $this->where('user_group_id', 1)->get();
-    }
 }
