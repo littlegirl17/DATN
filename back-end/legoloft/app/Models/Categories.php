@@ -23,6 +23,10 @@ class Categories extends Model
         return $this->hasMany(Categories::class, 'parent_id');
     }
 
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'category_id')->where('status', 1);
+    }
 
     public function categoryAll()
     {

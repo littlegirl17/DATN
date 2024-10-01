@@ -87,7 +87,7 @@ class Product extends Model
 
     public function productBestseller()
     {
-        $quantityTotal = (new OrderProduct)->getQuantityProduct();
-        return $this->whereIn('id', $quantityTotal->pluck('product_id'))->get();
+        $quantityTotal = (new OrderProduct)->getQuantityProduct(); //trả về một tập hợp các bản ghi chứa product_id và tổng số lượng (total_quantity) của từng sản phẩm.
+        return $this->whereIn('id', $quantityTotal->pluck('product_id'))->get(); //>whereIn('id':  lọc những sản phẩm từ bảng sản phẩm có id nằm trong danh sách các product_id này.  //pluck('product_id') sẽ lấy ra tất cả các product_id từ tập hợp kết quả đó, tạo thành một danh sách (mảng) các product_id.
     }
 }

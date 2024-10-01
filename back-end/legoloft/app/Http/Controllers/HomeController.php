@@ -30,7 +30,17 @@ class HomeController extends Controller
         $productOutStanding = $this->productModel->productOutStanding();
         $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
         $productDiscountSection = $this->productModel->productDiscountSection();
-        $productBestseller =  $this->productModel->productBestseller();
-        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'productBestseller'));
+        $productBestseller = $this->productModel->productBestseller();
+        // Lấy danh sách các danh mục chính và danh mục con
+        $categories = Categories::with(['categories_children', 'categories_children.product'])->whereNull('parent_id')->get();
+        $productByCategory = []; //tạo mảng để lưu trữ sản phẩm theo danh mục con
+        foreach ($categories as $category) { //Duyệt qua từng danh mục cha
+            foreach ($category->categories_children as $child) { // Duyệt qua từng danh mục con của danh mục cha hiện tại //$child đại diện cho một danh mục con của danh mục cha hiện tại.
+                // Lưu trữ sản phẩm cho từng danh mục con
+                $productByCategory[$child->id] = $child->product;
+            }
+        }
+
+        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory'));
     }
 }

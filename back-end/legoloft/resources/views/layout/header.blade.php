@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="">
-                    <a href="cart.html"> <img src="img/cart.svg" alt="" /></a>
+                    <a href="{{ route('cart') }}"> <img src="img/cart.svg" alt="" /></a>
                 </div>
             </div>
         </div>

@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\CartC;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Category;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\Admin\AdminstrationController;
 
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -20,11 +23,15 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
 
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-Route::get('/', [HomeController::class, 'index']);
+
 
 
 
@@ -50,6 +57,14 @@ Route::get('resetPassword', function () {
     return view('reenterPassword');
 })->name('resetPassword');
 Route::post('resetPassword', [UserController::class, 'resetPassword'])->name('resetPassword');
+
+Route::get('cart', [CartController::class, 'getCart'])->name('cart');
+Route::post('cartForm', [CartController::class, 'cartAdd'])->name('cartForm');
+Route::get('increaseQuantity/{id}', [CartController::class, 'increaseQuantity'])->name('increaseQuantity');
+Route::get('decreaseQuantity/{id}', [CartController::class, 'decreaseQuantity'])->name('decreaseQuantity');
+Route::get('deleteItemCart/{id}', [CartController::class, 'deleteItemCart'])->name('deleteItemCart');
+Route::get('deleteAllCart', [CartController::class, 'deleteAllCart'])->name('deleteAllCart');
+
 
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */

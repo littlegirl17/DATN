@@ -9,90 +9,51 @@
 
         <div class="cart_box">
             <div class="">
-                <div class="cart_item">
-                    <div class="cart_item_img">
-                        <img src="img/city-product-1.webp" alt="" />
-                    </div>
-                    <div class="cart_item_content">
-                        <div class="cart_item_content_name">
-                            <h2>Tàu thám hiểm Bắc Cực</h2>
+                @if (is_array($cart))
+                    {{-- SHOW CART COOKIE --}}
+                    @foreach ($cart as $item)
+                        @php
+                            // dùng để truy xuất vao bảng product thông qua product_id  để show thông tin của 1 san phẩm trong cart
+                            $product = $products->where('id', $item['product_id'])->first();
+                            // ta tiếp tục dùng $product để truy xuất vào  quan hệ   productDiscount để tìm giá giảm tương ứng với nhóm người dùng hiện tại. //  lọc theo user_group_id của người dùng hiện tại. Nếu người dùng chưa đăng nhập, mặc định nhóm người dùng là 1.
+                            $userGroupDefaultDiscount = $product->productDiscount
+                                ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
+                                ->first();
+                        @endphp
+                        <div class="cart_item">
+                            <div class="cart_item_img">
+                                <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                            </div>
+                            <div class="cart_item_content">
+                                <div class="cart_item_content_name">
+                                    <h2>{{ $product->name }}</h2>
+                                </div>
+                                @if ($userGroupDefaultDiscount)
+                                    <div class="cart_item_content_price">
+                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
+                                    </div>
+                                @else
+                                    <div class="cart_item_content_price">
+                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                    </div>
+                                @endif
+
+                                <div class="cart_item_content_quantity">
+                                    <button class="cart_quantity_decrease">-</button>
+                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number" />
+                                    <button class="cart_quantity_increase">+</button>
+                                </div>
+                            </div>
+                            <div class="cart_item_close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
                         </div>
-                        <div class="cart_item_content_price">
-                            <span>1.500.000đ</span>1.200.000đ
-                        </div>
-                        <div class="cart_item_content_quantity">
-                            <button class="cart_quantity_decrease">-</button>
-                            <input type="text" value="1" class="cart_quantity_number" />
-                            <button class="cart_quantity_increase">+</button>
-                        </div>
-                    </div>
-                    <div class="cart_item_close">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
-                <div class="cart_item">
-                    <div class="cart_item_img">
-                        <img src="img/city-product-1.webp" alt="" />
-                    </div>
-                    <div class="cart_item_content">
-                        <div class="cart_item_content_name">
-                            <h2>Tàu thám hiểm Bắc Cực</h2>
-                        </div>
-                        <div class="cart_item_content_price">
-                            <span>1.500.000đ</span>1.200.000đ
-                        </div>
-                        <div class="cart_item_content_quantity">
-                            <button class="cart_quantity_decrease">-</button>
-                            <input type="text" value="1" class="cart_quantity_number" />
-                            <button class="cart_quantity_increase">+</button>
-                        </div>
-                    </div>
-                    <div class="cart_item_close">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
-                <div class="cart_item">
-                    <div class="cart_item_img">
-                        <img src="img/city-product-1.webp" alt="" />
-                    </div>
-                    <div class="cart_item_content">
-                        <div class="cart_item_content_name">
-                            <h2>Tàu thám hiểm Bắc Cực</h2>
-                        </div>
-                        <div class="cart_item_content_price">
-                            <span>1.500.000đ</span>1.200.000đ
-                        </div>
-                        <div class="cart_item_content_quantity">
-                            <button class="cart_quantity_decrease">-</button>
-                            <input type="text" value="1" class="cart_quantity_number" />
-                            <button class="cart_quantity_increase">+</button>
-                        </div>
-                    </div>
-                    <div class="cart_item_close">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
-                <div class="cart_item">
-                    <div class="cart_item_img">
-                        <img src="img/city-product-1.webp" alt="" />
-                    </div>
-                    <div class="cart_item_content">
-                        <div class="cart_item_content_name">
-                            <h2>Tàu thám hiểm Bắc Cực</h2>
-                        </div>
-                        <div class="cart_item_content_price">
-                            <span>1.500.000đ</span>1.200.000đ
-                        </div>
-                        <div class="cart_item_content_quantity">
-                            <button class="cart_quantity_decrease">-</button>
-                            <input type="text" value="1" class="cart_quantity_number" />
-                            <button class="cart_quantity_increase">+</button>
-                        </div>
-                    </div>
-                    <div class="cart_item_close">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
+                    @endforeach
+                @else
+                    {{-- Tài show cart bằng DB ra chô này --}}
+                @endif
+
+
                 <div class="btn_two_cart">
                     <a class="btn_goon_cart">Tiếp tục mua sắm</a>
 
