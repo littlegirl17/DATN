@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th9 25, 2024 lúc 02:36 PM
+-- Thời gian đã tạo: Th10 01, 2024 lúc 06:28 PM
 -- Phiên bản máy phục vụ: 8.3.0
 -- Phiên bản PHP: 8.3.1
 
@@ -57,7 +57,7 @@ INSERT INTO `administrations` (`id`, `admin_group_id`, `fullname`, `username`, `
 CREATE TABLE `administration_groups` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permission` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permission` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -97,6 +97,21 @@ CREATE TABLE `cache_locks` (
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` bigint UNSIGNED NOT NULL,
+  `product_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `quantity` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `categories`
 --
 
@@ -120,10 +135,17 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`, `image`, `slug`, `description`, `sort_order`, `status`, `parent_id`, `created_at`, `updated_at`) VALUES
 (1, 'Mô hình trẻ em', NULL, 'mo-hinh-nguoi-lon', NULL, 1, 1, NULL, NULL, NULL),
 (2, 'Mô hình người lớn\r\n', NULL, 'mo-hinh-tre-em', NULL, 2, 1, NULL, NULL, NULL),
-(5, 'Danh mục trẻ em 1', NULL, 'danh-muc-tre-em-1', NULL, 1, 1, 1, NULL, NULL),
-(6, 'Danh mục trẻ em 2', NULL, 'danh-muc-tre-em-2', NULL, 1, 1, 1, NULL, NULL),
-(7, 'Danh mục người lớn 1', NULL, 'danh-muc-nguoi-lon-1', NULL, 1, 1, 2, NULL, NULL),
-(8, 'Danh mục người lớn 2', NULL, 'danh-muc-nguoi-lon-2', NULL, 2, 1, 2, NULL, NULL);
+(3, 'Mô hình con gái\r\n', NULL, 'mo-hinh-con-gai', NULL, 3, 1, NULL, NULL, NULL),
+(4, 'Súng NERF\r\n', NULL, 'mo-hinh-con-gai', NULL, 4, 1, NULL, NULL, NULL),
+(5, 'Mô hình đơn giản', NULL, 'danh-muc-tre-em-1', NULL, 1, 0, 1, NULL, NULL),
+(6, 'Mô hình DUPLO', NULL, 'danh-muc-tre-em-2', NULL, 1, 0, 1, NULL, NULL),
+(7, 'Mô hình cô điển', NULL, 'danh-muc-tre-em-3', NULL, 1, 0, 1, NULL, NULL),
+(8, 'Mô hình thiếu niên', NULL, 'danh-muc-tre-em-4', NULL, 1, 0, 1, NULL, NULL),
+(9, 'Mô hình kỹ thuật Việt Nam', NULL, 'danh-muc-nguoi-lon-1', NULL, 1, 1, 2, NULL, NULL),
+(10, 'Mô hình động cơ điện', NULL, 'danh-muc-nguoi-lon-2', NULL, 1, 0, 2, NULL, NULL),
+(11, 'Mô hình chuyên gia tạo hình', NULL, 'danh-muc-nguoi-lon-3', NULL, 1, 0, 2, NULL, NULL),
+(12, 'Mô hình lắp rắp và lập trình ROBOT', NULL, 'danh-muc-nguoi-lon-4', NULL, 1, 0, 2, NULL, NULL),
+(13, 'Mô hình kiến trúc', NULL, 'danh-muc-nguoi-lon-5', NULL, 1, 0, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -203,7 +225,74 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2024_09_16_065447_create_products_table', 6),
 (13, '2024_09_16_114844_create_product_images_table', 7),
 (14, '2024_09_16_115342_create_user_groups_table', 8),
-(16, '2024_09_16_115455_create_product_discounts_table', 9);
+(16, '2024_09_16_115455_create_product_discounts_table', 9),
+(17, '2024_10_01_024046_create_carts_table', 10),
+(18, '2024_10_01_024441_create_orders_table', 11),
+(19, '2024_10_01_025406_create_order_products_table', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` int NOT NULL,
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ward` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` decimal(15,0) NOT NULL,
+  `payment` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `coupon_code` int DEFAULT NULL,
+  `order_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `phone`, `province`, `district`, `ward`, `total`, `payment`, `status`, `coupon_code`, `order_code`, `note`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Khách vãng lai 1', 'kvl@gmail.com', 1234567899, 'Quang nam', 'Can nam', 'Dong Tay', 250000, 1, 1, NULL, '', 'đ', NULL, NULL),
+(2, NULL, 'Khách vãng lai 2', 'kvl@gmail.com', 1234567899, 'Quang nam', 'Can nam', 'Dong Tay', 250000, 1, 1, NULL, '', 'đ', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `order_products`
+--
+
+CREATE TABLE `order_products` (
+  `id` bigint UNSIGNED NOT NULL,
+  `order_id` bigint UNSIGNED NOT NULL,
+  `product_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` decimal(15,0) NOT NULL,
+  `quantity` int NOT NULL,
+  `total` decimal(15,0) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `order_products`
+--
+
+INSERT INTO `order_products` (`id`, `order_id`, `product_id`, `name`, `price`, `quantity`, `total`, `created_at`, `updated_at`) VALUES
+(1, 1, 17, 'san pham F', 260000, 110, 28600000, NULL, NULL),
+(2, 1, 12, 'san pham A', 200000, 135, 27000000, NULL, NULL),
+(3, 1, 16, 'san pham E', 250000, 146, 36500000, NULL, NULL),
+(4, 1, 13, 'san pham B', 220000, 150, 33000000, NULL, NULL),
+(5, 1, 14, 'san pham C', 230000, 200, 46000000, NULL, NULL),
+(6, 1, 15, 'san pham D', 240000, 179, 42960000, NULL, NULL),
+(7, 2, 15, 'san pham D', 240000, 1, 240000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -229,7 +318,7 @@ CREATE TABLE `products` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` bigint UNSIGNED NOT NULL,
-  `price` decimal(15,2) NOT NULL,
+  `price` decimal(15,0) NOT NULL,
   `view` int NOT NULL,
   `outstanding` tinyint NOT NULL DEFAULT '0',
   `status` tinyint NOT NULL DEFAULT '0',
@@ -243,8 +332,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `slug`, `image`, `category_id`, `price`, `view`, `outstanding`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'ưd', '1.jpg', 6, 11111111.00, 500, 1, 1, 'dfdaf', '2024-09-24 08:27:14', '2024-09-24 08:27:14'),
-(2, 'san pham a', 'san-pham-a', '2.webp', 5, 1111111.00, 500, 1, 1, 'ssssssssss', '2024-09-24 08:34:48', '2024-09-24 09:15:17');
+(12, 'San pham A', 'san-pham-a', 'product-test.webp', 9, 200000, 1, 1, 1, '', NULL, NULL),
+(13, 'San pham B', 'san-pham-b', 'product-test.webp', 9, 220000, 1, 1, 1, '', NULL, NULL),
+(14, 'San pham C', 'san-pham-c', 'product-test.webp', 9, 230000, 1, 1, 1, '', NULL, NULL),
+(15, 'San pham D', 'san-pham-d', 'product-test.webp', 9, 240000, 1, 1, 1, '', NULL, NULL),
+(16, 'San pham E', 'san-pham-e', 'product-test.webp', 9, 250000, 1, 1, 1, '', NULL, NULL),
+(17, 'San pham F', 'san-pham-f', 'product-test.webp', 9, 260000, 1, 1, 1, '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -256,11 +349,20 @@ CREATE TABLE `product_discounts` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `user_group_id` bigint UNSIGNED NOT NULL,
-  `quantity` int NOT NULL,
-  `discount_price` decimal(15,2) NOT NULL,
+  `price` decimal(15,0) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `product_discounts`
+--
+
+INSERT INTO `product_discounts` (`id`, `product_id`, `user_group_id`, `price`, `created_at`, `updated_at`) VALUES
+(19, 17, 1, 255000, NULL, NULL),
+(20, 16, 1, 245000, NULL, NULL),
+(21, 14, 1, 225000, NULL, NULL),
+(22, 15, 1, 235000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -275,6 +377,17 @@ CREATE TABLE `product_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `images`, `created_at`, `updated_at`) VALUES
+(6, 17, '2_66f90538de76b.png', '2024-09-29 00:27:11', '2024-09-29 00:43:52'),
+(7, 17, '2_66f9019754d58.jpg', '2024-09-29 00:27:11', '2024-09-29 00:28:23'),
+(8, 17, '2_66f903f8713f6.jpg', '2024-09-29 00:27:28', '2024-09-29 00:38:32'),
+(9, 17, '2_66f903ea77bc6.png', '2024-09-29 00:38:18', '2024-09-29 00:38:18'),
+(10, 17, '2_66f9056150d0f.jpg', '2024-09-29 00:44:19', '2024-09-29 00:44:33');
 
 -- --------------------------------------------------------
 
@@ -296,9 +409,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('K0FaO0CyX8iVr6pVzcB8CrSLVxMYgiYR0inVkBe5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWU9PSVd6ckl4Tnp0OHgzSWZISGFxWTNRYUpwMk5Zam1xT3ZEdGRodCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9kdWN0Ijt9czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NToiYWRtaW4iO086MjU6IkFwcFxNb2RlbHNcQWRtaW5pc3RyYXRpb24iOjMyOntzOjEzOiIAKgBjb25uZWN0aW9uIjtzOjU6Im15c3FsIjtzOjg6IgAqAHRhYmxlIjtzOjE1OiJhZG1pbmlzdHJhdGlvbnMiO3M6MTM6IgAqAHByaW1hcnlLZXkiO3M6MjoiaWQiO3M6MTA6IgAqAGtleVR5cGUiO3M6MzoiaW50IjtzOjEyOiJpbmNyZW1lbnRpbmciO2I6MTtzOjc6IgAqAHdpdGgiO2E6MDp7fXM6MTI6IgAqAHdpdGhDb3VudCI7YTowOnt9czoxOToicHJldmVudHNMYXp5TG9hZGluZyI7YjowO3M6MTA6IgAqAHBlclBhZ2UiO2k6MTU7czo2OiJleGlzdHMiO2I6MTtzOjE4OiJ3YXNSZWNlbnRseUNyZWF0ZWQiO2I6MDtzOjI4OiIAKgBlc2NhcGVXaGVuQ2FzdGluZ1RvU3RyaW5nIjtiOjA7czoxMzoiACoAYXR0cmlidXRlcyI7YToxMDp7czoyOiJpZCI7aToxO3M6MTQ6ImFkbWluX2dyb3VwX2lkIjtpOjEwO3M6ODoiZnVsbG5hbWUiO3M6OToiSHV5bmggS2hhIjtzOjg6InVzZXJuYW1lIjtzOjg6ImtoYWtoYTE3IjtzOjU6ImVtYWlsIjtzOjIwOiJraGFraGE1MDg3QGdtYWlsLmNvbSI7czo4OiJwYXNzd29yZCI7czo2MDoiJDJ5JDEyJDlzVXN0bkduMzBsVFd5SDRzVnJrbXVhWEhpbHJkaTVtUmsubElyL05GaWMvZWkyajdoOHdlIjtzOjU6ImltYWdlIjtzOjU6IjEucG5nIjtzOjY6InN0YXR1cyI7aToxO3M6MTA6ImNyZWF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTQgMDY6Mjk6NDIiO3M6MTA6InVwZGF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTYgMDM6MzE6NTAiO31zOjExOiIAKgBvcmlnaW5hbCI7YToxMDp7czoyOiJpZCI7aToxO3M6MTQ6ImFkbWluX2dyb3VwX2lkIjtpOjEwO3M6ODoiZnVsbG5hbWUiO3M6OToiSHV5bmggS2hhIjtzOjg6InVzZXJuYW1lIjtzOjg6ImtoYWtoYTE3IjtzOjU6ImVtYWlsIjtzOjIwOiJraGFraGE1MDg3QGdtYWlsLmNvbSI7czo4OiJwYXNzd29yZCI7czo2MDoiJDJ5JDEyJDlzVXN0bkduMzBsVFd5SDRzVnJrbXVhWEhpbHJkaTVtUmsubElyL05GaWMvZWkyajdoOHdlIjtzOjU6ImltYWdlIjtzOjU6IjEucG5nIjtzOjY6InN0YXR1cyI7aToxO3M6MTA6ImNyZWF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTQgMDY6Mjk6NDIiO3M6MTA6InVwZGF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTYgMDM6MzE6NTAiO31zOjEwOiIAKgBjaGFuZ2VzIjthOjA6e31zOjg6IgAqAGNhc3RzIjthOjA6e31zOjE3OiIAKgBjbGFzc0Nhc3RDYWNoZSI7YTowOnt9czoyMToiACoAYXR0cmlidXRlQ2FzdENhY2hlIjthOjA6e31zOjEzOiIAKgBkYXRlRm9ybWF0IjtOO3M6MTA6IgAqAGFwcGVuZHMiO2E6MDp7fXM6MTk6IgAqAGRpc3BhdGNoZXNFdmVudHMiO2E6MDp7fXM6MTQ6IgAqAG9ic2VydmFibGVzIjthOjA6e31zOjEyOiIAKgByZWxhdGlvbnMiO2E6MDp7fXM6MTA6IgAqAHRvdWNoZXMiO2E6MDp7fXM6MTA6InRpbWVzdGFtcHMiO2I6MTtzOjEzOiJ1c2VzVW5pcXVlSWRzIjtiOjA7czo5OiIAKgBoaWRkZW4iO2E6MDp7fXM6MTA6IgAqAHZpc2libGUiO2E6MDp7fXM6MTE6IgAqAGZpbGxhYmxlIjthOjc6e2k6MDtzOjE0OiJhZG1pbl9ncm91cF9pZCI7aToxO3M6ODoiZnVsbG5hbWUiO2k6MjtzOjg6InVzZXJuYW1lIjtpOjM7czo1OiJlbWFpbCI7aTo0O3M6ODoicGFzc3dvcmQiO2k6NTtzOjU6ImltYWdlIjtpOjY7czo2OiJzdGF0dXMiO31zOjEwOiIAKgBndWFyZGVkIjthOjE6e2k6MDtzOjE6IioiO31zOjE5OiIAKgBhdXRoUGFzc3dvcmROYW1lIjtzOjg6InBhc3N3b3JkIjtzOjIwOiIAKgByZW1lbWJlclRva2VuTmFtZSI7czoxNDoicmVtZW1iZXJfdG9rZW4iO319', 1727194519),
-('s11Vw54E8H1K0YcmLj7D0yRVELOhW559q5zgUs8P', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Avast/128.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiN1VENW55Vk01ZVBFbDdWbE9nWWJ2ejBDbUFrbEZkN3F4M1BlQ2NLRiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9kdWN0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NToiYWRtaW4iO086MjU6IkFwcFxNb2RlbHNcQWRtaW5pc3RyYXRpb24iOjMyOntzOjEzOiIAKgBjb25uZWN0aW9uIjtzOjU6Im15c3FsIjtzOjg6IgAqAHRhYmxlIjtzOjE1OiJhZG1pbmlzdHJhdGlvbnMiO3M6MTM6IgAqAHByaW1hcnlLZXkiO3M6MjoiaWQiO3M6MTA6IgAqAGtleVR5cGUiO3M6MzoiaW50IjtzOjEyOiJpbmNyZW1lbnRpbmciO2I6MTtzOjc6IgAqAHdpdGgiO2E6MDp7fXM6MTI6IgAqAHdpdGhDb3VudCI7YTowOnt9czoxOToicHJldmVudHNMYXp5TG9hZGluZyI7YjowO3M6MTA6IgAqAHBlclBhZ2UiO2k6MTU7czo2OiJleGlzdHMiO2I6MTtzOjE4OiJ3YXNSZWNlbnRseUNyZWF0ZWQiO2I6MDtzOjI4OiIAKgBlc2NhcGVXaGVuQ2FzdGluZ1RvU3RyaW5nIjtiOjA7czoxMzoiACoAYXR0cmlidXRlcyI7YToxMDp7czoyOiJpZCI7aToxO3M6MTQ6ImFkbWluX2dyb3VwX2lkIjtpOjEwO3M6ODoiZnVsbG5hbWUiO3M6OToiSHV5bmggS2hhIjtzOjg6InVzZXJuYW1lIjtzOjg6ImtoYWtoYTE3IjtzOjU6ImVtYWlsIjtzOjIwOiJraGFraGE1MDg3QGdtYWlsLmNvbSI7czo4OiJwYXNzd29yZCI7czo2MDoiJDJ5JDEyJDlzVXN0bkduMzBsVFd5SDRzVnJrbXVhWEhpbHJkaTVtUmsubElyL05GaWMvZWkyajdoOHdlIjtzOjU6ImltYWdlIjtzOjU6IjEucG5nIjtzOjY6InN0YXR1cyI7aToxO3M6MTA6ImNyZWF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTQgMDY6Mjk6NDIiO3M6MTA6InVwZGF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTYgMDM6MzE6NTAiO31zOjExOiIAKgBvcmlnaW5hbCI7YToxMDp7czoyOiJpZCI7aToxO3M6MTQ6ImFkbWluX2dyb3VwX2lkIjtpOjEwO3M6ODoiZnVsbG5hbWUiO3M6OToiSHV5bmggS2hhIjtzOjg6InVzZXJuYW1lIjtzOjg6ImtoYWtoYTE3IjtzOjU6ImVtYWlsIjtzOjIwOiJraGFraGE1MDg3QGdtYWlsLmNvbSI7czo4OiJwYXNzd29yZCI7czo2MDoiJDJ5JDEyJDlzVXN0bkduMzBsVFd5SDRzVnJrbXVhWEhpbHJkaTVtUmsubElyL05GaWMvZWkyajdoOHdlIjtzOjU6ImltYWdlIjtzOjU6IjEucG5nIjtzOjY6InN0YXR1cyI7aToxO3M6MTA6ImNyZWF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTQgMDY6Mjk6NDIiO3M6MTA6InVwZGF0ZWRfYXQiO3M6MTk6IjIwMjQtMDktMTYgMDM6MzE6NTAiO31zOjEwOiIAKgBjaGFuZ2VzIjthOjA6e31zOjg6IgAqAGNhc3RzIjthOjA6e31zOjE3OiIAKgBjbGFzc0Nhc3RDYWNoZSI7YTowOnt9czoyMToiACoAYXR0cmlidXRlQ2FzdENhY2hlIjthOjA6e31zOjEzOiIAKgBkYXRlRm9ybWF0IjtOO3M6MTA6IgAqAGFwcGVuZHMiO2E6MDp7fXM6MTk6IgAqAGRpc3BhdGNoZXNFdmVudHMiO2E6MDp7fXM6MTQ6IgAqAG9ic2VydmFibGVzIjthOjA6e31zOjEyOiIAKgByZWxhdGlvbnMiO2E6MDp7fXM6MTA6IgAqAHRvdWNoZXMiO2E6MDp7fXM6MTA6InRpbWVzdGFtcHMiO2I6MTtzOjEzOiJ1c2VzVW5pcXVlSWRzIjtiOjA7czo5OiIAKgBoaWRkZW4iO2E6MDp7fXM6MTA6IgAqAHZpc2libGUiO2E6MDp7fXM6MTE6IgAqAGZpbGxhYmxlIjthOjc6e2k6MDtzOjE0OiJhZG1pbl9ncm91cF9pZCI7aToxO3M6ODoiZnVsbG5hbWUiO2k6MjtzOjg6InVzZXJuYW1lIjtpOjM7czo1OiJlbWFpbCI7aTo0O3M6ODoicGFzc3dvcmQiO2k6NTtzOjU6ImltYWdlIjtpOjY7czo2OiJzdGF0dXMiO31zOjEwOiIAKgBndWFyZGVkIjthOjE6e2k6MDtzOjE6IioiO31zOjE5OiIAKgBhdXRoUGFzc3dvcmROYW1lIjtzOjg6InBhc3N3b3JkIjtzOjIwOiIAKgByZW1lbWJlclRva2VuTmFtZSI7czoxNDoicmVtZW1iZXJfdG9rZW4iO319', 1727238293),
-('uCYBKbZrlIU0hXNLW8Ln7upxxxrDDIh841isgL0j', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Avast/128.0.0.0', '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', 1727274036);
+('xxzqXCOzGEVUYNVHDZpQHikTG7NbVXgiVXJuZv9N', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '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', 1727807249);
 
 -- --------------------------------------------------------
 
@@ -316,15 +427,16 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `verification_code` int DEFAULT NULL
+  `verification_code` int DEFAULT NULL,
+  `user_group_id` bigint UNSIGNED NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `verification_code`) VALUES
-(1, 'kha', 'khakha5087@gmail.com', NULL, '$2y$12$iTIh4lveGPukaao1qcMua.hHEPloLVDUxyOspw/4gB7as0mbXp4uu', NULL, NULL, '2024-09-21 04:35:39', 1, NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `verification_code`, `user_group_id`) VALUES
+(1, 'kha', 'khakha5087@gmail.com', NULL, '$2y$12$iTIh4lveGPukaao1qcMua.hHEPloLVDUxyOspw/4gB7as0mbXp4uu', NULL, NULL, '2024-09-21 04:35:39', 1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -338,6 +450,16 @@ CREATE TABLE `user_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `user_groups`
+--
+
+INSERT INTO `user_groups` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Mặc định', NULL, NULL),
+(2, 'Đồng', NULL, NULL),
+(3, 'Bạc', NULL, NULL),
+(4, 'Vàng', NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -368,6 +490,14 @@ ALTER TABLE `cache`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
+
+--
+-- Chỉ mục cho bảng `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `carts_product_id_foreign` (`product_id`),
+  ADD KEY `carts_user_id_foreign` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `categories`
@@ -401,6 +531,21 @@ ALTER TABLE `job_batches`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_user_id_foreign` (`user_id`);
+
+--
+-- Chỉ mục cho bảng `order_products`
+--
+ALTER TABLE `order_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_products_order_id_foreign` (`order_id`),
+  ADD KEY `order_products_product_id_foreign` (`product_id`);
 
 --
 -- Chỉ mục cho bảng `password_reset_tokens`
@@ -443,7 +588,8 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `user_group_id` (`user_group_id`);
 
 --
 -- Chỉ mục cho bảng `user_groups`
@@ -459,19 +605,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT cho bảng `administrations`
 --
 ALTER TABLE `administrations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `administration_groups`
 --
 ALTER TABLE `administration_groups`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT cho bảng `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `failed_jobs`
@@ -489,25 +641,37 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `order_products`
+--
+ALTER TABLE `order_products`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `product_discounts`
 --
 ALTER TABLE `product_discounts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -519,7 +683,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -532,10 +696,30 @@ ALTER TABLE `administrations`
   ADD CONSTRAINT `administrations_admin_group_id_foreign` FOREIGN KEY (`admin_group_id`) REFERENCES `administration_groups` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
+-- Các ràng buộc cho bảng `carts`
+--
+ALTER TABLE `carts`
+  ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Các ràng buộc cho bảng `categories`
 --
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Các ràng buộc cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Các ràng buộc cho bảng `order_products`
+--
+ALTER TABLE `order_products`
+  ADD CONSTRAINT `order_products_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `order_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Các ràng buộc cho bảng `products`
@@ -555,6 +739,12 @@ ALTER TABLE `product_discounts`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Các ràng buộc cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
