@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_discounts', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('restrict')->onDelete('restrict');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('restrict')->onDelete('restrict');
-            $table->unsignedBigInteger('user_group_id');
-            $table->foreign('user_group_id')->references('id')->on('user_groups')->onUpdate('restrict')->onDelete('restrict');
+            $table->string('name');
+            $table->decimal('price', 15, 0);
             $table->integer('quantity');
-            $table->decimal('discount_price', 15, 0);
+            $table->decimal('total', 15, 0);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_discounts');
+        Schema::dropIfExists('order_products');
     }
 };

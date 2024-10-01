@@ -16,4 +16,9 @@ class UserGroup extends Model
     {
         return $this->orderBy('id', 'desc')->get();
     }
+
+    public function userGroupDefault()
+    {
+        return $this->where('id', 1)->first();
+    }
 }

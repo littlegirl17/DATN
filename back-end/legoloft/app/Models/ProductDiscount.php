@@ -15,6 +15,11 @@ class ProductDiscount extends Model
         'price',
     ];
 
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
     public function productDiscountById($id)
     {
         return $this->where('product_id', $id)->orderBy('id', 'desc')->get();
@@ -23,5 +28,17 @@ class ProductDiscount extends Model
     public function productDiscount($product_id, $user_group_id)
     {
         return $this->where('product_id', $product_id)->where('user_group_id', $user_group_id)->first();
+    }
+
+    // hàm lấy giá giảm theo default để show ra
+    public function userGroupDefaultDiscount()
+    {
+        return $this->where('user_group_id', 1)->first();
+    }
+
+    // hàm show section giá giảm
+    public function productDiscountDiscount()
+    {
+        return $this->where('user_group_id', 1)->get();
     }
 }

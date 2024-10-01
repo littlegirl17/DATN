@@ -28,7 +28,12 @@ class Product extends Model
 
     public function productDiscount()
     {
-        return $this->hasMany(ProductDiscount::class);
+        return $this->hasMany(ProductDiscount::class, 'product_id');
+    }
+
+    public function productImage()
+    {
+        return $this->hasMany(ProductImages::class, 'product_id');
     }
 
     public function productAll()
@@ -57,5 +62,13 @@ class Product extends Model
         }
 
         return $query->paginate(10);
+    }
+
+    public function productOutStanding()
+    {
+        return $this->where('outstanding', 1)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 }

@@ -86,52 +86,8 @@
             }
         });
     </script>
-    <script>
-        function showModalProduct() {
-            const modalHome = document.getElementById("modal_home");
-            modalHome.style.opacity = 1;
-            modalHome.style.pointerEvents = "auto"; // Cho phép tương tác khi hiển thị
 
-            const closeModal = document.getElementById("close_modal");
-            closeModal.onclick = function() {
-                modalHome.style.opacity = 0;
-            };
-        }
 
-        window.addEventListener("click", function(event) {
-            const modalHome = document.getElementById("modal_home");
-
-            // Kiểm tra nếu modalHome tồn tại và sự kiện xảy ra ngoài modal (chính modalHome)
-            if (event.target === modalHome) {
-                modalHome.style.opacity = 0;
-                modalHome.style.pointerEvents = "none"; // Ngăn tương tác khi ẩn
-            }
-        });
-    </script>
-    <script>
-        const largeImgHome = document.querySelector(
-            ".modal_product_content_two_img img"
-        );
-        const smallImgHome = document.querySelectorAll(
-            ".modal_product_left_img_item_res ul li img"
-        );
-
-        function updateLargeImageHome(i) {
-            largeImgHome.style.opacity = 0; // ẩn ảnh lớn
-
-            setTimeout(() => {
-                largeImgHome.src = smallImgHome[i].src; // Thay đổi hình ảnh lớn
-                largeImgHome.style.opacity = 1; // hiện ảnh lớn
-            }, 100);
-        }
-
-        // Sự kiện click vào hình ảnh nhỏ
-        smallImgHome.forEach((smallImg, i) => {
-            smallImg.addEventListener("click", function() {
-                updateLargeImageHome(i);
-            });
-        });
-    </script>
     <script>
         window.onscroll = function() {
             const navbar = document.querySelector(".nav_box");
