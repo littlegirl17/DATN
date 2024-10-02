@@ -79,7 +79,7 @@
                                         nhập</button>
                                 </div>
                                 <div class="btn_contain">
-                                    <button class="btn-register">Đăng ký</button>
+                                    <button class="btn-register" onclick="window.location.href='{{ route('register') }}'">Đăng ký</button>
                                 </div>
                             @endauth
 
