@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Mail\VerificationCode;
@@ -81,5 +82,10 @@ class UserController extends Controller
         $user->verification_code = null;
         $user->save();
         return redirect()->route('login')->with('success', 'Mật khẩu đã được thay đổi thành công');
+    }
+
+    public function register(RegisterRequest $request)
+    {
+
     }
 }
