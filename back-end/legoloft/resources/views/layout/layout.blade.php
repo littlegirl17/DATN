@@ -76,13 +76,13 @@
         const userContent = document.querySelector(".header_user_content");
         const headerUserClick = document.querySelector(".header_user_click");
         userImg.addEventListener("click", function() {
-            userContent.style.opacity = 1;
+            userContent.style.display = 'block';
         });
 
         window.addEventListener("click", function(event) {
             if (!headerUserClick.contains(event.target)) {
                 //Hàm này kiểm tra xem phần tử được nhấp chuột có nằm trong header_user_click hay không. Nếu không, tức là bạn đã nhấp ra ngoài, và userContent sẽ được ẩn đi.
-                userContent.style.opacity = 0;
+                userContent.style.display = 'none';
             }
         });
     </script>

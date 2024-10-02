@@ -21,9 +21,7 @@
             <div class="banner_home_mobile_image">
                 <img src="img/banner-home-mobile-1.webp" alt="" />
             </div>
-            <!-- <div class="banner_home_mobile_image_logo">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <img src="img/logo-ngang.png" alt="" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div> -->
+
             <div class="banner_home_mobile_text">
                 <h2 class="banner_home_mobile_text_h2">Đặt hàng trước bộ LEGO</h2>
                 <span class="banner_home_mobile_text_span">Cho đến khi hết hàng giao từ ngày 30/8</span>
@@ -297,8 +295,17 @@
                                         <button class="outline-0 border-0 bg-white"
                                             onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
-                                        </button> <i class="fa-solid fa-bag-shopping"></i>
+                                            <form action="{{ route('cartForm') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $item->id }}">
+                                                <input type="hidden" name="user_id"
+                                                    value="{{ Auth::check() ? Auth::user()->id : 0 }}">
+                                                <input type="hidden" name="quantity" value="1">
+                                                <button type="submit" class="outline-0 border-0 bg-white"><i
+                                                        class="fa-solid fa-bag-shopping"></i></button>
+                                            </form>
                                     </div>
+
                                     <div class="product_box_image">
                                         <img src="{{ asset('img/' . $item->image) }}" alt="" />
                                     </div>
@@ -411,7 +418,17 @@
                                                                 onclick="showModalProduct('{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                                                 <i class="fa-regular fa-eye"></i>
                                                             </button>
-                                                            <i class="fa-solid fa-bag-shopping"></i>
+                                                            <form action="{{ route('cartForm') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                                <input type="hidden" name="user_id"
+                                                                    value="{{ Auth::check() ? Auth::user()->id : 0 }}">
+                                                                <input type="hidden" name="quantity" value="1">
+                                                                <button type="submit"
+                                                                    class="outline-0 border-0 bg-white"><i
+                                                                        class="fa-solid fa-bag-shopping"></i></button>
+                                                            </form>
                                                         </div>
                                                         <div class="product_box_image">
                                                             <img src="{{ asset('img/' . $product->image) }}"
@@ -498,7 +515,15 @@
                                             onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
-                                        <i class="fa-solid fa-bag-shopping"></i>
+                                        <form action="{{ route('cartForm') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $item->id }}">
+                                            <input type="hidden" name="user_id"
+                                                value="{{ Auth::check() ? Auth::user()->id : 0 }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="outline-0 border-0 bg-white"><i
+                                                    class="fa-solid fa-bag-shopping"></i></button>
+                                        </form>
                                     </div>
                                     <div class="product_box_image">
                                         <img src="{{ asset('img/' . $item->image) }}" alt="" />
@@ -536,7 +561,6 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </section>
@@ -765,6 +789,7 @@
             modalHome.style.opacity = 1;
             modalHome.style.pointerEvents = "auto"; // Cho phép tương tác khi hiển thị
 
+            var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
             var priceItem = 0;
             if (defaultDiscountPrice) {
                 priceItem = `
@@ -811,9 +836,9 @@
                         ${priceItem}
                         <div class="detail_product_right_four py-3">
                             <div class="detail_product_right_four_item">
-                                <button class="right_four_item_decrease">-</button>
-                                <input type="text" class="right_four_item_number" value="1" />
-                                <button class="right_four_item_increase">+</button>
+                                <button class="right_four_item_decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="text" class="right_four_item_number" id="inputQuantity" value="1" disabled />
+                                <button class="right_four_item_increase" onclick="increaseQuantity()">+</button>
                             </div>
                             <div class="detail_product_right_four_span">
                                 <span>Giới hạn 5</span>
@@ -821,7 +846,14 @@
                         </div>
                         <div class="modal_btn">
                             <button class="modal_btn_item">Mua ngay</button>
-                            <button class="modal_btn_item">Thêm vào giỏ hàng</button>
+                            <form action="{{ route('cartForm') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="${ id }">
+                                <input type="hidden" name="user_id"
+                                    value="${user_id}">
+                                <input type="hidden" name="quantity" id="inputQuantityHidden" value="1">
+                                <button type="submit" class="modal_btn_item">Thêm vào giỏ hàng</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -870,6 +902,23 @@
                 modalHome.style.pointerEvents = "none"; // Ngăn tương tác khi ẩn
             }
         });
+
+        function decreaseQuantity() {
+            var inputQuantity = document.getElementById('inputQuantity');
+            var inputQuantityHidden = document.getElementById('inputQuantityHidden');
+            if (parseInt(inputQuantity.value) > 1) {
+                //lớn hơn 1 thì mưới cho giảm số lượng, nghĩa là ko cho giảm quantity xuống 0
+                inputQuantity.value = parseInt(inputQuantity.value) - 1;
+                inputQuantityHidden.value = inputQuantity.value;
+            }
+        }
+
+        function increaseQuantity() {
+            var inputQuantity = document.getElementById('inputQuantity');
+            var inputQuantityHidden = document.getElementById('inputQuantityHidden');
+            inputQuantity.value = parseInt(inputQuantity.value) + 1;
+            inputQuantityHidden.value = inputQuantity.value;
+        }
     </script>
 
 @endsection

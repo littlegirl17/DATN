@@ -77,15 +77,35 @@
                     <a href="{{ route('deleteAllCart') }}" class="btn_remove_cart">Xóa hết giỏ hàng</a>
                 </div>
             </div>
+
             <div class="cart_item_right">
                 <div class="cart_right_coupon">
                     <div class="coupon_title">
                         <h3>Nhập mã giảm giá</h3>
                     </div>
-                    <div class="d-flex">
-                        <input type="text" class="cart_right_coupon_input" placeholder="Nhập mã giảm giá" />
-                        <button type="submit" class="detail_btn_cart">Áp mã</button>
-                    </div>
+                    <form action="{{ route('couponForm') }}" method="post">
+                        @csrf
+                        <div class="d-flex">
+                            <input type="text" class="cart_right_coupon_input" name="code"
+                                placeholder="Nhập mã giảm giá" />
+                            @if (Session::get('coupon'))
+                                <button type="button" class="detail_btn_coupon"><a href="{{ route('couponDelete') }}"
+                                        class="text-decoration-none text-light">Xóa mã</a></button>
+                            @else
+                                <button type="submit" class="detail_btn_cart">Áp mã</button>
+                            @endif
+
+                        </div>
+                        <div class="pt-2">
+                            @if (session('error'))
+                                <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
+                            @endif
+                            @if (session('success'))
+                                <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
+                            @endif
+                        </div>
+
+                    </form>
                 </div>
                 <div class="cart_right_total">
                     <div class="cart_right_total_item">
@@ -94,11 +114,46 @@
                     </div>
                     <div class="cart_right_total_item">
                         <span>Mã giảm</span>
-                        <span>50.000đ</span>
+                        @if (Session::has('coupon'))
+                            @foreach (Session::get('coupon') as $item)
+                                @if (isset($item['type']))
+                                    @if ($item['type'] == 0)
+                                        {{-- giảm theo phần trăm --}}
+                                        @php
+                                            // Tổng số tiền giảm giá phần trăm
+                                            $total_coupon = ($total * $item['discount']) / 100;
+                                        @endphp
+                                        <span>{{ number_format($total - $total_coupon, 0, ',', '.') . 'đ' }}
+                                            ({{ $item['discount'] }}%)
+                                        </span>
+                                    @else
+                                        {{-- giảm theo số tiền --}}
+                                        @php
+                                            $total_coupon = $total * $item['discount'];
+                                        @endphp
+                                        <span> {{ number_format($item['discount'], 0, ',', '.') . 'đ' }}
+                                        </span>
+                                    @endif
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                     <div class="cart_right_total_item">
                         <h5>Tổng tiền</h5>
-                        <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
+                        @if (Session::has('coupon'))
+                            @php
+                                if ($item['type'] == 0) {
+                                    // nếu giảm theo %, thì lấu tổng tiền trừ đi cho số tiền giảm % đã tính ở trên
+                                    $totalFinalCoupon = $total - $total_coupon;
+                                } else {
+                                    // nếu giảm theo số tiền thì lấy tổng tiền trừ cho số tiền giảm
+                                    $totalFinalCoupon = $total - $item['discount'];
+                                }
+                            @endphp
+                            <span>{{ number_format($totalFinalCoupon, 0, ',', '.') . 'đ' }}</span>
+                        @else
+                            <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
+                        @endif
                     </div>
                     <div class="row_btn_checkout">
                         <a href="" class="btn_checkout">Tiến hành thanh toán</a>

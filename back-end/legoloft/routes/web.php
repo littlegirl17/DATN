@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\CouponController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
@@ -65,6 +66,8 @@ Route::get('decreaseQuantity/{id}', [CartController::class, 'decreaseQuantity'])
 Route::get('deleteItemCart/{id}', [CartController::class, 'deleteItemCart'])->name('deleteItemCart');
 Route::get('deleteAllCart', [CartController::class, 'deleteAllCart'])->name('deleteAllCart');
 
+Route::post('couponForm', [CouponController::class, 'couponApply'])->name('couponForm');
+Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('couponDelete');
 
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */

@@ -472,7 +472,7 @@ body {
     align-items: center;
     z-index: 2;
     width: 200px;
-    opacity: 0;
+    display: none;
 }
 
 .header_user_content div {
@@ -1842,7 +1842,7 @@ section {
 .cart_quantity_number {
     text-align: center;
     width: 40px;
-    padding: 5px 15px;
+    padding: 5px 10px;
     outline: none;
     border: none;
 }
@@ -1916,6 +1916,55 @@ section {
 }
 
 
+.detail_btn_coupon {
+    font-size: 16px;
+    background: #ff0202;
+    border: none;
+    padding: 0.5em 1.5em;
+    color: #000000;
+    position: relative;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.detail_btn_coupon::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #FFD602;
+    transition: 0.5s ease;
+}
+
+.detail_btn_coupon:hover {
+    background-color: #FFD602;
+    color: #000000;
+    transition-delay: 0.5s;
+}
+
+.detail_btn_coupon:hover::before {
+    width: 100%;
+}
+
+.detail_btn_coupon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background-color: #FFD602;
+    transition: 0.4s ease;
+    z-index: -1;
+}
+
+.detail_btn_coupon:hover::after {
+    height: 100%;
+    transition-delay: 0.4s;
+    color: rgb(0, 0, 0);
+}
 
 .cart_right_total {
     background-color: #e3e4ec;
