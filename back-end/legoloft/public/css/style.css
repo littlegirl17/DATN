@@ -952,17 +952,19 @@ section {
     /* Thêm khoảng cách giữa các cột */
 }
 
-.footer_main_column_item {}
-
-.footer_main_column_item_img {
-    margin-bottom: 1.25rem;
-}
 
 .footer_main_column_item_img img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+
+.footer_main_column_item_img {
+    width: 200px;
+    margin-bottom: 1.25rem;
+}
+
+
 
 .footer_main_column_item_title {
     padding: 0px 0.9375rem;
@@ -1819,12 +1821,22 @@ section {
     background-color: #e96f14;
 }
 
+.cart_quantity_decrease a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .cart_quantity_increase {
     padding: 5px 15px;
     outline: none;
     border: none;
     color: #fff;
     background-color: #e96f14;
+}
+
+.cart_quantity_increase a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .cart_quantity_number {

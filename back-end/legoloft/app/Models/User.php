@@ -20,6 +20,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'province',
+        'district',
+        'ward',
+        'status',
+        'image',
+        'verification_code',
+        'user_group_id'
     ];
 
     /**
@@ -43,6 +51,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function userGroup()
+    {
+        return $this->belongsTo(UserGroup::class, 'user_group_id');
     }
 
     /*----------------------------------------------------------------------------------------------------------------------*/

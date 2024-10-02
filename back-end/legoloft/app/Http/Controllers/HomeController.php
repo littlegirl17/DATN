@@ -8,6 +8,7 @@ use App\Models\Categories;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use App\Models\ProductDiscount;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -28,7 +29,6 @@ class HomeController extends Controller
     public function index()
     {
         $productOutStanding = $this->productModel->productOutStanding();
-        $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
         $productDiscountSection = $this->productModel->productDiscountSection();
         $productBestseller = $this->productModel->productBestseller();
         // Lấy danh sách các danh mục chính và danh mục con
@@ -40,7 +40,10 @@ class HomeController extends Controller
                 $productByCategory[$child->id] = $child->product;
             }
         }
+        //
+        $user = auth()->user();
+        $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
 
-        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory'));
+        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory', 'user'));
     }
 }
