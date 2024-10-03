@@ -31,4 +31,9 @@ class OrderProduct extends Model
             ->having('total_quantity', '>', 100) //having thêm các điều kiện lọc dữ liệu sau khi đã nhóm lại - Thường được sử dụng cùng với groupBy()
             ->orderBy('total_quantity', 'desc');
     }
+
+    public function orderProductUser($order_id)
+    {
+        return $this->where('order_id', $order_id)->with('product')->orderBy('id', 'desc')->get();
+    }
 }

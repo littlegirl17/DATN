@@ -24,4 +24,9 @@ class Order extends Model
         'note',
         'order_code'
     ];
+
+    public function orderUser($userId)
+    {
+        return $this->where('user_id', $userId)->get();
+    }
 }

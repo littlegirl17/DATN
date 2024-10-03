@@ -12,6 +12,9 @@
                 </div>
                 <ul class="layout_member_left_submenu">
                     <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
+                        <a href="{{ route('purchase') }}"><i class="fa fa-solid fa-plus"></i>Đơn hàng đã đặt</a>
+                    </li>
+                    <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
                         <a href="#"><i class="fa fa-solid fa-plus"></i>Mới</a>
                     </li>
                     <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">

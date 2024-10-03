@@ -70,6 +70,10 @@
                         <div class="m-0 p-0">
                             @auth
                                 <div class="btn_contain">
+                                    <button class="btn-register" onclick="window.location.href='{{ route('member') }}'">Tài
+                                        khoản của tôi</button>
+                                </div>
+                                <div class="btn_contain">
                                     <button class="btn-login" onclick="window.location.href='{{ route('logout') }}'">Đăng
                                         xuất</button>
                                 </div>
@@ -79,7 +83,8 @@
                                         nhập</button>
                                 </div>
                                 <div class="btn_contain">
-                                    <button class="btn-register" onclick="window.location.href='{{ route('register') }}'">Đăng ký</button>
+                                    <button class="btn-register"
+                                        onclick="window.location.href='{{ route('register') }}'">Đăng ký</button>
                                 </div>
                             @endauth
 
