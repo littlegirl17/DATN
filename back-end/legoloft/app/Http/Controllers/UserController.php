@@ -86,6 +86,28 @@ class UserController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        // Kiểm tra xem tài khoản đã tồn tại hay chưa
+        $existingUser = $this->userModel->checkAccount($request->email);
+        if ($existingUser) {
+            return redirect()->route('register')->with('error', 'Email đã tồn tại trong hệ thống');
+        }
 
+        // Tạo tài khoản mới
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->status = 1; // 1 = active, 0 = inactive
+        $user->save();
+
+//        // Gửi email xác nhận (nếu cần thiết)
+//        $verificationCode = rand(100000, 999999);
+//        $user->verification_code = $verificationCode;
+//        $user->save();
+//
+//        Mail::to($user->email)->send(new VerificationCode($verificationCode));
+
+        return redirect()->route('login')->with('success', 'Đăng ký thành công. Vui lòng kiểm tra email để xác nhận tài khoản của bạn.');
     }
+
 }

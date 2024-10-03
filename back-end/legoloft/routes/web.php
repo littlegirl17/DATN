@@ -58,6 +58,12 @@ Route::get('resetPassword', function () {
 })->name('resetPassword');
 Route::post('resetPassword', [UserController::class, 'resetPassword'])->name('resetPassword');
 
+
+Route::get('register', function () {
+    return view('register');
+})->name('register');
+Route::post('register', [UserController::class, 'register'])->name('registerForm');
+
 Route::get('cart', [CartController::class, 'getCart'])->name('cart');
 Route::post('cartForm', [CartController::class, 'cartAdd'])->name('cartForm');
 Route::get('increaseQuantity/{id}', [CartController::class, 'increaseQuantity'])->name('increaseQuantity');
