@@ -29,4 +29,14 @@ class Order extends Model
     {
         return $this->where('user_id', $userId)->get();
     }
+
+    public function definePayment()
+    {
+        return [
+            1 => 'Thanh toán bằng tiền mặt',
+            2 => 'Chuyển khoản ngân hàng',
+            3 => 'Thanh toán VNPAY',
+            4 => 'Thanh toán MoMo',
+        ];
+    }
 }

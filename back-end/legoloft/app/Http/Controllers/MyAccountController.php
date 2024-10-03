@@ -31,10 +31,12 @@ class MyAccountController extends Controller
         $this->orderModel = new Order();
         $this->orderProductModel = new OrderProduct();
     }
+
     public function member()
     {
         return view('myaccount.member');
     }
+
     public function purchase()
     {
         $user_id = auth()->user()->id;
@@ -47,5 +49,11 @@ class MyAccountController extends Controller
             $orderProductUser[$item->id] = $this->orderProductModel->orderProductUser($item->id);
         }
         return view('myaccount.purchase', compact('orderUser', 'orderUser', 'orderProductUser'));
+    }
+
+    public function inforPurchase($id)
+    {
+        $order = $this->orderModel->findOrFail($id);
+        return view('myaccount.informationPurchase', compact('order'));
     }
 }

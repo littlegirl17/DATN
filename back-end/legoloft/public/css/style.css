@@ -2866,7 +2866,7 @@ section {
 .layout_member_right {
     position: relative;
     width: 75%;
-    background-color: #fff;
+    background-color: #f6f6f6;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 20px;
     margin-left: 30px;
@@ -3089,15 +3089,35 @@ section {
 }
 
 .seeMore {
-    text-align: center;
-    margin-top: 15px;
-    background-color: #e6e5e5;
-    color: #343333;
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 .seeMore p {
-    padding: 2px 0;
+    text-align: center;
+    margin-top: 15px;
+    background-color: #f4f4f4;
+    color: #343333;
+    border-radius: 5px;
+    width: 130px;
+}
+
+.returnPurchase {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #ececec;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+}
+
+.returnPurchaseMobile {
+    display: none;
+}
+
+.infor_main h4 {
+    padding-top: 15px;
+    font-size: 1.125rem;
 }
 
 /*-------------------------------END PURCHASE---------------------------------------*/
@@ -4192,7 +4212,7 @@ section {
 
     .layout_member_right {
         width: 100%;
-        background-color: #fff;
+        background-color: #f6f6f6;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius: 20px;
         margin-left: 30px;
@@ -4252,6 +4272,22 @@ section {
         height: 342px;
     }
 
+    /**/
+    .returnPurchase {
+        display: none;
+    }
+
+    .returnPurchaseMobile {
+        display: block;
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        padding: 5px 5px;
+        width: 56px;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+        text-align: center;
+    }
 }
 
 
@@ -4816,7 +4852,7 @@ section {
 
     .layout_member_right {
         width: 100%;
-        background-color: #fff;
+        background-color: #f6f6f6;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius: 20px;
         padding: 20px 30px;
@@ -4910,6 +4946,23 @@ section {
 
     .btn_404 {
         padding: 10px 10px;
+    }
+
+    /**/
+    .returnPurchase {
+        display: none;
+    }
+
+    .returnPurchaseMobile {
+        display: block;
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        padding: 5px 5px;
+        width: 56px;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+        text-align: center;
     }
 }
 

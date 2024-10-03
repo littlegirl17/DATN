@@ -20,9 +20,11 @@
                                             <h5>Mã đơn hàng: #{{ $item->order_code }}</h5>
                                         </div>
                                         <div class="account_purchase_header_right">
-                                            <p class="account_purchase_header_right_1">
-                                                Giao hàng thành công
-                                            </p>
+                                            <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
+                                                <p class="account_purchase_header_right_1">
+                                                    Giao hàng thành công
+                                                </p>
+                                            </a>
                                             <p class="account_purchase_header_right_2">HOÀN THÀNH</p>
                                         </div>
                                     </div>
@@ -44,7 +46,7 @@
                                                 <h5>{{ $orderProduct['name'] }}</h5>
                                                 <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                 <p class="pricecheckout_mobile">
-                                                    <span>100.000đ</span>90.000đ
+                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
@@ -69,7 +71,7 @@
                                                         <h5>{{ $orderProduct['name'] }}</h5>
                                                         <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                         <p class="pricecheckout_mobile">
-                                                            <span>100.000đ</span>90.000đ
+                                                            <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                         </p>
                                                     </div>
                                                     <div class="col-md-3 col-12 checkout_right_price">
@@ -81,7 +83,8 @@
                                             @endforeach
                                         </div>
                                         <div class="seeMore">
-                                            <p class="show-more">Xem thêm</p>
+                                            <p class="show-more">Xem thêm <i class="fa-solid fa-chevron-down"></i>
+                                            </p>
                                         </div>
                                     @endif
                                     <hr />
@@ -110,7 +113,7 @@
                 moreProducts.style.display = moreProducts.style.display === 'none' || moreProducts.style
                     .display === '' ? 'block' : 'none';
 
-                this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm' : 'Thu lại';
+                this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm ' : 'Thu lại ';
             });
         });
     </script>

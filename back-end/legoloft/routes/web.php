@@ -78,6 +78,7 @@ Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('cou
 
 Route::get('member', [MyAccountController::class, 'member'])->name('member');
 Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
+Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
 
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */

@@ -26,7 +26,7 @@
                     <i class="fas fa-bars"></i>
                 </a>
                 <div class="nav_img_logo">
-                    <a href="/"><img src="img/legoloft.png" alt="" /></a>
+                    <a href="/"><img src="{{ asset('img/legoloft.png') }}" alt="" /></a>
                 </div>
             </div>
             <div class="nav_box_menu">
@@ -68,18 +68,32 @@
                             <img src="img/legomini.svg" alt="" />
                         </div>
                         <div class="m-0 p-0">
-                            <div class="btn_contain">
-                                <button class="btn-login">Đăng nhập</button>
-                            </div>
-                            <div class="btn_contain">
-                                <button class="btn-register">Đăng ký</button>
-                            </div>
+                            @auth
+                                <div class="btn_contain">
+                                    <button class="btn-register" onclick="window.location.href='{{ route('member') }}'">Tài
+                                        khoản của tôi</button>
+                                </div>
+                                <div class="btn_contain">
+                                    <button class="btn-login" onclick="window.location.href='{{ route('logout') }}'">Đăng
+                                        xuất</button>
+                                </div>
+                            @else
+                                <div class="btn_contain">
+                                    <button class="btn-login" onclick="window.location.href='{{ route('login') }}'">Đăng
+                                        nhập</button>
+                                </div>
+                                <div class="btn_contain">
+                                    <button class="btn-register"
+                                        onclick="window.location.href='{{ route('register') }}'">Đăng ký</button>
+                                </div>
+                            @endauth
+
                         </div>
                     </div>
                 </div>
 
                 <div class="">
-                    <a href="cart.html"> <img src="img/cart.svg" alt="" /></a>
+                    <a href="{{ route('cart') }}"> <img src="img/cart.svg" alt="" /></a>
                 </div>
             </div>
         </div>
@@ -109,26 +123,21 @@
             </ul>
             <ul class="main_bar_menu_list">
                 <li><a href="category.html">Xem tất cả chủ đề</a></li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
-                <li class="main_bar_menu_list_item">
-                    <a href="#">danh muc con</a>
-                </li>
+                @foreach ($categories as $category)
+                    <li class="main_bar_menu_list_item">
+                        <a href="#" data-category-id="{{ $category->id }}">{{ $category->name }}</a>
+                    </li>
+                @endforeach
             </ul>
             <ul class="main_bar_submenu_list">
-                <div class="submenu-category" style="display: none">
-                    <li><a href="#">danh muc con1</a></li>
-                </div>
+                @foreach ($categories as $category)
+                    <div class="submenu-category" style="display: none" data-category-id="{{ $category->id }}">
+                        @foreach ($category->categories_children as $item)
+                            <li><a href="#">{{ $item->name }}</a></li>
+                        @endforeach
+                    </div>
+                @endforeach
+
             </ul>
         </div>
     </div>

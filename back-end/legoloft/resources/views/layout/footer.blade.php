@@ -3,7 +3,7 @@
         <div class="footer_main_column">
             <div class="footer_main_column_item">
                 <div class="footer_main_column_item_img">
-                    <a href="index.html"><img src="img/legoloft.png" alt="" /></a>
+                    <a href="index.html"><img src="{{ asset('img/legoloft.png') }}" alt="" /></a>
                 </div>
                 <div class="footer_main_column_item_content">
                     <a href="index.html">Trang chủ</a>

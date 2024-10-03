@@ -26,7 +26,7 @@
                     <i class="fas fa-bars"></i>
                 </a>
                 <div class="nav_img_logo">
-                    <a href="/"><img src="img/legoloft.png" alt="" /></a>
+                    <a href="/"><img src="{{ asset('img/legoloft.png') }}" alt="" /></a>
                 </div>
             </div>
             <div class="nav_box_menu">
