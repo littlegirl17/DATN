@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+            'phone' => 'required|digits_between:10,11',
         ];
     }
 
@@ -39,6 +40,8 @@ class RegisterRequest extends FormRequest
             'email.required' => 'Vui lòng nhập Email.',
             'email.email' => 'Email của bạn không hợp lệ.',
             'email.unique' => 'Email đã tồn tại trong hệ thống.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.digits_between' => 'Số điện thoại phải có từ 10 đến 11 chữ số.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.confirmed' => 'Mật khẩu và xác nhận mật khẩu không trùng khớp.',

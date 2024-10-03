@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Mail\WelcomeUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Mail\VerificationCode;
@@ -100,12 +101,11 @@ class UserController extends Controller
         $user->status = 1; // 1 = active, 0 = inactive
         $user->save();
 
-//        // Gửi email xác nhận (nếu cần thiết)
-//        $verificationCode = rand(100000, 999999);
-//        $user->verification_code = $verificationCode;
-//        $user->save();
-//
-//        Mail::to($user->email)->send(new VerificationCode($verificationCode));
+
+
+        // Gửi email chào mừng
+        Mail::to($user->email)->send(new WelcomeUser($user));
+
 
         return redirect()->route('login')->with('success', 'Đăng ký thành công. Vui lòng kiểm tra email để xác nhận tài khoản của bạn.');
     }
