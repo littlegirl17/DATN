@@ -681,20 +681,23 @@ section {
     padding: 7px 7px;
 }
 
-.product_box .product_box_tag_sale {
+.product_box .product_box_tag_sale_outstanding {
     position: absolute;
-    top: 5%;
-    left: 5%;
+    top: 16%;
     background-color: #ee0000;
     color: #FFFFFF;
     font-size: 0.9rem;
-    padding: 5px 5px;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    justify-items: center;
-    align-items: center;
+    padding: 7px 7px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
+.product_box .product_box_tag_sale {
+    position: absolute;
+    top: 5%;
+    background-color: #ee0000;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    padding: 7px 7px;
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
 

@@ -31,6 +31,7 @@ class HomeController extends Controller
         $productOutStanding = $this->productModel->productOutStanding();
         $productDiscountSection = $this->productModel->productDiscountSection();
         $productBestseller = $this->productModel->productBestseller();
+        $productSoldOut =  $this->productModel->productSoldOut();
         // Lấy danh sách các danh mục chính và danh mục con
         $categories = Categories::with(['categories_children', 'categories_children.product'])->whereNull('parent_id')->get();
         $productByCategory = []; //tạo mảng để lưu trữ sản phẩm theo danh mục con
@@ -44,6 +45,6 @@ class HomeController extends Controller
         $user = auth()->user();
         $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
 
-        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory', 'user'));
+        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut'));
     }
 }

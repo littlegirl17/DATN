@@ -191,13 +191,17 @@
                                 // ràng buộc giá default mặc định
                                 $userPriceModal = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
                             }
-
+                            // tính % giảm giá
+                            $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                         @endphp
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
                                     <div class="product_box_tag">Nổi bật </div>
+                                    @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                        <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
+                                    @endif
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button type="button" class="outline-0 border-0 bg-white"
@@ -407,11 +411,19 @@
                                                         : null;
                                                 }
 
+                                                // tính % giảm giá
+                                                $percent = ceil(
+                                                    (($product->price - $userPriceModal) / $product->price) * 100,
+                                                );
                                                 $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                                             @endphp
                                             <div class="item">
                                                 <div class="product_box">
                                                     <div class="product_box_effect">
+                                                        @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                                            <div class="product_box_tag_sale">
+                                                                {{ $percent }}%</div>
+                                                        @endif
                                                         <div class="product_box_icon">
                                                             <i class="fa-regular fa-heart"></i>
                                                             <button class="outline-0 border-0 bg-white"
@@ -503,12 +515,17 @@
                                 $userPriceModal = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
                             }
 
+                            // tính % giảm giá
+                            $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                         @endphp
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
                                     <div class="product_box_tag_soldout">Hot</div>
+                                    @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                        <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
+                                    @endif
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button class="outline-0 border-0 bg-white"
@@ -567,119 +584,39 @@
         <!-- END PRODUCT BÁN CHÁY-->
 
         <!-- START PRODUCT HẾT HÀNG -->
-        <section class="product">
-            <div class="container">
-                <div class="title_home">
-                    <h2>Sản phẩm hết hàng</h2>
-                </div>
-                <div class="owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hết hàng</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image_black">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        @if ($productSoldOut && count($productSoldOut) > 0)
+            <section class="product">
+                <div class="container">
+                    <div class="title_home">
+                        <h2>Sản phẩm hết hàng</h2>
                     </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hết hàng</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image_black">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
+                    <div class="owl-carousel owl-theme">
+                        @foreach ($productSoldOut as $item)
+                            <div class="item">
+                                <div class="product_box">
+                                    <div class="product_box_effect">
+                                        <div class="product_box_tag_soldout">Hết hàng</div>
+                                        <div class="product_box_image_black">
+                                            <img src="{{ asset('img/' . $item->image) }}" alt="" />
+                                        </div>
+                                        <div class="product_box_content_out">
+                                            <div class="product_box_content">
+                                                <h3><a href="">{{ $item->name }}</a></h3>
+                                            </div>
+                                            <div class="">
+                                                <span
+                                                    class="text-black">{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hết hàng</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image_black">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product_box">
-                            <div class="product_box_effect">
-                                <div class="product_box_tag_soldout">Hết hàng</div>
-                                <div class="product_box_icon">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-regular fa-eye"></i>
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                </div>
-                                <div class="product_box_image_black">
-                                    <img src="img/product-test.webp" alt="" />
-                                </div>
-                                <div class="product_box_content_out">
-                                    <div class="product_box_content">
-                                        <h3><a href="">Tên sản phẩm</a></h3>
-                                    </div>
-                                    <div class="product_box_price">
-                                        <span>100.000đ</span>90.000đ
-                                    </div>
-                                    <div class="product_box_content_soldout">
-                                        <p>+100 lượt mua</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
+
         <!-- END PRODUCT HẾT HÀNG -->
 
         <!-- START BÀI VIẾT -->
