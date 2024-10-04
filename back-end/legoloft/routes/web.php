@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\admin\UserAdminController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\MyAccountController;
 
@@ -105,6 +106,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('productDeleteImages/{product_id}', [ProductAdminController::class, 'productDeleteImages'])->name('productDeleteImages');
         Route::get('productDeleteDiscount/{id}', [ProductAdminController::class, 'productDeleteDiscount'])->name('productDeleteDiscount');
     });
+
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');
         Route::get('addAdminstration', [AdminstrationController::class, 'adminstrationAdd'])->name('addAdminstration');
@@ -115,6 +117,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('updateStatusAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdateStatus'])->name('adminstrationUpdateStatus');
         Route::get('searchAdminstration', [AdminstrationController::class, 'administrationSearch'])->name('searchAdminstration');
     });
+
     Route::middleware(['admin:administrationGroup'])->group(function () {
         Route::get('adminstrationGroup', [AdminstrationController::class, 'adminstrationGroup'])->name('adminstrationGroup');
         Route::get('addAdminstrationGroup', [AdminstrationController::class, 'adminstrationGroupAdd'])->name('addAdminstrationGroup');
@@ -123,5 +126,14 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('editAdminstrationGroup/{id}', [AdminstrationController::class, 'adminstrationGroupUpdate']);
         Route::post('deleteAdminstrationGroup', [AdminstrationController::class, 'adminstrationGroupDeleteCheckbox'])->name('deleteAdminstrationGroup');
     });
+
+    Route::middleware(['admin:user'])->group(function () {
+        Route::get('userAdmin', [UserAdminController::class, 'userAdmin'])->name('userAdmin');
+    });
+
+    Route::middleware(['admin:userGroup'])->group(function () {
+        Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
+    });
+
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');
 });

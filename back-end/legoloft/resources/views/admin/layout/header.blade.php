@@ -75,35 +75,39 @@
                             <span class="hide-menu">Đơn hàng</span>
                         </a>
                     </li>
+                    @if (in_array('user', $permission) || in_array('userGroup', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="ti fa-solid fa-user ico-side" style="color: #ffffff; font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Khách hàng</span>
+                            </a>
+                            <ul class="submenu">
+                                @if (in_array('user', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('userAdmin') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Khách hàng</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (in_array('userGroup', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('userGroup') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Nhóm khách hàng</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="ti fa-solid fa-user ico-side" style="color: #ffffff; font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Khách hàng</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="">
-                                <a class="sidebar-link" href="" aria-expanded="false">
-                                    <span style="width:20px">
-                                        <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
-                                    </span>
-                                    <span class="hide-menu">Khách hàng</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a class="sidebar-link" href="" aria-expanded="false">
-                                    <span style="width:20px">
-                                        <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
-                                    </span>
-                                    <span class="hide-menu">Nhóm khách hàng</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
                     @if (in_array('administration', $permission) || in_array('administrationGroup', $permission))
 
                         <li class="sidebar-item">
