@@ -46,7 +46,7 @@
                         </div>
                         <div class="login_regis">
                             <span>Bạn chưa có tài khoản?</span>
-                            <a href="">
+                            <a href="{{ route('register') }}">
                                 <span>Đăng ký thành viên<i class="fa-solid fa-arrow-right ps-1"></i></span></a>
                         </div>
                     </div>

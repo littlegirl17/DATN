@@ -109,5 +109,4 @@ class UserController extends Controller
 
         return redirect()->route('login')->with('success', 'Đăng ký thành công. Vui lòng kiểm tra email để xác nhận tài khoản của bạn.');
     }
-
 }
