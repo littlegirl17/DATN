@@ -29,7 +29,7 @@ class LoginController extends Controller
 
             if ($admin->status >= 1) {
                 session()->put('admin', $admin);
-                return redirect()->route('adminstration')->with('success', 'Đăng nhập quản trị thành công.');
+                return redirect()->route('dashboard')->with('success', 'Đăng nhập quản trị thành công.');
             } else {
                 auth()->guard('admin')->logout();
                 return redirect()->back()->with('error', 'Tài khoản quản trị của bạn đã bị khóa');

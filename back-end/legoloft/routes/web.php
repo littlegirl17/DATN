@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\MyAccountController;
 
@@ -88,6 +89,10 @@ Route::get('admin/login', function () {
 Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
 Route::prefix('admin')->middleware('admin')->group(function () { // prefix: được sử dụng để nhóm các route lại với nhau dưới một tiền tố chung.
+
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+
     Route::middleware(['admin:product'])->group(function () {
         Route::get('product', [ProductAdminController::class, 'product'])->name('product');
         Route::get('addProduct', [ProductAdminController::class, 'productAdd'])->name('addProduct');

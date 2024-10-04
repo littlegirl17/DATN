@@ -20,7 +20,7 @@
             <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                 <ul id="sidebarnav">
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
                             <span style="width:20px">
                                 <i class="ti fa-solid fa-gauge-high ico-side" style="color: #FFFFFF;"></i>
                             </span>

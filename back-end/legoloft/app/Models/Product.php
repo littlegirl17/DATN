@@ -74,6 +74,8 @@ class Product extends Model
         return $this->where('outstanding', 1)
             ->where('status', 1)
             ->orderBy('id', 'desc')
+            ->inRandomOrder() // Sử dụng inRandomOrder() để lấy sản phẩm ngẫu nhiên
+            ->limit(4)
             ->get();
     }
 
