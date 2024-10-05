@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\CartC;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Category;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -81,6 +79,11 @@ Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('cou
 Route::get('member', [MyAccountController::class, 'member'])->name('member');
 Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
 Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
+Route::get('waitConfirmation', [MyAccountController::class, 'waitConfirmation'])->name('waitConfirmation');
+Route::get('pendingPurchase', [MyAccountController::class, 'pendingPurchase'])->name('pendingPurchase');
+Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping');
+Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
+Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
 
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */

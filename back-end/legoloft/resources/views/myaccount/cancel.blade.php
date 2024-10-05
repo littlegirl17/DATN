@@ -1,5 +1,5 @@
 @extends('myaccount.layout.layout')
-@section('title', 'Đơn hàng đã mua')
+@section('title', 'Đơn hàng đã hủy')
 @section('content_myaccount')
     <div class="container">
         <div class="layout_member">
@@ -10,29 +10,9 @@
                 <form action="">
                     <div class="container-account-right-item">
                         <div class="row">
-                            <h4 class="m-0 ps-3">Đơn hàng đã hoàn thành</h4>
+                            <h4 class="m-0 ps-3">Đơn hàng đã hủy</h4>
                         </div>
-                        <div class=""> {{-- @switch($item->status)
-                            @case($item->status == 1)
-                            @break
-
-                            @case($item->status == 2)
-                            @break
-
-                            @case($item->status == 3)
-                            @break
-
-                            @case($item->status == 4)
-                            @break
-
-                            @case($item->status == 5)
-                                <p class="account_purchase_header_right_5">
-                                    Giao hàng thành công
-                                </p>
-                            @break
-
-                            @default
-                        @endswitch --}}
+                        <div class="">
                             @foreach ($orderUser as $item)
                                 <div class="account_purchase">
                                     <div class="account_purchase_header">
@@ -40,11 +20,10 @@
                                             <h5>Mã đơn hàng: #{{ $item->order_code }}</h5>
                                         </div>
                                         <div class="account_purchase_header_right">
-
-                                            <p class="account_purchase_header_right_5">
-                                                Giao hàng thành công
+                                            <p class="account_purchase_header_right_1">
+                                                <button class="account_purchase_header_right_cancel"><a href=""
+                                                        class="">Đơn hàng đã bị hủy</a></button>
                                             </p>
-
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
                                                 <p class="account_purchase_header_right_2">Chi tiết</p>
                                             </a>

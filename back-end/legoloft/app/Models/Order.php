@@ -25,10 +25,15 @@ class Order extends Model
         'order_code'
     ];
 
-    public function orderUser($userId)
+    public function orderUser($user_id, $status = null)
     {
-        return $this->where('user_id', $userId)->get();
+        $query = $this->where('user_id', $user_id);
+        if (!is_null($status)) {
+            $query = $this->where('status', $status);
+        }
+        return $query->get();
     }
+
 
     public function definePayment()
     {

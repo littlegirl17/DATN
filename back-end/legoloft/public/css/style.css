@@ -3082,10 +3082,84 @@ section {
     padding: 0 5px;
 }
 
+.account_purchase_header_right .account_purchase_header_right_3 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_4 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_5 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
 .account_purchase_header_right .account_purchase_header_right_2 {
     color: #FF0000;
     padding: 0 5px;
 
+}
+
+.account_purchase_header_right .account_purchase_header_right_confir {
+    background-color: #0065a7;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_confir a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right .account_purchase_header_right_pending {
+    background-color: #FFD602;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_pending a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right_cancel {
+    background-color: #FF0000;
+    border: none;
+    outline: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right_cancel a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right_shipping {
+    background-color: #26AA99;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right_shipping a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
 }
 
 .seeMore {

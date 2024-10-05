@@ -1,5 +1,5 @@
 @extends('myaccount.layout.layout')
-@section('title', 'Đơn hàng đã mua')
+@section('title', 'Đơn hàng đang chờ xác nhận')
 @section('content_myaccount')
     <div class="container">
         <div class="layout_member">
@@ -10,29 +10,9 @@
                 <form action="">
                     <div class="container-account-right-item">
                         <div class="row">
-                            <h4 class="m-0 ps-3">Đơn hàng đã hoàn thành</h4>
+                            <h4 class="m-0 ps-3">Tất cả đơn hàng đang chờ xác nhận</h4>
                         </div>
-                        <div class=""> {{-- @switch($item->status)
-                            @case($item->status == 1)
-                            @break
-
-                            @case($item->status == 2)
-                            @break
-
-                            @case($item->status == 3)
-                            @break
-
-                            @case($item->status == 4)
-                            @break
-
-                            @case($item->status == 5)
-                                <p class="account_purchase_header_right_5">
-                                    Giao hàng thành công
-                                </p>
-                            @break
-
-                            @default
-                        @endswitch --}}
+                        <div class="">
                             @foreach ($orderUser as $item)
                                 <div class="account_purchase">
                                     <div class="account_purchase_header">
@@ -40,11 +20,15 @@
                                             <h5>Mã đơn hàng: #{{ $item->order_code }}</h5>
                                         </div>
                                         <div class="account_purchase_header_right">
-
-                                            <p class="account_purchase_header_right_5">
-                                                Giao hàng thành công
+                                            <p class="account_purchase_header_right_1">
+                                                <span class="ms-3 me-1 account_purchase_header_right_cancel"
+                                                    id="cancelOrder"><a
+                                                        onclick="cancelOrder(event,'{{ route('cancelConfirmation', $item->id) }}')"
+                                                        class="">Hủy
+                                                        đơn</a></span>
+                                                <button class="account_purchase_header_right_pending"><a href=""
+                                                        class="">Đang chờ xác nhận</a></button>
                                             </p>
-
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
                                                 <p class="account_purchase_header_right_2">Chi tiết</p>
                                             </a>
@@ -55,25 +39,23 @@
                                         $orderProductSlice = array_slice($orderProducts, 0, 2); // array_slice : lấy đi 1 phần của mảng,vế 1 là mảng bạn muốn cắt, vế 2 là vị trí bắt đầu, vế 3 là số lượng muốn lấy
                                         $orderProductShow = count($orderProducts) > 2;
                                     @endphp
-
                                     @foreach ($orderProductSlice as $orderProduct)
                                         <div class="row checkout_row_right">
                                             <div class="col-md-3 col-sm-3 col-4">
                                                 <div class="img_checkout_product">
-                                                    <img src="{{ asset('img/' . $orderProduct['product']['image']) }}"
-                                                        alt="" />
+                                                    <img src="../img/city-product-1.webp" alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-9 col-8">
-                                                <h5>{{ $orderProduct['name'] }}</h5>
-                                                <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
+                                                <h5>Bộ Lego thành phố</h5>
+                                                <p class="">Số lượng: 1</p>
                                                 <p class="pricecheckout_mobile">
-                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                    <span>100.000đ</span>90.000đ
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
                                                 <div class="product_box_price">
-                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                    <span>100.000đ</span>90.000đ
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +100,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
                 </form>
@@ -138,5 +119,32 @@
                 this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm ' : 'Thu lại ';
             });
         });
+    </script>
+    <script>
+        var cancel = document.getElementById('cancelOrder');
+
+        function cancelOrder(event, url) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+            Swal.fire({
+                title: "Bạn có chắc chắc?",
+                text: "muốn hủy đơn hàng không!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Có, tôi đồng ý!",
+                cancelButtonText: "không",
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Hủy đơn hàng thành công!",
+                        icon: "success"
+                    });
+                    window.location.href = url;
+                }
+            });
+        }
     </script>
 @endsection
