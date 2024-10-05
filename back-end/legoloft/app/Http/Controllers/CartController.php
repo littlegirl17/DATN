@@ -20,18 +20,17 @@ class CartController extends Controller
         $this->productModel = new Product();
         $this->cartModel = new Cart();
         $this->productDiscountModel = new ProductDiscount();
-        $this->getallcart = new Cart();
     }
 
     public function getCart()
     {
         if (Auth::check()) {
-            // Tài làm chỗ này nha
             // Lưu vào DATABASE - CẦN LOGIN
+            $user = Auth::check() ? Auth::user()->id : 0;
             $products = $this->productModel;
-            $getallcart = $this->cartModel->getallcart();
+            $getallcart = $this->cartModel->getallcart($user);
             $cart = $this->cartModel;
-            return view('cart', compact('cart','getallcart','products'));
+            return view('cart', compact('cart', 'getallcart', 'products'));
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
@@ -45,30 +44,30 @@ class CartController extends Controller
     public function cartAdd(Request $request)
     {
         $user = Auth::check() ? Auth::user()->id : 0;
-          // Lấy thông tin sản phẩm từ request
+        // Lấy thông tin sản phẩm từ request
         $product_id = $request->product_id;
         $quantity = $request->quantity;
         if ($user > 0) {
-             // Khi người dùng đã đăng nhập, lưu vào DB
+            // Khi người dùng đã đăng nhập, lưu vào DB
             // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-        $cartItem = $this->cartModel->where('user_id', $user)
-        ->where('product_id', $product_id)
-        ->first();
+            $cartItem = $this->cartModel->where('user_id', $user)
+                ->where('product_id', $product_id)
+                ->first();
             if ($cartItem) {
-            // Nếu đã có, tăng số lượng
-            $cartItem->quantity += $quantity;
-            $cartItem->save();
+                // Nếu đã có, tăng số lượng
+                $cartItem->quantity += $quantity;
+                $cartItem->save();
             } else {
-            // Nếu chưa có, thêm mới
-            $this->cartModel->create([
-                'user_id' => $user,
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-            ]);
+                // Nếu chưa có, thêm mới
+                $this->cartModel->create([
+                    'user_id' => $user,
+                    'product_id' => $product_id,
+                    'quantity' => $quantity,
+                ]);
             }
-            return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng'); // Thông báo thành công
-            // Tài làm chỗ này nha
-            //  lưu vào db
+
+            return response()->json(['message' => 'Thêm giỏ hàng thành công']);
+            // return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng'); // Thông báo thành công
         } else {
             // lưu vào cookie
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
@@ -82,7 +81,8 @@ class CartController extends Controller
                 ];
             }
 
-            return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart)))->with('success', 'Sản phẩm đã được thêm vào giỏ hàng'); //withCookie :  cho phép bạn thêm một cookie vào phản hồi, Cookie này sẽ được gửi về trình duyệt của người dùng cùng với phản hồi, và trình duyệt sẽ lưu cookie này
+            return response()->json(['success' => true, 'message' => 'Thêm giỏ hàng thành công'])->withCookie(cookie()->forever('cart', json_encode($cart))); //withCookie :  cho phép bạn thêm một cookie vào phản hồi, Cookie này sẽ được gửi về trình duyệt của người dùng cùng với phản hồi, và trình duyệt sẽ lưu cookie này
+            // return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart)))->with('success', 'Sản phẩm đã được thêm vào giỏ hàng');
         }
     }
 
@@ -90,15 +90,15 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             // Tài làm chỗ này nha
-             // Người dùng đã đăng nhập, cập nhật số lượng trong cơ sở dữ liệu
-        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
+            // Người dùng đã đăng nhập, cập nhật số lượng trong cơ sở dữ liệu
+            $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
 
-        if ($cartItem) {
-            $cartItem->quantity++;
-            $cartItem->save();
-        }
+            if ($cartItem) {
+                $cartItem->quantity++;
+                $cartItem->save();
+            }
 
-        return redirect()->back()->with('success', 'Số lượng sản phẩm đã được tăng lên.');
+            return redirect()->back();
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
@@ -114,15 +114,15 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             // Tài làm chỗ này nha
-             // Người dùng đã đăng nhập, cập nhật số lượng trong cơ sở dữ liệu
-        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
+            // Người dùng đã đăng nhập, cập nhật số lượng trong cơ sở dữ liệu
+            $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
 
-        if ($cartItem) {
-            $cartItem->quantity--;
-            $cartItem->save();
-        }
+            if ($cartItem) {
+                $cartItem->quantity--;
+                $cartItem->save();
+            }
 
-        return redirect()->back()->with('success', 'Số lượng sản phẩm đã được tăng lên.');
+            return redirect()->back();
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart  = json_decode(request()->cookie('cart'), true) ?? [];
@@ -131,7 +131,7 @@ class CartController extends Controller
                     $cart[$id]['quantity']--;
                     return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart)));
                 } else {
-                    return redirect()->back()->with('error', 'Số lượng ít nhất một sản phẩm!');
+                    return redirect()->back()->with('error_decreaseQuantity', 'Số lượng ít nhất một sản phẩm!');
                 }
             }
         }
@@ -142,14 +142,14 @@ class CartController extends Controller
         if (Auth::check()) {
             // Tài làm chỗ này nha
             // Lấy giỏ hàng của người dùng hiện tại
-        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
+            $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
 
-        if ($cartItem) {
-            // Xóa sản phẩm khỏi giỏ hàng
-            $cartItem->delete();
-        }
+            if ($cartItem) {
+                // Xóa sản phẩm khỏi giỏ hàng
+                $cartItem->delete();
+            }
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
+            return redirect()->back();
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
@@ -164,10 +164,9 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             // Xóa tất cả sản phẩm trong giỏ hàng của người dùng đã đăng nhập
-        Cart::where('user_id', Auth::id())->delete();
+            Cart::where('user_id', Auth::id())->delete();
 
-        return redirect()->back()->with('success', 'Giỏ hàng đã được xóa.');
-
+            return redirect()->back();
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];

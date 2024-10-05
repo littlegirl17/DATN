@@ -9,6 +9,9 @@
 
         <div class="cart_box">
             <div class="">
+                @if (session('error_decreaseQuantity'))
+                    <div id="alert-message" class="alertDanger">{{ session('error_decreaseQuantity') }}</div>
+                @endif
                 @php
                     $total = 0;
                     $intoMoney = 0;
@@ -55,22 +58,23 @@
                                 <div class="cart_item_content_quantity">
                                     <button class="cart_quantity_decrease"><a
                                             href="{{ route('decreaseQuantity', $item['product_id']) }}">-</a></button>
-                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number" />
+                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number"
+                                        disabled />
                                     <button class="cart_quantity_increase"><a
                                             href="{{ route('increaseQuantity', $item['product_id']) }}">+</a></button>
                                 </div>
                             </div>
                             <div class="cart_item_close">
-                                <a href="{{ route('deleteItemCart', $item['product_id']) }}">
+                                <a onclick="deleteItemCart('{{ route('deleteItemCart', $item['product_id']) }}')">
                                     <i class="fa-solid fa-xmark text-black"></i></a>
                             </div>
-                            
+
                         </div>
                     @endforeach
                     {{-- ----------------------------------------------------------- --}}
                 @elseif(isset($getallcart) && $getallcart->isNotEmpty())
                     {{-- Tài show cart bằng DB ra chô này --}}
-                    @forEach($getallcart as $item)
+                    @foreach ($getallcart as $item)
                         @php
                             // dùng để truy xuất vao bảng product thông qua product_id  để show thông tin của 1 san phẩm trong cart
                             $product = $products->where('id', $item['product_id'])->first();
@@ -90,60 +94,72 @@
                         @endphp
                         <div class="cart_item">
                             <div class="cart_item_img">
-                                <img src="{{ asset('img/' . $product->image) }}"  alt="" />
+                                <img src="{{ asset('img/' . $product->image) }}" alt="" />
                             </div>
                             <div class="cart_item_content">
                                 <div class="cart_item_content_name">
                                     <h2>{{ $item->product->name }}</h2>
                                 </div>
-                                <div class="cart_item_content_price">
-                                    Số Lượng Mua : 
-                                <h5>{{ $item->quantity}}</h5>
-                                </div>
+
                                 @if ($userGroupDefaultDiscount)
-                                        <div class="cart_item_content_price">
-                                            <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                        </div>
-                                    @else
-                                        <div class="cart_item_content_price">
-                                            <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                        </div>
-                                    @endif
+                                    <div class="cart_item_content_price">
+                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
+                                    </div>
+                                @else
+                                    <div class="cart_item_content_price">
+                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                    </div>
+                                @endif
                                 <div class="cart_item_content_quantity">
-                                    <button class="cart_quantity_decrease" 
-                                    {{-- khi giảm tới 0 sẽ bị vô hiệu hóa nút giảm --}}
+                                    <button class="cart_quantity_decrease" {{-- khi giảm tới 0 sẽ bị vô hiệu hóa nút giảm --}}
                                         @if ($item['quantity'] <= 0) disabled @endif>
-                                        <a href="{{ $item['quantity'] > 0 ? route('decreaseQuantity', $item['product_id']) : '#' }}">-</a>
+                                        <a
+                                            href="{{ $item['quantity'] > 0 ? route('decreaseQuantity', $item['product_id']) : '#' }}">-</a>
                                     </button>
 
-                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number" readonly />
+                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number"
+                                        disabled readonly />
 
-                                    <button class="cart_quantity_increase" 
-                                    {{-- khi tăng tới 100 thì vô hiệu hóa, hoặc kha muốn làm thêm instock tồn kho thì thêm vào --}}
-                                            @if ($item['quantity'] >= 100) disabled @endif>
-                                        <a href="{{ $item['quantity'] < 100 ? route('increaseQuantity', $item['product_id']) : '#' }}">+</a>
+                                    <button class="cart_quantity_increase" {{-- khi tăng tới 100 thì vô hiệu hóa, hoặc kha muốn làm thêm instock tồn kho thì thêm vào --}}
+                                        @if ($item['quantity'] >= 100) disabled @endif>
+                                        <a
+                                            href="{{ $item['quantity'] < 100 ? route('increaseQuantity', $item['product_id']) : '#' }}">+</a>
                                     </button>
                                 </div>
                             </div>
-                                <div class="cart_item_close">
-                                    <a href="{{ route('deleteItemCart', $item['product_id']) }}">
-                                        <i class="fa-solid fa-xmark text-black"></i></a>
-                                </div>
+                            <div class="cart_item_close">
+                                <a onclick="deleteItemCart('{{ route('deleteItemCart', $item['product_id']) }}')">
+                                    <i class="fa-solid fa-xmark text-black"></i></a>
+                            </div>
                         </div>
                     @endforeach
                 @else
                     {{-- Thông báo khi giỏ hàng trống --}}
-                    <div class="alert alert-warning" role="alert">
-                        Bạn chưa có sản phẩm nào trong giỏ hàng. Hãy đi mua hàng ngay!
+                    <div class="div_Empty_main_cart">
+                        <div class="Empty_main_cart">
+                            <div class="cartEmpty_main">
+                                <div class="cartEmpty">
+                                    <img src="{{ asset('img/cart.jpg') }}" alt="">
+                                </div>
+                            </div>
+                            <div class="cartEmptyText">
+                                <span> Bạn chưa có sản phẩm nào trong giỏ hàng!
+                                </span>
+                                <div class=""> <a href="/" class="btn_empty_cart">Tiến hành mua hàng</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 @endif
 
+                @if ((is_array($cart) && !empty($cart)) || (isset($getallcart) && $getallcart->isNotEmpty()))
+                    <div class="btn_two_cart">
+                        <a href="/" class="btn_goon_cart">Tiếp tục mua sắm</a>
 
-                <div class="btn_two_cart">
-                    <a href="/" class="btn_goon_cart">Tiếp tục mua sắm</a>
-
-                    <a href="{{ route('deleteAllCart') }}" class="btn_remove_cart">Xóa hết giỏ hàng</a>
-                </div>
+                        <a onclick="deleteAllCart('{{ route('deleteAllCart') }}')" class="btn_remove_cart">Xóa hết giỏ
+                            hàng</a>
+                    </div>
+                @endif
             </div>
 
             <div class="cart_item_right">
@@ -231,4 +247,53 @@
         </div>
     </div>
     <!-- END MAIN -->
+
+    <script>
+        function deleteItemCart(url) {
+            let timerInterval;
+            Swal.fire({
+                title: "Xóa sản phẩm!",
+                html: "Sản phẩm đang được xóa sau <b></b> mili giây.",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                    window.location.href = url;
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+            });
+        }
+
+        function deleteAllCart(url) {
+            Swal.fire({
+                title: "Bạn có muốn xóa hết giỏ hàng không?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Có, xóa hết!",
+                cancelButtonText: "không!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Xóa thành công!",
+                        text: "Giỏ hàng của bạn đã được xóa.",
+                        icon: "success"
+                    });
+                    window.location.href = url;
+                }
+            });
+        }
+    </script>
 @endsection

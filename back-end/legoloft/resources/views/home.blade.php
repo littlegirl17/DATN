@@ -208,15 +208,12 @@
                                             onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
-                                        <form action="{{ route('cartForm') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $item->id }}">
-                                            <input type="hidden" name="user_id"
-                                                value="{{ Auth::check() ? Auth::user()->id : 0 }}">
-                                            <input type="hidden" name="quantity" value="1">
-                                            <button type="submit" class="outline-0 border-0 bg-white"><i
-                                                    class="fa-solid fa-bag-shopping"></i></button>
-                                        </form>
+                                        {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
+                                        <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
+                                            class="outline-0 border-0 bg-white">
+                                            <i class="fa-solid fa-bag-shopping"></i>
+                                        </button>
+
                                     </div>
                                     <div class="product_box_image">
                                         <img src="{{ asset('img/' . $item->image) }}" alt="" />
@@ -299,15 +296,12 @@
                                         <button class="outline-0 border-0 bg-white"
                                             onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
-                                            <form action="{{ route('cartForm') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="product_id" value="{{ $item->id }}">
-                                                <input type="hidden" name="user_id"
-                                                    value="{{ Auth::check() ? Auth::user()->id : 0 }}">
-                                                <input type="hidden" name="quantity" value="1">
-                                                <button type="submit" class="outline-0 border-0 bg-white"><i
-                                                        class="fa-solid fa-bag-shopping"></i></button>
-                                            </form>
+                                        </button>
+                                        {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
+                                        <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
+                                            class="outline-0 border-0 bg-white">
+                                            <i class="fa-solid fa-bag-shopping"></i>
+                                        </button>
                                     </div>
 
                                     <div class="product_box_image">
@@ -430,17 +424,12 @@
                                                                 onclick="showModalProduct('{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                                                 <i class="fa-regular fa-eye"></i>
                                                             </button>
-                                                            <form action="{{ route('cartForm') }}" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="product_id"
-                                                                    value="{{ $product->id }}">
-                                                                <input type="hidden" name="user_id"
-                                                                    value="{{ Auth::check() ? Auth::user()->id : 0 }}">
-                                                                <input type="hidden" name="quantity" value="1">
-                                                                <button type="submit"
-                                                                    class="outline-0 border-0 bg-white"><i
-                                                                        class="fa-solid fa-bag-shopping"></i></button>
-                                                            </form>
+                                                            {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
+                                                            <button type="button"
+                                                                onclick="addToCart('{{ $product->id }}', 1)"
+                                                                class="outline-0 border-0 bg-white">
+                                                                <i class="fa-solid fa-bag-shopping"></i>
+                                                            </button>
                                                         </div>
                                                         <div class="product_box_image">
                                                             <img src="{{ asset('img/' . $product->image) }}"
@@ -532,15 +521,11 @@
                                             onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
-                                        <form action="{{ route('cartForm') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $item->id }}">
-                                            <input type="hidden" name="user_id"
-                                                value="{{ Auth::check() ? Auth::user()->id : 0 }}">
-                                            <input type="hidden" name="quantity" value="1">
-                                            <button type="submit" class="outline-0 border-0 bg-white"><i
-                                                    class="fa-solid fa-bag-shopping"></i></button>
-                                        </form>
+                                        {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
+                                        <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
+                                            class="outline-0 border-0 bg-white">
+                                            <i class="fa-solid fa-bag-shopping"></i>
+                                        </button>
                                     </div>
                                     <div class="product_box_image">
                                         <img src="{{ asset('img/' . $item->image) }}" alt="" />
@@ -720,6 +705,45 @@
 
 
     <script>
+        function addToCart(product_id, quantity) {
+            $.ajax({
+                url: '{{ route('cartForm') }}',
+                type: 'POST',
+                data: {
+                    product_id: product_id,
+                    quantity: quantity,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass: {
+                            popup: 'my-popup-zindex' // Thêm lớp tùy chỉnh
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Có lỗi xảy ra! Vui lòng thử lại sau",
+                        showConfirmButton: true,
+                        customClass: {
+                            popup: 'my-popup-zindex' // Thêm lớp tùy chỉnh
+                        }
+                    });
+                }
+            })
+        }
+        // không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
+        // server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
+    </script>
+
+    <script>
         function showModalProduct(id, image, name, price, defaultDiscountPrice, productImages) {
 
             const modalHome = document.getElementById("modal_home");
@@ -783,14 +807,7 @@
                         </div>
                         <div class="modal_btn">
                             <button class="modal_btn_item">Mua ngay</button>
-                            <form action="{{ route('cartForm') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product_id" value="${ id }">
-                                <input type="hidden" name="user_id"
-                                    value="${user_id}">
-                                <input type="hidden" name="quantity" id="inputQuantityHidden" value="1">
-                                <button type="submit" class="modal_btn_item">Thêm vào giỏ hàng</button>
-                            </form>
+                            <button type="submit" onclick="addToCart(${id},document.getElementById('inputQuantity').value)" class="modal_btn_item">Thêm vào giỏ hàng</button>
                         </div>
                     </div>
                 </div>

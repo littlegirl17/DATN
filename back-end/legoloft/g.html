@@ -5,61 +5,54 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <style>
-            .alertSuccess {
-                position: relative;
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #4caf50;
-                /* Màu nền */
-                color: #fff;
-                /* Màu chữ */
-                padding: 15px;
-                border-radius: 10px;
-                width: 300px;
-                z-index: 1000;
-                overflow: hidden;
+            .addCartMain {
+                background-color: #fff;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+                width: 350px;
             }
-
-            .progress-bar {
-                height: 5px;
-                background-color: #f1c40f;
-                /* Màu thanh chạy */
-                width: 0;
-                /* Bắt đầu từ 0% */
-                position: absolute;
-                bottom: 0;
-                /* Đặt thanh chạy ở dưới cùng */
-                left: 0;
-                /* Bắt đầu từ bên trái */
-                transition: width 5s linear;
-                /* Thời gian chạy thanh */
+            .addCartContent {
+                display: flex;
+                flex-direction: column;
+            }
+            .addCartContent_item {
+                display: flex;
+                flex-direction: row;
+            }
+            .addCartContent_item span {
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+            .addCartContent_image {
+                width: 100px;
+                height: 100px;
+                padding: 10px 10px 10px 10px;
+            }
+            .addCartContent_image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         </style>
     </head>
     <body>
-        <div id="alertAction" class="alertSuccess">
-            <span class="alert-message">hhh</span>
-            <div class="progress-bar" id="progress-bar"></div>
+        <div class="addCartMain">
+            <div class="addCartContent">
+                <div class="addCartContent_item">
+                    <span class="text-center">Thêm vào giò thành công</span>
+                </div>
+                <div class="addCartContent_item">
+                    <div class="addCartContent_image">
+                        <img src="public/img/city-product-1.webp" alt="" />
+                    </div>
+                    <div class="addCartContent_name">
+                        <span>Mô hình lego thành phố</span>
+                        <div class="addCartContent_quantity">
+                            Số lượng mua: 1
+                        </div>
+                    </div>
+                </div>
+                <div class="addCartContent_item"></div>
+            </div>
         </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const alertBox = document.getElementById("alertAction");
-                const progressBar = document.getElementById("progress-bar");
-
-                // Bắt đầu thanh chạy
-                progressBar.style.width = "100%"; // Di chuyển thanh từ 0% đến 100%
-
-                // Sau 5 giây, ẩn alert
-                setTimeout(() => {
-                    alertBox.style.opacity = "0"; // Từ từ giảm độ mờ
-                    setTimeout(() => {
-                        alertBox.style.display = "none"; // Ẩn hoàn toàn
-                    }, 500); // Thời gian giảm độ mờ
-                }, 5000); // Thời gian thanh chạy
-            });
-        </script>
     </body>
 </html>

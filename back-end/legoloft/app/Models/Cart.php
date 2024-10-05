@@ -20,7 +20,8 @@ class Cart extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-    public function getallcart(){
-        return $this->orderBy('id', 'desc')->get();
+    public function getallcart($user_id)
+    {
+        return $this->where('user_id', $user_id)->orderBy('id', 'desc')->get();
     }
 }

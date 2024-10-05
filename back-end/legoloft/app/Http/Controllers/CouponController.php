@@ -31,6 +31,7 @@ class CouponController extends Controller
             // kiểm tra giỏ hàng có sản phẩm để áp mã coupon hay không
             $cart = [];
             if (Auth::check()) {
+                $cart = $this->cartModel->getallcart();
             } else {
                 $cart = json_decode(request()->cookie('cart'), true) ?? [];
             }
