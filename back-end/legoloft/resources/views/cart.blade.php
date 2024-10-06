@@ -59,7 +59,8 @@
                                     <button class="cart_quantity_decrease"><a
                                             href="{{ route('decreaseQuantity', $item['product_id']) }}">-</a></button>
                                     <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number"
-                                        disabled />
+                                        data-product-id="{{ $item['product_id'] }}" disabled />
+                                    <!-- data-product-id: thuộc tính tùy chỉnh trong HTML-->
                                     <button class="cart_quantity_increase"><a
                                             href="{{ route('increaseQuantity', $item['product_id']) }}">+</a></button>
                                 </div>
@@ -111,19 +112,16 @@
                                     </div>
                                 @endif
                                 <div class="cart_item_content_quantity">
-                                    <button class="cart_quantity_decrease" {{-- khi giảm tới 0 sẽ bị vô hiệu hóa nút giảm --}}
-                                        @if ($item['quantity'] <= 0) disabled @endif>
-                                        <a
-                                            href="{{ $item['quantity'] > 0 ? route('decreaseQuantity', $item['product_id']) : '#' }}">-</a>
+                                    <button class="cart_quantity_decrease">{{-- khi giảm tới 0 sẽ bị vô hiệu hóa nút giảm --}}
+                                        <a href="{{ route('decreaseQuantity', $item['product_id']) }}">-</a>
                                     </button>
 
                                     <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number"
-                                        disabled readonly />
+                                        data-product-id="{{ $item['product_id'] }}" disabled readonly />
 
-                                    <button class="cart_quantity_increase" {{-- khi tăng tới 100 thì vô hiệu hóa, hoặc kha muốn làm thêm instock tồn kho thì thêm vào --}}
-                                        @if ($item['quantity'] >= 100) disabled @endif>
-                                        <a
-                                            href="{{ $item['quantity'] < 100 ? route('increaseQuantity', $item['product_id']) : '#' }}">+</a>
+                                    <button class="cart_quantity_increase"
+                                        @if ($item['quantity'] >= 100) disabled @endif>{{-- khi tăng tới 100 thì vô hiệu hóa, hoặc kha muốn làm thêm instock tồn kho thì thêm vào --}}
+                                        <a href="{{ route('increaseQuantity', $item['product_id']) }}">+</a>
                                     </button>
                                 </div>
                             </div>
@@ -172,13 +170,17 @@
                         <div class="d-flex">
                             <input type="text" class="cart_right_coupon_input" name="code"
                                 placeholder="Nhập mã giảm giá" />
+                            {{-- @if (is_array($cart) && empty($cart) && (isset($getallcart) && $getallcart->isEmpty()))
+                            @else
+
+                            @endif --}}
+
                             @if (Session::get('coupon'))
                                 <button type="button" class="detail_btn_coupon"><a href="{{ route('couponDelete') }}"
                                         class="text-decoration-none text-light">Xóa mã</a></button>
                             @else
                                 <button type="submit" class="detail_btn_cart">Áp mã</button>
                             @endif
-
                         </div>
                         <div class="pt-2">
                             @if (session('error'))
@@ -198,6 +200,7 @@
                     </div>
                     <div class="cart_right_total_item">
                         <span>Mã giảm</span>
+
                         @if (Session::has('coupon'))
                             @foreach (Session::get('coupon') as $item)
                                 @if (isset($item['type']))
@@ -221,6 +224,8 @@
                                 @endif
                             @endforeach
                         @endif
+
+
                     </div>
                     <div class="cart_right_total_item">
                         <h5>Tổng tiền</h5>
@@ -247,7 +252,55 @@
         </div>
     </div>
     <!-- END MAIN -->
+    <script>
+        function increaseCart(product_id) {
 
+            $.ajax({
+                url: '{{ route('increaseQuantity', '') }}/' + product_id,
+                type: 'POST',
+                data: {
+                    product_id: product_id,
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    if (response.success) {
+                        let quantityInput = $('.cart_quantity_number[data-product-id="' + product_id +
+                            '"]'
+                        ); // Lấy phần tử bằng jQuery // [data-product-id="' + product_id + '"] chỉ định rằng bạn chỉ muốn các phần tử có thuộc tính data-product-id bằng với giá trị của product_id.
+                        let currentQuantity = parseInt(quantityInput.val()); //Lấy giá trị hiện tại của ô input
+                        quantityInput.val(currentQuantity + 1); // Tăng số lượng lên 1
+                    }
+                },
+                error: function(xhr) {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại!');
+                }
+            })
+        }
+
+        function decreaseCart(product_id) {
+            $.ajax({
+                url: '{{ route('decreaseQuantity', '') }}/' + product_id,
+                type: 'POST',
+                data: {
+                    product_id: product_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        let quantityInput = $('.cart_quantity_number[data-product-id="' + product_id + '"]');
+                        let currentQuantity = parseInt(quantityInput.val());
+                        quantityInput.val(currentQuantity - 1);
+                    } else if (response.error) {
+                        alert(response.error_decreaseQuantity);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại!');
+
+                }
+            })
+        }
+    </script>
     <script>
         function deleteItemCart(url) {
             let timerInterval;

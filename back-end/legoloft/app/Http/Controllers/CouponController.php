@@ -31,7 +31,8 @@ class CouponController extends Controller
             // kiểm tra giỏ hàng có sản phẩm để áp mã coupon hay không
             $cart = [];
             if (Auth::check()) {
-                $cart = $this->cartModel->getallcart();
+                $user = Auth::check() ? Auth::user()->id : 0;
+                $cart = $this->cartModel->getallcart($user);
             } else {
                 $cart = json_decode(request()->cookie('cart'), true) ?? [];
             }
@@ -64,6 +65,19 @@ class CouponController extends Controller
                 $total += $intoMoney;
             }
 
+            if ($total >= $couponCheck->total) {
+                $coupon[] = array(
+                    'code' => $couponCheck->code,
+                    'type' => $couponCheck->type,
+                    'total' => $couponCheck->total,
+                    'discount' => $couponCheck->discount,
+                );
+                Session::put('coupon', $coupon);
+                return redirect()->back()->with('success', 'Thêm mã giảm giá thành công');
+            } else {
+                return redirect()->back()->with('error', 'Tổng giá trị đơn hàng không đủ để áp dụng mã giảm giá này!');
+            }
+
             // Kiểm tra mã giảm giá nhập vào có hợp lệ hay không
             if ($total >= $couponCheck->total) {
                 $coupon[] = array(
@@ -84,6 +98,7 @@ class CouponController extends Controller
 
     public function couponDelete()
     {
+
         $coupon = Session::get('coupon');
         if ($coupon) {
             session()->forget('coupon');

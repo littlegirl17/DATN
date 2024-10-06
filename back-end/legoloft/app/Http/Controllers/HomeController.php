@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $productOutStanding = $this->productModel->productOutStanding();
-        $productDiscountSection = $this->productModel->productDiscountSection();
+        //$productDiscountSection = $this->productModel->productDiscountSection();
         $productBestseller = $this->productModel->productBestseller();
         $productSoldOut =  $this->productModel->productSoldOut();
         // Lấy danh sách các danh mục chính và danh mục con
@@ -44,7 +44,7 @@ class HomeController extends Controller
         //
         $user = auth()->user();
         $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
-
-        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection', 'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut'));
+        $productDiscountSection = $this->productDiscountModel->productDiscountSection($user ? $user->user_group_id : 1);
+        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection',  'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut'));
     }
 }

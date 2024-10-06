@@ -262,7 +262,7 @@
                 </div>
                 <div class="owl-carousel owl-theme">
                     @foreach ($productDiscountSection as $item)
-                        @php
+                        {{-- @php
                             $userGroupDiscount = 0;
                             $userPriceModal = 0;
                             if ($user && Auth::check()) {
@@ -285,8 +285,11 @@
 
                             $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
-                        @endphp
+                        @endphp --}}
+                        @php
+                            $percent = ceil((($item->products->price - $item->price) / $item->products->price) * 100);
 
+                        @endphp
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
@@ -294,44 +297,34 @@
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button class="outline-0 border-0 bg-white"
-                                            onclick="showModalProduct('{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
+                                            onclick="showModalProduct('{{ $item->product_id }}','{{ $item->products->image }}','{{ $item->products->name }}','{{ $item->products->price }}','{{ $item->price }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
                                         {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
-                                        <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
+                                        <button type="button" onclick="addToCart('{{ $item->product_id }}', 1)"
                                             class="outline-0 border-0 bg-white">
                                             <i class="fa-solid fa-bag-shopping"></i>
                                         </button>
                                     </div>
 
                                     <div class="product_box_image">
-                                        <img src="{{ asset('img/' . $item->image) }}" alt="" />
+                                        <img src="{{ asset('img/' . $item->products->image) }}" alt="" />
                                     </div>
                                     <div class="product_box_content_out">
                                         <div class="product_box_content">
-                                            <h3><a href="">{{ $item->name }}</a></h3>
+                                            <h3> <a href="">{{ $item->products->name }}</a>
+                                            </h3>
                                         </div>
-                                        @if ($user && Auth::check())
-                                            @if ($userGroupDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                        @if (Auth::check())
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->products->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @else
-                                            @if ($userGroupDefaultDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->products->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @endif
+
                                     </div>
                                 </div>
                             </div>

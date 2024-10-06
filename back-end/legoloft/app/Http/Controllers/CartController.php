@@ -106,6 +106,7 @@ class CartController extends Controller
             if (isset($cart[$id])) {
                 $cart[$id]['quantity']++;
             }
+
             return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart))); // withCookie :  cho phép bạn thêm một cookie vào phản hồi, Cookie này sẽ được gửi về trình duyệt của người dùng cùng với phản hồi, và trình duyệt sẽ lưu cookie này // cookie:  là một phương thức để tạo cookie,
         }
     }
@@ -118,18 +119,23 @@ class CartController extends Controller
             $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
 
             if ($cartItem) {
-                $cartItem->quantity--;
-                $cartItem->save();
+                if ($cartItem->quantity > 1) {
+                    $cartItem->quantity--;
+                    $cartItem->save();
+                    return redirect()->back();
+                } else {
+                    return redirect()->back()->with('error_decreaseQuantity', 'Số lượng ít nhất một sản phẩm!');
+                }
             }
 
-            return redirect()->back();
+            // return redirect()->back();
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart  = json_decode(request()->cookie('cart'), true) ?? [];
             if (isset($cart[$id])) {
                 if ($cart[$id]['quantity'] > 1) {
                     $cart[$id]['quantity']--;
-                    return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart)));
+                    return redirect()->back()->withCookie(cookie()->forever('cart', json_encode($cart))); // withCookie :  cho phép bạn thêm một cookie vào phản hồi, Cookie này sẽ được gửi về trình duyệt của người dùng cùng với phản hồi, và trình duyệt sẽ lưu cookie này // cookie:  là một phương thức để tạo cookie,
                 } else {
                     return redirect()->back()->with('error_decreaseQuantity', 'Số lượng ít nhất một sản phẩm!');
                 }

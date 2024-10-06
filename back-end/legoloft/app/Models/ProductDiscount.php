@@ -40,4 +40,9 @@ class ProductDiscount extends Model
     {
         return $this->where('user_group_id', $userGroupId)->first();
     }
+
+    public function productDiscountSection($user_group_id)
+    {
+        return $this->where('user_group_id', $user_group_id)->get();
+    }
 }

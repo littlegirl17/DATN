@@ -79,13 +79,14 @@ class Product extends Model
             ->get();
     }
 
-    public function productDiscountSection()
+    /*public function productDiscountSection()
     {
-        return $this
-            ->where('status', 1)
-            ->orderBy('id', 'desc')
-            ->get();
-    }
+         return $this
+             ->where('status', 1)
+             ->orderBy('id', 'desc')
+             ->get();
+
+    }*/
 
     public function productBestseller()
     {

@@ -30,6 +30,7 @@ class UserController extends Controller
             return redirect()->route('login')->with('error', 'Tài khoản không tồn tại trong hệ thống!');
         }
 
+
         if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
             if ($user->status < 1) {
