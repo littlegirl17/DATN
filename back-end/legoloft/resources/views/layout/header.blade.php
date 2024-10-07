@@ -92,8 +92,8 @@
                     </div>
                 </div>
 
-                <div class="">
-                    <a href="{{ route('cart') }}"> <img src="img/cart.svg" alt="" /></a>
+                <div class="icon_shoppingbag">
+                    <a href="{{ route('cart') }}"> <img src="{{ asset('img/shoppingbag.png') }}" alt="" /></a>
                 </div>
             </div>
         </div>

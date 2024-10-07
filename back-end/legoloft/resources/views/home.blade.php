@@ -262,30 +262,6 @@
                 </div>
                 <div class="owl-carousel owl-theme">
                     @foreach ($productDiscountSection as $item)
-                        {{-- @php
-                            $userGroupDiscount = 0;
-                            $userPriceModal = 0;
-                            if ($user && Auth::check()) {
-                                // giá giảm nhóm người dùng đã đăng nhập
-                                // truy cập vào table user lấy ra user_group_id, để biết khách hàng đang thuốc nhóm nào(đồng, bạc, vàng)
-                                $userGroupId = $user->user_group_id;
-                                //$item biến đại diện cho từng sản phẩm, và các giảm giá liên quan đến sản phẩm đó, và lọc giá giảm theo nhóm người dùng cụ thể
-                                $userGroupDiscount = $item->productDiscount
-                                    ->where('user_group_id', $userGroupId)
-                                    ->first();
-                                // dùng để lấy được giá cho modal
-                                $userPriceModal = $userGroupDiscount ? $userGroupDiscount->price : null;
-                            } else {
-                                // giá giảm nhóm người dùng không cần đăng nhập
-                                // $userGroupDefaultDiscount biến này đã đucợ xử lí bên controller và model nên chỉ cần gọi biến qua đây
-                                $userGroupDefaultDiscount = $item->productDiscount->first();
-                                // ràng buộc giá default mặc định
-                                $userPriceModal = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
-                            }
-
-                            $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
-                            $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
-                        @endphp --}}
                         @php
                             $percent = ceil((($item->products->price - $item->price) / $item->products->price) * 100);
 
@@ -296,10 +272,10 @@
                                     <div class="product_box_tag_sale">{{ $percent }}%</div>
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
-                                        <button class="outline-0 border-0 bg-white"
+                                        {{-- <button class="outline-0 border-0 bg-white"
                                             onclick="showModalProduct('{{ $item->product_id }}','{{ $item->products->image }}','{{ $item->products->name }}','{{ $item->products->price }}','{{ $item->price }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
-                                        </button>
+                                        </button> --}}
                                         {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
                                         <button type="button" onclick="addToCart('{{ $item->product_id }}', 1)"
                                             class="outline-0 border-0 bg-white">
@@ -416,6 +392,7 @@
                                                             <button class="outline-0 border-0 bg-white"
                                                                 onclick="showModalProduct('{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
                                                                 <i class="fa-regular fa-eye"></i>
+
                                                             </button>
                                                             {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
                                                             <button type="button"

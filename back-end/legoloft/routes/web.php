@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\ArticleAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\MyAccountController;
 
@@ -87,6 +88,7 @@ Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping
 Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
 Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
 
+Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {
