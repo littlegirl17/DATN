@@ -25,11 +25,16 @@ class Categories extends Model
 
     public function product()
     {
-        return $this->hasMany(Product::class, 'category_id')->where('status', 1);
+        return $this->hasMany(Product::class, 'category_id')->where('status', 1)->inRandomOrder()->limit(4);
     }
 
     public function categoryAll()
     {
         return $this->orderBy('id', 'desc')->get();
+    }
+
+    public function categoryTotal()
+    {
+        return $this->whereNotNull('parent_id')->orderBy('id', 'desc')->get();
     }
 }

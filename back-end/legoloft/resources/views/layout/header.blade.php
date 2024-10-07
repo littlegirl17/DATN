@@ -61,11 +61,11 @@
                 </div>
                 <div class="header_user_click">
                     <div class="header_user_img">
-                        <img src="img/user.svg" alt="" />
+                        <img src="{{ asset('img/user.svg') }}" alt="" />
                     </div>
                     <div class="header_user_content">
                         <div class="header_user_content_moc_item">
-                            <img src="img/legomini.svg" alt="" />
+                            <img src="{{ asset('img/legomini.svg') }}" alt="" />
                         </div>
                         <div class="m-0 p-0">
                             @auth

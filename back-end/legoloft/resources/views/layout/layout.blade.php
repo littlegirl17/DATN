@@ -87,8 +87,6 @@
             }
         });
     </script>
-
-
     <script>
         window.onscroll = function() {
             const navbar = document.querySelector(".nav_box");
@@ -114,6 +112,179 @@
                 searchMobile.classList.remove("shrink");
             }
         };
+    </script>
+
+
+    <script>
+        function addToCart(product_id, quantity) {
+            $.ajax({
+                url: '{{ route('cartForm') }}',
+                type: 'POST',
+                data: {
+                    product_id: product_id,
+                    quantity: quantity,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass: {
+                            popup: 'my-popup-zindex' // Thêm lớp tùy chỉnh
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Có lỗi xảy ra! Vui lòng thử lại sau",
+                        showConfirmButton: true,
+                        customClass: {
+                            popup: 'my-popup-zindex' // Thêm lớp tùy chỉnh
+                        }
+                    });
+                }
+            })
+        }
+        // không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
+        // server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
+    </script>
+
+    <script>
+        function showModalProduct(event, id, image, name, price, defaultDiscountPrice, productImages) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định
+
+            const modalHome = document.getElementById("modal_home");
+            modalHome.style.opacity = 1;
+            modalHome.style.pointerEvents = "auto"; // Cho phép tương tác khi hiển thị
+
+            var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
+            var priceItem = 0;
+            if (defaultDiscountPrice) {
+                priceItem = `
+                <div class="product_box_price"><span>${new Intl.NumberFormat().format(price)}đ</span>${new Intl.NumberFormat().format(defaultDiscountPrice)}đ</div>
+            `;
+            } else {
+                priceItem = `
+                <div class="product_box_price"><span></span>${new Intl.NumberFormat().format(price)}đ</div>
+            `;
+            }
+
+            //chuyển chuổi thành mảng
+            var images = JSON.parse(productImages);
+            var imagesList = images.map(img => `
+            <li>
+                <div class="modal_product_left_img">
+                    <img src="{{ asset('img/${img}') }}" alt="" />
+                </div>
+            </li>
+            `).join('');
+
+            var template = `
+            <div class="modal_product_content">
+            <div id="close_modal" class="modal_product_content_one">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal_product_content_two">
+                <div class="" style="max-width: 400px">
+                    <div class="modal_product_content_two_img">
+                        <img src="{{ asset('img/${image}') }}" alt="" />
+                    </div>
+                    <div class="modal_product_left_img">
+                        <div class="modal_product_left_img_item_res">
+                            <ul>
+                               ${imagesList}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal_product_content_two_content">
+                    <div class="">
+                        <h2>${name}</h2>
+                    </div>
+                    ${priceItem}
+                    <div class="detail_product_right_four py-3">
+                        <div class="detail_product_right_four_item">
+                            <button class="right_four_item_decrease" onclick="decreaseQuantity()">-</button>
+                            <input type="text" class="right_four_item_number" id="inputQuantity" value="1" disabled />
+                            <button class="right_four_item_increase" onclick="increaseQuantity()">+</button>
+                        </div>
+                        <div class="detail_product_right_four_span">
+                            <span>Giới hạn 5</span>
+                        </div>
+                    </div>
+                    <div class="modal_btn">
+                        <button class="modal_btn_item">Mua ngay</button>
+                        <button type="submit" onclick="addToCart(${id},document.getElementById('inputQuantity').value)" class="modal_btn_item">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+            // Hiển thị modal với nội dung template
+            document.getElementById('modal_home').innerHTML = template;
+
+            // đóng modal
+            const closeModal = document.getElementById("close_modal");
+            closeModal.onclick = function() {
+                modalHome.style.opacity = 0;
+            };
+
+            //click vào ảnh con
+            const largeImgHome = document.querySelector(
+                ".modal_product_content_two_img img"
+            );
+            const smallImgHome = document.querySelectorAll(
+                ".modal_product_left_img_item_res ul li img"
+            );
+
+            function updateLargeImageHome(i) {
+                largeImgHome.style.opacity = 0; // ẩn ảnh lớn
+
+                setTimeout(() => {
+                    largeImgHome.src = smallImgHome[i].src; // Thay đổi hình ảnh lớn
+                    largeImgHome.style.opacity = 1; // hiện ảnh lớn
+                }, 100);
+            }
+
+            // Sự kiện click vào hình ảnh nhỏ
+            smallImgHome.forEach((smallImg, i) => {
+                smallImg.addEventListener("click", function() {
+                    updateLargeImageHome(i);
+                });
+            });
+        }
+
+        window.addEventListener("click", function(event) {
+            const modalHome = document.getElementById("modal_home");
+
+            // Kiểm tra nếu modalHome tồn tại và sự kiện xảy ra ngoài modal (chính modalHome)
+            if (event.target === modalHome) {
+                modalHome.style.opacity = 0;
+                modalHome.style.pointerEvents = "none"; // Ngăn tương tác khi ẩn
+            }
+        });
+
+        function decreaseQuantity() {
+            var inputQuantity = document.getElementById('inputQuantity');
+            var inputQuantityHidden = document.getElementById('inputQuantityHidden');
+            if (parseInt(inputQuantity.value) > 1) {
+                //lớn hơn 1 thì mưới cho giảm số lượng, nghĩa là ko cho giảm quantity xuống 0
+                inputQuantity.value = parseInt(inputQuantity.value) - 1;
+                inputQuantityHidden.value = inputQuantity.value;
+            }
+        }
+
+        function increaseQuantity() {
+            var inputQuantity = document.getElementById('inputQuantity');
+            var inputQuantityHidden = document.getElementById('inputQuantityHidden');
+            inputQuantity.value = parseInt(inputQuantity.value) + 1;
+            inputQuantityHidden.value = inputQuantity.value;
+        }
     </script>
 </body>
 

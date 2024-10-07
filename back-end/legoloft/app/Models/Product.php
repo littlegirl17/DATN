@@ -46,6 +46,11 @@ class Product extends Model
         return $this->orderBy('id', 'desc')->get();
     }
 
+    public function productByCategory($category_id)
+    {
+        return $this->where('category_id', $category_id)->orderBy('id', 'desc')->limit(9)->get();
+    }
+
     public function searchProduct($filter_iddm, $filter_name, $filter_price, $filter_status)
     {
         $query = $this->query();
@@ -78,15 +83,6 @@ class Product extends Model
             ->limit(4)
             ->get();
     }
-
-    /*public function productDiscountSection()
-    {
-         return $this
-             ->where('status', 1)
-             ->orderBy('id', 'desc')
-             ->get();
-
-    }*/
 
     public function productBestseller()
     {

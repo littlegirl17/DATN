@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\ArticleAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\MyAccountController;
@@ -69,6 +70,10 @@ Route::get('register', function () {
 })->name('register');
 Route::post('register', [UserController::class, 'register'])->name('registerForm');
 
+Route::get('categoryAll', [CategoryController::class, 'categoryAll'])->name('categoryAll');
+Route::get('categoryProduct/{id}', [CategoryController::class, 'categoryProduct'])->name('categoryProduct');
+
+
 Route::get('cart', [CartController::class, 'getCart'])->name('cart');
 Route::post('cartForm', [CartController::class, 'cartAdd'])->name('cartForm');
 Route::get('increaseQuantity/{id}', [CartController::class, 'increaseQuantity'])->name('increaseQuantity');
@@ -89,6 +94,7 @@ Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
 Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
 
 Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {

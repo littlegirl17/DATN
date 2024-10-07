@@ -226,3 +226,6 @@ function memberSubmenuMobile(element) {
 }
 
 // ------------------------- HEIGHT SCROLL -----------------------
+
+// không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
+// server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
