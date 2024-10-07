@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\ArticleAdminController;
+use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\UserAdminController;
 use App\Http\Controllers\CouponController;
@@ -128,6 +130,18 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('editAdminstrationGroup/{id}', [AdminstrationController::class, 'adminstrationGroupEdit'])->name('editAdminstrationGroup');
         Route::put('editAdminstrationGroup/{id}', [AdminstrationController::class, 'adminstrationGroupUpdate']);
         Route::post('deleteAdminstrationGroup', [AdminstrationController::class, 'adminstrationGroupDeleteCheckbox'])->name('deleteAdminstrationGroup');
+    });
+
+    Route::middleware(['admin:categoryArticle'])->group(function () {
+        Route::get('categoryArticle', [CategoryArticleAdminController::class, 'categoryArticle'])->name('categoryArticle');
+        Route::get('categoryArticleEdit', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
+    });
+
+    Route::middleware(['admin:article'])->group(function () {
+        Route::get('article', [ArticleAdminController::class, 'article'])->name('article');
+        Route::get('articleAdd', [ArticleAdminController::class, 'articleAdd'])->name('articleAdd');
+        Route::get('articleEdit', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
     });
 
     Route::middleware(['admin:user'])->group(function () {

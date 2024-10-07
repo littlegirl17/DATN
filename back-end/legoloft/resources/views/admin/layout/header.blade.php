@@ -144,7 +144,39 @@
                             </ul>
                         </li>
                     @endif
-
+                    @if (in_array('article', $permission) || in_array('categoryArticle', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="fa-solid fa-newspaper" style="color: #ffffff; font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Bài viết - blog</span>
+                            </a>
+                            <ul class="submenu">
+                                @if (in_array('categoryArticle', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('categoryArticle') }}"
+                                            aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Danh mục bài viết</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (in_array('article', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('article') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Bài viết</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="" aria-expanded="false">
                             <span style="width:20px">

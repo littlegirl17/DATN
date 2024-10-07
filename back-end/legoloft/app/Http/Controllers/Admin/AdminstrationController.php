@@ -48,34 +48,26 @@ class AdminstrationController extends Controller
                 'admin_group_id' => 'required | exists:administration_groups,id',
                 'email' => 'required | email | unique:administrations,email',
                 'password' => 'required | confirmed',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'nullable',
                 'status' => 'required | in:0,1',
             ]);
-            try {
-                $administration = $this->administrationModel;
-                $administration->fullname = $request->fullname;
-                $administration->username = $request->username;
-                $administration->admin_group_id = $request->admin_group_id;
-                $administration->email = $request->email;
-                $administration->password = bcrypt($request->password);
-                $administration->status = $request->status;
-                $administration->save();
-                $administration->nonExistentMethod(); // Đây sẽ gây ra lỗi
+            $administration = $this->administrationModel;
+            $administration->fullname = $request->fullname;
+            $administration->username = $request->username;
+            $administration->admin_group_id = $request->admin_group_id;
+            $administration->email = $request->email;
+            $administration->password = bcrypt($request->password);
+            $administration->status = $request->status;
+            $administration->save();
 
-                if ($request->hasFile('image')) {
-                    $image = $request->file('image');
-                    $imageName = "{$administration->id}.{$image->getClientOriginalExtension()}";
-                    $image->move(public_path('img/'), $imageName);
-                    $administration->image = $imageName;
-                    $administration->save();
-                }
-                return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
-            } catch (\Throwable $th) {
-                // Ghi lại lỗi vào file log
-                Log::error('Lỗi khi thêm người dùng: ' . $th->getMessage());
-                $error = $th->getMessage();
-                return redirect()->back()->with(['error' => $error]);
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = "{$administration->id}.{$image->getClientOriginalExtension()}";
+                $image->move(public_path('img/'), $imageName);
+                $administration->image = $imageName;
+                $administration->save();
             }
+            return redirect()->route('adminstration')->with('success', 'Thêm người dùng thành công');
         }
 
         $administrationGroup = $this->administrationGroupModel->administrationGroupAll();
