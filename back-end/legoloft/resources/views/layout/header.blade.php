@@ -133,7 +133,7 @@
                 @foreach ($categories as $category)
                     <div class="submenu-category" style="display: none" data-category-id="{{ $category->id }}">
                         @foreach ($category->categories_children as $item)
-                            <li><a href="#">{{ $item->name }}</a></li>
+                            <li><a href="{{ route('categoryProduct', $item->id) }}">{{ $item->name }}</a></li>
                         @endforeach
                     </div>
                 @endforeach

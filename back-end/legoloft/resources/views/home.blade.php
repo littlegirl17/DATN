@@ -69,7 +69,7 @@
                                     <h3>{{ $item->name }}</h3>
                                 </div>
                                 <div class="card_box_btn">
-                                    <a href="{{ route('categoryProduct', $item->id) }}">Xem thêm</a>
+                                    <a href="{{ route('categoryProduct', $item->id) }}">Xem ngay</a>
                                     <i class="fa-solid fa-chevron-right"></i>
                                 </div>
                             </div>

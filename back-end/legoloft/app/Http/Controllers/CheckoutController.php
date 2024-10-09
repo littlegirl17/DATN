@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class CheckoutController extends Controller
         $this->productDiscountModel = new ProductDiscount();
     }
 
-    public function checkout(Request $request)
+    public function checkout(CheckoutRequest $request)
     {
         // Fetch data from API
         $response = Http::get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json');
@@ -60,6 +61,8 @@ class CheckoutController extends Controller
                 break;
             }
         }
+
+
 
         $products = $this->productModel;
         if (Auth::check()) {
