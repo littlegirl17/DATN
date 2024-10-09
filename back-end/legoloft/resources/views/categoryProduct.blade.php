@@ -80,36 +80,26 @@
                     <div class="row">
                         @foreach ($productCategory as $item)
                             @php
-                                $userGroupDiscount = 0;
-                                $userPriceModal = 0;
-                                if ($user && Auth::check()) {
-                                    // giá giảm nhóm người dùng đã đăng nhập
-                                    // truy cập vào table user lấy ra user_group_id, để biết khách hàng đang thuốc nhóm nào(đồng, bạc, vàng)
-                                    $userGroupId = $user->user_group_id;
-                                    //$item biến đại diện cho từng sản phẩm, và các giảm giá liên quan đến sản phẩm đó, và lọc giá giảm theo nhóm người dùng cụ thể
-                                    $userGroupDiscount = $item->productDiscount
-                                        ->where('user_group_id', $userGroupId)
-                                        ->first();
-                                    // dùng để lấy được giá cho modal
-                                    $userPriceModal = $userGroupDiscount ? $userGroupDiscount->price : null;
-                                } else {
-                                    // giá giảm nhóm người dùng không cần đăng nhập
-                                    // $userGroupDefaultDiscount biến này đã đucợ xử lí bên controller và model nên chỉ cần gọi biến qua đây
-                                    $userGroupDefaultDiscount = $item->productDiscount->first();
-                                    // ràng buộc giá default mặc định
-                                    $userPriceModal = $userGroupDefaultDiscount
-                                        ? $userGroupDefaultDiscount->price
-                                        : null;
+                                $priceDiscount = 0;
+                                $userGroupId = Auth::check() ? Auth::user()->user_group_id : 1;
+                                $productDiscountPrice = $item->productDiscount
+                                    ->where('user_group_id', $userGroupId)
+                                    ->first();
+
+                                $price = $item->price ? $item->price : null;
+
+                                if ($productDiscountPrice) {
+                                    $priceDiscount = $productDiscountPrice ? $productDiscountPrice->price : null;
                                 }
-                                // tính % giảm giá
-                                $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
+
+                                $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                                 $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                             @endphp
                             <div class="col-md-4 col-sm-6 col-12 category_product_main_right_item">
                                 <a href="" class="text-black text-decoration-none">
                                     <div class="category_product_box">
                                         <div class="category_product_box_effect">
-                                            @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                            @if (isset($productDiscountPrice))
                                                 <div class="categoryproduct_box_tag_sale_outstanding">{{ $percent }}%
                                                 </div>
                                             @endif
@@ -117,7 +107,7 @@
                                                 <i class="fa-regular fa-heart"></i>
                                                 <button type="button" class="outline-0 border-0 "
                                                     style="background-color: transparent"
-                                                    onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
+                                                    onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                                     <i class="fa-regular fa-eye"></i>
                                                 </button>
                                                 {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
@@ -133,26 +123,14 @@
                                                 <div class="product_box_content">
                                                     <h3><a href="">{{ $item->name }}</a></h3>
                                                 </div>
-                                                @if ($user && Auth::check())
-                                                    @if ($userGroupDiscount)
-                                                        <div class="category_product_box_price">
-                                                            <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDiscount->price, 0, ',', '.') . 'đ' }}
-                                                        </div>
-                                                    @else
-                                                        <div class="category_product_box_price">
-                                                            <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                        </div>
-                                                    @endif
+                                                @if ($productDiscountPrice)
+                                                    <div class="product_box_price">
+                                                        <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
+                                                    </div>
                                                 @else
-                                                    @if ($userGroupDefaultDiscount)
-                                                        <div class="category_product_box_price">
-                                                            <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                                        </div>
-                                                    @else
-                                                        <div class="category_product_box_price">
-                                                            <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                        </div>
-                                                    @endif
+                                                    <div class="product_box_price">
+                                                        <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>

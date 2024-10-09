@@ -24,21 +24,16 @@ class CartController extends Controller
 
     public function getCart()
     {
+        $products = $this->productModel;
         if (Auth::check()) {
             // Lưu vào DATABASE - CẦN LOGIN
             $user = Auth::check() ? Auth::user()->id : 0;
-            $products = $this->productModel;
-            $getallcart = $this->cartModel->getallcart($user);
-            $cart = $this->cartModel;
-            return view('cart', compact('cart', 'getallcart', 'products'));
+            $cart = $this->cartModel->getallcart($user);
         } else {
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
-            $products = $this->productModel;
-            $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
-
-            return view('cart', compact('cart', 'products', 'userGroupDefaultDiscount'));
         }
+        return view('cart', compact('cart', 'products'));
     }
 
     public function cartAdd(Request $request)

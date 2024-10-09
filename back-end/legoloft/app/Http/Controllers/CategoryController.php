@@ -33,7 +33,6 @@ class CategoryController extends Controller
         $categoryAll = $this->categoryModel->categoryTotal();
         $productCategory = $this->productModel->productByCategory($id);
         $user = auth()->user();
-        $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
-        return view('categoryProduct', compact('categoryAll', 'productCategory', 'user', 'userGroupDefaultDiscount', 'categoryName'));
+        return view('categoryProduct', compact('categoryAll', 'productCategory', 'user', 'categoryName'));
     }
 }

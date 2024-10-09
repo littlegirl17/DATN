@@ -37,70 +37,16 @@
         <div class="container">
             <div class="image_category">
                 <ul class="image_category_ul">
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="" class="text-decoration-none">
-                            <img src="img/category-1.webp" alt="" />
-                            <div class="image_category_span">
-                                <span>Tốc độ</span>
-                            </div>
-                        </a>
-                    </li>
+                    @foreach ($categoryAll as $item)
+                        <li class="">
+                            <a href="{{ route('categoryProduct', $item->id) }}" class="text-decoration-none">
+                                <img src="{{ asset('img/' . $item->image) }}" alt="" />
+                                <div class="image_category_span">
+                                    <span>{{ $item->name }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -113,51 +59,22 @@
                     <h2>Những lựa chọn hàng đầu trong tuần này</h2>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card_box">
-                            <div class="card_box_img">
-                                <img src="img/box_choice_1.webp" alt="" />
-                            </div>
-                            <div class="card_box_content">
-                                <h3>Đặt hàng trước bộ LEGO® Fortnite mới</h3>
-                                <p>Cho đến khi hết hàng. Giao hàng từ ngày 10/1.</p>
-                            </div>
-                            <div class="card_box_btn">
-                                <a href="">Đặt hàng trước </a>
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card_box">
-                            <div class="card_box_img">
-                                <img src="img/box_choice_1.webp" alt="" />
-                            </div>
-                            <div class="card_box_content">
-                                <h3>Đặt hàng trước bộ LEGO® Fortnite mới</h3>
-                                <p>Cho đến khi hết hàng. Giao hàng từ ngày 10/1.</p>
-                            </div>
-                            <div class="card_box_btn">
-                                <a href="">Đặt hàng trước </a>
-                                <i class="fa-solid fa-chevron-right"></i>
+                    @foreach ($categoryChoose as $item)
+                        <div class="col-md-4">
+                            <div class="card_box">
+                                <div class="card_box_img">
+                                    <img src="{{ asset('img/' . $item->image) }}" alt="" />
+                                </div>
+                                <div class="card_box_content">
+                                    <h3>{{ $item->name }}</h3>
+                                </div>
+                                <div class="card_box_btn">
+                                    <a href="{{ route('categoryProduct', $item->id) }}">Xem thêm</a>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card_box">
-                            <div class="card_box_img">
-                                <img src="img/box_choice_1.webp" alt="" />
-                            </div>
-                            <div class="card_box_content">
-                                <h3>Đặt hàng trước bộ LEGO® Fortnite mới</h3>
-                                <p>Cho đến khi hết hàng. Giao hàng từ ngày 10/1.</p>
-                            </div>
-                            <div class="card_box_btn">
-                                <a href="">Đặt hàng trước </a>
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -172,41 +89,34 @@
                 <div class="owl-carousel owl-theme">
                     @foreach ($productOutStanding as $item)
                         @php
-                            $userGroupDiscount = 0;
-                            $userPriceModal = 0;
-                            if ($user && Auth::check()) {
-                                // giá giảm nhóm người dùng đã đăng nhập
-                                // truy cập vào table user lấy ra user_group_id, để biết khách hàng đang thuốc nhóm nào(đồng, bạc, vàng)
-                                $userGroupId = $user->user_group_id;
-                                //$item biến đại diện cho từng sản phẩm, và các giảm giá liên quan đến sản phẩm đó, và lọc giá giảm theo nhóm người dùng cụ thể
-                                $userGroupDiscount = $item->productDiscount
-                                    ->where('user_group_id', $userGroupId)
-                                    ->first();
-                                // dùng để lấy được giá cho modal
-                                $userPriceModal = $userGroupDiscount ? $userGroupDiscount->price : null;
-                            } else {
-                                // giá giảm nhóm người dùng không cần đăng nhập
-                                // $userGroupDefaultDiscount biến này đã đucợ xử lí bên controller và model nên chỉ cần gọi biến qua đây
-                                $userGroupDefaultDiscount = $item->productDiscount->first();
-                                // ràng buộc giá default mặc định
-                                $userPriceModal = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
+                            $priceDiscount = 0;
+                            $userGroupId = Auth::check() ? Auth::user()->user_group_id : 1;
+                            $productDiscountPrice = $item->productDiscount
+                                ->where('user_group_id', $userGroupId)
+                                ->first();
+
+                            $price = $item->price ? $item->price : null;
+
+                            if ($productDiscountPrice) {
+                                $priceDiscount = $productDiscountPrice ? $productDiscountPrice->price : null;
                             }
-                            // tính % giảm giá
-                            $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
+
+                            $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                         @endphp
+
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
                                     <div class="product_box_tag">Nổi bật </div>
-                                    @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                    @if (isset($productDiscountPrice))
                                         <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
                                     @endif
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button type="button" class="outline-0 border-0 "
                                             style="background-color: transparent"
-                                            onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
+                                            onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
                                         {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
@@ -222,28 +132,15 @@
                                         <div class="product_box_content">
                                             <h3><a href="">{{ $item->name }}</a></h3>
                                         </div>
-                                        @if ($user && Auth::check())
-                                            @if ($userGroupDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                        @if ($productDiscountPrice)
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @else
-                                            @if ($userGroupDefaultDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                            <div class="product_box_price">
+                                                <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @endif
-
                                     </div>
                                 </div>
                             </div>
@@ -350,40 +247,30 @@
                                     @if (isset($productByCategory[$item->id]))
                                         @foreach ($productByCategory[$item->id] as $product)
                                             @php
-                                                $userGroupDiscount = 0;
-                                                $userPriceModal = 0;
-                                                if ($user && Auth::check()) {
-                                                    // giá giảm nhóm người dùng đã đăng nhập
-                                                    // truy cập vào table user lấy ra user_group_id, để biết khách hàng đang thuốc nhóm nào(đồng, bạc, vàng)
-                                                    $userGroupId = $user->user_group_id;
-                                                    //$item biến đại diện cho từng sản phẩm, và các giảm giá liên quan đến sản phẩm đó, và lọc giá giảm theo nhóm người dùng cụ thể
-                                                    $userGroupDiscount = $product->productDiscount
-                                                        ->where('user_group_id', $userGroupId)
-                                                        ->first();
-                                                    // dùng để lấy được giá cho modal
-                                                    $userPriceModal = $userGroupDiscount
-                                                        ? $userGroupDiscount->price
-                                                        : null;
-                                                } else {
-                                                    // giá giảm nhóm người dùng không cần đăng nhập
-                                                    // $userGroupDefaultDiscount biến này đã đucợ xử lí bên controller và model nên chỉ cần gọi biến qua đây
-                                                    $userGroupDefaultDiscount = $product->productDiscount->first();
-                                                    // ràng buộc giá default mặc định
-                                                    $userPriceModal = $userGroupDefaultDiscount
-                                                        ? $userGroupDefaultDiscount->price
+                                                $priceDiscount = 0;
+                                                $userGroupId = Auth::check() ? Auth::user()->user_group_id : 1;
+                                                $productDiscountPrice = $product->productDiscount
+                                                    ->where('user_group_id', $userGroupId)
+                                                    ->first();
+
+                                                $price = $product->price ? $product->price : null;
+
+                                                if ($productDiscountPrice) {
+                                                    $priceDiscount = $productDiscountPrice
+                                                        ? $productDiscountPrice->price
                                                         : null;
                                                 }
 
-                                                // tính % giảm giá
                                                 $percent = ceil(
-                                                    (($product->price - $userPriceModal) / $product->price) * 100,
+                                                    (($product->price - $priceDiscount) / $product->price) * 100,
                                                 );
                                                 $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                                             @endphp
+
                                             <div class="item">
                                                 <div class="product_box">
                                                     <div class="product_box_effect">
-                                                        @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                                        @if (isset($productDiscountPrice))
                                                             <div class="product_box_tag_sale">
                                                                 {{ $percent }}%</div>
                                                         @endif
@@ -391,7 +278,7 @@
                                                             <i class="fa-regular fa-heart"></i>
                                                             <button class="outline-0 border-0 "
                                                                 style="background-color: transparent"
-                                                                onclick="showModalProduct(event,'{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
+                                                                onclick="showModalProduct(event,'{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                                                 <i class="fa-regular fa-eye"></i>
 
                                                             </button>
@@ -411,28 +298,15 @@
                                                             <div class="product_box_content">
                                                                 <h3><a href="">{{ $product->name }}</a></h3>
                                                             </div>
-                                                            @if ($user && Auth::check())
-                                                                @if ($userGroupDiscount)
-                                                                    <div class="product_box_price">
-                                                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDiscount->price, 0, ',', '.') . 'đ' }}
-                                                                    </div>
-                                                                @else
-                                                                    <div class="product_box_price">
-                                                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                                                    </div>
-                                                                @endif
+                                                            @if ($productDiscountPrice)
+                                                                <div class="product_box_price">
+                                                                    <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
+                                                                </div>
                                                             @else
-                                                                @if ($userGroupDefaultDiscount)
-                                                                    <div class="product_box_price">
-                                                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                                                    </div>
-                                                                @else
-                                                                    <div class="product_box_price">
-                                                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                                                    </div>
-                                                                @endif
+                                                                <div class="product_box_price">
+                                                                    <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                                                </div>
                                                             @endif
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -456,41 +330,32 @@
                 <div class="owl-carousel owl-theme">
                     @foreach ($productBestseller as $item)
                         @php
-                            $userGroupDiscount = 0;
-                            $userPriceModal = 0;
-                            if ($user && Auth::check()) {
-                                // giá giảm nhóm người dùng đã đăng nhập
-                                // truy cập vào table user lấy ra user_group_id, để biết khách hàng đang thuốc nhóm nào(đồng, bạc, vàng)
-                                $userGroupId = $user->user_group_id;
-                                //$item biến đại diện cho từng sản phẩm, và các giảm giá liên quan đến sản phẩm đó, và lọc giá giảm theo nhóm người dùng cụ thể
-                                $userGroupDiscount = $item->productDiscount
-                                    ->where('user_group_id', $userGroupId)
-                                    ->first();
-                                // dùng để lấy được giá cho modal
-                                $userPriceModal = $userGroupDiscount ? $userGroupDiscount->price : null;
-                            } else {
-                                // giá giảm nhóm người dùng không cần đăng nhập
-                                // $userGroupDefaultDiscount biến này đã đucợ xử lí bên controller và model nên chỉ cần gọi biến qua đây
-                                $userGroupDefaultDiscount = $item->productDiscount->first();
-                                // ràng buộc giá default mặc định
-                                $userPriceModal = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : null;
+                            $priceDiscount = 0;
+                            $userGroupId = Auth::check() ? Auth::user()->user_group_id : 1;
+                            $productDiscountPrice = $item->productDiscount
+                                ->where('user_group_id', $userGroupId)
+                                ->first();
+
+                            $price = $item->price ? $item->price : null;
+
+                            if ($productDiscountPrice) {
+                                $priceDiscount = $productDiscountPrice ? $productDiscountPrice->price : null;
                             }
 
-                            // tính % giảm giá
-                            $percent = ceil((($item->price - $userPriceModal) / $item->price) * 100);
+                            $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                         @endphp
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
                                     <div class="product_box_tag_soldout">Hot</div>
-                                    @if (isset($userGroupDiscount) && isset($userGroupDefaultDiscount))
+                                    @if (isset($productDiscountPrice))
                                         <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
                                     @endif
                                     <div class="product_box_icon">
                                         <i class="fa-regular fa-heart"></i>
                                         <button class="outline-0 border-0" style="background-color: transparent"
-                                            onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $userPriceModal }}','{{ json_encode($productImageCollect) }}')">
+                                            onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
                                         </button>
                                         {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
@@ -506,26 +371,14 @@
                                         <div class="product_box_content">
                                             <h3><a href="">{{ $item->name }}</a></h3>
                                         </div>
-                                        @if ($user && Auth::check())
-                                            @if ($userGroupDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                        @if ($productDiscountPrice)
+                                            <div class="product_box_price">
+                                                <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @else
-                                            @if ($userGroupDefaultDiscount)
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @else
-                                                <div class="product_box_price">
-                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                </div>
-                                            @endif
+                                            <div class="product_box_price">
+                                                <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
+                                            </div>
                                         @endif
                                         <div class="product_box_content_soldout">
                                             <p>+{{ $item->orderProduct->sum('quantity') }} Lượt mua</p>

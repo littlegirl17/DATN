@@ -80,7 +80,6 @@ class Product extends Model
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->inRandomOrder() // Sử dụng inRandomOrder() để lấy sản phẩm ngẫu nhiên
-            ->limit(4)
             ->get();
     }
 

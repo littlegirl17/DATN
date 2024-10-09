@@ -49,6 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/index.js') }} "></script>
     <script src="{{ asset('js/admin.js') }} "></script>
+    <script src="{{ asset('js/api63.js') }} "></script>
 
     <script>
         $(document).ready(function() {
@@ -155,7 +156,7 @@
     </script>
 
     <script>
-        function showModalProduct(event, id, image, name, price, defaultDiscountPrice, productImages) {
+        function showModalProduct(event, id, image, name, price, priceDiscount, productImages) {
             event.preventDefault(); // Ngăn chặn hành vi mặc định
 
             const modalHome = document.getElementById("modal_home");
@@ -164,9 +165,9 @@
 
             var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
             var priceItem = 0;
-            if (defaultDiscountPrice) {
+            if (priceDiscount > 0) {
                 priceItem = `
-                <div class="product_box_price"><span>${new Intl.NumberFormat().format(price)}đ</span>${new Intl.NumberFormat().format(defaultDiscountPrice)}đ</div>
+                <div class="product_box_price"><span>${new Intl.NumberFormat().format(price)}đ</span>${new Intl.NumberFormat().format(priceDiscount)}đ</div>
             `;
             } else {
                 priceItem = `
