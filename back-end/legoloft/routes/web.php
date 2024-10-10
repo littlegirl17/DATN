@@ -94,6 +94,8 @@ Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
 Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
 
 Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name('checkoutForm');
+Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
 
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */

@@ -3,244 +3,253 @@
 @section('content')
     <!-- START MAIN -->
     <div class="container_checkout">
-        <div class="container">
-            <div class="checkout_main">
-                <div class="checkout_main_left">
-                    <div class="checkout_header_left_one"></div>
-                    <div class="checkout_main_left_one">
-                        <div class="check_left_title">
-                            <h2>Thông tin vận chuyển</h2>
-                        </div>
-                        <div class="checkout_main_left_one_item">
-                            <div class="checkout_left_one_input">
-                                <label for="">Tên</label>
-                                <input type="text" class="input_checkout" id="" placeholder="Nhập tên"
-                                    name="name" value="{{ Session::has('user') ? Session::get('user')->name : '' }}" />
+        <form action="{{ route('checkoutForm') }}" method="post">
+            @csrf
+            <div class="container">
+                <div class="checkout_main">
+                    <div class="checkout_main_left">
+                        <div class="checkout_header_left_one"></div>
+                        <div class="checkout_main_left_one">
+                            <div class="check_left_title">
+                                <h2>Thông tin vận chuyển</h2>
                             </div>
-                            <div class="checkout_left_one_input">
-                                <label for="">Số điện thoại</label>
-                                <input type="text" class="input_checkout" id="" placeholder="Nhập số điện thoại"
-                                    name="name" value="{{ Session::has('user') ? Session::get('user')->phone : '' }}" />
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="checkout_left_one_input">
-                                <label for="">Email</label>
-                                <input type="text" class="input_checkout" id="" placeholder="Nhập email"
-                                    name="name" value="{{ Session::has('user') ? Session::get('user')->email : '' }}" />
-                            </div>
-                        </div>
-                        <div class="checkout_main_left_one_item_2">
-                            <div class="checkout_left_one_input">
-                                <label for="">Tỉnh</label>
-                                <select class="select_checkout" aria-label="Default select example" name="province"
-                                    id="province">
-                                    @if (Session::has('user'))
-                                        <option selected value="{{ Session::get('user')->province }}">
-                                            {{ Session::get('user')->province }}</option>
-                                    @else
-                                        <option selected disabled>Tỉnh/Thành phố</option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="checkout_left_one_input">
-                                <label for="">Quận/Huyện</label>
-                                <select class="select_checkout" aria-label="Default select example" name="district"
-                                    id="district">
-                                    @if (Session::has('user'))
-                                        <option selected value="{{ Session::get('user')->district }}">
-                                            {{ Session::get('user')->district }}</option>
-                                    @else
-                                        <option selected disabled>Quận/Huyện</option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="checkout_left_one_input">
-                                <label for="">Phường/Xã</label>
-                                <select class="select_checkout" aria-label="Default select example" name="ward"
-                                    id="ward">
-                                    @if (Session::has('user'))
-                                        <option selected value="{{ Session::get('user')->ward }}">
-                                            {{ Session::get('user')->ward }}</option>
-                                    @else
-                                        <option selected disabled>Phường/Xã</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="checkout_main_left_two">
-                        <div class="">
-                            <div class="checkout_left_one_input">
-                                <label for="">Lời nhắn</label>
-                                <input type="text" class="input_checkout" id=""
-                                    placeholder="Lưu ý cho người bán" name="note" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="checkout_main_left_three">
-                        <div class="">
-                            <span>Phương thức thanh toán</span>
-                        </div>
-                        <div class="checkout_main_left_three_pttt">
-                            <input type="radio" id="momo" name="payment_method" value="momo"
-                                style="display: none" />
-                            <label for="momo">
-                                <div class="checkout_main_left_three_img">
-                                    <img src="img/momo.svg" alt="" />
+                            <div class="checkout_main_left_one_item">
+                                <div class="checkout_left_one_input">
+                                    <label for="">Tên</label>
+                                    <input type="text" class="input_checkout" id="" placeholder="Nhập tên"
+                                        name="name"
+                                        value="{{ Session::has('user') ? Session::get('user')->name : '' }}" />
                                 </div>
-                                <p>Thanh toán MoMo</p>
-                            </label>
-                        </div>
-                        <div class="checkout_main_left_three_pttt">
-                            <input type="radio" id="vnpay" name="payment_method" value="vnpay"
-                                style="display: none" />
-                            <label for="vnpay">
-                                <div class="checkout_main_left_three_img">
-                                    <img src="img/vnpay_new.svg" alt="" />
+                                <div class="checkout_left_one_input">
+                                    <label for="">Số điện thoại</label>
+                                    <input type="text" class="input_checkout" id=""
+                                        placeholder="Nhập số điện thoại" name="phone"
+                                        value="{{ Session::has('user') ? Session::get('user')->phone : '' }}" />
                                 </div>
-                                <p>Thanh toán VNPAY</p>
-                            </label>
-                        </div>
-                        <div class="checkout_main_left_three_pttt">
-                            <input type="radio" id="other" name="payment_method" value="other"
-                                style="display: none" />
-                            <label for="other">
-                                <div class="checkout_main_left_three_img">
-                                    <img src="img/other.svg" alt="" />
+                            </div>
+                            <div class="">
+                                <div class="checkout_left_one_input">
+                                    <label for="">Email</label>
+                                    <input type="text" class="input_checkout" id="" placeholder="Nhập email"
+                                        name="email"
+                                        value="{{ Session::has('user') ? Session::get('user')->email : '' }}" />
                                 </div>
-                                <p>Thanh toán bằng tiền mặt</p>
-                            </label>
+                            </div>
+                            <div class="checkout_main_left_one_item_2">
+                                <div class="checkout_left_one_input">
+                                    <label for="">Tỉnh</label>
+                                    <select class="select_checkout" aria-label="Default select example" name="province"
+                                        id="province">
+                                        @if (Session::has('user'))
+                                            <option selected value="{{ Session::get('user')->province }}">
+                                                {{ Session::get('user')->province }}</option>
+                                        @else
+                                            <option selected disabled>Tỉnh/Thành phố</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="checkout_left_one_input">
+                                    <label for="">Quận/Huyện</label>
+                                    <select class="select_checkout" aria-label="Default select example" name="district"
+                                        id="district">
+                                        @if (Session::has('user'))
+                                            <option selected value="{{ Session::get('user')->district }}">
+                                                {{ Session::get('user')->district }}</option>
+                                        @else
+                                            <option selected disabled>Quận/Huyện</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="checkout_left_one_input">
+                                    <label for="">Phường/Xã</label>
+                                    <select class="select_checkout" aria-label="Default select example" name="ward"
+                                        id="ward">
+                                        @if (Session::has('user'))
+                                            <option selected value="{{ Session::get('user')->ward }}">
+                                                {{ Session::get('user')->ward }}</option>
+                                        @else
+                                            <option selected disabled>Phường/Xã</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="checkout_main_right">
-                    <div class="checkout_main_right_product">
-                        @php
-                            $total = 0;
-                            $intoMoney = 0;
-                            $amount = 0;
-                        @endphp
-                        @foreach ($cart as $item)
-                            @php
-                                $product = $products->where('id', $item['product_id'])->first();
-                                $priceProductDiscount = $product->productDiscount
-                                    ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
-                                    ->first();
-                                // giá thường ko có giảm
-                                $amount = $product ? $product->price : 0;
-                                if ($priceProductDiscount) {
-                                    // giá đã lọc theo nhóm khách hàng
-                                    $amount = $priceProductDiscount ? $priceProductDiscount->price : 0;
-                                }
 
-                                // thành tiền
-                                $intoMoney = $amount * $item['quantity'];
-                                // tổng tiền
-                                $total += $intoMoney;
-                            @endphp
-                            <div class="row checkout_row_right">
-                                <div class="col-md-3 col-sm-3 col-4">
-                                    <div class="img_checkout_product">
-                                        <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                        <div class="checkout_main_left_two">
+                            <div class="">
+                                <div class="checkout_left_one_input">
+                                    <label for="">Lời nhắn</label>
+                                    <input type="text" class="input_checkout" id=""
+                                        placeholder="Lưu ý cho người bán" name="note" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout_main_left_three">
+                            <div class="">
+                                <span>Phương thức thanh toán</span>
+                            </div>
+                            <div class="checkout_main_left_three_pttt">
+                                <input type="radio" id="momo" name="payment" value="momo" style="display: none" />
+                                <label for="momo">
+                                    <div class="checkout_main_left_three_img">
+                                        <img src="img/momo.svg" alt="" />
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-sm-9 col-8">
-                                    <h5>{{ $product->name }}</h5>
-                                    <p class="">Số lượng: {{ $item['quantity'] }}</p>
-                                    @if (Auth::check())
+                                    <p>Thanh toán MoMo</p>
+                                </label>
+                            </div>
+                            <div class="checkout_main_left_three_pttt">
+                                <input type="radio" id="vnpay" name="payment" value="vnpay" style="display: none" />
+                                <label for="vnpay">
+                                    <div class="checkout_main_left_three_img">
+                                        <img src="img/vnpay_new.svg" alt="" />
+                                    </div>
+                                    <p>Thanh toán VNPAY</p>
+                                </label>
+                            </div>
+                            <div class="checkout_main_left_three_pttt">
+                                <input type="radio" id="other" name="payment" value="other" style="display: none" />
+                                <label for="other">
+                                    <div class="checkout_main_left_three_img">
+                                        <img src="img/other.svg" alt="" />
+                                    </div>
+                                    <p>Thanh toán bằng tiền mặt</p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout_main_right">
+                        <div class="checkout_main_right_product">
+                            @php
+                                $total = 0;
+                                $intoMoney = 0;
+                                $amount = 0;
+                            @endphp
+                            @foreach ($cart as $item)
+                                @php
+                                    $product = $products->where('id', $item['product_id'])->first();
+                                    $priceProductDiscount = $product->productDiscount
+                                        ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
+                                        ->first();
+                                    // giá thường ko có giảm
+                                    $amount = $product ? $product->price : 0;
+                                    if ($priceProductDiscount) {
+                                        // giá đã lọc theo nhóm khách hàng
+                                        $amount = $priceProductDiscount ? $priceProductDiscount->price : 0;
+                                    }
+
+                                    // thành tiền
+                                    $intoMoney = $amount * $item['quantity'];
+                                    // tổng tiền
+                                    $total += $intoMoney;
+                                @endphp
+                                <div class="row checkout_row_right">
+                                    <input type="hidden" name="product_id" value="{{ $item['product_id'] }}">
+                                    <div class="col-md-3 col-sm-3 col-4">
+                                        <div class="img_checkout_product">
+                                            <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-9 col-8">
+                                        <h5>{{ $product->name }}</h5>
+                                        <p class="">Số lượng: {{ $item['quantity'] }}</p>
+                                        @if (Auth::check())
+                                            @if ($priceProductDiscount)
+                                                <p class="pricecheckout_mobile">
+                                                    <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
+                                                </p>
+                                            @else
+                                                <p class="pricecheckout_mobile">
+                                                    <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                                </p>
+                                            @endif
+                                        @else
+                                        @endif
+
+                                    </div>
+                                    <div class="col-md-3 col-12 checkout_right_price">
+
                                         @if ($priceProductDiscount)
-                                            <p class="pricecheckout_mobile">
+                                            <p class="product_box_price">
                                                 <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
                                             </p>
                                         @else
-                                            <p class="pricecheckout_mobile">
+                                            <p class="product_box_price">
                                                 <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
                                             </p>
                                         @endif
-                                    @else
-                                    @endif
 
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-12 checkout_right_price">
-
-                                    @if ($priceProductDiscount)
-                                        <p class="product_box_price">
-                                            <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
-                                        </p>
-                                    @else
-                                        <p class="product_box_price">
-                                            <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                        </p>
-                                    @endif
-
+                            @endforeach
+                        </div>
+                        <div class="checkout_main_right_total">
+                            <div class="check_item_total_one">
+                                <div class="checkout_item_total">
+                                    <span>Tạm tính</span>
+                                    <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="checkout_main_right_total">
-                        <div class="check_item_total_one">
-                            <div class="checkout_item_total">
-                                <span>Tạm tính</span>
-                                <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
-                            </div>
-                            <div class="checkout_item_total">
-                                <span>Giảm giá</span>
-                                @php
-                                    if (Session::has('coupon')) {
-                                        foreach (Session::get('coupon') as $item) {
-                                            if ($item['type'] == 0) {
-                                                //  giảm theo percent
-                                                $percent = ($total * $item['discount']) / 100;
-                                                $total_coupon = $total - $percent;
-                                            } else {
-                                                // giảm theo số tiền cụ thể
-                                                $total_coupon = $total - $item['discount'];
+                                <div class="checkout_item_total">
+                                    <span>Giảm giá</span>
+                                    @php
+                                        $coupon_code = '';
+                                        if (Session::has('coupon')) {
+                                            foreach (Session::get('coupon') as $item) {
+                                                $coupon_code = $item['code'];
+                                                if ($item['type'] == 0) {
+                                                    //  giảm theo percent
+                                                    $percent = ($total * $item['discount']) / 100;
+                                                    $total_coupon = $total - $percent;
+                                                } else {
+                                                    // giảm theo số tiền cụ thể
+                                                    $total_coupon = $total - $item['discount'];
+                                                }
                                             }
+                                        } else {
+                                            $total_coupon = 0;
                                         }
-                                    } else {
-                                        $total_coupon = 0;
-                                    }
-                                @endphp
+                                    @endphp
 
+                                    @if (Session::has('coupon'))
+                                        @foreach (Session::get('coupon') as $item)
+                                            @if ($item['type'] == 0)
+                                                <span>{{ $item['discount'] }}%</span>
+                                            @else
+                                                <span>{{ number_format($item['discount'], 0, ',', '.') . 'đ' }}</span>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+                                    <input type="hidden" name="coupon_code" value="{{ $coupon_code }}">
+                                </div>
+                            </div>
+                            <div class="checkout_item_total_last">
+                                <span>Tổng tiền</span>
                                 @if (Session::has('coupon'))
-                                    @foreach (Session::get('coupon') as $item)
-                                        @if ($item['type'] == 0)
-                                            <span>{{ $item['discount'] }}%</span>
-                                        @else
-                                            <span>{{ number_format($item['discount'], 0, ',', '.') . 'đ' }}</span>
-                                        @endif
-                                    @endforeach
+                                    <h2>{{ number_format($total_coupon, 0, ',', '.') . 'đ' }}</h2>
+                                    <input type="hidden" name="total" value="{{ $total_coupon }}">
+                                @else
+                                    <h2>{{ number_format($total, 0, ',', '.') . 'đ' }}</h2>
+                                    <input type="hidden" name="total" value="{{ $total }}">
                                 @endif
                             </div>
                         </div>
-                        <div class="checkout_item_total_last">
-                            <span>Tổng tiền</span>
-                            @if (Session::has('coupon'))
-                                <h2>{{ number_format($total_coupon, 0, ',', '.') . 'đ' }}</h2>
-                            @else
-                                <h2>{{ number_format($total, 0, ',', '.') . 'đ' }}</h2>
-                            @endif
-
-                        </div>
-                    </div>
-                    <div class="checkout_main_right_next">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="back_cart_checkout">
-                                    <a href="" class="">Quay lại giỏ hàng</a>
+                        <div class="checkout_main_right_next">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="back_cart_checkout">
+                                        <a href="" class="">Quay lại giỏ hàng</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <button class="btn_checkout">Hoàn tất đơn hàng</button>
+                                <div class="col-md-6">
+                                    <button class="btn_checkout">Hoàn tất đơn hàng</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     <!-- END MAIN -->
 @endsection
