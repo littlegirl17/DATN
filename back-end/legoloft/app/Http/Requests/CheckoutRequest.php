@@ -21,20 +21,23 @@ class CheckoutRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required',
-            'province' => 'required|string|max:100',
-            'district' => 'required|string|max:100',
-            'ward' => 'required|string|max:100',
-        ];
+        if ($this->isMethod('post')) {
+            return [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'phone' => 'required',
+                'province' => 'required|string|max:100',
+                'district' => 'required|string|max:100',
+                'ward' => 'required|string|max:100',
+            ];
+        }
+        return [];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên là bắt buộc.',
+            'name.required' => 'Vui lòng điền tên đặt hàng.',
             'name.string' => 'Tên phải là một chuỗi.',
             'name.max' => 'Tên không được vượt quá 255 ký tự.',
 

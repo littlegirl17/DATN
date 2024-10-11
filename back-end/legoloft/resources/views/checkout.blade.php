@@ -19,12 +19,18 @@
                                     <input type="text" class="input_checkout" id="" placeholder="Nhập tên"
                                         name="name"
                                         value="{{ Session::has('user') ? Session::get('user')->name : '' }}" />
+                                    @error('name')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="checkout_left_one_input">
                                     <label for="">Số điện thoại</label>
                                     <input type="text" class="input_checkout" id=""
                                         placeholder="Nhập số điện thoại" name="phone"
                                         value="{{ Session::has('user') ? Session::get('user')->phone : '' }}" />
+                                    @error('phone')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="">
@@ -33,6 +39,9 @@
                                     <input type="text" class="input_checkout" id="" placeholder="Nhập email"
                                         name="email"
                                         value="{{ Session::has('user') ? Session::get('user')->email : '' }}" />
+                                    @error('email')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="checkout_main_left_one_item_2">
@@ -47,6 +56,9 @@
                                             <option selected disabled>Tỉnh/Thành phố</option>
                                         @endif
                                     </select>
+                                    @error('province')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="checkout_left_one_input">
                                     <label for="">Quận/Huyện</label>
@@ -59,6 +71,9 @@
                                             <option selected disabled>Quận/Huyện</option>
                                         @endif
                                     </select>
+                                    @error('district')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="checkout_left_one_input">
                                     <label for="">Phường/Xã</label>
@@ -71,6 +86,9 @@
                                             <option selected disabled>Phường/Xã</option>
                                         @endif
                                     </select>
+                                    @error('ward')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -90,7 +108,7 @@
                                 <span>Phương thức thanh toán</span>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="momo" name="payment" value="momo" style="display: none" />
+                                <input type="radio" id="momo" name="payment" value="3" style="display: none" />
                                 <label for="momo">
                                     <div class="checkout_main_left_three_img">
                                         <img src="img/momo.svg" alt="" />
@@ -99,7 +117,7 @@
                                 </label>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="vnpay" name="payment" value="vnpay" style="display: none" />
+                                <input type="radio" id="vnpay" name="payment" value="2" style="display: none" />
                                 <label for="vnpay">
                                     <div class="checkout_main_left_three_img">
                                         <img src="img/vnpay_new.svg" alt="" />
@@ -108,8 +126,9 @@
                                 </label>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="other" name="payment" value="other" style="display: none" />
-                                <label for="other">
+                                <input type="radio" id="cash" name="payment" value="1"
+                                    style="display: none" />
+                                <label for="cash">
                                     <div class="checkout_main_left_three_img">
                                         <img src="img/other.svg" alt="" />
                                     </div>

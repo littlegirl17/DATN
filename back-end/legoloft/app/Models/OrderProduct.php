@@ -36,4 +36,9 @@ class OrderProduct extends Model
     {
         return $this->where('order_id', $order_id)->orderBy('id', 'desc')->get();
     }
+
+    public function orderProductUserGet($id_order)
+    {
+        return $this->where('order_id', $id_order->id)->get();
+    }
 }
