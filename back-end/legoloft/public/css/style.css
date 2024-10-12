@@ -2280,6 +2280,12 @@ section {
     padding: 10px 0;
 }
 
+.checkout_main_left_three_pttt input:checked+label {
+    padding: 2px 3px;
+    border-radius: 5px;
+    box-shadow: rgba(255, 0, 0, 0.3) 0px 0px 0px 3px;
+}
+
 .checkout_main_left_three_img {
     width: 50px;
     height: 50px;
