@@ -124,6 +124,8 @@ class CheckoutController extends Controller
                 // Lưu vào DATABASE - CẦN LOGIN
                 $user =  Auth::user()->id;
                 $cart = $this->cartModel->getallcart($user);
+                // Điều này xóa giỏ hàng của người dùng khỏi cơ sở dữ liệu ngay sau khi đơn hàng được tạo.
+                $this->cartModel->where('user_id', $user)->delete();
             } else {
                 // Lưu vào COOKIE - KHÔNG CẦN LOGIN
                 $cart = json_decode(request()->cookie('cart'), true) ?? [];
@@ -150,19 +152,12 @@ class CheckoutController extends Controller
             }
         }
 
-        if (Auth::check()) {
-            $user_id = Auth::user()->id;
-            $cart = $this->cartModel->where('user_id', $user_id)->delete();
-        } else {
-            return redirect()->route('order')->withCookie(cookie()->forget('cart'));
-        }
-
         if ($order->payment == 3) { // payment momo
-            return $this->momo($order->order_code, $order->total);
+            return $this->momo($order->order_code, $order->total)->withCookie(cookie()->forget('cart'));
         } elseif ($request->payment == 2) { // payment vnpay
-            return $this->vnPay($order->order_code, $order->total);
+            return $this->vnPay($order->order_code, $order->total)->withCookie(cookie()->forget('cart'));
         } elseif ($order->payment == 1) {  // payment cash
-            return redirect()->route('order');
+            return redirect()->route('order')->withCookie(cookie()->forget('cart'));
         }
 
         return redirect()->route('order');
@@ -304,7 +299,7 @@ class CheckoutController extends Controller
         }
         $orderUser = $this->orderModel->viewOrderUser($id_order);
         $orderProductUser = $this->orderProductModel->orderProductUserGet($id_order);
-        // session()->forget('iddh');
+        session()->forget('iddh');
         return view('order', compact('orderUser', 'orderProductUser'));
     }
 
