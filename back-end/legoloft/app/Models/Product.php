@@ -48,7 +48,7 @@ class Product extends Model
 
     public function productByCategory($category_id)
     {
-        return $this->where('category_id', $category_id)->orderBy('id', 'desc')->limit(9)->get();
+        return $this->where('category_id', $category_id)->orderBy('id', 'desc')->paginate(9);
     }
 
     public function searchProduct($filter_iddm, $filter_name, $filter_price, $filter_status)

@@ -97,6 +97,8 @@ Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout'
 Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name('checkoutForm');
 Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
 
+Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
+
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {

@@ -41,7 +41,7 @@ class CheckoutController extends Controller
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
         }
-        if (count($cart) == 0) {
+        if (count($cart) == 0 && empty(session()->get('buyNow'))) {
             return redirect()->route('cart');
         }
         return view('checkout', compact('cart', 'products'));
@@ -103,36 +103,52 @@ class CheckoutController extends Controller
         $order->save();
         session()->put('iddh', $order);
 
-        $cart = [];
-        if (Auth::check()) {
-            // Lưu vào DATABASE - CẦN LOGIN
-            $user = Auth::check() ? Auth::user()->id : 0;
-            $cart = $this->cartModel->getallcart($user);
-        } else {
-            // Lưu vào COOKIE - KHÔNG CẦN LOGIN
-            $cart = json_decode(request()->cookie('cart'), true) ?? [];
-        }
 
-        foreach ($cart as $item) {
-            $product = $this->productModel->where('id', $item['product_id'])->first();
-            $price = $product->price ?? null;
-            $productDiscountPrice = $product->productDiscount->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)->first();
-            if ($productDiscountPrice) {
-                $price = $productDiscountPrice->price ?? null;
-            }
 
-            $intoMoney = $price * $item['quantity'];
-
+        $buyNow = session()->get('buyNow', []);
+        if ($buyNow) {
+            $price = $buyNow['priceDiscount'] ? $buyNow['priceDiscount'] : $buyNow['price'];
+            $intoMoney = $price * $buyNow['quantity'];
+            // tổng tiền
             $orderProduct = new OrderProduct();
             $orderProduct->order_id = $order->id;
-            $orderProduct->product_id = $item['product_id'];
-            $orderProduct->quantity = $item['quantity'];
-            $orderProduct->name = $product->name;
+            $orderProduct->product_id = $buyNow['id'];
+            $orderProduct->quantity = $buyNow['quantity'];
+            $orderProduct->name = $buyNow['name'];
             $orderProduct->price = $price;
             $orderProduct->total = $intoMoney;
             $orderProduct->save();
-        }
+        } else {
+            $cart = [];
+            if (Auth::check()) {
+                // Lưu vào DATABASE - CẦN LOGIN
+                $user =  Auth::user()->id;
+                $cart = $this->cartModel->getallcart($user);
+            } else {
+                // Lưu vào COOKIE - KHÔNG CẦN LOGIN
+                $cart = json_decode(request()->cookie('cart'), true) ?? [];
+            }
 
+            foreach ($cart as $item) {
+                $product = $this->productModel->where('id', $item['product_id'])->first();
+                $price = $product->price ?? null;
+                $productDiscountPrice = $product->productDiscount->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)->first();
+                if ($productDiscountPrice) {
+                    $price = $productDiscountPrice->price ?? null;
+                }
+
+                $intoMoney = $price * $item['quantity'];
+
+                $orderProduct = new OrderProduct();
+                $orderProduct->order_id = $order->id;
+                $orderProduct->product_id = $item['product_id'];
+                $orderProduct->quantity = $item['quantity'];
+                $orderProduct->name = $product->name;
+                $orderProduct->price = $price;
+                $orderProduct->total = $intoMoney;
+                $orderProduct->save();
+            }
+        }
 
         if (Auth::check()) {
             $user_id = Auth::user()->id;
@@ -278,7 +294,8 @@ class CheckoutController extends Controller
         // Chuyển hướng đến URL thanh toán
         return redirect($jsonResult['payUrl']);
     }
-    /***/
+
+    /*----------*/
     public function viewOrder()
     {
         $id_order = session()->get('iddh', []);
@@ -287,7 +304,30 @@ class CheckoutController extends Controller
         }
         $orderUser = $this->orderModel->viewOrderUser($id_order);
         $orderProductUser = $this->orderProductModel->orderProductUserGet($id_order);
-        session()->forget('iddh');
+        // session()->forget('iddh');
         return view('order', compact('orderUser', 'orderProductUser'));
+    }
+
+    /*----------*/
+    public function buyNow(Request $request)
+    {
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $price = $request->input('price');
+        $priceDiscount = $request->input('priceDiscount');
+        $image = $request->input('image');
+        $quantity = $request->input('quantity');
+
+        $buyNowArray = [
+            'id' => $id,
+            'name' => $name,
+            'image' => $image,
+            'price' => $price,
+            'priceDiscount' => $priceDiscount,
+            'quantity' => $quantity,
+        ];
+
+        session()->put('buyNow', $buyNowArray);
+        return redirect()->route('checkout');
     }
 }

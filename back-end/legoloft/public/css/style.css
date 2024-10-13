@@ -810,7 +810,7 @@ section {
     font-weight: 700;
     text-align: left;
     color: #ff0000;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
 }
 
 .product_box_price span {
@@ -823,6 +823,9 @@ section {
     padding-right: 3px;
 }
 
+.product_box_content_soldout p {
+    font-size: 0.8rem;
+}
 
 /*-------------------------------END PRODUCT---------------------------------------*/
 
@@ -3914,6 +3917,66 @@ section {
 
 
 /*------------------------------- START ---------------------------------------*/
+.div_nav_pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.nav_pagination ul.pagination {
+    list-style: none;
+    /* Bỏ dấu đầu dòng */
+    padding: 0;
+    /* Bỏ padding */
+    margin: 0;
+    /* Bỏ margin */
+}
+
+.nav_pagination ul.pagination li {
+    display: inline-block;
+    /* Hiển thị các phần tử trong cùng một dòng */
+    margin-right: 5px;
+    /* Khoảng cách giữa các phần tử */
+}
+
+.nav_pagination ul.pagination li a {
+    background-color: #fff;
+    /* Màu nền cho các liên kết không active */
+    color: #000;
+    /* Màu chữ cho các liên kết không active */
+    padding: 8px 12px;
+    /* Padding cho các liên kết */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    border: 1px solid #edecec;
+    /* Đường viền cho các liên kết */
+    border-radius: 4px;
+    /* Bo góc cho các liên kết */
+}
+
+.nav_pagination ul.pagination li.active .page-link {
+    background-color: #FFD602;
+    /* Màu nền cho trạng thái active */
+    color: #fff;
+    /* Màu chữ cho trạng thái active */
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #edecec;
+
+}
+
+.nav_pagination ul.pagination li.disabled .page-link {
+    background-color: #f0f0f0;
+    /* Màu nền cho trạng thái disabled */
+    color: #aaa;
+    /* Màu chữ cho trạng thái disabled */
+}
+
+.nav_pagination ul.pagination li a:hover {
+    background-color: #f0f0f0;
+    /* Màu nền khi hover */
+    color: #000;
+    /* Màu chữ khi hover */
+}
 
 
 /*-------------------------------END ---------------------------------------*/

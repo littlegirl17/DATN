@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Categories;
 use App\Models\Product;
+use App\Models\Categories;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
             $permission = $admin ? json_decode($admin->administrationGroup->permission) : [];
             $view->with(compact('permission', 'categories'));
         });
+
+        Paginator::useBootstrap();
     }
 }

@@ -140,8 +140,17 @@
                         @endforeach
 
                     </div>
+
                 </div>
             </div>
+            <div class="div_nav_pagination">
+                <nav class="nav_pagination">
+                    <ul class="pagination">
+                        <li>{{ $productCategory->links() }}</li>
+                    </ul>
+                </nav>
+            </div>
+
         </div>
     </div>
     <div id="modal_home" class="modal_product_main">

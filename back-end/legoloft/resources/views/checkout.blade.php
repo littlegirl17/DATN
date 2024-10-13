@@ -144,63 +144,110 @@
                                 $intoMoney = 0;
                                 $amount = 0;
                             @endphp
-                            @foreach ($cart as $item)
-                                @php
-                                    $product = $products->where('id', $item['product_id'])->first();
-                                    $priceProductDiscount = $product->productDiscount
-                                        ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
-                                        ->first();
-                                    // giá thường ko có giảm
-                                    $amount = $product ? $product->price : 0;
-                                    if ($priceProductDiscount) {
-                                        // giá đã lọc theo nhóm khách hàng
-                                        $amount = $priceProductDiscount ? $priceProductDiscount->price : 0;
-                                    }
 
+                            @if (Session::has('buyNow'))
+                                @php
+                                    $buyNow = Session::get('buyNow');
+                                    $amount = $buyNow['priceDiscount'] ? $buyNow['priceDiscount'] : $buyNow['price'];
                                     // thành tiền
-                                    $intoMoney = $amount * $item['quantity'];
+                                    $intoMoney = $amount * $buyNow['quantity'];
                                     // tổng tiền
                                     $total += $intoMoney;
                                 @endphp
                                 <div class="row checkout_row_right">
-                                    <input type="hidden" name="product_id" value="{{ $item['product_id'] }}">
+                                    <input type="hidden" name="product_id" value="{{ $buyNow['id'] }}">
                                     <div class="col-md-3 col-sm-3 col-4">
                                         <div class="img_checkout_product">
-                                            <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                                            <img src="{{ asset('img/' . $buyNow['image']) }}" alt="" />
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-9 col-8">
-                                        <h5>{{ $product->name }}</h5>
-                                        <p class="">Số lượng: {{ $item['quantity'] }}</p>
-                                        @if (Auth::check())
-                                            @if ($priceProductDiscount)
-                                                <p class="pricecheckout_mobile">
-                                                    <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
-                                                </p>
-                                            @else
-                                                <p class="pricecheckout_mobile">
-                                                    <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                                </p>
-                                            @endif
+                                        <h5>{{ $buyNow['name'] }}</h5>
+                                        <p class="">Số lượng: {{ $buyNow['quantity'] }}</p>
+                                        @if ($buyNow['priceDiscount'])
+                                            <p class="pricecheckout_mobile">
+                                                <span>{{ number_format($buyNow['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($buyNow['priceDiscount'], 0, ',', '.') . 'đ' }}
+                                            </p>
                                         @else
+                                            <p class="pricecheckout_mobile">
+                                                <span></span>{{ number_format($buyNow['price'], 0, ',', '.') . 'đ' }}
+                                            </p>
                                         @endif
-
                                     </div>
                                     <div class="col-md-3 col-12 checkout_right_price">
-
-                                        @if ($priceProductDiscount)
+                                        @if ($buyNow['priceDiscount'])
                                             <p class="product_box_price">
-                                                <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
+                                                <span>{{ number_format($buyNow['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($buyNow['priceDiscount'], 0, ',', '.') . 'đ' }}
                                             </p>
                                         @else
                                             <p class="product_box_price">
-                                                <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                                <span></span>{{ number_format($buyNow['price'], 0, ',', '.') . 'đ' }}
                                             </p>
                                         @endif
 
                                     </div>
                                 </div>
-                            @endforeach
+                            @else
+                                @foreach ($cart as $item)
+                                    @php
+                                        $product = $products->where('id', $item['product_id'])->first();
+                                        $priceProductDiscount = $product->productDiscount
+                                            ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
+                                            ->first();
+                                        // giá thường ko có giảm
+                                        $amount = $product ? $product->price : 0;
+                                        if ($priceProductDiscount) {
+                                            // giá đã lọc theo nhóm khách hàng
+                                            $amount = $priceProductDiscount ? $priceProductDiscount->price : 0;
+                                        }
+
+                                        // thành tiền
+                                        $intoMoney = $amount * $item['quantity'];
+                                        // tổng tiền
+                                        $total += $intoMoney;
+                                    @endphp
+                                    <div class="row checkout_row_right">
+                                        <input type="hidden" name="product_id" value="{{ $item['product_id'] }}">
+                                        <div class="col-md-3 col-sm-3 col-4">
+                                            <div class="img_checkout_product">
+                                                <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-9 col-8">
+                                            <h5>{{ $product->name }}</h5>
+                                            <p class="">Số lượng: {{ $item['quantity'] }}</p>
+                                            @if (Auth::check())
+                                                @if ($priceProductDiscount)
+                                                    <p class="pricecheckout_mobile">
+                                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
+                                                    </p>
+                                                @else
+                                                    <p class="pricecheckout_mobile">
+                                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                                    </p>
+                                                @endif
+                                            @else
+                                            @endif
+
+                                        </div>
+                                        <div class="col-md-3 col-12 checkout_right_price">
+
+                                            @if ($priceProductDiscount)
+                                                <p class="product_box_price">
+                                                    <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($priceProductDiscount->price, 0, ',', '.') . 'đ' }}
+                                                </p>
+                                            @else
+                                                <p class="product_box_price">
+                                                    <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
+                                                </p>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            @endif
+
                         </div>
                         <div class="checkout_main_right_total">
                             <div class="check_item_total_one">

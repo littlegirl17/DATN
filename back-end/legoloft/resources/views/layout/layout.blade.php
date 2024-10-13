@@ -115,7 +115,6 @@
         };
     </script>
 
-
     <script>
         function addToCart(product_id, quantity) {
             $.ajax({
@@ -219,7 +218,16 @@
                         </div>
                     </div>
                     <div class="modal_btn">
-                        <button class="modal_btn_item">Mua ngay</button>
+                        <form action="{{ route('buyNow') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="${id}">
+                            <input type="hidden" name="name" value="${name}">
+                            <input type="hidden" name="price" value="${price}">
+                            <input type="hidden" name="priceDiscount" value="${priceDiscount}">
+                            <input type="hidden" name="image" value="${image}">
+                            <input type="hidden" id="inputQuantityHidden" name="quantity" value="1">
+                            <button type="submit" class="modal_btn_item">Mua ngay</button>
+                        </form>
                         <button type="submit" onclick="addToCart(${id},document.getElementById('inputQuantity').value)" class="modal_btn_item">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
@@ -283,6 +291,7 @@
         function increaseQuantity() {
             var inputQuantity = document.getElementById('inputQuantity');
             var inputQuantityHidden = document.getElementById('inputQuantityHidden');
+
             inputQuantity.value = parseInt(inputQuantity.value) + 1;
             inputQuantityHidden.value = inputQuantity.value;
         }
