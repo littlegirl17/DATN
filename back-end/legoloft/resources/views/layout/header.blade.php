@@ -26,7 +26,7 @@
                     <i class="fas fa-bars"></i>
                 </a>
                 <div class="nav_img_logo">
-                    <a href="/"><img src="img/legoloft.png" alt="" /></a>
+                    <a href="/"><img src="{{ asset('img/legoloft.png') }}" alt="" /></a>
                 </div>
             </div>
             <div class="nav_box_menu">
@@ -61,14 +61,18 @@
                 </div>
                 <div class="header_user_click">
                     <div class="header_user_img">
-                        <img src="img/user.svg" alt="" />
+                        <img src="{{ asset('img/user.svg') }}" alt="" />
                     </div>
                     <div class="header_user_content">
                         <div class="header_user_content_moc_item">
-                            <img src="img/legomini.svg" alt="" />
+                            <img src="{{ asset('img/legomini.svg') }}" alt="" />
                         </div>
                         <div class="m-0 p-0">
                             @auth
+                                <div class="btn_contain">
+                                    <button class="btn-register" onclick="window.location.href='{{ route('member') }}'">Tài
+                                        khoản của tôi</button>
+                                </div>
                                 <div class="btn_contain">
                                     <button class="btn-login" onclick="window.location.href='{{ route('logout') }}'">Đăng
                                         xuất</button>
@@ -79,7 +83,8 @@
                                         nhập</button>
                                 </div>
                                 <div class="btn_contain">
-                                    <button class="btn-register">Đăng ký</button>
+                                    <button class="btn-register"
+                                        onclick="window.location.href='{{ route('register') }}'">Đăng ký</button>
                                 </div>
                             @endauth
 
@@ -87,8 +92,8 @@
                     </div>
                 </div>
 
-                <div class="">
-                    <a href="cart.html"> <img src="img/cart.svg" alt="" /></a>
+                <div class="icon_shoppingbag">
+                    <a href="{{ route('cart') }}"> <img src="{{ asset('img/shoppingbag.png') }}" alt="" /></a>
                 </div>
             </div>
         </div>
@@ -128,7 +133,7 @@
                 @foreach ($categories as $category)
                     <div class="submenu-category" style="display: none" data-category-id="{{ $category->id }}">
                         @foreach ($category->categories_children as $item)
-                            <li><a href="#">{{ $item->name }}</a></li>
+                            <li><a href="{{ route('categoryProduct', $item->id) }}">{{ $item->name }}</a></li>
                         @endforeach
                     </div>
                 @endforeach

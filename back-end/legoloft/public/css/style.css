@@ -283,6 +283,24 @@ body {
 }
 
 /**/
+.icon_shoppingbag {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: -1px;
+    right: -40px;
+    z-index: 3;
+}
+
+.icon_shoppingbag a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+/**/
 
 .nav_box_menu_right {
     display: flex;
@@ -464,21 +482,25 @@ body {
     right: 0;
     background: #fff;
     box-shadow: 0px 6px 4px rgba(179, 179, 179, .25);
-    padding: 5px 10px 0 10px;
+    padding: 10px 10px 10px 10px;
     color: #000;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 2;
-    width: 200px;
-    opacity: 0;
+    display: none;
 }
 
 .header_user_content div {
     margin: 0 auto;
     padding: 0 0;
     margin: 0 0;
+}
+
+.btn_contain {
+    margin: 0 0;
+    padding: 0 0;
 }
 
 /*------------------------------- START BANNER---------------------------------------*/
@@ -595,6 +617,7 @@ body {
     text-align: center;
     padding-top: 10px;
     font-weight: 500;
+    font-size: 0.8rem;
 }
 
 /*-------------------------------END CATEGORY---------------------------------------*/
@@ -681,22 +704,26 @@ section {
     padding: 7px 7px;
 }
 
-.product_box .product_box_tag_sale {
+.product_box .product_box_tag_sale_outstanding {
     position: absolute;
-    top: 5%;
-    left: 5%;
+    top: 16%;
     background-color: #ee0000;
     color: #FFFFFF;
     font-size: 0.9rem;
-    padding: 5px 5px;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    justify-items: center;
-    align-items: center;
+    padding: 7px 7px;
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
+
+.product_box .product_box_tag_sale {
+    position: absolute;
+    top: 5%;
+    background-color: #ee0000;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    padding: 7px 7px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
 
 .product_box .product_box_tag_soldout {
     position: absolute;
@@ -719,11 +746,16 @@ section {
     margin: 5px 0;
 }
 
+.product_box .product_box_image {
+    width: 100%;
+    height: 300px;
+}
+
 .product_box .product_box_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    padding: 100px 10px 0 10px;
+    padding: 70px 10px 0 10px;
     transition: transform 500ms;
 }
 
@@ -749,11 +781,17 @@ section {
 
 .product_box_content_out {
     padding: 0px 15px 20px 15px;
+    height: 130px;
 
 }
 
 .product_box_content {
     padding: 40px 0px 0px 0;
+}
+
+.product_box_content h3 {
+    font-size: 1rem;
+    line-height: 1.125rem;
 }
 
 .product_box_content h3 a {
@@ -772,7 +810,7 @@ section {
     font-weight: 700;
     text-align: left;
     color: #ff0000;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
 }
 
 .product_box_price span {
@@ -785,6 +823,9 @@ section {
     padding-right: 3px;
 }
 
+.product_box_content_soldout p {
+    font-size: 0.8rem;
+}
 
 /*-------------------------------END PRODUCT---------------------------------------*/
 
@@ -951,17 +992,19 @@ section {
     /* Thêm khoảng cách giữa các cột */
 }
 
-.footer_main_column_item {}
-
-.footer_main_column_item_img {
-    margin-bottom: 1.25rem;
-}
 
 .footer_main_column_item_img img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+
+.footer_main_column_item_img {
+    width: 200px;
+    margin-bottom: 1.25rem;
+}
+
+
 
 .footer_main_column_item_title {
     padding: 0px 0.9375rem;
@@ -1115,10 +1158,11 @@ section {
 .card_theme_category_content {}
 
 .card_theme_category_content h2 {
-    font-size: 1rem;
-    line-height: 1.5625rem;
+    font-size: 0.95rem;
+    line-height: 1.5rem;
     font-weight: 700;
-    margin: 0.3125rem 0
+    margin: 0.3125rem 0;
+    height: 15px;
 }
 
 .card_theme_category_content span {
@@ -1203,6 +1247,16 @@ section {
     overflow: hidden;
 }
 
+.categoryproduct_box_tag_sale_outstanding {
+    position: absolute;
+    top: 8%;
+    background-color: #ee0000;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    padding: 7px 7px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
 .category_product_box_effect {
     position: relative;
     z-index: 1;
@@ -1267,15 +1321,22 @@ section {
     margin: 5px 0;
 }
 
+.category_product_box .category_product_img {
+    width: 100%;
+    height: 300px;
+}
+
 .category_product_box .category_product_img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    padding: 70px 10px 0 10px;
     transition: transform 500ms;
 }
 
 .category_product_box:hover .category_product_img img {
     transform: scale(1.1);
+    filter: grayscale(0%);
 }
 
 .category_product_box:hover {
@@ -1286,6 +1347,7 @@ section {
 
 .category_product_box_content_out {
     padding: 0px 15px 20px 15px;
+    height: 130px;
 
 }
 
@@ -1754,7 +1816,7 @@ section {
 
 /*------------------------------- START CART---------------------------------------*/
 .cart_container {
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 .cart_box {
@@ -1818,6 +1880,11 @@ section {
     background-color: #e96f14;
 }
 
+.cart_quantity_decrease a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .cart_quantity_increase {
     padding: 5px 15px;
     outline: none;
@@ -1826,10 +1893,15 @@ section {
     background-color: #e96f14;
 }
 
+.cart_quantity_increase a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .cart_quantity_number {
     text-align: center;
     width: 40px;
-    padding: 5px 15px;
+    padding: 5px 10px;
     outline: none;
     border: none;
 }
@@ -1903,6 +1975,55 @@ section {
 }
 
 
+.detail_btn_coupon {
+    font-size: 16px;
+    background: #ff0202;
+    border: none;
+    padding: 0.5em 1.5em;
+    color: #000000;
+    position: relative;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.detail_btn_coupon::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #FFD602;
+    transition: 0.5s ease;
+}
+
+.detail_btn_coupon:hover {
+    background-color: #FFD602;
+    color: #000000;
+    transition-delay: 0.5s;
+}
+
+.detail_btn_coupon:hover::before {
+    width: 100%;
+}
+
+.detail_btn_coupon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background-color: #FFD602;
+    transition: 0.4s ease;
+    z-index: -1;
+}
+
+.detail_btn_coupon:hover::after {
+    height: 100%;
+    transition-delay: 0.4s;
+    color: rgb(0, 0, 0);
+}
 
 .cart_right_total {
     background-color: #e3e4ec;
@@ -2024,6 +2145,58 @@ section {
     color: aliceblue;
 }
 
+.div_Empty_main_cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Empty_main_cart {
+    border-radius: 50%;
+    width: 380px;
+    height: 380px;
+    background-color: #ffcdcd;
+}
+
+.cartEmpty_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cartEmpty {
+    width: 250px;
+    height: 250px;
+}
+
+.cartEmpty img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cartEmptyText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -25px;
+}
+
+.cartEmptyText span {
+    padding-bottom: 20px;
+}
+
+.btn_empty_cart {
+    text-decoration: none;
+    color: #fff;
+    background-color: #f56991;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
 /*-------------------------------END CART---------------------------------------*/
 
 
@@ -2108,6 +2281,12 @@ section {
 .checkout_main_left_three_pttt label {
     display: flex;
     padding: 10px 0;
+}
+
+.checkout_main_left_three_pttt input:checked+label {
+    padding: 2px 3px;
+    border-radius: 5px;
+    box-shadow: rgba(255, 0, 0, 0.3) 0px 0px 0px 3px;
 }
 
 .checkout_main_left_three_img {
@@ -2591,10 +2770,20 @@ section {
     padding: 7px 10px;
 }
 
+.alertSuccess {
+    background-color: #2ED8B6;
+    color: #FFFFFF;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 0px 0px;
+    padding: 7px 10px;
+}
+
 /*-------------------------------END BUTTON---------------------------------------*/
 
 /*------------------------------- START MODAL---------------------------------------*/
 #modal_home {
+    z-index: 100;
     opacity: 0;
     pointer-events: none;
     /* Ngăn tương tác khi ẩn */
@@ -2654,13 +2843,13 @@ section {
 
 .modal_product_content_two_img {
     max-width: 400px;
-    max-height: 400px;
+    height: 300px;
 }
 
 .modal_product_content_two_img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .modal_product_content_two_content {
@@ -2797,7 +2986,7 @@ section {
 .layout_member_right {
     position: relative;
     width: 75%;
-    background-color: #fff;
+    background-color: #f6f6f6;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 20px;
     margin-left: 30px;
@@ -3013,10 +3202,116 @@ section {
     padding: 0 5px;
 }
 
+.account_purchase_header_right .account_purchase_header_right_3 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_4 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_5 {
+    color: #26AA99;
+    border-right: 0.5px solid #eaeaea;
+    padding: 0 5px;
+}
+
 .account_purchase_header_right .account_purchase_header_right_2 {
     color: #FF0000;
     padding: 0 5px;
 
+}
+
+.account_purchase_header_right .account_purchase_header_right_confir {
+    background-color: #0065a7;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_confir a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right .account_purchase_header_right_pending {
+    background-color: #FFD602;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right .account_purchase_header_right_pending a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right_cancel {
+    background-color: #FF0000;
+    border: none;
+    outline: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right_cancel a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.account_purchase_header_right_shipping {
+    background-color: #26AA99;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.account_purchase_header_right_shipping a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.seeMore {
+    display: flex;
+    justify-content: center;
+}
+
+.seeMore p {
+    text-align: center;
+    margin-top: 15px;
+    background-color: #f4f4f4;
+    color: #343333;
+    border-radius: 5px;
+    width: 130px;
+}
+
+.returnPurchase {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #ececec;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+}
+
+.returnPurchaseMobile {
+    display: none;
+}
+
+.infor_main h4 {
+    padding-top: 15px;
+    font-size: 1.125rem;
 }
 
 /*-------------------------------END PURCHASE---------------------------------------*/
@@ -3417,6 +3712,514 @@ section {
 }
 
 /*-------------------------------END LOGIN---------------------------------------*/
+
+
+/*------------------------------- START REGISTER---------------------------------------*/
+.bg_register {
+    background-image: url("../img/bg6.jpg");
+    /* Thay 'link_to_your_image.jpg' bằng đường dẫn đến hình ảnh của bạn */
+    background-size: cover;
+    /* Để hình ảnh phủ toàn bộ */
+    background-position: center;
+    /* Để hình ảnh ở giữa */
+}
+
+.login_main {
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 100px 0;
+}
+
+.login_content {
+    background-color: #ffffff;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+        rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 30px 50px;
+}
+
+.login_content .title h2 {
+    padding-bottom: 25px;
+    text-align: center;
+    background: linear-gradient(to right,
+            #ffc506,
+            #c9a804);
+    /* Phối hợp hai màu */
+    -webkit-background-clip: text;
+    /* Cắt nền theo chữ */
+    -webkit-text-fill-color: transparent;
+    /* Làm cho chữ trong suốt */
+}
+
+.login_item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.login_item label {
+    color: #8e8c8c;
+    font-size: 1rem;
+    padding-bottom: 5px;
+}
+
+.login_item input {
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 5px;
+}
+
+.login_forgetpw {
+    padding-top: 5px;
+}
+
+.login_forgetpw a {
+    text-decoration: none;
+    color: #8e8c8c;
+    font-size: 0.8rem;
+}
+
+.btn_login {
+    width: 100%;
+    background-color: #ffc506;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Để ẩn phần hiệu ứng ra ngoài nút */
+    font-weight: bold;
+    /* Làm cho chữ đậm hơn */
+    transition: color 0.3s ease;
+    /* Thêm hiệu ứng chuyển tiếp cho màu chữ */
+}
+
+.btn_login::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    /* Bắt đầu từ dưới */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e0a800;
+    /* Màu vàng đậm */
+    transition: top 0.3s ease;
+    /* Thời gian chuyển tiếp */
+    z-index: 0;
+    /* Đặt ở dưới cùng */
+}
+
+.btn_login:hover::before {
+    top: 0;
+    /* Di chuyển lên trên khi hover */
+    z-index: -1;
+}
+
+.btn_login:hover {
+    color: #ffffff;
+    /* Giữ màu chữ khi hover */
+    z-index: 1;
+    /* Đặt nút lên trên cùng */
+}
+
+.border-container-login {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0 15px 0;
+}
+
+.border-left,
+.border-right {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #000;
+    /* Màu sắc của đường viền */
+    margin: 0 10px;
+    /* Khoảng cách giữa đường viền và chữ "Hoặc" */
+}
+
+.border-left,
+.border-right {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #000;
+    /* Màu sắc của đường viền */
+    margin: 0 10px;
+    /* Khoảng cách giữa đường viền và chữ "Hoặc" */
+}
+
+.login_regis span {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.login_regis a {
+    color: #000;
+    text-decoration: none;
+}
+
+.login_regis a:hover {
+    text-decoration: underline;
+}
+
+/*-------------------------------END REGISTER---------------------------------------*/
+
+
+
+/*------------------------------- START ADD CART---------------------------------------*/
+.my-popup-zindex {
+    z-index: 1000;
+}
+
+.addCartMain {
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    width: 350px;
+    position: fixed;
+    z-index: 1000000000000000;
+}
+
+.addCartContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.addCartContent_item {
+    display: flex;
+    flex-direction: row;
+}
+
+.addCartContent_item span {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.addCartContent_image {
+    width: 100px;
+    height: 100px;
+    padding: 10px 10px 10px 10px;
+}
+
+.addCartContent_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*-------------------------------END ADD CART---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+.div_nav_pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.nav_pagination ul.pagination {
+    list-style: none;
+    /* Bỏ dấu đầu dòng */
+    padding: 0;
+    /* Bỏ padding */
+    margin: 0;
+    /* Bỏ margin */
+}
+
+.nav_pagination ul.pagination li {
+    display: inline-block;
+    /* Hiển thị các phần tử trong cùng một dòng */
+    margin-right: 5px;
+    /* Khoảng cách giữa các phần tử */
+}
+
+.nav_pagination ul.pagination li a {
+    background-color: #fff;
+    /* Màu nền cho các liên kết không active */
+    color: #000;
+    /* Màu chữ cho các liên kết không active */
+    padding: 8px 12px;
+    /* Padding cho các liên kết */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    border: 1px solid #edecec;
+    /* Đường viền cho các liên kết */
+    border-radius: 4px;
+    /* Bo góc cho các liên kết */
+}
+
+.nav_pagination ul.pagination li.active .page-link {
+    background-color: #FFD602;
+    /* Màu nền cho trạng thái active */
+    color: #fff;
+    /* Màu chữ cho trạng thái active */
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #edecec;
+
+}
+
+.nav_pagination ul.pagination li.disabled .page-link {
+    background-color: #f0f0f0;
+    /* Màu nền cho trạng thái disabled */
+    color: #aaa;
+    /* Màu chữ cho trạng thái disabled */
+}
+
+.nav_pagination ul.pagination li a:hover {
+    background-color: #f0f0f0;
+    /* Màu nền khi hover */
+    color: #000;
+    /* Màu chữ khi hover */
+}
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
+
+
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+/*------------------------------- START ---------------------------------------*/
+
+
+/*-------------------------------END ---------------------------------------*/
+
 
 
 /*------------------------------- START ---------------------------------------*/
@@ -3946,7 +4749,7 @@ section {
 
     .layout_member_right {
         width: 100%;
-        background-color: #fff;
+        background-color: #f6f6f6;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius: 20px;
         margin-left: 30px;
@@ -4004,6 +4807,34 @@ section {
 
     .contact_left_img {
         height: 342px;
+    }
+
+    /**/
+    .returnPurchase {
+        display: none;
+    }
+
+    .returnPurchaseMobile {
+        display: block;
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        padding: 5px 5px;
+        width: 56px;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    /**/
+    .product_box .product_box_image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .category_product_box .category_product_img {
+        width: 100%;
+        height: 200px;
     }
 
 }
@@ -4570,7 +5401,7 @@ section {
 
     .layout_member_right {
         width: 100%;
-        background-color: #fff;
+        background-color: #f6f6f6;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius: 20px;
         padding: 20px 30px;
@@ -4665,6 +5496,60 @@ section {
     .btn_404 {
         padding: 10px 10px;
     }
+
+    /**/
+    .returnPurchase {
+        display: none;
+    }
+
+    .returnPurchaseMobile {
+        display: block;
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        padding: 5px 5px;
+        width: 56px;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    /**/
+    .cart_container {
+        padding-top: 95px;
+    }
+
+    .div_Empty_main_cart {
+        padding-bottom: 150px;
+    }
+
+    .Empty_main_cart {
+        width: 250px;
+        height: 250px;
+    }
+
+    .cartEmptyText {
+        padding-top: 40px;
+        text-align: center;
+    }
+
+    /**/
+    .product_box .product_box_image {
+        width: 100%;
+        height: 260px;
+    }
+
+    /**/
+    .section_product_theme {
+        padding: 40px 20px 40px 20px;
+        /* trên - phải - dưới - trái */
+    }
+
+    /**/
+    .category_product_box .category_product_img {
+        height: 260px;
+    }
+
 }
 
 @media only screen and (max-width: 300px) {

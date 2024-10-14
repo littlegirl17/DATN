@@ -127,6 +127,25 @@
                              </label>
                              <p>Comment</p>
                          </div>
+                         <div class="d-flex">
+                             <label class="checkbox-btnGroup">
+                                 <label for="checkbox"></label>
+                                 <input type="checkbox" class="" name="permission[]" value="categoryArticle"
+                                     id=""
+                                     {{ in_array('categoryArticle', $permissionGroupGet) ? 'checked' : '' }}>
+                                 <span class="checkmark"></span>
+                             </label>
+                             <p>Category Article</p>
+                         </div>
+                         <div class="d-flex">
+                             <label class="checkbox-btnGroup">
+                                 <label for="checkbox"></label>
+                                 <input type="checkbox" class="" name="permission[]" value="article"
+                                     id="" {{ in_array('article', $permissionGroupGet) ? 'checked' : '' }}>
+                                 <span class="checkmark"></span>
+                             </label>
+                             <p> Article</p>
+                         </div>
                      </div>
                  </div>
                  <div class="col-md-6">
@@ -441,6 +460,70 @@
                                      <input type="checkbox" class="" name="permission[]"
                                          value="commentCheckboxDelete" id=""
                                          {{ in_array('commentCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Xóa </p>
+                             </div>
+                         </div>
+                         <div class="d-flex">
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input id="checkbox" type="checkbox" name="permission[]"
+                                         value="categoryArticleAdd" id=""
+                                         {{ in_array('categoryArticleAdd', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Thêm</p>
+                             </div>
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input type="checkbox" class="" name="permission[]"
+                                         value="categoryArticleEdit" id=""
+                                         {{ in_array('categoryArticleEdit', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Sửa </p>
+                             </div>
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input type="checkbox" class="" name="permission[]"
+                                         value="categoryArticleCheckboxDelete" id=""
+                                         {{ in_array('categoryArticleCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Xóa </p>
+                             </div>
+                         </div>
+                         <div class="d-flex">
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input id="checkbox" type="checkbox" name="permission[]" value="articleAdd"
+                                         id=""
+                                         {{ in_array('articleAdd', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Thêm</p>
+                             </div>
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input type="checkbox" class="" name="permission[]" value="articleEdit"
+                                         id=""
+                                         {{ in_array('articleEdit', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <span class="checkmark"></span>
+                                 </label>
+                                 <p>Sửa </p>
+                             </div>
+                             <div class="d-flex ps-3">
+                                 <label class="checkbox-btnGroup">
+                                     <label for="checkbox"></label>
+                                     <input type="checkbox" class="" name="permission[]"
+                                         value="articleCheckboxDelete" id=""
+                                         {{ in_array('articleCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>

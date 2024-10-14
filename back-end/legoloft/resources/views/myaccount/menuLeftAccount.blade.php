@@ -11,11 +11,21 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <ul class="layout_member_left_submenu">
+
                     <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
-                        <a href="#"><i class="fa fa-solid fa-plus"></i>Mới</a>
+                        <a href="{{ route('pendingPurchase') }}"><i class="fa fa-solid fa-plus"></i>Chờ xác nhận</a>
                     </li>
                     <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
-                        <a href="#"><i class="fa fa-solid fa-plus"></i>Hủy</a>
+                        <a href="{{ route('waitConfirmation') }}"><i class="fa fa-solid fa-plus"></i>Đã xác nhận</a>
+                    </li>
+                    <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
+                        <a href="{{ route('shipping') }}"><i class="fa fa-solid fa-plus"></i>Đang vận chuyển</a>
+                    </li>
+                    <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
+                        <a href="{{ route('purchase') }}"><i class="fa fa-solid fa-plus"></i>Hoàn thành</a>
+                    </li>
+                    <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
+                        <a href="{{ route('cancel') }}"><i class="fa fa-solid fa-plus"></i>Đã hủy</a>
                     </li>
                 </ul>
             </li>

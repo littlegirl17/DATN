@@ -107,8 +107,8 @@
                          <thead>
                              <tr>
                                  <th>Nhóm khách hàng</th>
-                                 <th>Số lượng</th>
-                                 <th>Giá</th>
+                                 <th>Giá giảm sản phẩm</th>
+                                 <th></th>
                              </tr>
                          </thead>
                          {{-- <tbody>
@@ -121,29 +121,114 @@
                                 <input class="form-control" type="number" name="priceUserGroup[{{ $item->id }}]">
                             </td>
                         </tr>
-                    </tbody> --}}
+                    </tbody>  --}}
+                         <tbody class="discount-product">
+                             <tr>
+                                 <td>
+                                     <select class="form-select" aria-label="Default select example"
+                                         name="user_group_id[]">
+                                         @foreach ($userGroups as $userGroup)
+                                             <option value="{{ $userGroup->id }}">
+                                                 {{ $userGroup->name }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td><input class="form-control" type="number" name="priceUserGroup[]">
+                                 </td>
+                                 <td>
+                                     <button type="button"
+                                         class="remove_bannerImages_add remove-discount-btn">Xóa</button>
+                                 </td>
+                             </tr>
+                         </tbody>
                      </table>
+                     <div class="row mb-3">
+                         <div class="col-md-12">
+                             <button type="button" class="btn btn-primary add-discount-btn">Thêm mức giảm
+                                 giá</button>
+                         </div>
+                     </div>
                  </div>
                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                      tabindex="0">
+                     <div class="form-group  mt-3">
+                         <h4 class="label_admin">Ảnh sản phẩm</h4>
+
+                         <div class="custom-file imageAdd p-3 ">
+                             <div class="imageFile">
+                                 <div id="preview"><img src="../img/lf.png" alt=""></div>
+                             </div>
+                             <div class="">
+                                 <input type="file" name="image" id="HinhAnh" class="inputFile">
+                             </div>
+                         </div>
+
+                     </div>
                      <div class="form-group mt-3">
-                         <label for="exampleInputFile" class="label_admin">Ảnh sản phẩm</label>
-                         <div class="custom-file">
-                             <input type="file" name="image" id="HinhAnh">
-                             <div id="preview"></div>
+                         <h4>Hình ảnh bổ sung</h4>
+                         <div class="row bannnerImagesEdit">
+                             <div class="col-md-12 productImagePut">
+                                 <div class="row_product my-3">
+                                     <div class="custom-file imageAdd p-3">
+                                         <div class="imageFile">
+                                             <div class="previewImages"><img src="../img/lf.png" alt="">
+                                             </div>
+                                         </div>
+                                         <div class="d-flex flex-column">
+                                             <div class="">
+                                                 <input type="file" name="images[]" class="inputFile imageInputJS">
+                                             </div>
+                                             <div class="mt-3">
+                                                 <button class="remove_bannerImages_add remove_productImages">Xóa</button>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="row mt-3  p-0">
+                             <div class="col-md-3 col-12">
+                                 <button type="button" class="  btn-ProductImagesAdd">Thêm hình
+                                     ảnh</button>
+                             </div>
+                             <div class="col-md-9  col-12"></div>
                          </div>
                      </div>
 
-                     <div class="form-group mt-3">
-                         <label for="exampleInputFile" class="label_admin">Ảnh sản phẩm</label>
-                         <div class="custom-file">
-                             <input type="file" id="HinhAnh" name="images[]" multiple>
-                             <div id="preview"></div>
-                         </div>
-                     </div>
                  </div>
              </div>
          </form>
      </div>
 
+ @endsection
+ @section('productEditAdminScript')
+     <script>
+         $(document).ready(function() {
+             let discountRowTemplate = `
+           <tr class="discount-row">
+               <td>
+                   <select class="form-select" aria-label="Default select example" name="user_group_id[]">
+                       @foreach ($userGroups as $userGroup)
+                           <option value="{{ $userGroup->id }}">{{ $userGroup->name }}</option>
+                       @endforeach
+                   </select>
+               </td>
+               <td>
+                   <input class="form-control" type="number" name="priceUserGroup[]" >
+               </td>
+               <td>
+                   <button type="button" class="remove_bannerImages_add remove-discount-btn">Xóa</button>
+               </td>
+           </tr>
+       `;
+
+             $('.add-discount-btn').click(function() {
+                 $('.discount-product').append(discountRowTemplate.trim());
+             });
+
+             $(document).on('click', '.remove-discount-btn', function() {
+                 $(this).closest('.discount-row').remove();
+             });
+         });
+     </script>
  @endsection

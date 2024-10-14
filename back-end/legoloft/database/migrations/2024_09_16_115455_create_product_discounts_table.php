@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_group_id');
             $table->foreign('user_group_id')->references('id')->on('user_groups')->onUpdate('restrict')->onDelete('restrict');
             $table->integer('quantity');
-            $table->decimal('discount_price', 15, 2);
+            $table->decimal('discount_price', 15, 0);
             $table->timestamps();
         });
     }

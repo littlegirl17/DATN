@@ -76,9 +76,9 @@
                              <tr class="">
                                  <td>
                                      <div class="d-flex justify-content-center align-items-center">
-                                         <input type="checkbox" id="cbx" class="hidden-xs-up"
+                                         <input type="checkbox" id="cbx_{{ $item->id }}" class="hidden-xs-up"
                                              name="administration_id[]" value="{{ $item->id }}">
-                                         <label for="cbx" class="cbx"></label>
+                                         <label for="cbx_{{ $item->id }}" class="cbx"></label>
                                      </div>
                                  </td>
                                  <td>{{ $item->username }}</td>

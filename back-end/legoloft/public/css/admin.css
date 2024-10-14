@@ -503,9 +503,7 @@ table tbody tr:nth-child(even) {
 }
 
 /**/
-.imageAdd {
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-}
+
 
 /**/
 .inputSearch_Admin {
@@ -927,7 +925,6 @@ table tbody tr:nth-child(even) {
 .bannnerImagesEdit {
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
-    padding: 1rem;
 }
 
 .bannnerImagesEdit .row {
@@ -969,32 +966,34 @@ table tbody tr:nth-child(even) {
 .cbx:after {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 8px;
+    top: 6px;
+    /* Đặt vị trí cho dấu tick */
+    left: 10px;
+    /* Đặt vị trí cho dấu tick */
     width: 7px;
     height: 14px;
     opacity: 0;
     transform: rotate(45deg) scale(0);
     border-right: 2px solid #fff;
+    /* Màu sắc của dấu tick */
     border-bottom: 2px solid #fff;
+    /* Màu sắc của dấu tick */
     transition: all 0.3s ease;
     transition-delay: 0.15s;
 }
 
-
-
-#cbx:checked~.cbx {
+.hidden-xs-up:checked+.cbx {
     border-color: transparent;
     background: #6871f1;
+    /* Màu nền khi checked */
     animation: jelly 0.6s ease;
 }
 
-#cbx:checked~.cbx:after {
+.hidden-xs-up:checked+.cbx:after {
     opacity: 1;
+    /* Hiện dấu tick */
     transform: rotate(45deg) scale(1);
 }
-
-
 
 @keyframes jelly {
     from {
@@ -1027,8 +1026,10 @@ table tbody tr:nth-child(even) {
 }
 
 .hidden-xs-up {
-    display: none !important;
+    display: none;
+    /* Ẩn checkbox thực tế */
 }
+
 
 /**/
 .bg_admin_login {
@@ -1136,4 +1137,79 @@ table tbody tr:nth-child(even) {
     display: flex;
     justify-content: center;
     padding-bottom: 15px;
+}
+
+/**/
+.inputFile {
+    background-color: #007ACC;
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/**/
+.remove_bannerImages_add {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-ProductImagesAdd {
+    background-color: #007ACC;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+
+}
+
+.imageAdd {
+    border: 1px solid #dfdddd;
+    border-radius: 5px;
+    display: flex;
+}
+
+.imageFile {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+.imageFile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#preview {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+#preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.previewImages {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+.previewImages img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

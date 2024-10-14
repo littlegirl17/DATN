@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <h3 class="title-page">Chỉnh sửa bài viết</h3>
+  <form
+    action="/admin/add-category"
+    method="post"
+    class="formAdmin"
+    enctype="multipart/form-data"
+  >
+    <div class="buttonProductForm">
+      <div class=""></div>
+      <div class="">
+        <button type="submit" class="btnFormAdd">
+          <p class="text m-0 p-0">Lưu</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Tiêu đề bài viết</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        onkeyup="ChangeToSlug();"
+        id="slug"
+        aria-describedby="title"
+        placeholder="Nhập bài viết"
+      />
+    </div>
+    <div class="form-group mt-3">
+      <label for="description" class="form-label">Nội dung bài viết</label>
+      <textarea class="form-control" id="editor1" name="description" rows="10">
+      </textarea>
+    </div>
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Danh mục bài viết </label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="status"
+      >
+        <option value=""></option>
+      </select>
+    </div>
+    <div class="form-group mt-3">
+      <label for="title" class="form-label">Trạng thái</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="status"
+      >
+        <option selected>Trang thái</option>
+        <option value="1">Kích hoạt</option>
+        <option value="0">Vô hiệu hóa</option>
+      </select>
+    </div>
+    <div class="form-group mt-3">
+      <h4 class="label_admin">Ảnh sản phẩm</h4>
+      <div class="custom-file imageAdd p-3">
+        <input type="file" name="image" id="HinhAnh" class="inputFile" />
+        <img
+          src="../img/bg1.jpg"
+          alt=""
+          style="width: 80px; height: 80px; object-fit: cover"
+        />
+      </div>
+    </div>
+  </form>
+</div>

@@ -112,7 +112,24 @@
                             </label>
                             <p>AdministrationGroup </p>
                         </div>
-
+                        <div class="d-flex">
+                            <label class="checkbox-btnGroup">
+                                <label for="checkbox"></label>
+                                <input type="checkbox" class="" name="permission[]" value="categoryArticle"
+                                    id="categoryArticle">
+                                <span class="checkmark"></span>
+                            </label>
+                            <p>Category Article </p>
+                        </div>
+                        <div class="d-flex">
+                            <label class="checkbox-btnGroup">
+                                <label for="checkbox"></label>
+                                <input type="checkbox" class="" name="permission[]" value="article"
+                                    id="article">
+                                <span class="checkmark"></span>
+                            </label>
+                            <p>Article </p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -405,6 +422,64 @@
                                 <p>Xóa </p>
                             </div>
                         </div>
+                        <div class="d-flex">
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input id="checkbox" type="checkbox" name="permission[]" value="categoryArticleAdd"
+                                        disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Thêm</p>
+                            </div>
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input type="checkbox" class="" name="permission[]"
+                                        value="categoryArticleEdit" disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Sửa </p>
+                            </div>
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input type="checkbox" class="" name="permission[]"
+                                        value="categoryArticleCheckboxDelete" disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Xóa </p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input id="checkbox" type="checkbox" name="permission[]" value="articleAdd"
+                                        disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Thêm</p>
+                            </div>
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input type="checkbox" class="" name="permission[]" value="articleEdit"
+                                        disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Sửa </p>
+                            </div>
+                            <div class="d-flex ps-3">
+                                <label class="checkbox-btnGroup">
+                                    <label for="checkbox"></label>
+                                    <input type="checkbox" class="" name="permission[]"
+                                        value="articleCheckboxDelete" disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Xóa </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -428,7 +503,13 @@
                 'administration': ['administrationAdd', 'administrationEdit', 'administrationCheckboxDelete'],
                 'administrationGroup': ['administrationGroupAdd', 'administrationGroupEdit',
                     'administrationGroupCheckboxDelete'
-                ]
+                ],
+                'categoryArticle': ['categoryArticleAdd', 'categoryArticleEdit',
+                    'categoryArticleCheckboxDelete'
+                ],
+                'article': ['articleAdd', 'articleEdit',
+                    'articleCheckboxDelete'
+                ],
             };
 
             // Hàm để kích hoạt hoặc vô hiệu hóa các checkbox quyền

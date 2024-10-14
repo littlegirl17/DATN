@@ -1,13 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Category;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\admin\OrderAdminController;
+use App\Http\Controllers\admin\ArticleAdminController;
+use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\CategoryArticleAdminController;
 
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -20,11 +31,15 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
 
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-Route::get('/', [HomeController::class, 'index']);
+
 
 
 
@@ -52,6 +67,41 @@ Route::get('resetPassword', function () {
 Route::post('resetPassword', [UserController::class, 'resetPassword'])->name('resetPassword');
 
 
+Route::get('register', function () {
+    return view('register');
+})->name('register');
+Route::post('register', [UserController::class, 'register'])->name('registerForm');
+
+Route::get('categoryAll', [CategoryController::class, 'categoryAll'])->name('categoryAll');
+Route::get('categoryProduct/{id}', [CategoryController::class, 'categoryProduct'])->name('categoryProduct');
+
+
+Route::get('cart', [CartController::class, 'getCart'])->name('cart');
+Route::post('cartForm', [CartController::class, 'cartAdd'])->name('cartForm');
+Route::get('increaseQuantity/{id}', [CartController::class, 'increaseQuantity'])->name('increaseQuantity');
+Route::get('decreaseQuantity/{id}', [CartController::class, 'decreaseQuantity'])->name('decreaseQuantity');
+Route::get('deleteItemCart/{id}', [CartController::class, 'deleteItemCart'])->name('deleteItemCart');
+Route::get('deleteAllCart', [CartController::class, 'deleteAllCart'])->name('deleteAllCart');
+
+Route::post('couponForm', [CouponController::class, 'couponApply'])->name('couponForm');
+Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('couponDelete');
+
+Route::get('member', [MyAccountController::class, 'member'])->name('member');
+Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
+Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
+Route::get('waitConfirmation', [MyAccountController::class, 'waitConfirmation'])->name('waitConfirmation');
+Route::get('pendingPurchase', [MyAccountController::class, 'pendingPurchase'])->name('pendingPurchase');
+Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping');
+Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
+Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
+
+Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name('checkoutForm');
+Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
+
+Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
+
+
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {
     return view('admin.login');
@@ -59,6 +109,10 @@ Route::get('admin/login', function () {
 Route::post('admin/login', [LoginController::class, 'login'])->name('adminLoginForm');
 
 Route::prefix('admin')->middleware('admin')->group(function () { // prefix: được sử dụng để nhóm các route lại với nhau dưới một tiền tố chung.
+
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+
     Route::middleware(['admin:product'])->group(function () {
         Route::get('product', [ProductAdminController::class, 'product'])->name('product');
         Route::get('addProduct', [ProductAdminController::class, 'productAdd'])->name('addProduct');
@@ -68,7 +122,10 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
         Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
         Route::post('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
+        Route::get('productDeleteImages/{product_id}', [ProductAdminController::class, 'productDeleteImages'])->name('productDeleteImages');
+        Route::get('productDeleteDiscount/{id}', [ProductAdminController::class, 'productDeleteDiscount'])->name('productDeleteDiscount');
     });
+
     Route::middleware(['admin:administration'])->group(function () {
         Route::get('adminstration', [AdminstrationController::class, 'adminstration'])->name('adminstration');
         Route::get('addAdminstration', [AdminstrationController::class, 'adminstrationAdd'])->name('addAdminstration');
@@ -79,6 +136,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('updateStatusAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdateStatus'])->name('adminstrationUpdateStatus');
         Route::get('searchAdminstration', [AdminstrationController::class, 'administrationSearch'])->name('searchAdminstration');
     });
+
     Route::middleware(['admin:administrationGroup'])->group(function () {
         Route::get('adminstrationGroup', [AdminstrationController::class, 'adminstrationGroup'])->name('adminstrationGroup');
         Route::get('addAdminstrationGroup', [AdminstrationController::class, 'adminstrationGroupAdd'])->name('addAdminstrationGroup');
@@ -87,5 +145,34 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('editAdminstrationGroup/{id}', [AdminstrationController::class, 'adminstrationGroupUpdate']);
         Route::post('deleteAdminstrationGroup', [AdminstrationController::class, 'adminstrationGroupDeleteCheckbox'])->name('deleteAdminstrationGroup');
     });
+
+    Route::middleware(['admin:categoryArticle'])->group(function () {
+        Route::get('categoryArticle', [CategoryArticleAdminController::class, 'categoryArticle'])->name('categoryArticle');
+        Route::get('categoryArticleEdit', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
+    });
+
+    Route::middleware(['admin:article'])->group(function () {
+        Route::get('article', [ArticleAdminController::class, 'article'])->name('article');
+        Route::get('articleAdd', [ArticleAdminController::class, 'articleAdd'])->name('articleAdd');
+        Route::get('articleEdit', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
+    });
+
+    Route::middleware(['admin:user'])->group(function () {
+        Route::get('userAdmin', [UserAdminController::class, 'userAdmin'])->name('userAdmin');
+    });
+
+    Route::middleware(['admin:userGroup'])->group(function () {
+        Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
+    });
+
+    Route::middleware(['admin:comment'])->group(function () {
+        Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
+    });
+
+    Route::middleware(['admin:order'])->group(function () {
+        Route::get('order', [OrderAdminController::class, 'order'])->name('comment');
+    });
+
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');
 });
