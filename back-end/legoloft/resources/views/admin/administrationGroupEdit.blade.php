@@ -281,8 +281,8 @@
                              <div class="d-flex ps-3">
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
-                                     <input id="checkbox" type="checkbox" name="permission[]" value="orderAdd"
-                                         id="" {{ in_array('orderAdd', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <input id="checkbox" type="checkbox" name="permission[]" value=""
+                                         id="" disabled>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Thêm</p>
@@ -290,8 +290,8 @@
                              <div class="d-flex ps-3">
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
-                                     <input type="checkbox" class="" name="permission[]" value="orderEdit"
-                                         id="" {{ in_array('orderEdit', $permissionGroupGet) ? 'checked' : '' }}>
+                                     <input type="checkbox" class="" name="permission[]" value=""
+                                         id="" disabled>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Sửa </p>
@@ -300,8 +300,7 @@
                                  <label class="checkbox-btnGroup">
                                      <label for="checkbox"></label>
                                      <input type="checkbox" class="" name="permission[]"
-                                         value="orderCheckboxDelete" id=""
-                                         {{ in_array('orderCheckboxDelete', $permissionGroupGet) ? 'checked' : '' }}>
+                                         value="orderCheckboxDelete" id="" disabled>
                                      <span class="checkmark"></span>
                                  </label>
                                  <p>Xóa </p>

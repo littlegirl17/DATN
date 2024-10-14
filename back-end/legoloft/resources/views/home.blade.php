@@ -130,7 +130,8 @@
                                     </div>
                                     <div class="product_box_content_out">
                                         <div class="product_box_content">
-                                            <h3><a href="">{{ $item->name }}</a></h3>
+                                            <h3><a href="{{ route('detail', $item->slug) }}">{{ $item->name }}</a>
+                                            </h3>
                                         </div>
                                         @if ($productDiscountPrice)
                                             <div class="product_box_price">
@@ -524,8 +525,7 @@
         </section>
         <!-- END BÀI VIẾT -->
 
-        <div id="modal_home" class="modal_product_main">
-        </div>
+
     </div>
 
 

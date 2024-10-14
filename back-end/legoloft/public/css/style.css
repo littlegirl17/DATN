@@ -1514,10 +1514,18 @@ section {
     padding: 1.25rem 0px 0px 1.25rem;
 }
 
-.detail_product_right .detail_product_right_one span {
+.detail_product_right .detail_product_right_one .inStock {
     background-color: #00973E;
     color: #FFFFFF;
     padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+.detail_product_right .detail_product_right_one .outStock {
+    background-color: #ff0000;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    font-size: 0.9rem;
 }
 
 .detail_product_right_two h1 {
@@ -1533,8 +1541,9 @@ section {
     font-weight: 700;
     text-align: left;
     color: #ff0000;
-    padding: 0px 0 20px 0;
-
+    padding: 8px 5px;
+    margin: 0px 0 20px 0;
+    background-color: #f4f4f4;
 }
 
 .detail_product_right_three span {
@@ -3984,6 +3993,43 @@ section {
 
 
 /*------------------------------- START ---------------------------------------*/
+.stars a {
+    display: inline-block;
+    padding-right: 4px;
+    text-decoration: none;
+    margin: 0;
+}
+
+.stars a:after {
+    position: relative;
+    font-size: 18px;
+    font-family: 'FontAwesome', serif;
+    display: block;
+    content: "\f005";
+    color: #9e9e9e;
+}
+
+.stars_span {
+    font-size: 0;
+    /* trick to remove inline-element's margin */
+}
+
+.stars a:hover~a:after {
+    color: #9e9e9e !important;
+}
+
+.stars_span.active a.active~a:after {
+    color: #9e9e9e;
+}
+
+.stars_span:hover a:after {
+    color: blue !important;
+}
+
+.stars_span.active a:after,
+.stars a.active:after {
+    color: blue;
+}
 
 
 /*-------------------------------END ---------------------------------------*/
