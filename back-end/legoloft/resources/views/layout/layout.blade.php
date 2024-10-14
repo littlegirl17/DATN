@@ -20,6 +20,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
         crossorigin="anonymous" />
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -31,6 +32,8 @@
 
         <main>
             @yield('content')
+            <div id="modal_home" class="modal_product_main">
+            </div>
         </main>
 
         <footer>
@@ -39,6 +42,9 @@
     </div>
 
     <!-- Jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous"></script>
@@ -47,6 +53,7 @@
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="{{ asset('js/index.js') }} "></script>
     <script src="{{ asset('js/admin.js') }} "></script>
     <script src="{{ asset('js/api63.js') }} "></script>
@@ -295,6 +302,46 @@
             inputQuantity.value = parseInt(inputQuantity.value) + 1;
             inputQuantityHidden.value = inputQuantity.value;
         }
+    </script>
+    <script>
+        $(document).ready(function() { // khởi tạo sự kiện khi đã sẵn sàng
+            $('.star').click(function(e) {
+                e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+                var rating = $(this).data('rating'); // giá trị rating sẽ được lấy từ data-rating
+                $('#rating').val(rating); // Gán giá trị rating vào input ẩn
+
+            });
+
+            $('#commentReview').on('submit', function(e) {
+                e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+                $.ajax({
+                    url: $(this).attr(
+                        'action'
+                    ), // $(this) đại diện cho đối tượng form hiện tại , attr phương thức lấy giá trị của thuộc tính action từ form
+                    type: 'POST',
+                    data: $(this)
+                        .serialize(), //.serialize() lấy tất cả các trường input trong form (bao gồm các input ẩn, textarea, checkbox, radio, v.v.) và tạo ra một chuỗi có định dạng URL-encoded.
+                    success: function(response) {
+                        alert(response.message);
+                        $('#commentReview')[0].reset(); // Reset form
+                        $('.star').removeClass('active'); // Xóa trạng thái sao đã chọn
+                    },
+                    error: function(xhr) {
+                        alert('Có lỗi xảy ra! Vui lòng kiểm tra lại.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $('.stars a').on('click', function() {
+            $('.stars .stars_span, .stars a').removeClass('active');
+
+            $(this).addClass('active');
+            $('.stars .stars_span').addClass('active');
+            // alert($(this).text());
+        });
     </script>
 </body>
 

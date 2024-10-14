@@ -16,7 +16,9 @@ use App\Http\Controllers\admin\ArticleAdminController;
 use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\CategoryAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
@@ -101,6 +103,8 @@ Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
 
 Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
 
+Route::get('detail/{slug}', [ProductController::class, 'detail'])->name('detail');
+Route::post('commentReview', [ProductController::class, 'commentReview'])->name('commentReview');
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {
@@ -171,7 +175,11 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     });
 
     Route::middleware(['admin:order'])->group(function () {
-        Route::get('order', [OrderAdminController::class, 'order'])->name('comment');
+        Route::get('order', [OrderAdminController::class, 'order'])->name('order');
+    });
+
+    Route::middleware(['admin:category'])->group(function () {
+        Route::get('category', [CategoryAdminController::class, 'category'])->name('category');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');

@@ -93,4 +93,9 @@ class Product extends Model
     {
         return $this->where('status', '=', 0)->orderBy('id', 'desc')->get();
     }
+
+    public function productRelated($detail)
+    {
+        return $this->where('category_id', $detail->category_id)->inRandomOrder()->get();
+    }
 }

@@ -96,46 +96,44 @@
                                 $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                             @endphp
                             <div class="col-md-4 col-sm-6 col-12 category_product_main_right_item">
-                                <a href="" class="text-black text-decoration-none">
-                                    <div class="category_product_box">
-                                        <div class="category_product_box_effect">
-                                            @if (isset($productDiscountPrice))
-                                                <div class="categoryproduct_box_tag_sale_outstanding">{{ $percent }}%
+                                <div class="category_product_box">
+                                    <div class="category_product_box_effect">
+                                        @if (isset($productDiscountPrice))
+                                            <div class="categoryproduct_box_tag_sale_outstanding">{{ $percent }}%
+                                            </div>
+                                        @endif
+                                        <div class="category_product_box_icon">
+                                            <i class="fa-regular fa-heart"></i>
+                                            <button type="button" class="outline-0 border-0 "
+                                                style="background-color: transparent"
+                                                onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </button>
+                                            {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
+                                            <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
+                                                class="outline-0 border-0 " style="background-color: transparent">
+                                                <i class="fa-solid fa-bag-shopping"></i>
+                                            </button>
+                                        </div>
+                                        <div class="category_product_img">
+                                            <img src="{{ asset('img/' . $item->image) }}" alt="" />
+                                        </div>
+                                        <div class="category_product_box_content_out">
+                                            <div class="product_box_content">
+                                                <h3><a href="">{{ $item->name }}</a></h3>
+                                            </div>
+                                            @if ($productDiscountPrice)
+                                                <div class="product_box_price">
+                                                    <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
+                                                </div>
+                                            @else
+                                                <div class="product_box_price">
+                                                    <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
                                                 </div>
                                             @endif
-                                            <div class="category_product_box_icon">
-                                                <i class="fa-regular fa-heart"></i>
-                                                <button type="button" class="outline-0 border-0 "
-                                                    style="background-color: transparent"
-                                                    onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
-                                                    <i class="fa-regular fa-eye"></i>
-                                                </button>
-                                                {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
-                                                <button type="button" onclick="addToCart('{{ $item->id }}', 1)"
-                                                    class="outline-0 border-0 " style="background-color: transparent">
-                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                </button>
-                                            </div>
-                                            <div class="category_product_img">
-                                                <img src="{{ asset('img/' . $item->image) }}" alt="" />
-                                            </div>
-                                            <div class="category_product_box_content_out">
-                                                <div class="product_box_content">
-                                                    <h3><a href="">{{ $item->name }}</a></h3>
-                                                </div>
-                                                @if ($productDiscountPrice)
-                                                    <div class="product_box_price">
-                                                        <span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
-                                                    </div>
-                                                @else
-                                                    <div class="product_box_price">
-                                                        <span></span>{{ number_format($item->price, 0, ',', '.') . 'đ' }}
-                                                    </div>
-                                                @endif
-                                            </div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         @endforeach
 
