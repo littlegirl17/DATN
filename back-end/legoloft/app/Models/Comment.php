@@ -27,6 +27,6 @@ class Comment extends Model
 
     public function productReview($detail, $user_id)
     {
-        return $this->where('product_id', $user_id)->where('user_id', $user_id)->get();
+        return $this->where('product_id', $detail->id)->where('user_id', $user_id)->get();
     }
 }

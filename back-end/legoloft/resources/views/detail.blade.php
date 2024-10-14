@@ -146,63 +146,41 @@
                     <div class="accordion-body">
                         <div class="product_review">
                             <ul>
-                                <li>
-                                    <p>Ngày 6 tháng 3 năm 2022</p>
-                                    <span class="product_review_name">HuynhKha</span>
-                                    <span class="product_review_content">Tôi thực sự thích bản dựng này, hệ thống treo
-                                        thanh đẩy
-                                        được triển khai rất tốt, thiết kế rất phù hợp với chiếc xe
-                                        thật, là một người hâm mộ F1 lớn, đây là điều bắt buộc,
-                                        bản dựng khá nhanh nhưng sản phẩm cuối cùng trông thật
-                                        tuyệt vời.</span>
-                                    <div class="product_review_img">
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-1.webp" alt="" />
-                                        </button>
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-5.webp" alt="" />
-                                        </button>
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-1.webp" alt="" />
-                                        </button>
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-4.webp" alt="" />
-                                        </button>
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-3.webp" alt="" />
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Ngày 6 tháng 3 năm 2022</p>
-                                    <span class="product_review_name">HuynhKha</span>
-                                    <span class="product_review_content">Tôi thực sự thích bản dựng này, hệ thống treo
-                                        thanh đẩy
-                                        được triển khai rất tốt, thiết kế rất phù hợp với chiếc xe
-                                        thật, là một người hâm mộ F1 lớn, đây là điều bắt buộc,
-                                        bản dựng khá nhanh nhưng sản phẩm cuối cùng trông thật
-                                        tuyệt vời.</span>
-                                    <div class="product_review_img">
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-1.webp" alt="" />
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Ngày 6 tháng 3 năm 2022</p>
-                                    <span class="product_review_name">HuynhKha</span>
-                                    <span class="product_review_content">Tôi thực sự thích bản dựng này, hệ thống treo
-                                        thanh đẩy
-                                        được triển khai rất tốt, thiết kế rất phù hợp với chiếc xe
-                                        thật, là một người hâm mộ F1 lớn, đây là điều bắt buộc,
-                                        bản dựng khá nhanh nhưng sản phẩm cuối cùng trông thật
-                                        tuyệt vời.</span>
-                                    <div class="product_review_img">
-                                        <button class="product_review_imgbtn">
-                                            <img src="img/city-product-1.webp" alt="" />
-                                        </button>
-                                    </div>
-                                </li>
+                                @foreach ($productReview as $item)
+                                    <li>
+                                        <p>{{ $item->created_at->format('d/m/Y H:i:s') }}</p>
+                                        <p class="starsget">
+                                            <span class="starsget_span">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <a class="starsget {{ $item->rating >= $i ? 'active' : '' }}"
+                                                        data-rating="{{ $i }}"
+                                                        href="javascript:void(0);">{{ $i }}</a>
+                                                    {{-- $item->rating >= $i : ví dụ: ratinng productA là 3 sao thì => 3 >= 1 → true → thêm lớp 'active',  3 >= 2 → true → thêm lớp 'active', 3 >= 3 → true → thêm lớp 'active',3 >= 4 → false → không thêm lớp 'active' --}}
+                                                @endfor
+                                            </span>
+                                        </p>
+                                        <span class="product_review_name">{{ $item->user->name }}</span>
+                                        <span class="product_review_content">{{ $item->content }}</span>
+                                        {{-- <div class="product_review_img">
+                                            <button class="product_review_imgbtn">
+                                                <img src="img/city-product-1.webp" alt="" />
+                                            </button>
+                                            <button class="product_review_imgbtn">
+                                                <img src="img/city-product-5.webp" alt="" />
+                                            </button>
+                                            <button class="product_review_imgbtn">
+                                                <img src="img/city-product-1.webp" alt="" />
+                                            </button>
+                                            <button class="product_review_imgbtn">
+                                                <img src="img/city-product-4.webp" alt="" />
+                                            </button>
+                                            <button class="product_review_imgbtn">
+                                                <img src="img/city-product-3.webp" alt="" />
+                                            </button>
+                                        </div> --}}
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                         <div class="product_review">

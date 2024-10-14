@@ -21,9 +21,10 @@ class ProductController extends Controller
 
     public function detail($slug)
     {
+        $user_id = Auth::user()->id;
         $detail = $this->productModel->whereSlug($slug)->firstOrFail();
         $productRelated = $this->productModel->productRelated($detail);
-        $productReview = $this->commentModel->productReview($detail);
+        $productReview = $this->commentModel->productReview($detail, $user_id);
 
         return view('detail', compact('detail', 'productRelated', 'productReview'));
     }
