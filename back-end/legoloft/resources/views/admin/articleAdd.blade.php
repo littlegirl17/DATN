@@ -7,7 +7,8 @@
              Thêm bài viết
          </h3>
 
-         <form action="/admin/add-post" method="post" class="formAdmin" enctype="multipart/form-data">
+         <form action="{{route('articleAdd')}}" method="post" class="formAdmin" enctype="multipart/form-data">
+            @csrf
              <div class="buttonProductForm">
                  <div class="">
                      @if (session('error'))
@@ -33,18 +34,23 @@
                  <input type="text" class="form-control" name="title" placeholder="Nhập danh mục bài viết">
              </div>
              <div class="form-group mt-3">
-                 <label for="title" class="form-label">Danh mục</label>
-                 <select name="category_id" id="" class="form-select mt-3">
-                     <option value=""></option>
-                 </select>
-             </div>
-             <div class="form-group mt-3">
+                <label for="category_id" class="form-label">Danh mục</label>
+                <select name="category_id" id="category_id" class="form-select mt-3">
+                    <option value="">Chọn danh mục</option>
+                    @foreach ($categoryArticle as $category)
+                    <option value="{{ $category->id }}">{{ $category->title }}</option> <!-- Đảm bảo hiển thị title -->
+                    @endforeach
+                </select>
+            </div>
+            {{-- vậy là trung tên đó hả: nó trùng chỗ này nè --}}
+                      
+             <div class="form-group mt-3 ">
                  <label for="title" class="form-label">Mô tả ngắn</label>
-                 <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
+                 <textarea class="form-control ckeditor" name="description" id="" cols="30" rows="10"></textarea>
              </div>
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Mô tả</label>
-                 <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>
+                 <textarea class="form-control ckeditor" name="description" id="" cols="30" rows="15"></textarea>
              </div>
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Trạng thái</label>

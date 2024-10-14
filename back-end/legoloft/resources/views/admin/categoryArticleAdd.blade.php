@@ -9,7 +9,8 @@
          </h3>
 
 
-         <form action="/admin/add-category" method="post" class="formAdmin" enctype="multipart/form-data">
+         <form action="{{ route('categoryArticleAdd') }}" method="post" class="formAdmin" enctype="multipart/form-data">
+            @csrf
              <div class="buttonProductForm">
                  <div class="">
                      @if (session('error'))
@@ -17,15 +18,14 @@
                      @endif
                  </div>
                  <div class="">
-                     <button type="submit" class="btnFormAdd">
-                         <p class="text m-0 p-0">Lưu</p>
-                     </button>
+                    <button type="submit" class="btnFormAdd" id="submit-button">
+                        <p class="text m-0 p-0">Lưu</p>
+                    </button>
                  </div>
              </div>
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Tiêu đề bài viết </label>
-                 <input type="text" class="form-control" name="name" aria-describedby="title"
-                     placeholder="Nhập danh mục bài viết">
+                 <input type="text" class="form-control" name="title" placeholder="Nhập tiêu đề danh mục" required>
              </div>
              <div class="form-group mt-3">
                  <label for="exampleInputFile" class="form-label">Ảnh danh mục</label>
@@ -34,26 +34,26 @@
                      <div id="preview"></div>
                  </div>
              </div>
-
+             
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Mô tả ngắn</label>
-                 <textarea class="form-control" id="editor1" name="description" rows="10"></textarea>
+                 <textarea class="form-control ckeditor" id="editor1" name="description_short" rows="10" col="80"></textarea>
              </div>
 
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Mô tả </label>
-                 <textarea class="form-control" id="editor1" name="description" rows="15"></textarea>
+                 <textarea class="form-control ckeditor" id="editor1" name="description" rows="10" col="80"></textarea>
              </div>
 
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Trạng thái</label>
-                 <select class="form-select" aria-label="Default select example" name="status">
-                     <option selected>Trang thái</option>
+                 <select class="form-select" aria-label="Default select example" name="status" required>
+                     <option value="" disabled selected> Chon Trang thái</option>
                      <option value="1">Kích hoạt</option>
                      <option value="0">Vô hiệu hóa</option>
                  </select>
              </div>
          </form>
      </div>
-
+     
  @endsection

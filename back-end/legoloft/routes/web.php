@@ -152,14 +152,20 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:categoryArticle'])->group(function () {
         Route::get('categoryArticle', [CategoryArticleAdminController::class, 'categoryArticle'])->name('categoryArticle');
-        Route::get('categoryArticleEdit', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::get('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::put('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
         Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
+        Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
+        Route::delete('categoryArticleDel/{id}/delete', [CategoryArticleAdminController::class, 'categoryArticleDel'])->name('categoryArticleDel');
     });
 
     Route::middleware(['admin:article'])->group(function () {
         Route::get('article', [ArticleAdminController::class, 'article'])->name('article');
         Route::get('articleAdd', [ArticleAdminController::class, 'articleAdd'])->name('articleAdd');
-        Route::get('articleEdit', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
+        Route::post('articleAdd', [ArticleAdminController::class, 'articleAdd'])->name('articleAdd');
+        Route::get('articleEdit/{id}', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
+        Route::put('articleEdit/{id}', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
+        Route::delete('articleDel/{id}/delete', [ArticleAdminController::class, 'articleDel'])->name('articleDel');
     });
 
     Route::middleware(['admin:user'])->group(function () {
