@@ -4,17 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\admin\ProductAdminController;
-use App\Http\Controllers\Admin\AdminstrationController;
-use App\Http\Controllers\admin\ArticleAdminController;
-use App\Http\Controllers\admin\CategoryArticleAdminController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CouponController;
 use App\Http\Controllers\MyAccountController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\admin\OrderAdminController;
+use App\Http\Controllers\admin\ArticleAdminController;
+use App\Http\Controllers\admin\CommentAdminController;
+use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\CategoryArticleAdminController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
@@ -162,6 +164,14 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:userGroup'])->group(function () {
         Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
+    });
+
+    Route::middleware(['admin:comment'])->group(function () {
+        Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
+    });
+
+    Route::middleware(['admin:order'])->group(function () {
+        Route::get('order', [OrderAdminController::class, 'order'])->name('comment');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');
