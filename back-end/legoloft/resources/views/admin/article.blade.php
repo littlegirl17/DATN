@@ -6,7 +6,7 @@
          <div id="alert-message" class="alertDanger">
          </div>
          <div class="searchAdmin">
-             <form id="filterFormCategory" action="" method="GET">
+             <form id="filterFormCategory"  method="GET">
                  <div class="row d-flex flex-row justify-content-between align-items-center">
                      <div class="col-sm-6">
                          <div class="form-group mt-3">
@@ -35,17 +35,18 @@
                  </div>
              </form>
          </div>
-         <form id="submitFormAdmin">
+         <form id="submitFormAdmin" >
              <div class="buttonProductForm mt-3">
                  <div class=""></div>
                  <div class="">
                      <button class="btn btnF1">
-                         <a href="" class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-plus"
+                         <a href="{{ route('articleAdd') }}" class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-plus"
                                  style="color: #ffffff;"></i>Tạo bài viết</a>
                      </button>
                      <button class="btn btnF2" type="button" onclick="">
                          <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa bài viết
                      </button>
+                     
                  </div>
 
              </div>
@@ -65,32 +66,43 @@
                          </tr>
                      </thead>
                      <tbody class="table-body">
-                         <tr class="">
-                             <td>
-                                 <input type="checkbox" name="category_id[]" id="" value="">
-                             </td>
-                             <td class=""></td>
-                             <td class="nameAdmin">
-                                 <p></p>
-                             </td>
-                             <td class=""></td>
-                             <td class="">
-                                 <div class="form-check form-switch">
-                                     <input class="form-check-input" type="checkbox" role="switch" data-id=""
-                                         id="flexSwitchCheckChecked" style="font-size:20px; ">
-                                     <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                 </div>
-                             </td>
-                             <td class="">
-                                 <div class="actionAdminProduct m-0 py-3">
-                                     <button class="btnActionProductAdmin2"><a href=""
-                                             class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
-                                                 style="color: #ffffff;"></i>Sửa lại
-                                             bài viết</a></button>
-                                 </div>
-                             </td>
-                         </tr>
+                        @foreach ($atc as $item)
+                        <tr class="">
+                            <td>
+                                <input type="checkbox" name="category_id[]" id="" value="">
+                            </td>
+                            <td class="">{{$item->categoryArticle->title}}</td>
+                            <td class="nameAdmin">
+                                <p>{{$item->title}}</p>
+                            </td>
+                            <td class="">{{$item->created_at}}</td>
+                            <td class="">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" data-id=""
+                                        id="flexSwitchCheckChecked" style="font-size:20px; ">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                </div>
+                            </td>
+                            <td class="">
+                                <div class="actionAdminProduct m-0 py-3">
+                                    <button class="btnActionProductAdmin2"><a href="{{route('articleEdit', $item->id)}}"
+                                            class="text-decoration-none text-light"><i class="pe-2 fa-solid fa-pen"
+                                                style="color: #ffffff;"></i>Sửa lại
+                                            bài viết</a></button>
+                                </div>
+                                <form action="{{ route('articleDel', ['id' => $item->id]) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">
+                                        <i class="fa-solid fa-trash"></i> Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        
                      </tbody>
+
                  </table>
              </div>
          </form>

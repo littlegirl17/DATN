@@ -17,4 +17,12 @@ class Article extends Model
         'description',
         'status'
     ];
+   
+    public function category() {
+        return $this->belongsTo(CategoryArticle::class, 'categoryArticle_id');
+    }
+    public function categoryArticle()
+{
+    return $this->belongsTo(CategoryArticle::class, 'categoryArticle_id');
+}
 }

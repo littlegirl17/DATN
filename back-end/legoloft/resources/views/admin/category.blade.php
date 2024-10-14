@@ -38,7 +38,7 @@
 <form id="submitFormAdmin">
     <div class="buttonProductForm mt-3">
         <button class="btn btnF1">
-            <a href="" class="text-decoration-none text-light"><i
+            <a href="{{route('categoryArticleAdd')}}" class="text-decoration-none text-light"><i
                     class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo danh mục</a>
         </button>
         <button class="btn btnF2" type="button"

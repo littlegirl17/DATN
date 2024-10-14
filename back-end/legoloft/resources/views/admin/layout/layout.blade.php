@@ -21,11 +21,10 @@
         @yield('content')
         @include('admin.layout.footer')
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
-
     <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -38,9 +37,12 @@
     <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/api63Tinh.js') }}"></script>
+    {{-- <script src="{{ asset('js/ckeditor.js') }}"></script> --}}
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+
     <script>
         function submitForm(action, method) {
             var form = document.getElementById('submitFormAdmin');
@@ -49,10 +51,13 @@
             form.submit();
         }
     </script>
+    
+    
     @yield('administrationScript')
     @yield('productAdminScript')
     @yield('productEditAdminScript')
-
+   
+</script>
 </body>
 
 </html>

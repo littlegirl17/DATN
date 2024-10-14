@@ -16,4 +16,11 @@ class CategoryArticle extends Model
         'description',
         'status'
     ];
+    public function articles() {
+        return $this->hasMany(Article::class, 'categoryArticle_id');
+    }
+    public function categoryArticle()
+{
+    return $this->belongsTo(CategoryArticle::class, 'categoryArticle_id');
+}
 }
