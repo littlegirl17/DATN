@@ -52,6 +52,8 @@ class ProductController extends Controller
         ]);
     }
 
+    public function viewFavourite() {}
+
     public function favourite(Request $request)
     {
         $request->validate([
@@ -59,23 +61,47 @@ class ProductController extends Controller
             'status' => 'required',
         ]);
 
-        $favouriteFist = $this->favouriteModel->favouriteFist(Auth::user()->id, $request->product_id);
-        if (!$favouriteFist) {
-            $favourite = new Favourite();
-            $favourite->user_id =  Auth::user()->id;
-            $favourite->product_id = $request->product_id;
-            $favourite->status = 1;
-            $favourite->save();
+        $user = Auth::check() ? Auth::user()->id : 0;
+        if ($user > 0) {
+            $favouriteFist = $this->favouriteModel->favouriteFist(Auth::user()->id, $request->product_id);
+            if (!$favouriteFist) {
+                $favourite = new Favourite();
+                $favourite->user_id = $user;
+                $favourite->product_id = $request->product_id;
+                $favourite->status = 1;
+                $favourite->save();
 
-            return response()->json([
-                'message' => 'Yêu thích thành công mỹ mãn',
-                'is_favourite' => true
-            ]);
-        }
-        // Nếu trạng thái là 0, xóa yêu thích
-        if ($favouriteFist) {
-            $favouriteFist->delete();
-            return response()->json(['message' => 'Đã xóa yêu thích!', 'is_favourite' => false]);
+                return response()->json([
+                    'message' => 'Yêu thích thành công mỹ mãn',
+                    'is_favourite' => true
+                ]);
+            }
+            // Nếu trạng thái là 0, xóa yêu thích
+            if ($favouriteFist) {
+                $favouriteFist->delete();
+                return response()->json(['message' => 'Đã xóa yêu thích!', 'is_favourite' => false]);
+            }
+        } else {
+            $favourite = json_decode(request()->cookie('favourite'), true) ?? [];
+            $product_id = $request->product_id;
+
+            if (isset($favourite[$product_id])) {
+                unset($favourite[$product_id]); // Xóa yêu thích
+                return response()->json([
+                    'message' => 'Đã xóa yêu thích!',
+                    'is_favourite' => false
+                ])->withCookie(cookie()->forever('favourite', json_encode($favourite)));
+            } else {
+                $favourite[$product_id] = [
+                    'user_id' => $user,
+                    'product_id' => $product_id,
+                    'status' => 1,
+                ];
+                return response()->json([
+                    'message' => 'Yêu thích thành công mỹ mãn',
+                    'is_favourite' => true
+                ])->withCookie(cookie()->forever('favourite', json_encode($favourite)));
+            }
         }
     }
 }

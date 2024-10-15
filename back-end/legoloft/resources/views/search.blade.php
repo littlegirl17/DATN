@@ -23,7 +23,16 @@
 
                         $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                         $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
-                        $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                        if (Auth::check()) {
+                            $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                        } else {
+                            $favourite = json_decode(Cookie::get('favourite', '[]'), true);
+                            // Lấy danh sách tất cả các product_id từ mảng $favourite
+                            $productIds = array_column($favourite, 'product_id'); //Lấy tất cả các product_id từ các mảng con trong $favourite và tạo ra một mảng chỉ chứa các product_id.
+
+                            // Kiểm tra xem $item->id có nằm trong danh sách product_id không
+                            $isFavourite = is_array($productIds) && in_array((string) $item->id, $productIds); //Kiểm tra xem product_id của $item->id có nằm trong danh sách sản phẩm yêu thích hay không. Chúng ta ép kiểu item->id thành chuỗi để so sánh chính xác với product_id trong mảng (vì product_id trong cookie là chuỗi).
+                        }
                     @endphp
 
                     <div class="col-md-3 col-sm-4 col-12">

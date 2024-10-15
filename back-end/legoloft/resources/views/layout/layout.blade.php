@@ -159,6 +159,7 @@
         }
 
         function addFavourite(id) {
+            var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
             $.ajax({
                 url: '{{ route('favourite') }}',
                 type: 'POST',
