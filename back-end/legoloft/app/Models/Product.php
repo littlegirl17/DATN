@@ -31,6 +31,11 @@ class Product extends Model
         return $this->hasMany(ProductDiscount::class, 'product_id');
     }
 
+    public function favourite()
+    {
+        return $this->hasMany(Favourite::class, 'product_id');
+    }
+
     public function orderProduct()
     {
         return $this->hasMany(OrderProduct::class, 'product_id');
@@ -97,5 +102,10 @@ class Product extends Model
     public function productRelated($detail)
     {
         return $this->where('category_id', $detail->category_id)->inRandomOrder()->get();
+    }
+
+    public function searchProductHome($name)
+    {
+        return $this->where('name', 'LIKE', "%{$name}%")->where('status', 1)->orderBy('id', 'desc')->paginate(12);
     }
 }

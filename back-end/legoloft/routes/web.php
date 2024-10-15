@@ -20,6 +20,7 @@ use App\Http\Controllers\admin\CategoryAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\ProductController;
 
+Route::get('search', [HomeController::class, 'search'])->name('search');
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
     return view('contact');
@@ -105,6 +106,8 @@ Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
 
 Route::get('detail/{slug}', [ProductController::class, 'detail'])->name('detail');
 Route::post('commentReview', [ProductController::class, 'commentReview'])->name('commentReview');
+Route::get('viewFavourite', [ProductController::class, 'viewFavourite'])->name('viewFavourite');
+Route::post('favourite', [ProductController::class, 'favourite'])->name('favourite');
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {

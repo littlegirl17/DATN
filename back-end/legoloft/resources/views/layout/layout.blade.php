@@ -157,6 +157,41 @@
                 }
             })
         }
+
+        function addFavourite(id) {
+            $.ajax({
+                url: '{{ route('favourite') }}',
+                type: 'POST',
+                data: {
+                    product_id: id,
+                    status: 1,
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    // alert(response.message);
+                    const favouriteIcon = document.getElementById('favourite-' + id);
+                    if (response.is_favourite) {
+                        favouriteIcon.classList.add('red');
+                        Swal.fire({
+                            imageUrl: "{{ asset('img/tim.jpg') }}",
+                            imageHeight: 150,
+                            imageWidth: 150,
+                            imageAlt: "A tall image",
+                            showConfirmButton: false, // Ẩn nút OK
+                            timer: 1000, // Tự động tắt sau 2 giây
+                            width: '300px',
+                        });
+                    } else {
+                        favouriteIcon.classList.remove('red');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText); // Ghi lại phản hồi lỗi
+
+                    alert('Có lỗi xảy ra! Vui lòng thử lại sau');
+                }
+            })
+        }
         // không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
         // server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
     </script>
@@ -341,6 +376,13 @@
             $(this).addClass('active');
             $('.stars .stars_span').addClass('active');
             // alert($(this).text());
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.fa-heart').forEach(function(heart) {
+            heart.addEventListener('click', function() {
+                this.classList.toggle('red');
+            })
         });
     </script>
 </body>

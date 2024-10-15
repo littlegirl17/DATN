@@ -80,6 +80,7 @@
         </section>
         <!-- END LỰA CHỌN -->
 
+
         <!-- START PRODUCT NỔI BẬT -->
         <section class="product">
             <div class="container">
@@ -103,6 +104,7 @@
 
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                         @endphp
 
                         <div class="item">
@@ -113,7 +115,11 @@
                                         <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
                                     @endif
                                     <div class="product_box_icon">
-                                        <i class="fa-regular fa-heart"></i>
+                                        <button onclick="addFavourite('{{ $item->id }}')" class="outline-0 border-0"
+                                            style="background-color: transparent">
+                                            <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
+                                                id="favourite-{{ $item->id }}"></i>
+                                        </button>
                                         <button type="button" class="outline-0 border-0 "
                                             style="background-color: transparent"
                                             onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
@@ -163,13 +169,18 @@
                         @php
                             $percent = ceil((($item->products->price - $item->price) / $item->products->price) * 100);
                             $productImageCollect = $item->products->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = $item->products->favourite->contains('product_id', $item->product_id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                         @endphp
                         <div class="item">
                             <div class="product_box">
                                 <div class="product_box_effect">
                                     <div class="product_box_tag_sale">{{ $percent }}%</div>
                                     <div class="product_box_icon">
-                                        <i class="fa-regular fa-heart"></i>
+                                        <button onclick="addFavourite('{{ $item->product_id }}')"
+                                            class="outline-0 border-0" style="background-color: transparent">
+                                            <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
+                                                id="favourite-{{ $item->product_id }}"></i>
+                                        </button>
                                         <button class="outline-0 border-0 " style="background-color: transparent"
                                             onclick="showModalProduct(event,'{{ $item->product_id }}','{{ $item->products->image }}','{{ $item->products->name }}','{{ $item->products->price }}','{{ $item->price }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
@@ -186,8 +197,10 @@
                                     </div>
                                     <div class="product_box_content_out">
                                         <div class="product_box_content">
-                                            <h3> <a href="">{{ $item->products->name }}</a>
+                                            <h3> <a
+                                                    href="{{ route('detail', $item->products->slug) }}">{{ $item->products->name }}</a>
                                             </h3>
+
                                         </div>
                                         @if (Auth::check())
                                             <div class="product_box_price">
@@ -266,6 +279,10 @@
                                                     (($product->price - $priceDiscount) / $product->price) * 100,
                                                 );
                                                 $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                                                $isFavourite = $product->favourite->contains(
+                                                    'product_id',
+                                                    $product->id,
+                                                ); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                                             @endphp
 
                                             <div class="item">
@@ -276,8 +293,12 @@
                                                                 {{ $percent }}%</div>
                                                         @endif
                                                         <div class="product_box_icon">
-                                                            <i class="fa-regular fa-heart"></i>
-                                                            <button class="outline-0 border-0 "
+                                                            <button onclick="addFavourite('{{ $product->id }}')"
+                                                                class="outline-0 border-0"
+                                                                style="background-color: transparent">
+                                                                <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
+                                                                    id="favourite-{{ $product->id }}"></i>
+                                                            </button> <button class="outline-0 border-0 "
                                                                 style="background-color: transparent"
                                                                 onclick="showModalProduct(event,'{{ $product->id }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                                                 <i class="fa-regular fa-eye"></i>
@@ -297,7 +318,10 @@
                                                         </div>
                                                         <div class="product_box_content_out">
                                                             <div class="product_box_content">
-                                                                <h3><a href="">{{ $product->name }}</a></h3>
+                                                                <h3><a
+                                                                        href="{{ route('detail', $product->slug) }}">{{ $product->name }}</a>
+                                                                </h3>
+
                                                             </div>
                                                             @if ($productDiscountPrice)
                                                                 <div class="product_box_price">
@@ -345,6 +369,7 @@
 
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                         @endphp
                         <div class="item">
                             <div class="product_box">
@@ -354,7 +379,11 @@
                                         <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
                                     @endif
                                     <div class="product_box_icon">
-                                        <i class="fa-regular fa-heart"></i>
+                                        <button onclick="addFavourite('{{ $item->id }}')" class="outline-0 border-0"
+                                            style="background-color: transparent">
+                                            <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
+                                                id="favourite-{{ $item->id }}"></i>
+                                        </button>
                                         <button class="outline-0 border-0" style="background-color: transparent"
                                             onclick="showModalProduct(event,'{{ $item->id }}','{{ $item->image }}','{{ $item->name }}','{{ $item->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
                                             <i class="fa-regular fa-eye"></i>
@@ -370,7 +399,8 @@
                                     </div>
                                     <div class="product_box_content_out">
                                         <div class="product_box_content">
-                                            <h3><a href="">{{ $item->name }}</a></h3>
+                                            <h3><a href="{{ route('detail', $item->slug) }}">{{ $item->name }}</a>
+                                            </h3>
                                         </div>
                                         @if ($productDiscountPrice)
                                             <div class="product_box_price">
@@ -412,7 +442,8 @@
                                         </div>
                                         <div class="product_box_content_out">
                                             <div class="product_box_content">
-                                                <h3><a href="">{{ $item->name }}</a></h3>
+                                                <h3><a href="{{ route('detail', $item->slug) }}">{{ $item->name }}</a>
+                                                </h3>
                                             </div>
                                             <div class="">
                                                 <span
@@ -524,8 +555,6 @@
             </div>
         </section>
         <!-- END BÀI VIẾT -->
-
-
     </div>
 
 

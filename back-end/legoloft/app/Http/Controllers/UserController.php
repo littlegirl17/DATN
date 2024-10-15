@@ -101,6 +101,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->status = 1; // 1 = active, 0 = inactive
+        $user->image = "userDefault.png";
         $user->save();
 
 

@@ -49,4 +49,13 @@ class HomeController extends Controller
         session()->forget('buyNow');
         return view('home', compact('productOutStanding',  'productDiscountSection',  'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut', 'categoryAll', 'categoryChoose'));
     }
+
+    public function search(Request $request)
+    {
+
+        $name = $request->input('name');
+        $searchProduct = $this->productModel->searchProductHome($name);
+
+        return view('search', compact('searchProduct', 'name'));
+    }
 }
