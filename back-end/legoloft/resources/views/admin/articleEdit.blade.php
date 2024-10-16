@@ -50,7 +50,7 @@
             <div class="custom-file">
                 <input type="file" name="image" id="image" class="form-control">
                 @if($Article->image)
-                    <img src="{{ asset('images/articles/' . $Article->image) }}" alt="Hình ảnh hiện tại" style="max-width: 100px; max-height: 100px; margin-top: 10px;">
+                    <img src="{{ asset('img/' . $Article->image) }}" alt="Hình ảnh hiện tại" style="max-width: 100px; max-height: 100px; margin-top: 10px;">
                 @endif
             </div>
         </div>

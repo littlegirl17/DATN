@@ -34,7 +34,7 @@
                     <input type="file" name="image" id="HinhAnh">
                     <div id="preview"></div>
                     @if($categoryArticle->image)
-                        <img src="{{ asset('images/articles/' . $categoryArticle->image) }}" alt="Hình ảnh hiện tại" style="max-width: 100px; max-height: 100px;">
+                        <img src="{{ asset('img/' . $categoryArticle->image) }}" alt="Hình ảnh hiện tại" style="max-width: 100px; max-height: 100px;">
                     @endif
                 </div>
             </div>

@@ -6,36 +6,38 @@
          <div id="alert-message" class="alertDanger">
          </div>
          <div class="searchAdmin">
-             <form id="filterFormCategory" action="" method="GET">
-                 <div class="row d-flex flex-row justify-content-between align-items-center">
-                     <div class="col-sm-6">
-                         <div class="form-group mt-3">
-                             <label for="title" class="form-label">Tiêu đề</label>
-                             <input class="form-control rounded-0" name="filter_name" placeholder="Tên danh mục"
-                                 type="text" value="">
-                         </div>
-                     </div>
-                     <div class="col-sm-6">
-                         <div class="form-group mt-3">
-                             <label for="title" class="form-label">Trạng thái</label>
-                             <select class="form-select  rounded-0" aria-label="Default select example"
-                                 name="filter_status">
-                                 <option value="">Tất cả</option>
-                                 <option value="1">Kích hoạt
-                                 </option>
-                                 <option value="0">Vô hiệu hóa
-                                 </option>
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="d-flex justify-content-end align-items-end">
-                     <button type="submit" class="btn borrder-0 rounded-0 text-light my-3 " style="background: #4099FF"><i
-                             class="fa-solid fa-filter pe-2" style="color: #ffffff;"></i>Lọc danh
-                         mục</button>
-                 </div>
-             </form>
+            <form id="filterFormCategory" action="{{ route('categoryArticle') }}" method="GET">
+                <div class="row d-flex flex-row justify-content-between align-items-center">
+                    <div class="col-sm-6">
+                        <div class="form-group mt-3">
+                            <label for="title" class="form-label">Tiêu đề</label>
+                            <input class="form-control rounded-0" name="filter_name" placeholder="Tên danh mục"
+                                type="text" value="{{ request('filter_name') }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mt-3">
+                            <label for="title" class="form-label">Trạng thái</label>
+                            <select class="form-select rounded-0" aria-label="Default select example" name="filter_status">
+                                <option value="">Tất cả</option>
+                                <option value="1" {{ request('filter_status') == '1' ? 'selected' : '' }}>Kích hoạt</option>
+                                <option value="0" {{ request('filter_status') == '0' ? 'selected' : '' }}>Vô hiệu hóa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end align-items-end">
+                    <button type="submit" class="btn borrder-0 rounded-0 text-light my-3" style="background: #4099FF">
+                        <i class="fa-solid fa-filter pe-2" style="color: #ffffff;"></i>Lọc danh mục
+                    </button>
+                </div>
+            </form>
          </div>
+         @if (session('error'))
+         <div class="alert alert-danger">
+             {{ session('error') }}
+         </div>
+        @endif
          <div id="submitFormAdmin">
             <div class="buttonProductForm mt-3">
                 <div class=""></div>
@@ -43,6 +45,9 @@
                     <a href="{{ route('categoryArticleAdd') }}" class="btn btnF1 text-decoration-none text-light">
                         <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo danh mục
                     </a>
+                    <button class="btn btnF2" type="button" onclick="document.getElementById('deleteForm').submit();">
+                        <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa danh mục đã chọn
+                    </button>
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -62,56 +67,62 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <table class="table table-bordered pt-3">
-                    <thead class="table-header">
-                        <tr>
-                            <th class="py-2"></th>
-                            <th class="py-2">Hình ảnh</th>
-                            <th class="py-2">Tiêu đề</th>
-                            <th class="py-2">Trạng thái</th>
-                            <th class="py-2">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        @foreach ($CA as $item)
+                <form id="deleteForm" action="{{ route('categoryArticleBulkDelete') }}" method="POST" style="display:inline;">
+                    @csrf
+                    <table class="table table-bordered pt-3">
+                        <thead class="table-header">
                             <tr>
-                                <td>
-                                    <input type="checkbox" name="category_id[]" value="{{ $item->id }}">
-                                </td>
-                                <td>
-                                    <img src="{{ asset('images/articles/' . $item->image) }}" alt="" style="width: 80px; height: 80px; object-fit: cover;">
-                                </td>
-                                <td>{{ $item->title }}</td>
-                                <td>
-                                    @if($item->status == 1)
-                                        Kích hoạt
-                                    @else
-                                        Vô hiệu hóa
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="actionAdminProduct m-0 py-3">
-                                        <a href="{{ route('categoryArticleEdit', $item->id) }}" class="btn btnActionProductAdmin2 text-decoration-none text-light">
-                                            <i class="pe-2 fa-solid fa-pen"></i>Sửa lại danh mục
-                                        </a>
-                                        <!-- Form xóa danh mục -->
-                                        <form action="{{ route('categoryArticleDel', ['id' => $item->id]) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">
-                                                <i class="fa-solid fa-trash"></i> Xóa
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
+                                <th class="py-2"></th>
+                                <th class="py-2">Hình ảnh</th>
+                                <th class="py-2">Tiêu đề</th>
+                                <th class="py-2">Trạng thái</th>
+                                <th class="py-2">Hành động</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="table-body">
+                            @foreach ($CA as $item)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="category_ids[]" value="{{ $item->id }}">
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset('img/' . $item->image) }}" alt="" style="width: 80px; height: 80px; object-fit: cover;">
+                                    </td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>
+                                        @if($item->status == 1)
+                                            Kích hoạt
+                                        @else
+                                            Vô hiệu hóa
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="actionAdminProduct m-0 py-3">
+                                            <a href="{{ route('categoryArticleEdit', $item->id) }}" class="btn btnActionProductAdmin2 text-decoration-none text-light">
+                                                <i class="pe-2 fa-solid fa-pen"></i>Sửa lại danh mục
+                                            </a>
+                                            <!-- Form xóa danh mục -->
+                                            {{-- <form action="{{ route('categoryArticleDel', ['id' => $item->id]) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">
+                                                    <i class="fa-solid fa-trash"></i> Xóa
+                                                </button>
+                                            </form> --}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
         
-        
+                </table>
+            </div>
+        </div>
+           
          <nav class="navPhanTrang">
              <ul class="pagination">
                  <li></li>

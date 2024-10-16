@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoryArticle;
+use App\Models\Article;
 use Illuminate\Http\Request;
+use Schema;
 // use App\Models\CategoryArticle;
 class CategoryArticleAdminController extends Controller
 {
@@ -15,15 +17,28 @@ class CategoryArticleAdminController extends Controller
         $this->categoryArticleModel = new CategoryArticle();
     }
 
-    public function categoryArticle()
+    public function categoryArticle(Request $request)
     {
-        $CA = CategoryArticle::orderBy('id', 'desc')->get();
-        // dd($CA);
-        return view('admin.categoryArticle',compact('CA'));
+        $query = CategoryArticle::query(); // Khởi tạo query
+
+        // Lọc theo tên
+        if ($request->has('filter_name') && $request->filter_name !== '') {
+            $query->where('title', 'like', '%' . $request->filter_name . '%');
+        }
+    
+        // Lọc theo trạng thái
+        if ($request->has('filter_status') && $request->filter_status !== '') {
+            $query->where('status', $request->filter_status);
+        }
+    
+        // Lấy danh sách danh mục
+        $CA = $query->orderBy('id', 'desc')->get();
+    
+        return view('admin.categoryArticle', compact('CA'));
     }
 // dữ liệu show thử ra đâu thấy có danh mục, là mình xử lí model với control đang sai, nên view nó ko show ra đc
     public function categoryArticleAdd(Request $request)
-{
+    {
     if ($request->isMethod('post')) {
         // Xác thực dữ liệu
         $request->validate([
@@ -44,12 +59,12 @@ class CategoryArticleAdminController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/articles'), $filename);
+            $file->move(public_path('img'), $filename);
             $categoryArticle->image = $filename;
         }
 
         $categoryArticle->save();
-
+        return redirect()->route('categoryArticle');
     }
 
     // Hiển thị form khi là GET request
@@ -73,7 +88,7 @@ class CategoryArticleAdminController extends Controller
     if ($request->hasFile('image')) {
         // Xóa hình ảnh cũ nếu tồn tại
         if ($categoryArticle->image) {
-            $oldImagePath = public_path('images/articles/' . $categoryArticle->image);
+            $oldImagePath = public_path('img' . $categoryArticle->image);
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath); // Xóa hình ảnh cũ
             }
@@ -82,7 +97,7 @@ class CategoryArticleAdminController extends Controller
         // Lưu hình ảnh mới
         $file = $request->file('image');
         $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images/articles'), $filename);
+        $file->move(public_path('img'), $filename);
         $categoryArticle->image = $filename; // Cập nhật tên file
     }
 
@@ -90,27 +105,29 @@ class CategoryArticleAdminController extends Controller
         return view('admin.categoryArticleEdit',compact('categoryArticle'));
     }
 
-    public function categoryArticleDel(Request $request, $id) {
-        // Tìm danh mục theo ID
-        $categoryArticle = CategoryArticle::findOrFail($id);
     
-        // Xóa file hình ảnh nếu tồn tại
-        if ($categoryArticle->image) {
-            $imagePath = public_path('images/' . $categoryArticle->image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath); // Xóa file
+
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'category_ids' => 'required|array',
+        ]);
+    
+        // Kiểm tra từng danh mục trong mảng category_ids
+        foreach ($request->category_ids as $id) {
+            $articleCount = Article::where('categoryArticle_id', $id)->count();
+            if ($articleCount > 0) {
+                return redirect()->route('categoryArticle')->with('error', 'Không thể xóa danh mục có ID ' . $id . ' vì còn bài viết liên quan.');
             }
         }
     
-        // Xóa danh mục
-        $categoryArticle->delete();
+        // Nếu không có bài viết liên quan, tiến hành xóa
+        CategoryArticle::destroy($request->category_ids);
     
-        // Lấy lại danh sách danh mục
-        $CA = CategoryArticle::orderBy('id', 'desc')->get();
-    
-        // Trả về view cùng với danh sách mới
         return redirect()->route('categoryArticle')->with('success', 'Danh mục đã được xóa thành công!');
     }
+    
+    
     
     
     
