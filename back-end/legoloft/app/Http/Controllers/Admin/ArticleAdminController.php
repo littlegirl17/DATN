@@ -15,9 +15,20 @@ class ArticleAdminController extends Controller
         $this->articleModel = new Article();
     }
 
-    public function article()
+    public function article(Request $request)
     {
-        $atc = Article::orderBy('id','desc')->get();
+        $query = Article::query(); // Bắt đầu một query mới
+
+        // Lọc theo tiêu đề
+        if ($request->filled('filter_name')) {
+            $query->where('title', 'like', '%' . $request->filter_name . '%');
+        }
+    
+        // Lọc theo trạng thái
+        if ($request->filled('filter_status')) {
+            $query->where('status', $request->filter_status);
+        }
+        $atc = $query->orderBy('id', 'desc')->get();
         // dd($article);
         return view('admin.article',compact('atc'));
     }
@@ -46,7 +57,7 @@ class ArticleAdminController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/articles'), $filename);
+            $file->move(public_path('img'), $filename);
             $Article->image = $filename;
         }
 
@@ -80,7 +91,7 @@ public function articleEdit(Request $request, $id)
     if ($request->hasFile('image')) {
         // Xóa hình ảnh cũ nếu tồn tại
         if ($Article->image) {
-            $oldImagePath = public_path('images/articles/' . $Article->image);
+            $oldImagePath = public_path('img' . $Article->image);
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath); // Xóa hình ảnh cũ
             }
@@ -89,36 +100,30 @@ public function articleEdit(Request $request, $id)
         // Lưu hình ảnh mới
         $file = $request->file('image');
         $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images/articles'), $filename);
+        $file->move(public_path('img'), $filename);
         $data['image'] = $filename; // Cập nhật tên file
     }
 
     $Article->update($data); // Cập nhật bài viết
     $categoryArticle = CategoryArticle::all(); // Lấy tất cả danh mục
 
-    return view('admin.articleEdit',compact('Article','categoryArticle'))->with('success', 'Article updated successfully.'); // Redirect về danh sách bài viết
+    return view('admin.articleEdit')->with(compact('Article','categoryArticle')); // Redirect về danh sách bài viết
 }
 
-public function articleDel($id)  {
-    $Article = Article::findOrFail($id);
-    
-        // Xóa file hình ảnh nếu tồn tại
-        if ($Article->image) {
-            $imagePath = public_path('images/' . $Article->image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath); // Xóa file
-            }
-        }
-    
-        // Xóa danh mục
-        $Article->delete();
-    
-        // Lấy lại danh sách danh mục
-        $CA = Article::orderBy('id', 'desc')->get();
-    
-        // Trả về view cùng với danh sách mới
-        return redirect()->route('article')->with('success', 'Danh mục đã được xóa thành công!');
+public function articleBulkDelete(Request $request) {
+    // Xác thực dữ liệu
+    $request->validate([
+        'article_ids' => 'required|array',
+        'article_ids.*' => 'exists:articles,id',
+    ]);
+
+    // Xóa các bài viết theo ID
+    Article::destroy($request->article_ids);
+
+    // Chuyển hướng về danh sách bài viết với thông báo thành công
+    return redirect()->route('article')->with('success', 'Đã xóa bài viết thành công!');
 }
+
 
 
     public function articleUpdate() {}
