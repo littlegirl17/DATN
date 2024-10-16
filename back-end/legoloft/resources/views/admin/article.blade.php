@@ -76,10 +76,14 @@
                                 </td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="statusSwitch{{ $item->id }}" onchange="this.form.submit()" {{ $item->status ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="statusSwitch{{ $item->id }}"></label>
-                                    </div>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" data-id="{{ $item->id }}" id="switch-{{ $item->id }}"
+                                                   {{ $item->status == 1 ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="switch-{{ $item->id }}">{{ $item->status == 1 ? 'Bật' : 'Tắt' }}</label>
+                                        </div>
+                                    </td>
+                                    
                                 </td>
                                 <td>
                                     <div class="actionAdminProduct m-0 py-3">
@@ -108,3 +112,38 @@
 
 
  @endsection
+ @section('productAdminScript')
+
+ <script>
+    $(document).ready(function() {
+        $('.form-check-input').on('click', function() {
+            var article_id = $(this).data('id'); // Lấy ID bài viết
+            var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
+            var label = $(this).siblings('label'); // Lấy label liền kề
+            updateStatusArticle(article_id, status, label);
+        });
+    });
+
+    function updateStatusArticle(article_id, status, label) {
+        $.ajax({
+            url: '{{ route('updateStatusArticle', ':id') }}'.replace(':id', article_id),
+            type: 'PUT',
+            data: {
+                '_token': '{{ csrf_token() }}', // CSRF token
+                'status': status
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Cập nhật trạng thái
+                    label.text(status == 1 ? 'Bật' : 'Tắt');
+                }
+            },
+            error: function(error) {
+                console.error('Lỗi khi cập nhật trạng thái bài viết: ', error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    }
+</script>
+
+@endsection

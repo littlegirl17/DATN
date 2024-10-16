@@ -19,7 +19,7 @@
                         <div class="form-group mt-3">
                             <label for="title" class="form-label">Trạng thái</label>
                             <select class="form-select rounded-0" aria-label="Default select example" name="filter_status">
-                                <option value="">Tất cả</option>
+                                <option value="" >Tất cả</option>
                                 <option value="1" {{ request('filter_status') == '1' ? 'selected' : '' }}>Kích hoạt</option>
                                 <option value="0" {{ request('filter_status') == '0' ? 'selected' : '' }}>Vô hiệu hóa</option>
                             </select>
@@ -32,6 +32,7 @@
                     </button>
                 </div>
             </form>
+            
          </div>
          @if (session('error'))
          <div class="alert alert-danger">
@@ -90,11 +91,13 @@
                                     </td>
                                     <td>{{ $item->title }}</td>
                                     <td>
-                                        @if($item->status == 1)
-                                            Kích hoạt
-                                        @else
-                                            Vô hiệu hóa
-                                        @endif
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" data-id="{{ $item->id }}" id="switch-{{ $item->id }}"
+                                                       {{ $item->status == 1 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="switch-{{ $item->id }}">{{ $item->status == 1 ? 'Bật' : 'Tắt' }}</label>
+                                            </div>
+                                        </td>
                                     </td>
                                     <td>
                                         <div class="actionAdminProduct m-0 py-3">
@@ -132,62 +135,56 @@
      
  @endsection
  
- {{-- @section('scriptCategory')
-                            <script>
-                                $(document).ready(function() {
+ @section('productAdminScript')
+ <script>
+    $(document).ready(function() {
+        $('.form-check-input').on('click', function() {
+            var category_id = $(this).data('id'); // Lấy ID danh mục
+            var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
+            var label = $(this).siblings('label'); // Lấy label liền kề
+            updateStatusCategoryArticle(category_id, status, label);
+        });
+    });
 
-                                    $('.form-check-input').on('click', function() {
-                                        var category_id = $(this).data('id'); //lấy cái value của id danh mục
-                                        var status = $(this).is(':checked') ? 1 : 0;
-                                        var label = $(this).siblings('label');
-                                        updateCategoryStatus(category_id, status, label);
-                                    });
-                                })
+    function updateStatusCategoryArticle(category_id, status, label) {
+        $.ajax({
+            url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
+            type: 'PUT',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'status': status
+            },
+            success: function(response) {
+                console.log('Cập nhật trạng thái danh mục thành công');
+                label.text(status == 1 ? 'Bật' : 'Tắt'); // Cập nhật label
+            },
+            error: function(xhr, status, error) {
+                console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    }
+</script>
 
-                                function updateCategoryStatus(category_id, status, label) {
-                                    $.ajax({
-                                        url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
-                                        type: 'put',
-                                        data: {
-                                            '_token': '{{ csrf_token() }}',
-                                            'status': status
-                                        },
-                                        success: function(response) {
-                                            console.log('Cập nhật trạng thái danh mục thành công');
+{{-- <script>
+    $(document).ready(function() {
+        $('#filterFormCategory').on('submit', function() {
+            var formData = $(this).serialize();
+            //serialize: duyệt qua tất cả các phần tử đầu vào, chọn các phần tử input, select, và textarea trong biểu mẫu (form), và thu thập các giá trị của chúng.
 
-                                            if (status == 1) {
-                                                label.text('Bật');
-                                            } else {
-                                                label.text('Tắt');
-                                            }
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
-                                        }
-
-                                    })
-                                }
-                            </script>
-
-                            <script>
-                                $(document).ready(function() {
-                                    $('#filterFormCategory').on('submit', function() {
-                                        var formData = $(this).serialize();
-                                        //serialize: duyệt qua tất cả các phần tử đầu vào, chọn các phần tử input, select, và textarea trong biểu mẫu (form), và thu thập các giá trị của chúng.
-
-                                        $.ajax({
-                                            url: '{{ route('searchCategory') }}',
-                                            type: 'GET',
-                                            data: formData,
-                                            success: function(response) {
-                                                // Cập nhật bảng danh mục với kết quả lọc
-                                                $('.table-body').html(response.html);
-                                            },
-                                            error: function(error) {
-                                                console.error('Lỗi khi lọc danh mục' + error);
-                                            }
-                                        })
-                                    })
-                                })
-                            </script>
-@endsection --}}
+            $.ajax({
+                url: '{{ route('searchCategory') }}',
+                type: 'GET',
+                data: formData,
+                success: function(response) {
+                    // Cập nhật bảng danh mục với kết quả lọc
+                    $('.table-body').html(response.html);
+                },
+                error: function(error) {
+                    console.error('Lỗi khi lọc danh mục' + error);
+                }
+            })
+        })
+    })
+</script> --}}
+@endsection

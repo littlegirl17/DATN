@@ -124,6 +124,14 @@ public function articleBulkDelete(Request $request) {
     return redirect()->route('article')->with('success', 'Đã xóa bài viết thành công!');
 }
 
+public function updateStatusArticle(Request $request, $id)
+{
+    $article = Article::findOrFail($id);
+    $article->status = $request->status;
+    $article->save();
+
+    return response()->json(['success' => true]);
+}
 
 
     public function articleUpdate() {}

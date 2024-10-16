@@ -18,24 +18,26 @@ class CategoryArticleAdminController extends Controller
     }
 
     public function categoryArticle(Request $request)
-    {
-        $query = CategoryArticle::query(); // Khởi tạo query
+{
+    $query = CategoryArticle::query(); // Khởi tạo query
 
-        // Lọc theo tên
-        if ($request->has('filter_name') && $request->filter_name !== '') {
-            $query->where('title', 'like', '%' . $request->filter_name . '%');
-        }
-    
-        // Lọc theo trạng thái
-        if ($request->has('filter_status') && $request->filter_status !== '') {
-            $query->where('status', $request->filter_status);
-        }
-    
-        // Lấy danh sách danh mục
-        $CA = $query->orderBy('id', 'desc')->get();
-    
-        return view('admin.categoryArticle', compact('CA'));
+    // Lọc theo tên
+    if ($request->filled('filter_name')) {
+        $query->where('title', 'like', '%' . $request->filter_name . '%');
     }
+
+    // Lọc theo trạng thái
+    if ($request->filled('filter_status')) {
+        $query->where('status', $request->filter_status);
+    }
+
+    // Lấy danh sách danh mục
+    $CA = $query->orderBy('id', 'desc')->get();
+
+    return view('admin.categoryArticle', compact('CA'));
+}
+
+    
 // dữ liệu show thử ra đâu thấy có danh mục, là mình xử lí model với control đang sai, nên view nó ko show ra đc
     public function categoryArticleAdd(Request $request)
     {
@@ -70,6 +72,9 @@ class CategoryArticleAdminController extends Controller
     // Hiển thị form khi là GET request
     return view('admin.categoryArticleAdd');
 }
+
+
+
 
 
     public function categoryArticleEdit(Request $request, $id)
@@ -127,7 +132,14 @@ class CategoryArticleAdminController extends Controller
         return redirect()->route('categoryArticle')->with('success', 'Danh mục đã được xóa thành công!');
     }
     
+    public function updateStatus(Request $request, $id) {
+        $category = CategoryArticle::findOrFail($id);
+        $category->status = $request->status;
+        $category->save();
     
+        return response()->json(['success' => true]);
+    }
+
     
     
     
