@@ -156,7 +156,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     Route::middleware(['admin:categoryArticle'])->group(function () {
         Route::get('categoryArticle', [CategoryArticleAdminController::class, 'categoryArticle'])->name('categoryArticle');
         Route::get('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
-        Route::put('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::put('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit']);
         Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('/admin/category/article/bulk-delete', [CategoryArticleAdminController::class, 'bulkDelete'])->name('categoryArticleBulkDelete');

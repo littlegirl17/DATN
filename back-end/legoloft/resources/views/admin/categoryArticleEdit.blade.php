@@ -31,30 +31,32 @@
                  <label for="exampleInputFile" class="form-label">Ảnh danh mục</label>
                  <div class="custom-file">
                      <input type="file" name="image" id="HinhAnh">
-                     <div id="preview"></div>
+
                      @if ($categoryArticle->image)
                          <img src="{{ asset('img/' . $categoryArticle->image) }}" alt="Hình ảnh hiện tại"
                              style="max-width: 100px; max-height: 100px;">
+                     @else
+                         <div id="preview"></div>
                      @endif
                  </div>
              </div>
 
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Mô tả ngắn</label>
-                 <textarea class="form-control ckeditor" id="editor1" name="description_short" rows="10">{{ old('description_short', $categoryArticle->description_short) }}</textarea>
+                 <textarea class="form-control ckeditor" id="" name="description_short" rows="10">{{ old('description_short', $categoryArticle->description_short) }}</textarea>
              </div>
 
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Mô tả</label>
-                 <textarea class="form-control ckeditor" id="editor1" name="description" rows="15">{{ old('description', $categoryArticle->description) }}</textarea>
+                 <textarea class="form-control ckeditor" id="" name="description" rows="15">{{ old('description', $categoryArticle->description) }}</textarea>
              </div>
 
              <div class="form-group mt-3">
                  <label for="status" class="form-label">Trạng thái</label>
                  <select class="form-select" name="status" required>
-                     <option value="1" {{ old('status', $categoryArticle->status) == 1 ? 'selected' : '' }}>Kích hoạt
+                     <option value="1" {{ old('status', $categoryArticle->status) == 1 ? 'selected' : '' }}>Bật
                      </option>
-                     <option value="0" {{ old('status', $categoryArticle->status) == 0 ? 'selected' : '' }}>Vô hiệu hóa
+                     <option value="0" {{ old('status', $categoryArticle->status) == 0 ? 'selected' : '' }}>Tắt
                      </option>
                  </select>
              </div>

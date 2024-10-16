@@ -43,7 +43,8 @@
                                         <div class="row checkout_row_right">
                                             <div class="col-md-3 col-sm-3 col-4">
                                                 <div class="img_checkout_product">
-                                                    <img src="../img/city-product-1.webp" alt="" />
+                                                    <img src="{{ asset('img/' . $orderProduct['product']['image']) }}"
+                                                        alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-9 col-8">

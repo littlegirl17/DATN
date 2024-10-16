@@ -10,7 +10,7 @@
 
 
          <form action="{{ route('categoryArticleAdd') }}" method="post" class="formAdmin" enctype="multipart/form-data">
-            @csrf
+             @csrf
              <div class="buttonProductForm">
                  <div class="">
                      @if (session('error'))
@@ -18,9 +18,9 @@
                      @endif
                  </div>
                  <div class="">
-                    <button type="submit" class="btnFormAdd" id="submit-button">
-                        <p class="text m-0 p-0">Lưu</p>
-                    </button>
+                     <button type="submit" class="btnFormAdd" id="submit-button">
+                         <p class="text m-0 p-0">Lưu</p>
+                     </button>
                  </div>
              </div>
              <div class="form-group mt-3">
@@ -34,7 +34,7 @@
                      <div id="preview"></div>
                  </div>
              </div>
-             
+
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Mô tả ngắn</label>
                  <textarea class="form-control ckeditor" id="editor1" name="description_short" rows="10" col="80"></textarea>
@@ -49,11 +49,11 @@
                  <label for="title" class="form-label">Trạng thái</label>
                  <select class="form-select" aria-label="Default select example" name="status" required>
                      <option value="" disabled selected> Chon Trang thái</option>
-                     <option value="1">Kích hoạt</option>
-                     <option value="0">Vô hiệu hóa</option>
+                     <option value="1">Bật</option>
+                     <option value="0">Tắt</option>
                  </select>
              </div>
          </form>
      </div>
-     
+
  @endsection
