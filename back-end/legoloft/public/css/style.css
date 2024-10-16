@@ -4157,6 +4157,28 @@ input[type=number]::-webkit-outer-spin-button {
 /*-------------------------------END ---------------------------------------*/
 /*------------------------------- START ---------------------------------------*/
 
+.favourite_box_icon {
+    opacity: 1;
+    /* Đặt opacity về 0 khi không hover */
+    transform: translateY(0%);
+    /* Đặt lại vị trí xuống dưới */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.favourite_box_icon {
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    /* Đặt opacity về 1 khi không hover */
+    transform: translateY(50%);
+    /* Đặt vị trí ở trên cùng */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    /* Thêm transition cho transform */
+}
 
 /*-------------------------------END ---------------------------------------*/
 

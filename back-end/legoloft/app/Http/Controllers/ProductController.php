@@ -52,7 +52,10 @@ class ProductController extends Controller
         ]);
     }
 
-    public function viewFavourite() {}
+    public function viewFavourite()
+    {
+        return view('favourite');
+    }
 
     public function favourite(Request $request)
     {
