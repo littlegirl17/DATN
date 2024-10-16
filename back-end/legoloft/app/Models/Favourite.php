@@ -14,8 +14,24 @@ class Favourite extends Model
         'status',
     ];
 
-    public function favouriteFist($user_id,$product_id)
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function favouriteFist($user_id, $product_id)
     {
         return $this->where('user_id', $user_id)->where('product_id', $product_id)->first();
+    }
+
+    public function favouriteGet($user_id)
+    {
+        return $this->where('user_id', $user_id)->orderBy('id', 'desc')->paginate(4);
     }
 }

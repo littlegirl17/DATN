@@ -54,7 +54,17 @@ class ProductController extends Controller
 
     public function viewFavourite()
     {
-        return view('favourite');
+        $user_id = Auth::check() ? Auth::user()->id : 0;
+        $products = $this->productModel;
+
+        if (Auth::check() && $user_id > 0) {
+            $favourite = $this->favouriteModel->favouriteGet($user_id);
+        } else {
+            $favourite = json_decode(request()->cookie('favourite'), true) ?? [];
+        }
+
+
+        return view('favourite', compact('favourite', 'products'));
     }
 
     public function favourite(Request $request)

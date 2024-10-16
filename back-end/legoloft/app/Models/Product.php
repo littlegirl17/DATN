@@ -33,7 +33,7 @@ class Product extends Model
 
     public function favourite()
     {
-        return $this->hasMany(Favourite::class, 'product_id');
+        return $this->hasMany(Favourite::class);
     }
 
     public function orderProduct()
