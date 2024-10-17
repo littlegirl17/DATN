@@ -21,7 +21,8 @@
                                         </div>
                                         <div class="account_purchase_header_right">
                                             <p class="account_purchase_header_right_1">
-                                                <button class="account_purchase_header_right_shipping"><a href=""
+                                                <button class="account_purchase_header_right_shipping"><a
+                                                        href="javascript:void(0);" onclick="noticeShipping();"
                                                         class="">Đang vận chuyển</a></button>
                                             </p>
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
@@ -117,5 +118,22 @@
                 this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm ' : 'Thu lại ';
             });
         });
+    </script>
+    <script>
+        function noticeShipping() {
+            Swal.fire({
+                imageUrl: "{{ asset('img/shipping.png') }}",
+                imageHeight: 200,
+                imageWidth: 200,
+                imageAlt: "A tall image",
+                title: "Đơn hàng đang được vận chuyển",
+                showConfirmButton: false, // Ẩn nút OK
+                timer: 2000, // Tự động tắt sau 2 giây
+                width: '380px',
+                customClass: {
+                    title: 'custom-title' // Thêm lớp tùy chỉnh cho tiêu đề
+                }
+            });
+        }
     </script>
 @endsection

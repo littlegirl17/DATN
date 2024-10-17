@@ -29,7 +29,7 @@ class Order extends Model
     {
         $query = $this->where('user_id', $user_id);
         if (!is_null($status)) {
-            $query = $this->where('status', $status);
+            $query = $query->where('status', $status);
         }
         return $query->get();
     }

@@ -21,7 +21,8 @@
                                         </div>
                                         <div class="account_purchase_header_right">
                                             <p class="account_purchase_header_right_1">
-                                                <button class="account_purchase_header_right_cancel"><a href=""
+                                                <button class="account_purchase_header_right_cancel"><a
+                                                        href="javascript:void(0);" onclick="noticeCancel();"
                                                         class="">Đơn hàng đã bị hủy</a></button>
                                             </p>
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
@@ -47,12 +48,12 @@
                                                 <h5>{{ $orderProduct['name'] }}</h5>
                                                 <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                 <p class="pricecheckout_mobile">
-                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                    <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
                                                 <div class="product_box_price">
-                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                    <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -72,12 +73,12 @@
                                                         <h5>{{ $orderProduct['name'] }}</h5>
                                                         <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                         <p class="pricecheckout_mobile">
-                                                            <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                            <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                         </p>
                                                     </div>
                                                     <div class="col-md-3 col-12 checkout_right_price">
                                                         <div class="product_box_price">
-                                                            <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                            <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -117,5 +118,22 @@
                 this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm ' : 'Thu lại ';
             });
         });
+    </script>
+    <script>
+        function noticeCancel() {
+            Swal.fire({
+                imageUrl: "{{ asset('img/cancel.png') }}",
+                imageHeight: 200,
+                imageWidth: 200,
+                imageAlt: "A tall image",
+                title: "Bạn đã hủy đơn hàng!",
+                showConfirmButton: false, // Ẩn nút OK
+                timer: 2000, // Tự động tắt sau 2 giây
+                width: '350px',
+                customClass: {
+                    title: 'custom-title' // Thêm lớp tùy chỉnh cho tiêu đề
+                }
+            });
+        }
     </script>
 @endsection

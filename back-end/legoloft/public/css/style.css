@@ -811,7 +811,7 @@ section {
     line-height: 23px;
     font-size: 18px;
     font-weight: 700;
-    text-align: left;
+    text-align: right;
     color: #ff0000;
     /* padding-bottom: 5px; */
 }
@@ -3268,6 +3268,7 @@ section {
 .account_purchase_header_right .account_purchase_header_right_2 {
     color: #FF0000;
     padding: 0 5px;
+    font-size: 0.9rem;
 
 }
 
@@ -3357,6 +3358,11 @@ section {
 .infor_main h4 {
     padding-top: 15px;
     font-size: 1.125rem;
+}
+
+.custom-title {
+    font-size: 1.1rem;
+    text-align: center;
 }
 
 /*-------------------------------END PURCHASE---------------------------------------*/
@@ -5515,7 +5521,7 @@ input[type=number]::-webkit-outer-spin-button {
         line-height: 18px;
         font-size: 18px;
         font-weight: 700;
-        text-align: left;
+        text-align: right;
         color: #ff0000;
         padding-bottom: 5px;
     }

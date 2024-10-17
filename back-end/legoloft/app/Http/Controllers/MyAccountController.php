@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\UserGroup;
 use App\Models\Categories;
-use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
 use App\Models\ProductDiscount;
+use Illuminate\Support\Facades\Auth;
 
 class MyAccountController extends Controller
 {
@@ -76,14 +77,17 @@ class MyAccountController extends Controller
 
     public function getProductOrder($status)
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $orderUser = $this->orderModel->orderUser($user_id, $status);
         $orderProductUser = [];
         // foreach ra
-        foreach ($orderUser as $item) {
-            // lấy id của bảng order
-            $orderProductUser[$item->id] = $this->orderProductModel->orderProductUser($item->id)->load('product'); //Eager Loading để giảm số lượng truy vấn đến cơ sở dữ liệu, tải sẵn các sản phẩm liên quan đến đơn hàng.
+        if ($orderUser) {
+            foreach ($orderUser as $item) {
+                // lấy id của bảng order
+                $orderProductUser[$item->id] = $this->orderProductModel->orderProductUser($item->id)->load('product'); //Eager Loading để giảm số lượng truy vấn đến cơ sở dữ liệu, tải sẵn các sản phẩm liên quan đến đơn hàng.
+            }
         }
+
         $view = $this->viewMyaacountStatus($status);
         return view($view, compact('orderUser', 'orderProductUser'));
     }

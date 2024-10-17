@@ -9,12 +9,13 @@
 
             <div class="layout_member_right">
                 <div class="container-account-right-item">
-                    <a href="{{ route('purchase') }}" class="returnPurchaseMobile ">Trở lại</a>
+                    <a href="javascript:void(0);" onclick="window.history.back();" class="returnPurchaseMobile ">Trở lại</a>
 
                     <div class="account_purchase_header">
 
                         <div class="account_purchase_header_left">
-                            <a href="{{ route('purchase') }}" class="returnPurchase ">Trở lại</a>
+                            <a href="javascript:void(0);" onclick="window.history.back();" class="returnPurchase ">Trở
+                                lại</a>
                         </div>
                         <div class="account_purchase_header_right">
                             <a href="" class="text-decoration-none">
@@ -46,5 +47,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection

@@ -21,6 +21,7 @@
                     {{-- SHOW CART COOKIE VÀ DATABASE --}}
                     @foreach ($cart as $item)
                         @php
+
                             // dùng để truy xuất vao bảng product thông qua product_id  để show thông tin của 1 san phẩm trong cart
                             $product = $products->where('id', $item['product_id'])->first();
                             // ta tiếp tục dùng $product để truy xuất vào  quan hệ   productDiscount để tìm giá giảm tương ứng với nhóm người dùng hiện tại. //  lọc theo user_group_id của người dùng hiện tại. Nếu người dùng chưa đăng nhập, mặc định nhóm người dùng là 1.
