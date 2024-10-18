@@ -188,7 +188,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     });
 
     Route::middleware(['admin:order'])->group(function () {
-        Route::get('order', [OrderAdminController::class, 'order'])->name('order');
+        Route::get('order', [OrderAdminController::class, 'order'])->name('admin.order');
     });
 
     Route::middleware(['admin:category'])->group(function () {

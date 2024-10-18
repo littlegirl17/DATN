@@ -16,6 +16,7 @@ class OrderAdminController extends Controller
     }
     public function order()
     {
+        $order = Order::orderBy('id','desc')->get();
         return view('admin.order');
     }
 }
