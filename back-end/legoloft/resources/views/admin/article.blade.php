@@ -120,3 +120,38 @@
 
 
  @endsection
+ @section('productAdminScript')
+
+ <script>
+    $(document).ready(function() {
+        $('.form-check-input').on('click', function() {
+            var article_id = $(this).data('id'); // Lấy ID bài viết
+            var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
+            var label = $(this).siblings('label'); // Lấy label liền kề
+            updateStatusArticle(article_id, status, label);
+        });
+    });
+
+    function updateStatusArticle(article_id, status, label) {
+        $.ajax({
+            url: '{{ route('updateStatusArticle', ':id') }}'.replace(':id', article_id),
+            type: 'PUT',
+            data: {
+                '_token': '{{ csrf_token() }}', // CSRF token
+                'status': status
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Cập nhật trạng thái
+                    label.text(status == 1 ? 'Bật' : 'Tắt');
+                }
+            },
+            error: function(error) {
+                console.error('Lỗi khi cập nhật trạng thái bài viết: ', error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    }
+</script>
+
+@endsection

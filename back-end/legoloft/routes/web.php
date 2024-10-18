@@ -160,6 +160,8 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('/admin/category/article/bulk-delete', [CategoryArticleAdminController::class, 'bulkDelete'])->name('categoryArticleBulkDelete');
+        Route::put('categories/update-status/{id}', [CategoryArticleAdminController::class, 'updateStatus'])->name('categoryUpdateStatus');
+
     });
 
     Route::middleware(['admin:article'])->group(function () {
@@ -169,6 +171,8 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('articleEdit/{id}', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
         Route::put('articleEdit/{id}', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
         Route::post('/admin/article/bulk-delete', [ArticleAdminController::class, 'articleBulkDelete'])->name('articleBulkDelete');
+        Route::put('articles/update-status/{id}', [ArticleAdminController::class, 'updateStatusArticle'])->name('updateStatusArticle');
+        
     });
 
     Route::middleware(['admin:user'])->group(function () {

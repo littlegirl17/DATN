@@ -33,6 +33,7 @@
                      </button>
                  </div>
              </form>
+
          </div>
          @if (session('error'))
              <div class="alert alert-danger">
@@ -40,6 +41,7 @@
              </div>
          @endif
          <div id="submitFormAdmin">
+
              <div class="buttonProductForm mt-3">
                  <div class="m-0 p-0">
                      @if (session('error'))
@@ -131,62 +133,63 @@
 
  @endsection
 
- {{-- @section('scriptCategory')
-                            <script>
+ 
+ @section('productAdminScript')
+ <script>
+    $(document).ready(function() {
+        $('.form-check-input').on('click', function() {
+            var category_id = $(this).data('id'); // Lấy ID danh mục
+            var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
+            var label = $(this).siblings('label'); // Lấy label liền kề
+            updateStatusCategoryArticle(category_id, status, label);
+        });
+    });
+</script> <script>
+
+
                                 $(document).ready(function() {
 
-                                    $('.form-check-input').on('click', function() {
-                                        var category_id = $(this).data('id'); //lấy cái value của id danh mục
-                                        var status = $(this).is(':checked') ? 1 : 0;
-                                        var label = $(this).siblings('label');
-                                        updateCategoryStatus(category_id, status, label);
-                                    });
-                                })
 
-                                function updateCategoryStatus(category_id, status, label) {
-                                    $.ajax({
-                                        url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
-                                        type: 'put',
-                                        data: {
-                                            '_token': '{{ csrf_token() }}',
-                                            'status': status
-                                        },
-                                        success: function(response) {
-                                            console.log('Cập nhật trạng thái danh mục thành công');
+    function updateStatusCategoryArticle(category_id, status, label) {
+        $.ajax({
+            url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
+            type: 'PUT',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'status': status
+            },
+            success: function(response) {
+                console.log('Cập nhật trạng thái danh mục thành công');
+                label.text(status == 1 ? 'Bật' : 'Tắt'); // Cập nhật label
+            },
+            error: function(xhr, status, error) {
+                console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    }
+                                }); 
+</script>
 
-                                            if (status == 1) {
-                                                label.text('Bật');
-                                            } else {
-                                                label.text('Tắt');
-                                            }
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
-                                        }
+{{-- <script>
+    $(document).ready(function() {
+        $('#filterFormCategory').on('submit', function() {
+            var formData = $(this).serialize();
+            //serialize: duyệt qua tất cả các phần tử đầu vào, chọn các phần tử input, select, và textarea trong biểu mẫu (form), và thu thập các giá trị của chúng.
 
-                                    })
-                                }
-                            </script>
-
-                            <script>
-                                $(document).ready(function() {
-                                    $('#filterFormCategory').on('submit', function() {
-                                        var formData = $(this).serialize();
-                                        //serialize: duyệt qua tất cả các phần tử đầu vào, chọn các phần tử input, select, và textarea trong biểu mẫu (form), và thu thập các giá trị của chúng.
-
-                                        $.ajax({
-                                            url: '{{ route('searchCategory') }}',
-                                            type: 'GET',
-                                            data: formData,
-                                            success: function(response) {
-                                                // Cập nhật bảng danh mục với kết quả lọc
-                                                $('.table-body').html(response.html);
-                                            },
-                                            error: function(error) {
-                                                console.error('Lỗi khi lọc danh mục' + error);
-                                            }
-                                        })
-                                    })
-                                })
-                            </script>
-@endsection --}}
+            $.ajax({
+                url: '{{ route('searchCategory') }}',
+                type: 'GET',
+                data: formData,
+                success: function(response) {
+                    // Cập nhật bảng danh mục với kết quả lọc
+                    $('.table-body').html(response.html);
+                },
+                error: function(error) {
+                    console.error('Lỗi khi lọc danh mục' + error);
+                }
+            })
+        })
+    })
+</script> --}}
+@endsection

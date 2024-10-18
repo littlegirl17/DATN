@@ -18,8 +18,9 @@ class CategoryArticleAdminController extends Controller
     }
 
     public function categoryArticle(Request $request)
-    {
-        $query = CategoryArticle::query(); // Khởi tạo query
+{
+    $query = CategoryArticle::query(); // Khởi tạo query
+
 
         // Lọc theo tên
         if ($request->has('filter_name') && $request->filter_name !== '') {
@@ -30,14 +31,13 @@ class CategoryArticleAdminController extends Controller
         if ($request->has('filter_status') && $request->filter_status !== '') {
             $query->where('status', $request->filter_status);
         }
-
+// nguyeen đóng này đâu ra nè..
         // Lấy danh sách danh mục
         $CA = $query->orderBy('id', 'desc')->get();
 
         return view('admin.categoryArticle', compact('CA'));
     }
 
-    // dữ liệu show thử ra đâu thấy có danh mục, là mình xử lí model với control đang sai, nên view nó ko show ra đc
     public function categoryArticleAdd(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -71,6 +71,9 @@ class CategoryArticleAdminController extends Controller
         // Hiển thị form khi là GET request
         return view('admin.categoryArticleAdd');
     }
+
+
+
 
 
     public function categoryArticleEdit(Request $request, $id)
@@ -144,10 +147,18 @@ class CategoryArticleAdminController extends Controller
 
         return redirect()->route('categoryArticle')->with('success', 'Danh mục đã được xóa thành công!');
     }
+    
+    public function updateStatus(Request $request, $id) {
+        $category = CategoryArticle::findOrFail($id);
+        $category->status = $request->status;
+        $category->save();
+    
+        return response()->json(['success' => true]);
+    }
 
-
-
-
+    
+    
+    
 
     public function categoryArticleUpdate() {}
 }
