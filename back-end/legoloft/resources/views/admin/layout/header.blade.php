@@ -73,7 +73,7 @@
 
                     @if (in_array('order', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('order') }}" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('admin.order') }}" aria-expanded="false">
                                 <span style="width:20px">
                                     <img width="20" height="20"
                                         src="https://img.icons8.com/ios/20/FFFFFF/purchase-order.png"

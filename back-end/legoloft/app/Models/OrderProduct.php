@@ -41,4 +41,13 @@ class OrderProduct extends Model
     {
         return $this->where('order_id', $id_order->id)->get();
     }
+
+
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id'); // 'order_id' là khóa ngoại trong OrderProduct
+    }
+    // gọi order() trên một sản phẩm,
+    //  nó sẽ trả về đơn hàng mà sản phẩm đó thuộc về. Điều này giúp bạn dễ dàng truy xuất thông tin đơn hàng cho từng sản phẩm.
 }
