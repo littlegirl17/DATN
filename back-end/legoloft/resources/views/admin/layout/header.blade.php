@@ -27,23 +27,28 @@
                             <span class="hide-menu">Dashboard</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="fa-solid fa-image ico-side" style="color: #FFFFFF;font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Banner-Hình</span>
-                        </a>
-                    </li>
+                    @if (in_array('banner', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="fa-solid fa-image ico-side" style="color: #FFFFFF;font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Banner-Hình</span>
+                            </a>
+                        </li>
+                    @endif
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="ti fa-solid fa-list ico-side" style="color: #FFFFFF;font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Danh mục</span>
-                        </a>
-                    </li>
+                    @if (in_array('category', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="ti fa-solid fa-list ico-side" style="color: #FFFFFF;font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Danh mục</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if (in_array('product', $permission))
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('product') }}" aria-expanded="false">
@@ -55,26 +60,30 @@
                             </a>
                         </li>
                     @endif
+                    @if (in_array('coupon', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="fa-solid fa-ticket" style="color: #ffffff;font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Mã giảm giá</span>
+                            </a>
+                        </li>
+                    @endif
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="fa-solid fa-ticket" style="color: #ffffff;font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Mã giảm giá</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="ti"><img width="20" height="20"
+                    @if (in_array('order', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('order') }}" aria-expanded="false">
+                                <span style="width:20px">
+                                    <img width="20" height="20"
                                         src="https://img.icons8.com/ios/20/FFFFFF/purchase-order.png"
-                                        alt="purchase-order" /></i>
-                            </span>
-                            <span class="hide-menu">Đơn hàng</span>
-                        </a>
-                    </li>
+                                        alt="purchase-order" />
+                                </span>
+                                <span class="hide-menu">Đơn hàng</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if (in_array('user', $permission) || in_array('userGroup', $permission))
                         <li class="sidebar-item">
                             <a class="sidebar-link" aria-expanded="false">
@@ -177,17 +186,17 @@
                             </ul>
                         </li>
                     @endif
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
-                            <span style="width:20px">
-                                <i class="ti fa-regular fa-message ico-side"
-                                    style="color: #FFFFFF;font-size:20px;"></i>
-                            </span>
-                            <span class="hide-menu">Bình luận</span>
-                        </a>
-                    </li>
-
-
+                    @if (in_array('comment', $permission))
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('comment') }}" aria-expanded="false">
+                                <span style="width:20px">
+                                    <i class="ti fa-regular fa-message ico-side"
+                                        style="color: #FFFFFF;font-size:20px;"></i>
+                                </span>
+                                <span class="hide-menu">Bình luận</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('adminLogout') }}" aria-expanded="false">
                             <span style="width:20px">

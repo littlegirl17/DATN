@@ -30,11 +30,6 @@ class ProductDiscount extends Model
         return $this->where('product_id', $product_id)->where('user_group_id', $user_group_id)->first();
     }
 
-    // hàm lấy giá giảm theo default để show ra
-    public function userGroupDefaultDiscount()
-    {
-        return $this->where('user_group_id', 1)->first();
-    }
 
     public function userGroupDiscount($userGroupId)
     {

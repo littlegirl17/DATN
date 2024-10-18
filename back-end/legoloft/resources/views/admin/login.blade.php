@@ -36,8 +36,9 @@
                         @endif
                     </div>
                     <div class="form_admin_content">
+                        <div class="img_login_admin"><img src="{{ asset('img/lockk.png') }}" alt=""></div>
                         <div class="title">
-                            <h2>Đăng nhập</h2>
+                            <h2>Đăng nhập quản trị</h2>
                         </div>
                         <div class="form_admin_item">
                             <label for="">Tên đăng nhập</label>

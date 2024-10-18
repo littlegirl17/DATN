@@ -3,10 +3,9 @@
  @Section('content')
 
      <div class="container-fluid">
-         <div id="alert-message" class="alertDanger">
-         </div>
+
          <div class="searchAdmin">
-             <form id="filterFormCategory"  method="GET">
+             <form id="filterFormCategory" method="GET">
                  <div class="row d-flex flex-row justify-content-between align-items-center">
                      <div class="col-sm-6">
                          <div class="form-group mt-3">
@@ -21,8 +20,10 @@
                              <select class="form-select  rounded-0" aria-label="Default select example"
                                  name="filter_status">
                                  <option value="">Tất cả</option>
-                                 <option value="1" {{ request('filter_status') == '1' ? 'selected' : '' }}>Kích hoạt</option>
-                                 <option value="0" {{ request('filter_status') == '0' ? 'selected' : '' }}>Vô hiệu hóa</option>
+                                 <option value="1" {{ request('filter_status') == '1' ? 'selected' : '' }}>Kích hoạt
+                                 </option>
+                                 <option value="0" {{ request('filter_status') == '0' ? 'selected' : '' }}>Vô hiệu hóa
+                                 </option>
                              </select>
                          </div>
                      </div>
@@ -34,73 +35,80 @@
              </form>
          </div>
          <form id="submitFormAdmin" action="{{ route('articleBulkDelete') }}" method="POST">
-            @csrf
-            <div class="buttonProductForm mt-3">
-                <div class=""></div>
-                <div class="">
-                    <button class="btn btnF1">
-                        <a href="{{ route('articleAdd') }}" class="text-decoration-none text-light">
-                            <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo bài viết
-                        </a>
-                    </button>
-        
-                    <!-- Nút xóa bài viết -->
-                    <button onclick="return confirm('Bạn có chắc chắn muốn xóa những bài viết đã chọn?')" class="btn btn-danger">
-                        <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa bài viết đã chọn
-                    </button>
-                </div>
-            </div>
-        
-            <div class="border p-2">
-                <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách Bài Viết</h4>
-                <table class="table table-bordered pt-3">
-                    <thead class="table-header">
-                        <tr>
-                            <th class="py-2"></th>
-                            <th class="py-2">Danh mục</th>
-                            <th class="py-2">Tiêu đề</th>
-                            <th class="py-2">Ngày đăng</th>
-                            <th class="py-2">Trạng thái</th>
-                            <th class="py-2">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        @foreach ($atc as $item)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="article_ids[]" value="{{ $item->id }}">
-                                </td>
-                                <td>{{ $item->categoryArticle->title }}</td>
-                                <td class="nameAdmin">
-                                    <p>{{ $item->title }}</p>
-                                </td>
-                                <td>{{ $item->created_at }}</td>
-                                <td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" data-id="{{ $item->id }}" id="switch-{{ $item->id }}"
-                                                   {{ $item->status == 1 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="switch-{{ $item->id }}">{{ $item->status == 1 ? 'Bật' : 'Tắt' }}</label>
-                                        </div>
-                                    </td>
-                                    
-                                </td>
-                                <td>
-                                    <div class="actionAdminProduct m-0 py-3">
-                                        <button class="btnActionProductAdmin2">
-                                            <a href="{{ route('articleEdit', $item->id) }}" class="text-decoration-none text-light">
-                                                <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa lại bài viết
-                                            </a>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </form>
-        
+             @csrf
+             <div class="buttonProductForm mt-3">
+                 <div class="m-0 p-0">
+                     @if (session('error'))
+                         <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
+                     @endif
+                     @if (session('success'))
+                         <div id="alert-message" class="alertSuccess">{{ session('success') }}</div>
+                     @endif
+                 </div>
+                 <div class="">
+                     <button class="btn btnF1">
+                         <a href="{{ route('articleAdd') }}" class="text-decoration-none text-light">
+                             <i class="pe-2 fa-solid fa-plus" style="color: #ffffff;"></i>Tạo bài viết
+                         </a>
+                     </button>
+                     <!-- Nút xóa bài viết -->
+                     <button type="button" onclick="return confirm('Bạn có chắc chắn muốn xóa những bài viết đã chọn?')"
+                         class="btn btnF2">
+                         <i class="pe-2 fa-solid fa-trash" style="color: #ffffff;"></i>Xóa bài viết đã chọn
+                     </button>
+                 </div>
+             </div>
+
+             <div class="border p-2">
+                 <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách Bài Viết</h4>
+                 <table class="table table-bordered pt-3">
+                     <thead class="table-header">
+                         <tr>
+                             <th class="py-2"></th>
+                             <th class="py-2">Danh mục</th>
+                             <th class="py-2">Tiêu đề</th>
+                             <th class="py-2">Ngày đăng</th>
+                             <th class="py-2">Trạng thái</th>
+                             <th class="py-2">Hành động</th>
+                         </tr>
+                     </thead>
+                     <tbody class="table-body">
+                         @foreach ($atc as $item)
+                             <tr>
+                                 <td>
+                                     <input type="checkbox" name="article_ids[]" value="{{ $item->id }}">
+                                 </td>
+                                 <td>{{ $item->categoryArticle->title }}</td>
+                                 <td class="nameAdmin">
+                                     <p>{{ $item->title }}</p>
+                                 </td>
+                                 <td>{{ $item->created_at }}</td>
+                                 <td>
+                                     <div class="form-check form-switch">
+                                         <input class="form-check-input" type="checkbox" role="switch"
+                                             id="statusSwitch{{ $item->id }}" onchange="this.form.submit()"
+                                             {{ $item->status ? 'checked' : '' }}>
+                                         <label class="form-check-label" for="statusSwitch{{ $item->id }}"></label>
+                                     </div>
+                                 </td>
+                                 <td>
+                                     <div class="actionAdminProduct m-0 py-3">
+                                         <button class="btnActionProductAdmin2">
+                                             <a href="{{ route('articleEdit', $item->id) }}"
+                                                 class="text-decoration-none text-light">
+                                                 <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa lại bài
+                                                 viết
+                                             </a>
+                                         </button>
+                                     </div>
+                                 </td>
+                             </tr>
+                         @endforeach
+                     </tbody>
+                 </table>
+             </div>
+         </form>
+
 
          <nav class="navPhanTrang">
              <ul class="pagination">

@@ -31,6 +31,11 @@ class Product extends Model
         return $this->hasMany(ProductDiscount::class, 'product_id');
     }
 
+    public function favourite()
+    {
+        return $this->hasMany(Favourite::class);
+    }
+
     public function orderProduct()
     {
         return $this->hasMany(OrderProduct::class, 'product_id');
@@ -44,6 +49,11 @@ class Product extends Model
     public function productAll()
     {
         return $this->orderBy('id', 'desc')->get();
+    }
+
+    public function productByCategory($category_id)
+    {
+        return $this->where('category_id', $category_id)->orderBy('id', 'desc')->paginate(9);
     }
 
     public function searchProduct($filter_iddm, $filter_name, $filter_price, $filter_status)
@@ -75,18 +85,8 @@ class Product extends Model
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->inRandomOrder() // Sử dụng inRandomOrder() để lấy sản phẩm ngẫu nhiên
-            ->limit(4)
             ->get();
     }
-
-    /*public function productDiscountSection()
-    {
-         return $this
-             ->where('status', 1)
-             ->orderBy('id', 'desc')
-             ->get();
-
-    }*/
 
     public function productBestseller()
     {
@@ -97,5 +97,15 @@ class Product extends Model
     public function productSoldOut()
     {
         return $this->where('status', '=', 0)->orderBy('id', 'desc')->get();
+    }
+
+    public function productRelated($detail)
+    {
+        return $this->where('category_id', $detail->category_id)->inRandomOrder()->get();
+    }
+
+    public function searchProductHome($name)
+    {
+        return $this->where('name', 'LIKE', "%{$name}%")->where('status', 1)->orderBy('id', 'desc')->paginate(12);
     }
 }

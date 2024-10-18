@@ -1,7 +1,7 @@
 @extends('myaccount.layout.layout')
 @section('title', 'Đơn hàng đang chờ xác nhận')
 @section('content_myaccount')
-    <div class="container">
+    <div class="container pt_mobile">
         <div class="layout_member">
             <div class="layout_member_left">
                 @include('myaccount.menuLeftAccount')
@@ -26,7 +26,8 @@
                                                         onclick="cancelOrder(event,'{{ route('cancelConfirmation', $item->id) }}')"
                                                         class="">Hủy
                                                         đơn</a></span>
-                                                <button class="account_purchase_header_right_pending"><a href=""
+                                                <button class="account_purchase_header_right_pending"><a
+                                                        href="javascript:void(0);" onclick="noticeHandleOrder();"
                                                         class="">Đang chờ xác nhận</a></button>
                                             </p>
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
@@ -43,19 +44,20 @@
                                         <div class="row checkout_row_right">
                                             <div class="col-md-3 col-sm-3 col-4">
                                                 <div class="img_checkout_product">
-                                                    <img src="../img/city-product-1.webp" alt="" />
+                                                    <img src="{{ asset('img/' . $orderProduct['product']['image']) }}"
+                                                        alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-9 col-8">
-                                                <h5>Bộ Lego thành phố</h5>
-                                                <p class="">Số lượng: 1</p>
+                                                <h5>{{ $orderProduct['product']['name'] }}</h5>
+                                                <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                 <p class="pricecheckout_mobile">
-                                                    <span>100.000đ</span>90.000đ
+                                                    <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
                                                 <div class="product_box_price">
-                                                    <span>100.000đ</span>90.000đ
+                                                    <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -75,12 +77,12 @@
                                                         <h5>{{ $orderProduct['name'] }}</h5>
                                                         <p class="">Số lượng: {{ $orderProduct['quantity'] }}</p>
                                                         <p class="pricecheckout_mobile">
-                                                            <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                            <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                         </p>
                                                     </div>
                                                     <div class="col-md-3 col-12 checkout_right_price">
                                                         <div class="product_box_price">
-                                                            <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                            <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,7 +137,7 @@
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Có, tôi đồng ý!",
                 cancelButtonText: "không",
-
+                width: '400px',
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
@@ -143,6 +145,23 @@
                         icon: "success"
                     });
                     window.location.href = url;
+                }
+            });
+        }
+    </script>
+    <script>
+        function noticeHandleOrder() {
+            Swal.fire({
+                imageUrl: "{{ asset('img/handle.png') }}",
+                imageHeight: 150,
+                imageWidth: 150,
+                imageAlt: "A tall image",
+                title: "Đơn hàng của bạn đang chờ xác nhận",
+                showConfirmButton: false, // Ẩn nút OK
+                timer: 2000, // Tự động tắt sau 2 giây
+                width: '400px',
+                customClass: {
+                    title: 'custom-title' // Thêm lớp tùy chỉnh cho tiêu đề
                 }
             });
         }

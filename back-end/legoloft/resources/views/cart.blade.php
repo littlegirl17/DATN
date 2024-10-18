@@ -17,20 +17,24 @@
                     $intoMoney = 0;
                     $amount = 0;
                 @endphp
-                @if (is_array($cart) && !empty($cart))
-                    {{-- SHOW CART COOKIE --}}
+                @if (!empty($cart) && count($cart) > 0)
+                    {{-- SHOW CART COOKIE VÀ DATABASE --}}
                     @foreach ($cart as $item)
                         @php
+
                             // dùng để truy xuất vao bảng product thông qua product_id  để show thông tin của 1 san phẩm trong cart
                             $product = $products->where('id', $item['product_id'])->first();
                             // ta tiếp tục dùng $product để truy xuất vào  quan hệ   productDiscount để tìm giá giảm tương ứng với nhóm người dùng hiện tại. //  lọc theo user_group_id của người dùng hiện tại. Nếu người dùng chưa đăng nhập, mặc định nhóm người dùng là 1.
-                            $userGroupDefaultDiscount = $product->productDiscount
+                            $productDiscountPrice = $product->productDiscount
                                 ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
                                 ->first();
 
+                            // giá tiền không có giá giảm
                             $amount = $product ? $product->price : 0;
-                            if ($userGroupDefaultDiscount) {
-                                $amount = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : 0;
+
+                            if ($productDiscountPrice) {
+                                // giá giảm được lọc theo nhóm người dùng
+                                $amount = $productDiscountPrice ? $productDiscountPrice->price : 0;
                             }
                             // thành tiền
                             $intoMoney = $amount * $item['quantity'];
@@ -45,9 +49,9 @@
                                 <div class="cart_item_content_name">
                                     <h2>{{ $product->name }}</h2>
                                 </div>
-                                @if ($userGroupDefaultDiscount)
+                                @if ($productDiscountPrice)
                                     <div class="cart_item_content_price">
-                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
+                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
                                     </div>
                                 @else
                                     <div class="cart_item_content_price">
@@ -73,64 +77,6 @@
                         </div>
                     @endforeach
                     {{-- ----------------------------------------------------------- --}}
-                @elseif(isset($getallcart) && $getallcart->isNotEmpty())
-                    {{-- Tài show cart bằng DB ra chô này --}}
-                    @foreach ($getallcart as $item)
-                        @php
-                            // dùng để truy xuất vao bảng product thông qua product_id  để show thông tin của 1 san phẩm trong cart
-                            $product = $products->where('id', $item['product_id'])->first();
-                            // ta tiếp tục dùng $product để truy xuất vào  quan hệ   productDiscount để tìm giá giảm tương ứng với nhóm người dùng hiện tại. //  lọc theo user_group_id của người dùng hiện tại. Nếu người dùng chưa đăng nhập, mặc định nhóm người dùng là 1.
-                            $userGroupDefaultDiscount = $product->productDiscount
-                                ->where('user_group_id', Auth::check() ? Auth::user()->user_group_id : 1)
-                                ->first();
-
-                            $amount = $product ? $product->price : 0;
-                            if ($userGroupDefaultDiscount) {
-                                $amount = $userGroupDefaultDiscount ? $userGroupDefaultDiscount->price : 0;
-                            }
-                            // thành tiền
-                            $intoMoney = $amount * $item['quantity'];
-                            // tổng tiền
-                            $total += $intoMoney;
-                        @endphp
-                        <div class="cart_item">
-                            <div class="cart_item_img">
-                                <img src="{{ asset('img/' . $product->image) }}" alt="" />
-                            </div>
-                            <div class="cart_item_content">
-                                <div class="cart_item_content_name">
-                                    <h2>{{ $item->product->name }}</h2>
-                                </div>
-
-                                @if ($userGroupDefaultDiscount)
-                                    <div class="cart_item_content_price">
-                                        <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($userGroupDefaultDiscount->price, 0, ',', '.') . 'đ' }}
-                                    </div>
-                                @else
-                                    <div class="cart_item_content_price">
-                                        <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
-                                    </div>
-                                @endif
-                                <div class="cart_item_content_quantity">
-                                    <button class="cart_quantity_decrease">{{-- khi giảm tới 0 sẽ bị vô hiệu hóa nút giảm --}}
-                                        <a href="{{ route('decreaseQuantity', $item['product_id']) }}">-</a>
-                                    </button>
-
-                                    <input type="text" value="{{ $item['quantity'] }}" class="cart_quantity_number"
-                                        data-product-id="{{ $item['product_id'] }}" disabled readonly />
-
-                                    <button class="cart_quantity_increase"
-                                        @if ($item['quantity'] >= 100) disabled @endif>{{-- khi tăng tới 100 thì vô hiệu hóa, hoặc kha muốn làm thêm instock tồn kho thì thêm vào --}}
-                                        <a href="{{ route('increaseQuantity', $item['product_id']) }}">+</a>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="cart_item_close">
-                                <a onclick="deleteItemCart('{{ route('deleteItemCart', $item['product_id']) }}')">
-                                    <i class="fa-solid fa-xmark text-black"></i></a>
-                            </div>
-                        </div>
-                    @endforeach
                 @else
                     {{-- Thông báo khi giỏ hàng trống --}}
                     <div class="div_Empty_main_cart">
@@ -150,7 +96,7 @@
                     </div>
                 @endif
 
-                @if ((is_array($cart) && !empty($cart)) || (isset($getallcart) && $getallcart->isNotEmpty()))
+                @if (!empty($cart) && count($cart) > 0)
                     <div class="btn_two_cart">
                         <a href="/" class="btn_goon_cart">Tiếp tục mua sắm</a>
 
@@ -170,14 +116,16 @@
                         <div class="d-flex">
                             <input type="text" class="cart_right_coupon_input" name="code"
                                 placeholder="Nhập mã giảm giá" />
-                            {{-- @if (is_array($cart) && empty($cart) && (isset($getallcart) && $getallcart->isEmpty()))
-                            @else
-
-                            @endif --}}
-
                             @if (Session::get('coupon'))
-                                <button type="button" class="detail_btn_coupon"><a href="{{ route('couponDelete') }}"
-                                        class="text-decoration-none text-light">Xóa mã</a></button>
+                                @if (!empty($cart) && count($cart) > 0)
+                                    <button type="button" class="detail_btn_coupon"><a href="{{ route('couponDelete') }}"
+                                            class="text-decoration-none text-light">Xóa mã</a></button>
+                                @else
+                                    @php
+                                        session()->forget('coupon');
+                                    @endphp
+                                    <button type="submit" class="detail_btn_cart">Áp mã</button>
+                                @endif
                             @else
                                 <button type="submit" class="detail_btn_cart">Áp mã</button>
                             @endif
@@ -215,17 +163,17 @@
                                         </span>
                                     @else
                                         {{-- giảm theo số tiền --}}
-                                        @php
-                                            $total_coupon = $total * $item['discount'];
-                                        @endphp
-                                        <span> {{ number_format($item['discount'], 0, ',', '.') . 'đ' }}
-                                        </span>
+                                        @if (!empty($cart) && count($cart) > 0)
+                                            @php
+                                                $total_coupon = $total * $item['discount'];
+                                            @endphp
+                                            <span> {{ number_format($item['discount'], 0, ',', '.') . 'đ' }}
+                                            </span>
+                                        @endif
                                     @endif
                                 @endif
                             @endforeach
                         @endif
-
-
                     </div>
                     <div class="cart_right_total_item">
                         <h5>Tổng tiền</h5>
@@ -239,13 +187,18 @@
                                     $totalFinalCoupon = $total - $item['discount'];
                                 }
                             @endphp
-                            <span>{{ number_format($totalFinalCoupon, 0, ',', '.') . 'đ' }}</span>
+                            @if (!empty($cart) && count($cart) > 0)
+                                @php
+                                    $total_coupon = $total * $item['discount'];
+                                @endphp
+                                <span>{{ number_format($totalFinalCoupon, 0, ',', '.') . 'đ' }}</span>
+                            @endif
                         @else
                             <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
                         @endif
                     </div>
                     <div class="row_btn_checkout">
-                        <a href="" class="btn_checkout">Tiến hành thanh toán</a>
+                        <a href="{{ route('checkout') }}" class="btn_checkout">Tiến hành thanh toán</a>
                     </div>
                 </div>
             </div>

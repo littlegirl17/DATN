@@ -21,7 +21,8 @@
                                         </div>
                                         <div class="account_purchase_header_right">
                                             <p class="account_purchase_header_right_1">
-                                                <button class="account_purchase_header_right_confir"><a href=""
+                                                <button class="account_purchase_header_right_confir">
+                                                    <a href="javascript:void(0);" onclick="noticeConfirm();"
                                                         class="">Đã xác nhận
                                                         đơn hàng</a></button>
                                             </p>
@@ -118,5 +119,22 @@
                 this.textContent = moreProducts.style.display === 'none' ? 'Xem thêm ' : 'Thu lại ';
             });
         });
+    </script>
+    <script>
+        function noticeConfirm() {
+            Swal.fire({
+                imageUrl: "{{ asset('img/confirm.png') }}",
+                imageHeight: 150,
+                imageWidth: 150,
+                imageAlt: "A tall image",
+                title: "Đơn hàng của bạn đã được xác nhận",
+                showConfirmButton: false, // Ẩn nút OK
+                timer: 2000, // Tự động tắt sau 2 giây
+                width: '370px',
+                customClass: {
+                    title: 'custom-title' // Thêm lớp tùy chỉnh cho tiêu đề
+                }
+            });
+        }
     </script>
 @endsection

@@ -32,4 +32,14 @@ class Categories extends Model
     {
         return $this->orderBy('id', 'desc')->get();
     }
+
+    public function categoryTotal()
+    {
+        return $this->whereNotNull('parent_id')->orderBy('id', 'desc')->get();
+    }
+
+    public function categoryChoose()
+    {
+        return $this->where('choose', 1)->orderBy('id', 'desc')->inRandomOrder()->limit(3)->get();
+    }
 }

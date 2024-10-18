@@ -98,8 +98,10 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->status = 1; // 1 = active, 0 = inactive
+        $user->image = "userDefault.png";
         $user->save();
 
 

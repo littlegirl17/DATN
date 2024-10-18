@@ -145,7 +145,6 @@ document.getElementById("nextBtn").addEventListener("click", function () {
         currentIndex < detailImages.length - 1 ? currentIndex + 1 : 0;
     updateLargeImage(currentIndex);
 });
-// -------------------------  -----------------------
 
 // ------------------------- DETAIL PRODUCT IMAGES MODAL -----------------------
 
@@ -226,3 +225,6 @@ function memberSubmenuMobile(element) {
 }
 
 // ------------------------- HEIGHT SCROLL -----------------------
+
+// không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
+// server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.

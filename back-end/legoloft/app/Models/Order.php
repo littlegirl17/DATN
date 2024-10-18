@@ -29,7 +29,7 @@ class Order extends Model
     {
         $query = $this->where('user_id', $user_id);
         if (!is_null($status)) {
-            $query = $this->where('status', $status);
+            $query = $query->where('status', $status);
         }
         return $query->get();
     }
@@ -39,9 +39,13 @@ class Order extends Model
     {
         return [
             1 => 'Thanh toán bằng tiền mặt',
-            2 => 'Chuyển khoản ngân hàng',
-            3 => 'Thanh toán VNPAY',
-            4 => 'Thanh toán MoMo',
+            2 => 'Thanh toán VNPAY',
+            3 => 'Thanh toán MoMo',
         ];
+    }
+
+    public function viewOrderUser($id_order)
+    {
+        return $this->where('id', $id_order->id)->first();
     }
 }

@@ -21,7 +21,7 @@
         @yield('content')
         @include('admin.layout.footer')
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
@@ -40,8 +40,10 @@
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/api63Tinh.js') }}"></script>
-    {{-- <script src="{{ asset('js/ckeditor.js') }}"></script> --}}
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+
+    {{-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> --}}
 
 
     <script>
@@ -52,13 +54,13 @@
             form.submit();
         }
     </script>
-    
-    
+{{--  --}}
+
     @yield('administrationScript')
     @yield('productAdminScript')
     @yield('productEditAdminScript')
-   
-</script>
+
+    </script>
 </body>
 
 </html>

@@ -13,21 +13,20 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     private $productModel;
-    private $userGroupModel;
     private $productDiscountModel;
-    private $orderProduct;
+    private $categoryModel;
 
 
     public function __construct()
     {
         $this->productModel = new Product();
-        $this->userGroupModel = new UserGroup();
         $this->productDiscountModel = new ProductDiscount();
-        $this->orderProduct = new OrderProduct();
+        $this->categoryModel = new Categories();
     }
 
     public function index()
     {
+        $categoryAll = $this->categoryModel->categoryTotal();
         $productOutStanding = $this->productModel->productOutStanding();
         //$productDiscountSection = $this->productModel->productDiscountSection();
         $productBestseller = $this->productModel->productBestseller();
@@ -43,8 +42,20 @@ class HomeController extends Controller
         }
         //
         $user = auth()->user();
-        $userGroupDefaultDiscount = $this->productDiscountModel->userGroupDefaultDiscount();
         $productDiscountSection = $this->productDiscountModel->productDiscountSection($user ? $user->user_group_id : 1);
-        return view('home', compact('productOutStanding', 'userGroupDefaultDiscount', 'productDiscountSection',  'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut'));
+        $categoryAll = $this->categoryModel->categoryTotal();
+        $categoryChoose = $this->categoryModel->categoryChoose();
+
+        session()->forget('buyNow');
+        return view('home', compact('productOutStanding',  'productDiscountSection',  'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut', 'categoryAll', 'categoryChoose'));
+    }
+
+    public function search(Request $request)
+    {
+
+        $name = $request->input('name');
+        $searchProduct = $this->productModel->searchProductHome($name);
+
+        return view('search', compact('searchProduct', 'name'));
     }
 }

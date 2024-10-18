@@ -4,16 +4,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\admin\ProductAdminController;
-use App\Http\Controllers\Admin\AdminstrationController;
-use App\Http\Controllers\admin\ArticleAdminController;
-use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\UserAdminController;
-use App\Http\Controllers\CouponController;
-use App\Http\Controllers\MyAccountController;
+use App\Http\Controllers\admin\OrderAdminController;
+use App\Http\Controllers\admin\ArticleAdminController;
+use App\Http\Controllers\admin\CommentAdminController;
+use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\CategoryAdminController;
+use App\Http\Controllers\admin\CategoryArticleAdminController;
+use App\Http\Controllers\ProductController;
 
+Route::get('search', [HomeController::class, 'search'])->name('search');
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact', function () {
     return view('contact');
@@ -68,6 +75,10 @@ Route::get('register', function () {
 })->name('register');
 Route::post('register', [UserController::class, 'register'])->name('registerForm');
 
+Route::get('categoryAll', [CategoryController::class, 'categoryAll'])->name('categoryAll');
+Route::get('categoryProduct/{id}', [CategoryController::class, 'categoryProduct'])->name('categoryProduct');
+
+
 Route::get('cart', [CartController::class, 'getCart'])->name('cart');
 Route::post('cartForm', [CartController::class, 'cartAdd'])->name('cartForm');
 Route::get('increaseQuantity/{id}', [CartController::class, 'increaseQuantity'])->name('increaseQuantity');
@@ -87,6 +98,16 @@ Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping
 Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
 Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
 
+Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name('checkoutForm');
+Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
+
+Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
+
+Route::get('detail/{slug}', [ProductController::class, 'detail'])->name('detail');
+Route::post('commentReview', [ProductController::class, 'commentReview'])->name('commentReview');
+Route::get('viewFavourite', [ProductController::class, 'viewFavourite'])->name('viewFavourite');
+Route::post('favourite', [ProductController::class, 'favourite'])->name('favourite');
 
 /* ----------------------------------- ROUTE ADMIN ------------------------------------ */
 Route::get('admin/login', function () {
@@ -135,7 +156,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     Route::middleware(['admin:categoryArticle'])->group(function () {
         Route::get('categoryArticle', [CategoryArticleAdminController::class, 'categoryArticle'])->name('categoryArticle');
         Route::get('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
-        Route::put('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit'])->name('categoryArticleEdit');
+        Route::put('categoryArticleEdit/{id}', [CategoryArticleAdminController::class, 'categoryArticleEdit']);
         Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('/admin/category/article/bulk-delete', [CategoryArticleAdminController::class, 'bulkDelete'])->name('categoryArticleBulkDelete');
@@ -160,6 +181,18 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:userGroup'])->group(function () {
         Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
+    });
+
+    Route::middleware(['admin:comment'])->group(function () {
+        Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
+    });
+
+    Route::middleware(['admin:order'])->group(function () {
+        Route::get('order', [OrderAdminController::class, 'order'])->name('order');
+    });
+
+    Route::middleware(['admin:category'])->group(function () {
+        Route::get('category', [CategoryAdminController::class, 'category'])->name('category');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');

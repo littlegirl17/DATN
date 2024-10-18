@@ -21,57 +21,56 @@ class CategoryArticleAdminController extends Controller
 {
     $query = CategoryArticle::query(); // Khởi tạo query
 
-    // Lọc theo tên
-    if ($request->filled('filter_name')) {
-        $query->where('title', 'like', '%' . $request->filter_name . '%');
-    }
 
-    // Lọc theo trạng thái
-    if ($request->filled('filter_status')) {
-        $query->where('status', $request->filter_status);
-    }
-
-    // Lấy danh sách danh mục
-    $CA = $query->orderBy('id', 'desc')->get();
-
-    return view('admin.categoryArticle', compact('CA'));
-}
-
-    
-// dữ liệu show thử ra đâu thấy có danh mục, là mình xử lí model với control đang sai, nên view nó ko show ra đc
-    public function categoryArticleAdd(Request $request)
-    {
-    if ($request->isMethod('post')) {
-        // Xác thực dữ liệu
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description_short' => 'nullable|string',
-            'description' => 'nullable|string',
-            'status' => 'required|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // Thêm mới bài viết
-        $categoryArticle = new CategoryArticle();
-        $categoryArticle->title = $request->title;
-        $categoryArticle->description_short = $request->description_short;
-        $categoryArticle->description = $request->description;
-        $categoryArticle->status = $request->status ?? 1;
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('img'), $filename);
-            $categoryArticle->image = $filename;
+        // Lọc theo tên
+        if ($request->has('filter_name') && $request->filter_name !== '') {
+            $query->where('title', 'like', '%' . $request->filter_name . '%');
         }
 
-        $categoryArticle->save();
-        return redirect()->route('categoryArticle');
+        // Lọc theo trạng thái
+        if ($request->has('filter_status') && $request->filter_status !== '') {
+            $query->where('status', $request->filter_status);
+        }
+// nguyeen đóng này đâu ra nè..
+        // Lấy danh sách danh mục
+        $CA = $query->orderBy('id', 'desc')->get();
+
+        return view('admin.categoryArticle', compact('CA'));
     }
 
-    // Hiển thị form khi là GET request
-    return view('admin.categoryArticleAdd');
-}
+    public function categoryArticleAdd(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            // Xác thực dữ liệu
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description_short' => 'nullable|string',
+                'description' => 'nullable|string',
+                'status' => 'required|boolean',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // Thêm mới bài viết
+            $categoryArticle = new CategoryArticle();
+            $categoryArticle->title = $request->title;
+            $categoryArticle->description_short = $request->description_short;
+            $categoryArticle->description = $request->description;
+            $categoryArticle->status = $request->status ?? 1;
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('img'), $filename);
+                $categoryArticle->image = $filename;
+            }
+
+            $categoryArticle->save();
+            return redirect()->route('categoryArticle');
+        }
+
+        // Hiển thị form khi là GET request
+        return view('admin.categoryArticleAdd');
+    }
 
 
 
@@ -79,45 +78,62 @@ class CategoryArticleAdminController extends Controller
 
     public function categoryArticleEdit(Request $request, $id)
     {
+        // Tìm danh mục theo ID
+        $categoryArticle = CategoryArticle::findOrFail($id);
 
-        $categoryArticle = CategoryArticle::findOrFail($id); // Tìm danh mục theo ID
+        if ($request->isMethod('put')) {
+            $data = $request->only([
+                'title',
+                'description_short',
+                'description',
+                'status'
+            ]);
 
-       $data = $request->only([
-        'title',
-        'image',
-        'description_short',
-        'description',
-        'status']);
+            // Kiểm tra hợp lệ
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description_short' => 'nullable|string',
+                'description' => 'nullable|string',
+                'status' => 'required|boolean',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Kiểm tra hình ảnh
+            ]);
 
-    // Xử lý hình ảnh nếu có
-    if ($request->hasFile('image')) {
-        // Xóa hình ảnh cũ nếu tồn tại
-        if ($categoryArticle->image) {
-            $oldImagePath = public_path('img' . $categoryArticle->image);
-            if (file_exists($oldImagePath)) {
-                unlink($oldImagePath); // Xóa hình ảnh cũ
+            // Xử lý hình ảnh nếu có
+            if ($request->hasFile('image')) {
+                // Xóa hình ảnh cũ nếu tồn tại
+                if ($categoryArticle->image) {
+                    $oldImagePath = public_path('img/' . $categoryArticle->image);
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath); // Xóa hình ảnh cũ
+                    }
+                }
+
+                // Lưu hình ảnh mới
+                $file = $request->file('image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('img'), $filename);
+                $data['image'] = $filename; // Cập nhật tên file vào dữ liệu
             }
+
+            // Cập nhật danh mục
+            $categoryArticle->update($data);
+
+            return redirect()->route('categoryArticle')->with('success', 'Cập nhật thành công!');
         }
 
-        // Lưu hình ảnh mới
-        $file = $request->file('image');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('img'), $filename);
-        $categoryArticle->image = $filename; // Cập nhật tên file
+        // Trả về view với biến đã được định nghĩa
+        return view('admin.categoryArticleEdit', ['categoryArticle' => $categoryArticle]);
     }
 
-        $categoryArticle->update($data);
-        return view('admin.categoryArticleEdit',compact('categoryArticle'));
-    }
 
-    
+
 
     public function bulkDelete(Request $request)
     {
         $request->validate([
             'category_ids' => 'required|array',
         ]);
-    
+
         // Kiểm tra từng danh mục trong mảng category_ids
         foreach ($request->category_ids as $id) {
             $articleCount = Article::where('categoryArticle_id', $id)->count();
@@ -125,10 +141,10 @@ class CategoryArticleAdminController extends Controller
                 return redirect()->route('categoryArticle')->with('error', 'Không thể xóa danh mục có ID ' . $id . ' vì còn bài viết liên quan.');
             }
         }
-    
+
         // Nếu không có bài viết liên quan, tiến hành xóa
         CategoryArticle::destroy($request->category_ids);
-    
+
         return redirect()->route('categoryArticle')->with('success', 'Danh mục đã được xóa thành công!');
     }
     
@@ -143,5 +159,6 @@ class CategoryArticleAdminController extends Controller
     
     
     
+
     public function categoryArticleUpdate() {}
 }
