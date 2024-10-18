@@ -98,11 +98,7 @@
                                      </td>
                                      <td>{{ $item->title }}</td>
                                      <td>
-                                         @if ($item->status == 1)
-                                             Kích hoạt
-                                         @else
-                                             Vô hiệu hóa
-                                         @endif
+
                                      </td>
                                      <td class="m-0 p-0">
                                          <div class="actionAdminProduct m-0 py-3">
