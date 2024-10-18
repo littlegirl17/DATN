@@ -3234,6 +3234,10 @@ section {
 
 }
 
+.account_purchase_mobile {
+    display: none;
+}
+
 .account_purchase_header_right {
     display: flex;
     flex-direction: row;
@@ -4947,13 +4951,14 @@ input[type=number]::-webkit-outer-spin-button {
     }
 
     .checkout_row_right h5 {
-        font-size: 1rem;
+        font-size: 0.9rem;
         line-height: 1rem;
         padding-left: 20px;
     }
 
     .checkout_row_right p {
         padding-left: 20px;
+        font-size: 0.8rem;
     }
 
     .back_cart_checkout a {
@@ -5516,17 +5521,17 @@ input[type=number]::-webkit-outer-spin-button {
         padding: 8px 0 0 0;
     }
 
-    .pricecheckout_mobile {
+    .checkout_row_right .pricecheckout_mobile {
         display: block;
         line-height: 18px;
-        font-size: 18px;
+        font-size: 1rem;
         font-weight: 700;
         text-align: right;
         color: #ff0000;
         padding-bottom: 5px;
     }
 
-    .pricecheckout_mobile span {
+    .checkout_row_right .pricecheckout_mobile span {
         font-size: 13px;
         line-height: 17px;
         font-weight: 400;
@@ -5808,7 +5813,65 @@ input[type=number]::-webkit-outer-spin-button {
 
     /**/
     .pt_mobile {
-        padding-top: 100px;
+        margin-top: 100px;
+    }
+
+    /**/
+    .account_purchase_header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+    }
+
+    .account_purchase_header_right {
+        display: none;
+    }
+
+    .account_purchase_mobile {
+        display: block;
+    }
+
+    .account_purchase_mobile_right {
+        display: flex;
+    }
+
+    .account_purchase_mobile_main {
+        display: flex;
+    }
+
+    .purchase_mobile_rightcancel {
+        background-color: #FF0000;
+        border: none;
+        outline: none;
+        padding: 5px 5px;
+        border-radius: 5px;
+        margin-right: 5px;
+    }
+
+    .purchase_mobile_rightpending {
+        background-color: #FFD602;
+        border: none;
+        outline: none;
+        padding: 5px 5px;
+        border-radius: 5px;
+
+    }
+
+    .purchase_mobile_rightcancel a, .purchase_mobile_rightpending a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 0.6rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .purchase_mobile_right_detail {
+        color: #FF0000;
+        padding: 8px 0px 1px 12px;
+        font-size: 0.8rem;
+        text-align: right;
+        vertical-align: middle;
     }
 }
 

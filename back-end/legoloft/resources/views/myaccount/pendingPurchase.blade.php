@@ -10,7 +10,7 @@
                 <form action="">
                     <div class="container-account-right-item">
                         <div class="row">
-                            <h4 class="m-0 ps-3">Tất cả đơn hàng đang chờ xác nhận</h4>
+                            <h5 class="m-0 ps-3">Tất cả đơn hàng đang chờ xác nhận</h5>
                         </div>
                         <div class="">
                             @foreach ($orderUser as $item)
@@ -33,6 +33,24 @@
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
                                                 <p class="account_purchase_header_right_2">Chi tiết</p>
                                             </a>
+                                        </div>
+                                        <div class="account_purchase_mobile">
+                                            <div class="account_purchase_mobile_main">
+                                                <p class="account_purchase_mobile_right">
+                                                    <span class=" purchase_mobile_rightcancel" id="cancelOrder"><a
+                                                            onclick="cancelOrder(event,'{{ route('cancelConfirmation', $item->id) }}')"
+                                                            class="">Hủy
+                                                            đơn</a></span>
+                                                    <button class="purchase_mobile_rightpending"><a
+                                                            href="javascript:void(0);" onclick="noticeHandleOrder();"
+                                                            class="">Đang chờ xác
+                                                            nhận</a></button>
+                                                </p>
+                                                <a href="{{ route('inforPurchase', $item->id) }}"
+                                                    class="text-decoration-none purchase_mobile_right_detail">
+                                                    Chi tiết
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     @php

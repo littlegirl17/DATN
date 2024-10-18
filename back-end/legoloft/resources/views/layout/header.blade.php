@@ -116,9 +116,12 @@
             </div>
         </div>
     </div>
-    <div class="nav_box_menu_right_mobile">
-        <input type="text" placeholder="Tìm kiếm tại đây..." />
-    </div>
+    <form action="{{ route('search') }}" method="get">
+        @csrf
+        <div class="nav_box_menu_right_mobile">
+            <input type="text" name="name" placeholder="Tìm kiếm tại đây..." />
+        </div>
+    </form>
     <div class="main_bar_menu_bg">
         <div class="main_bar_menu submenu">
             <div class="button_close_back">
