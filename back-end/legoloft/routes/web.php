@@ -189,6 +189,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:order'])->group(function () {
         Route::get('order', [OrderAdminController::class, 'order'])->name('admin.order');
+        Route::get('orderEdit/{id}', [OrderAdminController::class, 'orderEdit'])->name('admin.orderEdit');
+        Route::post('orderUpdate/{id}', [OrderAdminController::class, 'orderUpdate'])->name('admin.orderUpdate'); // Thêm dòng này
+        
     });
 
     Route::middleware(['admin:category'])->group(function () {
