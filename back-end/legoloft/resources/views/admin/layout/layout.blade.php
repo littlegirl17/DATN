@@ -54,13 +54,12 @@
             form.submit();
         }
     </script>
-{{--  --}}
 
     @yield('administrationScript')
     @yield('productAdminScript')
     @yield('productEditAdminScript')
+    @yield('categoryArticleAdminScript')
 
-    </script>
 </body>
 
 </html>

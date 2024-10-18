@@ -133,45 +133,44 @@
 
  @endsection
 
- 
- @section('productAdminScript')
- <script>
-    $(document).ready(function() {
-        $('.form-check-input').on('click', function() {
-            var category_id = $(this).data('id'); // Lấy ID danh mục
-            var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
-            var label = $(this).siblings('label'); // Lấy label liền kề
-            updateStatusCategoryArticle(category_id, status, label);
-        });
-    });
-</script> <script>
+
+ @section('categoryArticleAdminScript')
+     <script>
+         $(document).ready(function() {
+             $('.form-check-input').on('click', function() {
+                 var category_id = $(this).data('id'); // Lấy ID danh mục
+                 var status = $(this).is(':checked') ? 1 : 0; // Xác định trạng thái
+                 var label = $(this).siblings('label'); // Lấy label liền kề
+                 updateStatusCategoryArticle(category_id, status, label);
+             });
+         });
+     </script>
+     <script>
+         $(document).ready(function() {
 
 
-                                $(document).ready(function() {
+             function updateStatusCategoryArticle(category_id, status, label) {
+                 $.ajax({
+                     url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
+                     type: 'PUT',
+                     data: {
+                         '_token': '{{ csrf_token() }}',
+                         'status': status
+                     },
+                     success: function(response) {
+                         console.log('Cập nhật trạng thái danh mục thành công');
+                         label.text(status == 1 ? 'Bật' : 'Tắt'); // Cập nhật label
+                     },
+                     error: function(xhr, status, error) {
+                         console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
+                         alert('Có lỗi xảy ra. Vui lòng thử lại!');
+                     }
+                 });
+             }
+         });
+     </script>
 
-
-    function updateStatusCategoryArticle(category_id, status, label) {
-        $.ajax({
-            url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
-            type: 'PUT',
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'status': status
-            },
-            success: function(response) {
-                console.log('Cập nhật trạng thái danh mục thành công');
-                label.text(status == 1 ? 'Bật' : 'Tắt'); // Cập nhật label
-            },
-            error: function(xhr, status, error) {
-                console.error('Lỗi khi cập nhật trạng thái danh mục: ' + error);
-                alert('Có lỗi xảy ra. Vui lòng thử lại!');
-            }
-        });
-    }
-                                }); 
-</script>
-
-{{-- <script>
+     {{-- <script>
     $(document).ready(function() {
         $('#filterFormCategory').on('submit', function() {
             var formData = $(this).serialize();
@@ -192,4 +191,4 @@
         })
     })
 </script> --}}
-@endsection
+ @endsection

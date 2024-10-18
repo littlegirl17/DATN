@@ -18,8 +18,8 @@ class CategoryArticleAdminController extends Controller
     }
 
     public function categoryArticle(Request $request)
-{
-    $query = CategoryArticle::query(); // Khởi tạo query
+    {
+        $query = CategoryArticle::query(); // Khởi tạo query
 
 
         // Lọc theo tên
@@ -31,7 +31,6 @@ class CategoryArticleAdminController extends Controller
         if ($request->has('filter_status') && $request->filter_status !== '') {
             $query->where('status', $request->filter_status);
         }
-// nguyeen đóng này đâu ra nè..
         // Lấy danh sách danh mục
         $CA = $query->orderBy('id', 'desc')->get();
 
@@ -147,18 +146,19 @@ class CategoryArticleAdminController extends Controller
 
         return redirect()->route('categoryArticle')->with('success', 'Danh mục đã được xóa thành công!');
     }
-    
-    public function updateStatus(Request $request, $id) {
+
+    public function updateStatus(Request $request, $id)
+    {
         $category = CategoryArticle::findOrFail($id);
         $category->status = $request->status;
         $category->save();
-    
+
         return response()->json(['success' => true]);
     }
 
-    
-    
-    
+
+
+
 
     public function categoryArticleUpdate() {}
 }
