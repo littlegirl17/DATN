@@ -74,7 +74,7 @@
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
-                                                <div class="product_box_price">
+                                                <div class="product_box_price_account">
                                                     <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </div>
                                             </div>

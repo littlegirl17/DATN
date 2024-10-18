@@ -826,6 +826,15 @@ section {
     padding-right: 3px;
 }
 
+.product_box_price_account {
+    line-height: 23px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: right;
+    color: #ff0000;
+    /* padding-bottom: 5px; */
+}
+
 .product_box_content_soldout p {
     font-size: 0.8rem;
 }
@@ -3122,22 +3131,6 @@ section {
     /* Màu chữ trắng cho liên kết khi active */
 }
 
-.accordion-header_member {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #eff0f1;
-    color: #000;
-    transition: background-color 0.3s;
-    border-bottom: 0.5px solid #e5e3e3;
-}
-
-.accordion-header_member i {
-    font-weight: 600;
-}
-
-.accordion-header_member:hover {
-    background-color: #ddd;
-}
 
 .accordion-content_member {
     display: block;
@@ -3162,10 +3155,7 @@ section {
     color: #000;
 }
 
-.accordion-header_member:target+.accordion-content_member {
-    display: none;
-    /* Ẩn khi click */
-}
+
 
 .layout_member_left_submenu.show {
     display: block;
@@ -5549,6 +5539,10 @@ input[type=number]::-webkit-outer-spin-button {
         display: none;
     }
 
+    .product_box_price_account {
+        display: none;
+    }
+
     /**/
     .container_order {
         width: 100%;
@@ -5861,7 +5855,7 @@ input[type=number]::-webkit-outer-spin-button {
 
     }
 
-    .purchase_mobile_rightcancel a, .purchase_mobile_rightpending a {
+    .account_purchase_mobile_cancel a, .account_purchase_mobile_shipping a, .purchase_mobile_rightcancel a, .purchase_mobile_rightpending a, .account_purchase_mobile_confir a {
         text-decoration: none;
         color: #fff;
         font-size: 0.6rem;
@@ -5875,6 +5869,72 @@ input[type=number]::-webkit-outer-spin-button {
         font-size: 0.8rem;
         text-align: right;
         vertical-align: middle;
+    }
+
+    .account_purchase_mobile_confir {
+        background-color: #0065a7;
+        border: none;
+        outline: none;
+        padding: 5px 5px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+    }
+
+    .account_purchase_mobile_shipping {
+        background-color: #26AA99;
+        border: none;
+        outline: none;
+        padding: 5px 10px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        vertical-align: middle;
+    }
+
+    .account_purchase_mobile_5 {
+        color: #26AA99;
+        border-right: 0.5px solid #eaeaea;
+        padding: 0 5px;
+    }
+
+    .purchase_detail {
+        color: #FF0000;
+        padding: 4px 0px 1px 12px;
+        font-size: 0.8rem;
+        text-align: right;
+        vertical-align: middle;
+    }
+
+    .account_purchase_mobile_cancel {
+        background-color: #FF0000;
+        border: none;
+        outline: none;
+        padding: 5px 5px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+    }
+
+    /**/
+
+    .accordion-header_member {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #eff0f1;
+        color: #000;
+        transition: background-color 0.3s;
+        border-bottom: 0.5px solid #e5e3e3;
+    }
+
+    .accordion-header_member i {
+        font-weight: 600;
+    }
+
+    .accordion-header_member:hover {
+        background-color: #ddd;
+    }
+
+    .accordion-header_member:target+.accordion-content_member {
+        display: none;
+        /* Ẩn khi click */
     }
 }
 

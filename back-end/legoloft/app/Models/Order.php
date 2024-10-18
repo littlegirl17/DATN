@@ -53,13 +53,15 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
-    
+
 
     public function orderProducts()
     {
         return $this->hasMany(OrderProduct::class, 'order_id'); // 'order_id' là khóa ngoại trong OrderProduct
     }
-    // gọi orderProducts() trên một đơn hàng, 
+
+
+    // gọi orderProducts() trên một đơn hàng,
     // nó sẽ trả về tất cả các sản phẩm liên quan đến đơn hàng đó. Điều này giúp bạn dễ dàng lấy thông tin sản phẩm cho từng đơn hàng.
     // Mô hình Order: Đây là mô hình đại diện cho bảng đơn hàng.
     // hasMany(OrderProduct::class, 'order_id'):

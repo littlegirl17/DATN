@@ -27,9 +27,11 @@
                             <div class="col-md-12 py-2">
                                 <div class="form-group">
                                     <label for="">Tên đăng nhập:</label>
-
                                     <input type="text" class="form-control-input" name="name"
                                         value="{{ Session::get('user')->name }}" />
+                                    @error('name')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12 py-2">
@@ -37,6 +39,9 @@
                                     <label for="">Email:</label>
                                     <input type="email" class="form-control-input" name="email"
                                         value="{{ Session::get('user')->email }}" />
+                                    @error('email')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12 py-2">
@@ -44,6 +49,9 @@
                                     <label for="">Số điện thoại:</label>
                                     <input type="number" class="form-control-input" name="phone"
                                         value="{{ Session::get('user')->phone }}" />
+                                    @error('phone')
+                                        <div class="text-danger" id="alert-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="checkout_main_left_one_item_2 pb-3">

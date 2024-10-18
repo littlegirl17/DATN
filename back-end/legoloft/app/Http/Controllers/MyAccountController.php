@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MemberRequest;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
@@ -43,7 +44,7 @@ class MyAccountController extends Controller
         return view('myaccount.member');
     }
 
-    public function memberForm(Request $request, $id)
+    public function memberForm(MemberRequest $request, $id)
     {
         // Fetch data from API
         $response = Http::get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json');
@@ -79,17 +80,10 @@ class MyAccountController extends Controller
                 break;
             }
         }
-        // $request->validate([
-        //     'name' => 'nullable',
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|email|unique:users,email',
-        //     'phone' => 'required|digits_between:10,11',
-        //     'province' => 'required',
-        //     'district' => 'required',
-        //     'ward' => 'required',
-        // ]);
+
 
         $user = $this->userModel->findOrFail($id);
+        // Truyền đối tượng người dùng vào request
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;

@@ -40,7 +40,6 @@
                                             <h5>Mã đơn hàng: #{{ $item->order_code }}</h5>
                                         </div>
                                         <div class="account_purchase_header_right">
-
                                             <p class="account_purchase_header_right_5">
                                                 Giao hàng thành công
                                             </p>
@@ -48,6 +47,18 @@
                                             <a href="{{ route('inforPurchase', $item->id) }}" class="text-decoration-none">
                                                 <p class="account_purchase_header_right_2">Chi tiết</p>
                                             </a>
+                                        </div>
+                                        <div class="account_purchase_mobile">
+                                            <div class="account_purchase_mobile_main">
+                                                <p class="account_purchase_mobile_5">
+                                                    Giao hàng thành công
+                                                </p>
+
+                                                <a href="{{ route('inforPurchase', $item->id) }}"
+                                                    class="text-decoration-none purchase_detail">
+                                                    Chi tiết
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     @php
@@ -72,8 +83,8 @@
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
-                                                <div class="product_box_price">
-                                                    <span>{{ number_format($orderProduct['product']['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
+                                                <div class="product_box_price_account">
+                                                    {{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </div>
                                             </div>
                                         </div>

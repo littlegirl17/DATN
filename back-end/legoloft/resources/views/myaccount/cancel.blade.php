@@ -29,6 +29,17 @@
                                                 <p class="account_purchase_header_right_2">Chi tiết</p>
                                             </a>
                                         </div>
+                                        <div class="account_purchase_mobile">
+                                            <div class="account_purchase_mobile_main">
+                                                <button class="account_purchase_mobile_cancel"><a href="javascript:void(0);"
+                                                        onclick="noticeCancel();" class="">Đơn hàng đã bị
+                                                        hủy</a></button>
+                                                <a href="{{ route('inforPurchase', $item->id) }}"
+                                                    class="text-decoration-none purchase_mobile_right_detail">
+                                                    Chi tiết
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                     @php
                                         $orderProducts = $orderProductUser[$item->id]->toArray(); // Chuyển đổi thành mảng;
@@ -52,7 +63,7 @@
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-12 checkout_right_price">
-                                                <div class="product_box_price">
+                                                <div class="product_box_price_account">
                                                     <span></span>{{ number_format($orderProduct['price'], 0, ',', '.') . 'đ' }}
                                                 </div>
                                             </div>
