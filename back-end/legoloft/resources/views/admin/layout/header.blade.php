@@ -29,7 +29,7 @@
                     </li>
                     @if (in_array('banner', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('banner') }}" aria-expanded="false">
                                 <span style="width:20px">
                                     <i class="fa-solid fa-image ico-side" style="color: #FFFFFF;font-size:20px;"></i>
                                 </span>
@@ -40,7 +40,7 @@
 
                     @if (in_array('category', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('category') }}" aria-expanded="false">
                                 <span style="width:20px">
                                     <i class="ti fa-solid fa-list ico-side" style="color: #FFFFFF;font-size:20px;"></i>
                                 </span>
@@ -62,7 +62,7 @@
                     @endif
                     @if (in_array('coupon', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('coupon') }}" aria-expanded="false">
                                 <span style="width:20px">
                                     <i class="fa-solid fa-ticket" style="color: #ffffff;font-size:20px;"></i>
                                 </span>

@@ -16,8 +16,10 @@ use App\Http\Controllers\admin\ArticleAdminController;
 use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\BannerAdminController;
 use App\Http\Controllers\admin\CategoryAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
+use App\Http\Controllers\admin\CouponAdminController;
 use App\Http\Controllers\ProductController;
 
 Route::get('search', [HomeController::class, 'search'])->name('search');
@@ -90,6 +92,8 @@ Route::post('couponForm', [CouponController::class, 'couponApply'])->name('coupo
 Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('couponDelete');
 
 Route::get('member', [MyAccountController::class, 'member'])->name('member');
+Route::put('memberForm/{id}', [MyAccountController::class, 'memberForm'])->name('memberForm');
+
 Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
 Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
 Route::get('waitConfirmation', [MyAccountController::class, 'waitConfirmation'])->name('waitConfirmation');
@@ -161,7 +165,6 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('/admin/category/article/bulk-delete', [CategoryArticleAdminController::class, 'bulkDelete'])->name('categoryArticleBulkDelete');
         Route::put('categories/update-status/{id}', [CategoryArticleAdminController::class, 'updateStatus'])->name('categoryUpdateStatus');
-
     });
 
     Route::middleware(['admin:article'])->group(function () {
@@ -172,7 +175,6 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('articleEdit/{id}', [ArticleAdminController::class, 'articleEdit'])->name('articleEdit');
         Route::post('/admin/article/bulk-delete', [ArticleAdminController::class, 'articleBulkDelete'])->name('articleBulkDelete');
         Route::put('articles/update-status/{id}', [ArticleAdminController::class, 'updateStatusArticle'])->name('updateStatusArticle');
-        
     });
 
     Route::middleware(['admin:user'])->group(function () {
@@ -193,6 +195,15 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:category'])->group(function () {
         Route::get('category', [CategoryAdminController::class, 'category'])->name('category');
+    });
+
+
+    Route::middleware(['admin:coupon'])->group(function () {
+        Route::get('coupon', [CouponAdminController::class, 'coupon'])->name('coupon');
+    });
+
+    Route::middleware(['admin:banner'])->group(function () {
+        Route::get('banner', [BannerAdminController::class, 'banner'])->name('banner');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('adminLogout');

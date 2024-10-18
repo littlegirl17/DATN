@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\UserGroup;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductImages;
 use App\Models\ProductDiscount;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class MyAccountController extends Controller
 {
@@ -18,6 +20,7 @@ class MyAccountController extends Controller
     private $categoryModel;
     private $productImageModel;
     private $productDiscountModel;
+    private $userModel;
     private $userGroupModel;
     private $orderModel;
     private $orderProductModel;
@@ -28,6 +31,7 @@ class MyAccountController extends Controller
         $this->categoryModel = new Categories();
         $this->productImageModel = new ProductImages();
         $this->productDiscountModel = new ProductDiscount();
+        $this->userModel = new User();
         $this->userGroupModel = new UserGroup();
         $this->orderModel = new Order();
         $this->orderProductModel = new OrderProduct();
@@ -35,7 +39,75 @@ class MyAccountController extends Controller
 
     public function member()
     {
+
         return view('myaccount.member');
+    }
+
+    public function memberForm(Request $request, $id)
+    {
+        // Fetch data from API
+        $response = Http::get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json');
+        $dataFetch = $response->json();
+        $provinceName = '';
+        $districtName = '';
+        $wardName = '';
+
+        //Lặp qua dữ liệu để lấy tên tỉnh
+        foreach ($dataFetch as $data) {
+
+            if ($data['Id'] == $request->province) {
+
+                $provinceName = $data['Name'];
+
+                // Lặp qua các huyện trong tỉnh để lấy tên huyện
+                foreach ($data['Districts'] as $district) {
+
+                    if ($district['Id'] == $request->district) {
+                        $districtName = $district['Name'];
+
+                        // Đi qua các phường của quận để lấy tên phường
+                        foreach ($district['Wards'] as $ward) {
+
+                            if ($ward['Id'] == $request->ward) {
+                                $wardName = $ward['Name'];
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        // $request->validate([
+        //     'name' => 'nullable',
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|unique:users,email',
+        //     'phone' => 'required|digits_between:10,11',
+        //     'province' => 'required',
+        //     'district' => 'required',
+        //     'ward' => 'required',
+        // ]);
+
+        $user = $this->userModel->findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->province = $provinceName ?: $request->province; // toán tử elvis kiểm tra xem  (không rỗng, không phải null, không phải false)
+        $user->district =  $districtName ?: $request->district;
+        $user->ward = $wardName ?: $request->ward;
+        $user->save();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = "{$user->id}.{$image->getClientOriginalExtension()}";
+            $image->move(public_path('img/'), $imageName);
+            $user->image = $imageName;
+            $user->save();
+        }
+        session()->put('user', $user);
+
+        return redirect()->route('member');
     }
 
     public function purchase()

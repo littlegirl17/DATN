@@ -201,7 +201,7 @@ function memberSubmenu(element) {
     const memberSubmenuLeft = document.querySelector(
         ".layout_member_left_submenu"
     );
-
+    memberSubmenuLeft.classList.toggle("show"); // Chuyển đổi lớp "show"
     if (memberSubmenuLeft) {
         if (memberSubmenuLeft.style.display === "none") {
             memberSubmenuLeft.style.display = "block";

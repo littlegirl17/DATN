@@ -7,5 +7,9 @@ use Illuminate\Http\Request;
 
 class BannerAdminController extends Controller
 {
-    //
+
+    public function comment()
+    {
+        return view('admin.banner');
+    }
 }

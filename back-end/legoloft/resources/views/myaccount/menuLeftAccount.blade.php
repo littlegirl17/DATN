@@ -2,7 +2,7 @@
     <nav class="layout_member_left_nav">
         <ul>
             <li class="layout_member_left_nav_li accordion-item" onclick="setActiveAccount(this)">
-                <a href="#" class="layout_member_left_nav_li_a">Tổng quan về tài khoản</a>
+                <a href="{{ route('member') }}" class="layout_member_left_nav_li_a">Tổng quan về tài khoản</a>
             </li>
             <li class="accordion-item">
                 <div class="d-flex justify-content-between align-items-center">
@@ -10,7 +10,7 @@
                     </a>
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
-                <ul class="layout_member_left_submenu">
+                <ul class="layout_member_left_submenu show">
 
                     <li class="accordion-item layout_member_left_submenu_li" onclick="setActiveAccount(this)">
                         <a href="{{ route('pendingPurchase') }}"><i class="fa fa-solid fa-plus"></i>Chờ xác nhận</a>

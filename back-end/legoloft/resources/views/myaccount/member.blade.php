@@ -7,18 +7,20 @@
                 @include('myaccount.menuLeftAccount')
             </div>
             <div class="layout_member_right">
-                <form action="">
+                <form action="{{ route('memberForm', Session::get('user')->id) }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf @method('PUT')
                     <div class="">
                         <div class="member_img_user">
                             <div class="member_image">
-                                <img src="../img/city-product-1.webp" alt="" />
+                                <img src="{{ asset('img/' . Session::get('user')->image) }}" alt="" />
                             </div>
 
                             <div class="member_image_inputfile">
                                 <label for="file-upload" class="custom-file-upload">
                                     Chọn ảnh
                                 </label>
-                                <input type="file" id="file-upload" class="form-control" name="HinhAnh" value="" />
+                                <input type="file" id="file-upload" class="form-control" name="image" value="" />
                             </div>
                         </div>
                         <div class="row member_profile">
@@ -26,45 +28,63 @@
                                 <div class="form-group">
                                     <label for="">Tên đăng nhập:</label>
 
-                                    <input type="text" class="form-control-input" name="" value="" />
+                                    <input type="text" class="form-control-input" name="name"
+                                        value="{{ Session::get('user')->name }}" />
                                 </div>
                             </div>
                             <div class="col-md-12 py-2">
                                 <div class="form-group">
                                     <label for="">Email:</label>
-                                    <input type="email" class="form-control-input" name="" value="" />
+                                    <input type="email" class="form-control-input" name="email"
+                                        value="{{ Session::get('user')->email }}" />
                                 </div>
                             </div>
                             <div class="col-md-12 py-2">
                                 <div class="form-group">
                                     <label for="">Số điện thoại:</label>
-                                    <input type="number" class="form-control-input" name="" value="" />
+                                    <input type="number" class="form-control-input" name="phone"
+                                        value="{{ Session::get('user')->phone }}" />
                                 </div>
                             </div>
                             <div class="checkout_main_left_one_item_2 pb-3">
                                 <div class="checkout_left_one_input">
                                     <label for="">Tỉnh</label>
-                                    <select class="select_checkout" aria-label="Default select example" name="province"
+                                    <select class="form-select" aria-label="Default select example" name="province"
                                         id="province">
-                                        <option selected disabled>Tỉnh/Thành phố</option>
+                                        @if (Session::has('user'))
+                                            <option value="{{ Session::get('user')->province }}">
+                                                {{ Session::get('user')->province }}</option>
+                                        @else
+                                            <option selected disabled>Tỉnh/Thành phố</option>
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="checkout_left_one_input">
                                     <label for="">Quận/Huyện</label>
-                                    <select class="select_checkout" aria-label="Default select example" name="province"
-                                        id="province">
-                                        <option selected disabled>Tỉnh/Thành phố</option>
+                                    <select class="form-select" aria-label="Default select example" name="district"
+                                        id="district">
+                                        @if (Session::has('user'))
+                                            <option selected value="{{ Session::get('user')->district }}">
+                                                {{ Session::get('user')->district }}</option>
+                                        @else
+                                            <option selected disabled>Quận/Huyện</option>
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="checkout_left_one_input">
                                     <label for="">Phường/Xã</label>
-                                    <select class="select_checkout" aria-label="Default select example" name="province"
-                                        id="province">
-                                        <option selected disabled>Tỉnh/Thành phố</option>
+                                    <select class="form-select" aria-label="Default select example" name="ward"
+                                        id="ward">
+                                        @if (Session::has('user'))
+                                            <option selected value="{{ Session::get('user')->ward }}">
+                                                {{ Session::get('user')->ward }}</option>
+                                        @else
+                                            <option selected disabled>Phường/Xã</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12 py-2">
+                            {{-- <div class="col-md-12 py-2">
                                 <div class="d-flex">
                                     <label class="pe-3" for="">Giới tính:</label>
                                     <div class="form-check d-flex">
@@ -81,7 +101,7 @@
                                         <p class="pe-3">Khác</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-sm-4">

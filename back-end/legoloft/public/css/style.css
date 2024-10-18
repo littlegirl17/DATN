@@ -811,7 +811,7 @@ section {
     line-height: 23px;
     font-size: 18px;
     font-weight: 700;
-    text-align: right;
+    text-align: left;
     color: #ff0000;
     /* padding-bottom: 5px; */
 }
@@ -3167,6 +3167,9 @@ section {
     /* Ẩn khi click */
 }
 
+.layout_member_left_submenu.show {
+    display: block;
+}
 
 .layout_member_left_submenu {
     list-style-type: none;
