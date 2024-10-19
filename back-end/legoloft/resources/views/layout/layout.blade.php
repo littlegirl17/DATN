@@ -158,6 +158,11 @@
             })
         }
 
+
+        // không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
+        // server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
+    </script>
+    <script>
         function addFavourite(id) {
             var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
             $.ajax({
@@ -169,8 +174,8 @@
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {
-                    // alert(response.message);
-                    const favouriteIcon = document.getElementById('favourite-' + id);
+                    console.log(response); // Kiểm tra phản hồi
+                    const favouriteIcon = document.querySelector(`i[data-product-id="favourite-${id}"]`);
                     if (response.is_favourite) {
                         favouriteIcon.classList.add('red');
                         Swal.fire({
@@ -178,8 +183,8 @@
                             imageHeight: 150,
                             imageWidth: 150,
                             imageAlt: "A tall image",
-                            showConfirmButton: false, // Ẩn nút OK
-                            timer: 1000, // Tự động tắt sau 2 giây
+                            showConfirmButton: false,
+                            timer: 1000,
                             width: '300px',
                         });
                     } else {
@@ -187,16 +192,12 @@
                     }
                 },
                 error: function(xhr) {
-                    console.log(xhr.responseText); // Ghi lại phản hồi lỗi
-
+                    console.log(xhr.responseText);
                     alert('Có lỗi xảy ra! Vui lòng thử lại sau');
                 }
-            })
+            });
         }
-        // không cần phải gửi user_id từ phía client khi sử dụng AJAX, vì server có thể lấy nó từ session.
-        // server sẽ lấy user_id từ session -> Mỗi lần người dùng gửi yêu cầu đến server, session này sẽ được gửi kèm theo yêu cầu đó.
     </script>
-
     <script>
         function showModalProduct(event, id, image, name, price, priceDiscount, productImages) {
             event.preventDefault(); // Ngăn chặn hành vi mặc định

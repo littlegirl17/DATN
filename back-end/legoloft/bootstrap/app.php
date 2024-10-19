@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Hàm này dùng để đăng ký middleware
         $middleware->alias([
             'admin' => App\Http\Middleware\AuthAdmin::class,
+            'user' => App\Http\Middleware\AuthAccount::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

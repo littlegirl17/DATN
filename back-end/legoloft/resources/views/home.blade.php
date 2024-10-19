@@ -104,8 +104,11 @@
 
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = false; // Mặc định là false
                             if (Auth::check()) {
-                                $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                                $isFavourite = $item->favourite
+                                    ->where('user_id', Auth::id())
+                                    ->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                             } else {
                                 $favourite = json_decode(Cookie::get('favourite', '[]'), true);
                                 // Lấy danh sách tất cả các product_id từ mảng $favourite
@@ -127,7 +130,7 @@
                                         <button onclick="addFavourite('{{ $item->id }}')" class="outline-0 border-0"
                                             style="background-color: transparent">
                                             <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
-                                                id="favourite-{{ $item->id }}"></i>
+                                                data-product-id="favourite-{{ $item->id }}"></i>
                                         </button>
                                         <button type="button" class="outline-0 border-0 "
                                             style="background-color: transparent"

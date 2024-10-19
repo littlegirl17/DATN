@@ -1,7 +1,7 @@
 @extends('myaccount.layout.layout')
 @section('title', 'Tài khoản của tôi')
 @section('content_myaccount')
-    <div class="container">
+    <div class="container pt_mobile">
         <div class="layout_member">
             <div class="layout_member_left">
                 @include('myaccount.menuLeftAccount')

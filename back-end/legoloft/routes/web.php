@@ -91,16 +91,19 @@ Route::get('deleteAllCart', [CartController::class, 'deleteAllCart'])->name('del
 Route::post('couponForm', [CouponController::class, 'couponApply'])->name('couponForm');
 Route::get('couponDelete', [CouponController::class, 'couponDelete'])->name('couponDelete');
 
-Route::get('member', [MyAccountController::class, 'member'])->name('member');
-Route::put('memberForm/{id}', [MyAccountController::class, 'memberForm'])->name('memberForm');
+Route::middleware('user')->group(function () {
+    Route::get('member', [MyAccountController::class, 'member'])->name('member');
+    Route::put('memberForm/{id}', [MyAccountController::class, 'memberForm'])->name('memberForm');
 
-Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
-Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
-Route::get('waitConfirmation', [MyAccountController::class, 'waitConfirmation'])->name('waitConfirmation');
-Route::get('pendingPurchase', [MyAccountController::class, 'pendingPurchase'])->name('pendingPurchase');
-Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping');
-Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
-Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
+    Route::get('purchase', [MyAccountController::class, 'purchase'])->name('purchase');
+    Route::get('informationPurchase/{id}', [MyAccountController::class, 'inforPurchase'])->name('inforPurchase');
+    Route::get('waitConfirmation', [MyAccountController::class, 'waitConfirmation'])->name('waitConfirmation');
+    Route::get('pendingPurchase', [MyAccountController::class, 'pendingPurchase'])->name('pendingPurchase');
+    Route::get('shipping', [MyAccountController::class, 'shipping'])->name('shipping');
+    Route::get('cancel', [MyAccountController::class, 'cancel'])->name('cancel');
+    Route::get('cancelConfirmation/{id}', [MyAccountController::class, 'cancelConfirmation'])->name('cancelConfirmation');
+});
+
 
 Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name('checkoutForm');
@@ -193,7 +196,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('order', [OrderAdminController::class, 'order'])->name('admin.order');
         Route::get('orderEdit/{id}', [OrderAdminController::class, 'orderEdit'])->name('admin.orderEdit');
         Route::post('orderUpdate/{id}', [OrderAdminController::class, 'orderUpdate'])->name('admin.orderUpdate'); // Thêm dòng này
-        
+
     });
 
     Route::middleware(['admin:category'])->group(function () {
