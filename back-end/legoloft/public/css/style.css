@@ -4197,15 +4197,10 @@ input[type=number]::-webkit-outer-spin-button {
 .favourite_title {
     font-family: "Alfa Slab One", serif;
     font-weight: 400;
-    font-style: normal;
     text-align: center;
-    background: linear-gradient(to right,
-            #fb0000, #00fbfb);
-    /* Phối hợp hai màu */
-    -webkit-background-clip: text;
-    /* Cắt nền theo chữ */
-    -webkit-text-fill-color: transparent;
-    /* Làm cho chữ trong suốt */
+    color: #000;
+    font-size: 45px;
+    margin-bottom: 10px;
 }
 
 .div_favourite {
@@ -4241,6 +4236,103 @@ input[type=number]::-webkit-outer-spin-button {
 .div_favourite_contain span {
     font-size: 1rem;
     color: #000;
+}
+
+
+.favourite_box {
+    background-color: #f9f9f9;
+    padding: 5px 20px 20px 20px;
+}
+
+.favourite_main {
+    display: flex;
+}
+
+.favourite_close {
+    display: flex;
+    justify-content: end;
+    padding: 10px 0;
+    font-size: 20px;
+    color: #696868;
+}
+
+.favourite_left {
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.favourite_left_name {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.favourite_left_price {
+    font-size: 18px;
+}
+
+.favourite_left_price span {
+    text-decoration: line-through;
+    margin-right: 5px;
+    color: #616161;
+}
+
+.favourite_right_img {
+    width: 250px;
+    height: 250px;
+}
+
+.favourite_right_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.favourite_cart {
+    margin-top: -111px;
+}
+
+/**/
+/* From Uiverse.io by WhiteNervosa */
+.btn_favourite {
+    margin-top: 85px;
+    font-size: 15px;
+    color: #504f4f;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+}
+
+.btn_favourite:focus,
+.btn_favourite:hover {
+    color: #d91717;
+}
+
+.btn_favourite:focus:after,
+.btn_favourite:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+.btn_favourite:after {
+    content: "";
+    pointer-events: none;
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #969393;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
 }
 
 /*-------------------------------END FAVOURITE---------------------------------------*/

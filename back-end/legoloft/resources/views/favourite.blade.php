@@ -4,8 +4,9 @@
     <!-- START MAIN -->
     <section class="product pt_mobile background_home">
         <div class="container">
-            <div class="title_home">
-                <h2 class="favourite_title">Sản phẩm yêu thích</h2>
+            <div class="title_favourite">
+                <h2 class="favourite_title">Danh sách </h2>
+                <h2 class="favourite_title">yêu thích của bạn</h2>
             </div>
             @if (count($favourite) > 0)
                 <div class="row">
@@ -27,7 +28,9 @@
                             $percent = ceil((($product->price - $priceDiscount) / $product->price) * 100);
                             $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                             if (Auth::check()) {
-                                $isFavourite = $product->favourite->contains('product_id', $item['product_id']); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                                $isFavourite = $product->favourite
+                                    ->where('user_id', Auth::id())
+                                    ->contains('product_id', $item['product_id']); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                             } else {
                                 $favourite = json_decode(Cookie::get('favourite', '[]'), true);
                                 // Lấy danh sách tất cả các product_id từ mảng $favourite
@@ -39,50 +42,51 @@
                             }
                         @endphp
 
-                        <div class="col-md-3 col-sm-4 col-12 mt-4">
-                            <div class="product_box">
-                                <div class="product_box_effect">
-                                    @if ($product->outstanding == 1)
-                                        <div class="product_box_tag">Nổi bật </div>
-                                    @endif
-                                    @if (isset($productDiscountPrice))
-                                        <div class="product_box_tag_sale_outstanding">{{ $percent }}%</div>
-                                    @endif
-                                    <div class="favourite_box_icon">
-                                        <button onclick="addFavourite('{{ $item['product_id'] }}')"
-                                            class="outline-0 border-0" style="background-color: transparent">
-                                            <i class="fa-solid fa-heart {{ $isFavourite ? 'red' : '' }}"
-                                                id="favourite-{{ $item['product_id'] }}"></i>
-                                        </button>
-                                        <button type="button" class="outline-0 border-0 "
-                                            style="background-color: transparent"
-                                            onclick="showModalProduct(event,'{{ $item['product_id'] }}','{{ $product->image }}','{{ $product->name }}','{{ $product->price }}','{{ $priceDiscount }}','{{ json_encode($productImageCollect) }}')">
-                                            <i class="fa-regular fa-eye"></i>
-                                        </button>
-                                        {{-- truyền vào id sản phẩm và số lượng cần thêm,user_id server láy từ sesion --}}
-                                        <button type="button" onclick="addToCart('{{ $item['product_id'] }}', 1)"
-                                            class="outline-0 border-0 " style="background-color: transparent">
-                                            <i class="fa-solid fa-bag-shopping"></i>
-                                        </button>
-                                    </div>
-                                    <div class="product_box_image">
-                                        <img src="{{ asset('img/' . $product->image) }}" alt="" />
-                                    </div>
-                                    <div class="product_box_content_out">
-                                        <div class="product_box_content">
-                                            <h3><a href="{{ route('detail', $product->slug) }}">{{ $product->name }}</a>
-                                            </h3>
+
+                        <div class="col-md-6 col-12 my-3">
+                            <div class="favourite_box">
+                                <div class="favourite_close">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </div>
+                                <div class="favourite_main">
+                                    <div class="favourite_left">
+                                        <div class="favourite_left_name">
+                                            <span>{{ $product->name }}</span>
                                         </div>
                                         @if ($productDiscountPrice)
-                                            <div class="product_box_price">
+                                            <div class="favourite_left_price">
                                                 <span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}</span>{{ number_format($productDiscountPrice->price, 0, ',', '.') . 'đ' }}
                                             </div>
                                         @else
-                                            <div class="product_box_price">
+                                            <div class="favourite_left_price">
                                                 <span></span>{{ number_format($product->price, 0, ',', '.') . 'đ' }}
                                             </div>
                                         @endif
+
                                     </div>
+                                    <div class="favourite_right">
+                                        <div class="favourite_right_img">
+                                            <img src="{{ asset('img/' . $product->image) }}" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="favourite_cart">
+                                    <svg id="Bag" width="24" height="25" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M2.95996 22.6598L3.90996 7.02979H20.59L21.54 22.6598H2.95996Z"
+                                            fill="#000000"></path>
+                                        <path
+                                            d="M10.1497 4.90967C10.7797 4.27967 11.6597 3.90967 12.5497 3.90967H12.5697C14.3497 3.90967 15.7897 5.28967 15.9397 7.02967H17.4397C17.2897 4.45967 15.1697 2.40967 12.5697 2.40967H12.5497C11.2597 2.40967 9.99969 2.92967 9.08969 3.83967C8.23969 4.68967 7.74969 5.83967 7.67969 7.02967H9.17969C9.24969 6.23967 9.57969 5.46967 10.1497 4.90967Z"
+                                            fill="#000000"></path>
+                                        <path d="M9.01978 12.3999H10.5598V10.8999H9.01978V12.3999Z" fill="#000000">
+                                        </path>
+                                        <path d="M14.6298 12.3999H16.1698V10.8999H14.6298V12.3999Z" fill="#000000">
+                                        </path>
+                                    </svg>
+                                    <button class="btn_favourite" onclick="addToCart('{{ $item['product_id'] }}', 1)">Thêm
+                                        vào giỏ
+                                        hàng</button>
                                 </div>
                             </div>
                         </div>

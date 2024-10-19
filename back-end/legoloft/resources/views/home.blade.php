@@ -182,7 +182,9 @@
                             $percent = ceil((($item->products->price - $item->price) / $item->products->price) * 100);
                             $productImageCollect = $item->products->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                             if (Auth::check()) {
-                                $isFavourite = $item->products->favourite->contains('product_id', $item->product_id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                                $isFavourite = $item->products->favourite
+                                    ->where('user_id', Auth::id())
+                                    ->contains('product_id', $item->product_id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                             } else {
                                 $favourite = json_decode(Cookie::get('favourite', '[]'), true);
                                 // Lấy danh sách tất cả các product_id từ mảng $favourite
@@ -302,10 +304,9 @@
                                                 );
                                                 $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                                                 if (Auth::check()) {
-                                                    $isFavourite = $product->favourite->contains(
-                                                        'product_id',
-                                                        $product->id,
-                                                    ); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                                                    $isFavourite = $product->favourite
+                                                        ->where('user_id', Auth::id())
+                                                        ->contains('product_id', $product->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                                                 } else {
                                                     $favourite = json_decode(Cookie::get('favourite', '[]'), true);
                                                     // Lấy danh sách tất cả các product_id từ mảng $favourite
@@ -403,7 +404,9 @@
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
                             if (Auth::check()) {
-                                $isFavourite = $item->favourite->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
+                                $isFavourite = $item->favourite
+                                    ->where('user_id', Auth::id())
+                                    ->contains('product_id', $item->id); //contains kiểm tra xem một tập hợp (collection) có chứa một giá trị cụ thể hay không.
                             } else {
                                 $favourite = json_decode(Cookie::get('favourite', '[]'), true);
                                 // Lấy danh sách tất cả các product_id từ mảng $favourite
