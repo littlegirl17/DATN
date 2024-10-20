@@ -1,142 +1,161 @@
 @extends('admin.layout.layout')
 @Section('title', 'Admin | Sửa danh mục')
-@Section('content') 
+@Section('content')
 
     <div class="container-fluid">
 
-    <div class="d-flex justify-content-between align-items-center  my-3">
-        <h2 class="title-page ">
-            Chỉnh sửa đơn hàng
-        </h2>
-        <a class="text-decoration-none text-light bg-31629e py-2 px-2" href="{{route('admin.order')}}">Quay lại</a>
+        <div class="d-flex justify-content-between align-items-center  my-3">
+            <h2 class="title-page ">
+                Chỉnh sửa đơn hàng
+            </h2>
+            <a class="text-decoration-none text-light bg-31629e py-2 px-2" href="{{ route('admin.order') }}">Quay lại</a>
+        </div>
+
+        <form action="{{ route('admin.orderUpdate', $order->id) }}" method="post" class="mt-5" enctype="multipart/form-data">
+            @csrf
+            <div class="buttonProductForm ">
+                <button class="btn btnF3">
+                    Lưu
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row orderAdminTable">
+                        <h4>Thông tin khách hàng</h4>
+                        <div class="col-md-6 ">
+                            <div class="form-group mt-3">
+                                <label for="title" class="form-label">Tên khách hàng</label>
+                                <input type="text" class="form-control" name="name" value="{{ $order->name }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="title" class="form-label">Email</label>
+                                <input type="text" class="form-control" name="email" value="{{ $order->email }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="title" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" name="phone" value="{{ $order->phone }}"
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mt-3">
+                                <label for="province" class="form-label">Tỉnh/Thành phố</label>
+                                <input type="text" class="form-control" name="province" value="{{ $order->province }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="district" class="form-label">Quận/Huyện</label>
+                                <input type="text" class="form-control" name="district" value="{{ $order->district }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="ward" class="form-label">Phường/Xã</label>
+                                <input type="text" class="form-control" name="ward" value="{{ $order->ward }}"
+                                    readonly>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12 orderAdminTable">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Hình</th>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th>Tổng cộng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($order->orderProducts as $index => $product)
+                                <tr class="trProduct">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td class="d-flex justify-content-center border-0">
+                                        <img src="{{ asset('img/' . $product->product->image) }}" alt=""
+                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                    </td>
+                                    <td>{{ $product->name }}</td>
+                                    <td class="unit-price">{{ number_format($product->price, 0, ',', '.') }} đ</td>
+                                    <td>
+                                        <input type="number" class="form-control quantity"
+                                            name="productByOrderEdit[{{ $index }}][newQuantity]"
+                                            value="{{ $product->quantity }}" min="1" readonly>
+                                    </td>
+                                    <td class="thanh-tien">
+                                        {{ number_format($product->price * $product->quantity, 0, ',', '.') }} đ</td>
+                                    <td class="total-orderProduct">
+                                        {{ number_format($product->price * $product->quantity, 0, ',', '.') }} đ</td>
+                                    <input type="hidden"
+                                        name="productByOrderEdit[{{ $index }}][newTotalOrderProduct]"
+                                        value="{{ $product->price * $product->quantity }}">
+                                </tr>
+                            @endforeach
+
+                            <tr class="trOrder">
+                                <td colspan="4">
+                                    <div class="form-group mt-3">
+                                        <label for="title" class="form-label">Phương thức thanh toán</label>
+                                        <input type="text" class="form-control" name="payment"
+                                            value="{{ $order->definePayment()[$order->payment] }}" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="title" class="form-label">Trạng thái đơn hàng</label>
+                                        <select class="form-select" aria-label="Default select example" name="status_id"
+                                            id="" selected
+                                            {{ $order->status == 1 ? 'Chờ xác nhận' : ($order->status == 2 ? 'Đã xác nhận' : ($order->status == 3 ? 'Đang vận chuyển' : ($order->status == 4 ? 'Hoàn thành' : 'Đã hủy'))) }}>
+
+                                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Chờ xác nhận
+                                            </option>
+                                            <option value="2" {{ $order->status == 2 ? 'selected' : '' }}>Đã xác nhận
+                                            </option>
+                                            <option value="3" {{ $order->status == 3 ? 'selected' : '' }}>Đang vận
+                                                chuyển</option>
+                                            <option value="4" {{ $order->status == 4 ? 'selected' : '' }}>Hoàn thành
+                                            </option>
+                                            <option value="5" {{ $order->status == 5 ? 'selected' : '' }}>Đã hủy
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </td>
+                                <td colspan="1"></td>
+                                <td colspan="2" class="total-order">
+                                    <div class="form-group mt-3">
+                                        <label for="title" class="form-label">Tạm tính</label>
+                                        <input type="text" class="form-control" name=""
+                                            value="{{ number_format($order->total, 0, ',', '.') }} đ" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="title" class="form-label">Tổng tiền</label>
+                                        <p id="displayedTotalOrder">{{ number_format($order->total, 0, ',', '.') }} đ</p>
+                                        <input type="hidden" class="form-control" name="total" value="">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </form>
     </div>
 
-    <form action="{{ route('admin.orderUpdate', $order->id) }}" method="post" class="mt-5"
-        enctype="multipart/form-data">
-        @csrf
-        <div class="buttonProductForm ">
-            <button class="btn btnF3">
-                Lưu
-            </button>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="row orderAdminTable">
-                    <h4>Thông tin khách hàng</h4>
-                    <div class="col-md-6 ">
-                        <div class="form-group mt-3">
-                            <label for="title" class="form-label">Tên khách hàng</label>
-                            <input type="text" class="form-control" name="name" value="{{$order->name}}" readonly>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="title" class="form-label">Email</label>
-                            <input type="text" class="form-control" name="email" value="{{$order->email}}" readonly>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="title" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" name="phone" value="{{$order->phone}}" readonly>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group mt-3">
-                            <label for="province" class="form-label">Tỉnh/Thành phố</label>
-                            <input type="text" class="form-control" name="province" value="{{ $order->province }}" readonly>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="district" class="form-label">Quận/Huyện</label>
-                            <input type="text" class="form-control" name="district" value="{{ $order->district }}" readonly>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="ward" class="form-label">Phường/Xã</label>
-                            <input type="text" class="form-control" name="ward" value="{{ $order->ward }}" readonly>
-                        </div>
-                        
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-md-2">
-
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12 orderAdminTable">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Hình</th>
-                            <th>Sản phẩm</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                            <th>Tổng cộng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($order->orderProducts as $index => $product)
-                            <tr class="trProduct">
-                                <td>{{ $index + 1 }}</td>
-                                <td class="d-flex justify-content-center border-0">
-                                    <img src="{{ asset('img/' . $product->product->image) }}" alt="" style="width: 50px; height: 50px; object-fit: cover;">
-                                </td>
-                                <td>{{ $product->name }}</td>
-                                <td class="unit-price">{{ number_format($product->price, 0, ',', '.') }} đ</td>
-                                <td>
-                                    <input type="number" class="form-control quantity" name="productByOrderEdit[{{ $index }}][newQuantity]" value="{{ $product->quantity }}" min="1" readonly>
-                                </td>
-                                <td class="thanh-tien">{{ number_format($product->price * $product->quantity, 0, ',', '.') }} đ</td>
-                                <td class="total-orderProduct">{{ number_format($product->price * $product->quantity, 0, ',', '.') }} đ</td>
-                                <input type="hidden" name="productByOrderEdit[{{ $index }}][newTotalOrderProduct]" value="{{ $product->price * $product->quantity }}">
-                            </tr>
-                        @endforeach
-                
-                        <tr class="trOrder">
-                            <td colspan="4">
-                                <div class="form-group mt-3">
-                                    <label for="title" class="form-label">Phương thức thanh toán</label>
-                                    <input type="text" class="form-control" name="payment" value="{{ $order->definePayment()[$order->payment] }}" readonly>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="title" class="form-label">Trạng thái đơn hàng</label>
-                                    <select class="form-select" aria-label="Default select example" name="status_id" id="">
-                                        <option value="" disabled selected>
-                                            {{ $order->status == 1 ? 'Chờ xác nhận' : ($order->status == 2 ? 'Đã xác nhận' : ($order->status == 3 ? 'Đang vận chuyển' : ($order->status == 4 ? 'Hoàn thành' : 'Đã hủy'))) }}
-                                        </option>
-                                        <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Chờ xác nhận</option>
-                                        <option value="2" {{ $order->status == 2 ? 'selected' : '' }}>Đã xác nhận</option>
-                                        <option value="3" {{ $order->status == 3 ? 'selected' : '' }}>Đang vận chuyển</option>
-                                        <option value="4" {{ $order->status == 4 ? 'selected' : '' }}>Hoàn thành</option>
-                                        <option value="5" {{ $order->status == 5 ? 'selected' : '' }}>Đã hủy</option>
-                                    </select>
-                                </div>
-                                
-                            </td>
-                            <td colspan="1"></td>
-                            <td colspan="2" class="total-order">
-                                <div class="form-group mt-3">
-                                    <label for="title" class="form-label">Tạm tính</label>
-                                    <input type="text" class="form-control" name="" value="{{ number_format($order->total, 0, ',', '.') }} đ" readonly>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="title" class="form-label">Tổng tiền</label>
-                                    <p id="displayedTotalOrder">{{ number_format($order->total, 0, ',', '.') }} đ</p>
-                                    <input type="hidden" class="form-control" name="total" value="">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-            </div>
-        </div>
-    </form>
-</div>
-
-
-<!-- <script>
+    <!-- <script>
         // Kích hoạt khi trang web đã được tải hoàn toàn
         document.addEventListener('DOMContentLoaded', function() {
             function formatCurrency(amount) {
@@ -243,4 +262,4 @@
         });
     </script>
 
-@endsection 
+@endsection
