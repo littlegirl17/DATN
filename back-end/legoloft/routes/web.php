@@ -173,7 +173,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:user'])->group(function () {
         Route::get('userAdmin', [UserAdminController::class, 'userAdmin'])->name('userAdmin');
+        Route::delete('user/delete/{id}', [UserAdminController::class, 'deleteUser'])->name('user.deleteUser');
     });
+
 
     Route::middleware(['admin:userGroup'])->group(function () {
         Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
