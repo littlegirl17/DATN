@@ -139,11 +139,19 @@
                                              <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa lại
                                              sản phẩm</button>
                                      </div>
+
                                  </td>
+
                              </tr>
+
                          @endforeach
                      </tbody>
+
                  </table>
+                 <nav class="navPhanTrang">
+                     {{ $products->links() }}
+                 </nav>
+
              </div>
          </form>
 
