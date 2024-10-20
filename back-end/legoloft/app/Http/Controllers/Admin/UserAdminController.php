@@ -19,7 +19,7 @@ class UserAdminController extends Controller
 
     public function deleteUser($id)
     {
-        // Tìm người dùng theo ID
+
         $user = User::find($id);
 
         if ($user) {
@@ -60,7 +60,7 @@ class UserAdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->password = bcrypt($request->password); // Mã hóa mật khẩu
+        $user->password = bcrypt($request->password);
 
         // Xử lý upload hình ảnh
         if ($request->hasFile('image')) {
@@ -68,16 +68,16 @@ class UserAdminController extends Controller
             $user->image = $imagePath;
         }
 
-        $user->save(); // Lưu người dùng vào cơ sở dữ liệu
+        $user->save();
 
         return redirect()->route('userAdmin')->with('success', 'Người dùng đã được thêm thành công.');
     }
 
     public function userEdit($id)
     {
-        $user = User::findOrFail($id); // Tìm người dùng theo ID
+        $user = User::findOrFail($id);
         $userGroups = UserGroup::all();
-        return view('admin.editUser', compact('user','userGroups')); // Trả về view chỉnh sửa với người dùng
+        return view('admin.editUser', compact('user','userGroups'));
     }
 
     public function userUpdate(Request $request, $id)
@@ -97,9 +97,9 @@ class UserAdminController extends Controller
         $user->email = $request->email;
         $user->user_group_id = $request->user_group_id;
         if ($request->filled('password')) {
-            $user->password = bcrypt($request->password); // Mã hóa mật khẩu nếu có
+            $user->password = bcrypt($request->password);
         }
-        $user->phone = $request->phone; // Cập nhật số điện thoại
+        $user->phone = $request->phone;
 
         // Xử lý upload hình ảnh
         if ($request->hasFile('image')) {
@@ -107,7 +107,7 @@ class UserAdminController extends Controller
             $user->image = $imagePath;
         }
 
-        $user->save(); // Lưu người dùng vào cơ sở dữ liệu
+        $user->save();
 
         return redirect()->route('userAdmin')->with('success', 'Người dùng đã được cập nhật thành công.');
     }
