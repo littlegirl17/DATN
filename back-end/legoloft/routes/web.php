@@ -174,6 +174,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     Route::middleware(['admin:user'])->group(function () {
         Route::get('userAdmin', [UserAdminController::class, 'userAdmin'])->name('userAdmin');
         Route::delete('user/delete/{id}', [UserAdminController::class, 'deleteUser'])->name('user.deleteUser');
+        Route::get('user/add', [UserAdminController::class, 'userAdd'])->name('user.add');
+        Route::post('user/store', [UserAdminController::class, 'userStore'])->name('user.store');
+
     });
 
 

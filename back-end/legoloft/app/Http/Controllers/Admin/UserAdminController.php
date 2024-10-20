@@ -22,31 +22,63 @@ class UserAdminController extends Controller
         $user = User::find($id);
 
         if ($user) {
-            $user->carts()->delete();  //cai nay xoa cac ban ghi lien quan trong bang cart
+            $user->carts()
+                ->delete();  //cai nay xoa cac ban ghi lien quan trong bang cart
 
 
             // Xóa người dùng
             $user->delete();
-            return redirect()->back()->with('success', 'Người dùng đã được xóa thành công.');
+            return redirect()->back()
+                ->with('success', 'Người dùng đã được xóa thành công.');
         } else {
-            return redirect()->back()->with('error', 'Người dùng không tồn tại.');
+            return redirect()->back()
+                ->with('error', 'Người dùng không tồn tại.');
         }
     }
 
 
-
-
-
-
-
-
-    public function userAdd() {
+    public function userAdd()
+    {
+        return view('admin.addUser'); // Chuyển đến view thêm người dùng
 
     }
 
-    public function userEdit() {}
+    public function userStore(Request $request)
+    {
+        // Xác thực dữ liệu
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:15',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    public function userCheckboxDelete() {}
+        // Tạo người dùng mới
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password); // Mã hóa mật khẩu
+
+        // Xử lý upload hình ảnh
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('img', 'public');
+            $user->image = $imagePath;
+        }
+
+        $user->save(); // Lưu người dùng vào cơ sở dữ liệu
+
+        return redirect()->route('userAdmin')->with('success', 'Người dùng đã được thêm thành công.');
+    }
+
+    public function userEdit()
+    {
+    }
+
+    public function userCheckboxDelete()
+    {
+    }
 
     // Còn mấy function tự nhìn thêm dô nhen Nghị đặt tên cho nó chuẩn xíu nhen giống thg adminstration
 
@@ -58,9 +90,15 @@ class UserAdminController extends Controller
         return view('admin.userGroup');
     }
 
-    public function userGroupAdd() {}
+    public function userGroupAdd()
+    {
+    }
 
-    public function userGroupEdit() {}
+    public function userGroupEdit()
+    {
+    }
 
-    public function userGroupCheckboxDelete() {}
+    public function userGroupCheckboxDelete()
+    {
+    }
 }

@@ -5,6 +5,12 @@
     <div class="container-fluid">
         <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách Người Dùng</h4>
 
+        <div class="mb-3">
+            <a href="{{ route('user.add') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Thêm Người Dùng
+            </a>
+        </div>
+
         <div class="border p-2">
             @if (session('success'))
                 <div class="alert alert-success">
