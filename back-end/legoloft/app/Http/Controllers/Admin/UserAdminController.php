@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\UserGroup;
 
 class UserAdminController extends Controller
 {
@@ -72,8 +73,43 @@ class UserAdminController extends Controller
         return redirect()->route('userAdmin')->with('success', 'Người dùng đã được thêm thành công.');
     }
 
-    public function userEdit()
+    public function userEdit($id)
     {
+        $user = User::findOrFail($id); // Tìm người dùng theo ID
+        $userGroups = UserGroup::all();
+        return view('admin.editUser', compact('user','userGroups')); // Trả về view chỉnh sửa với người dùng
+    }
+
+    public function userUpdate(Request $request, $id)
+    {
+        // Xác thực dữ liệu
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:15',
+            'user_group_id' => 'required|exists:user_groups,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = User::findOrFail($id); // Tìm người dùng theo ID
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->user_group_id = $request->user_group_id;
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password); // Mã hóa mật khẩu nếu có
+        }
+        $user->phone = $request->phone; // Cập nhật số điện thoại
+
+        // Xử lý upload hình ảnh
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('img', 'public');
+            $user->image = $imagePath;
+        }
+
+        $user->save(); // Lưu người dùng vào cơ sở dữ liệu
+
+        return redirect()->route('userAdmin')->with('success', 'Người dùng đã được cập nhật thành công.');
     }
 
     public function userCheckboxDelete()

@@ -61,7 +61,8 @@
                             </div>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info">
+                            <button type="button" class="btn btn-info"
+                                onclick="window.location.href='{{ route('user.edit', $user->id) }}'">
                                 <i class="fa-solid fa-pen"></i> Sửa
                             </button>
 
