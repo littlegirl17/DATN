@@ -41,13 +41,9 @@
     <script src="{{ asset('libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
-    <script src="{{ asset('js/api63Tinh.js') }}"></script>
+    <script src="{{ asset('js/api63.js') }} "></script>
+
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-    {{-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> --}}
 
 
     <script>

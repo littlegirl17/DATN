@@ -1,5 +1,5 @@
 @extends('admin.layout.layout')
-@section('title', 'Admin | Người dùng')
+@section('title', 'Admin | Khách hàng')
 @section('content')
 
     <div class="container-fluid">
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="border p-2">
-                <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách Người Dùng</h4>
+                <h4 class="my-2"><i class="pe-2 fa-solid fa-list"></i>Danh Sách Khách hàng</h4>
                 <table class="table table-bordered pt-3">
                     <thead class="table-header">
                         <tr>
@@ -101,7 +101,7 @@
                                     <div class="actionAdminProduct m-0 py-3">
 
                                         <button type="button" class="btnActionProductAdmin2"
-                                            onclick="window.location.href='{{ 'user.edit/' . $user->id }}'">
+                                            onclick="window.location.href='{{ route('userEditAdmin', $user->id) }}'">
                                             <i class="pe-2 fa-solid fa-pen" style="color: #ffffff;"></i>Sửa </button>
                                     </div>
                                 </td>

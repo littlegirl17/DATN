@@ -1,16 +1,24 @@
 @extends('admin.layout.layout')
-@Section('title', 'Admin| Sửa thành viên')
+@Section('title', 'Admin| Sửa khách hàng')
 @Section('content')
     <div class="container-fluid">
 
-        <h3 class="title-page ">
-            Chỉnh sửa khách hàng
-        </h3>
-        <form action="{{ route('userUpdate', $user->id) }}" method="post" class="formAdmin" enctype="multipart/form-data">
-            <div class="buttonProductForm ">
-                <button class="btn btnF3">
-                    Lưu
-                </button>
+        <div class="d-flex justify-content-between align-items-center  my-3">
+            <h3 class="title-page ">
+                Chỉnh sửa khách hàng
+            </h3>
+            <a class="text-decoration-none text-light bg-31629e py-2 px-2" href="">Quay lại</a>
+        </div>
+        <form class="formAdmin" action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="buttonProductForm">
+                <div class=""></div>
+                <div class="">
+                    <button type="submit" class="btnFormAdd">
+                        <p class="text m-0 p-0">Lưu</p>
+                    </button>
+                </div>
             </div>
             <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -28,40 +36,61 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group mt-3">
-                                <label for="title" class="form-label">Tên đăng nhập</label>
-                                <input type="text" class="form-control" id="name" name="name" value="">
+                                <label for="name" class="form-label">Tên khách hàng</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ old('name', $user->name) }}" required>
+                                @error('name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label for="title" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ old('email', $user->email) }}" required>
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="title" class="form-label">Số điện thoại</label>
-                                <input type="number" class="form-control" id="phone" name="phone" value="">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                    value="{{ old('phone', $user->phone) }}" maxlength="15">
+                                @error('phone')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
                                 <label for="title" class="form-label">Tỉnh/Thành phố</label>
                                 <select class="form-select" aria-label="Default select example" name="province"
                                     id="province">
-                                    <option selected value=""></option>
-                                    <option selected disabled>Tỉnh/Thành phố</option>
+                                    @if ($user->province)
+                                        <option selected value="{{ $user->province }}">{{ $user->province }}</option>
+                                    @else
+                                        <option selected disabled>Tỉnh/Thành phố</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="title" class="form-label">Quận/Huyện</label>
                                 <select class="form-select" aria-label="Default select example" name="district"
                                     id="district">
-                                    <option selected value=""></option>
-                                    <option selected disabled>Quận/Huyện</option>
+                                    @if ($user->district)
+                                        <option selected value="{{ $user->district }}">{{ $user->district }}</option>
+                                    @else
+                                        <option selected disabled>Quận/Huyện</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="title" class="form-label">Phường/Xã</label>
                                 <select class="form-select" aria-label="Default select example" name="ward"
                                     id="ward">
-                                    <option selected value=""></option>
-                                    <option selected disabled>Phường/Xã</option>
+                                    @if ($user->ward)
+                                        <option selected value="{{ $user->ward }}">{{ $user->ward }}</option>
+                                    @else
+                                        <option selected disabled>Phường/Xã</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -69,23 +98,32 @@
                             <div class="form-group mt-3">
                                 <label for="title" class="form-label">Ảnh tài khoản</label>
                                 <div class="custom-file">
-                                    <input type="file" name="image" id="HinhAnh">
-                                    <img src="" alt="" style="width:80px; height:80px; object-fit:cover;">
+                                    <input type="file" name="image" id="HinhAnh" class="inputFile">
+                                    <div class="imageFile">
+                                        <img src="{{ asset('img/' . $user->image) }}" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <label for="description" class="form-label">Nhóm khách hàng</label>
-                                <select class="form-select " name="user_group_id">
-                                    <option value="">
-                                    </option>
+                                <label for="user_group_id" class="form-label">Hạng thành viên</label>
+                                <select class="form-select" id="user_group_id" name="user_group_id" required>
+                                    @foreach ($userGroups as $userGroup)
+                                        <option value="{{ $userGroup->id }}"
+                                            {{ old('user_group_id', $user->user_group_id) == $userGroup->id ? 'selected' : '' }}>
+                                            {{ $userGroup->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('user_group_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group mt-3">
                                 <label for="title" class="form-label">Trạng thái</label>
-                                <select class="form-select " name="status">
-                                    <option value="0">Vô hiệu hóa</option>
-                                    <option value="1">Kích hoạt</option>
+                                <select class="form-select mt-3" aria-label="Default select example" name="status">
+                                    <option value="0"{{ $user->status == 0 ? 'selected' : '' }}>Vô hiệu hóa</option>
+                                    <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Kích hoạt</option>
                                 </select>
                             </div>
                         </div>
@@ -95,9 +133,13 @@
 
 
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                <div id="alert-message" class="alert alert-danger mt-3 py-2">
-
-                </div>
+                @if ($errors->any())
+                    <div id="alert-message" class="alertDanger">
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
+                    </div>
+                @endif
 
                 <div class="form-group mt-3">
                     <label for="password" class="form-label">Mật khẩu mới</label>

@@ -9,11 +9,13 @@ use App\Models\Favourite;
 use App\Models\UserGroup;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class UserAdminController extends Controller
 {
 
     private $userModel;
+    private $userGroupModel;
     private $cartModel;
     private $favouriteModel;
     private $orderModel;
@@ -21,6 +23,7 @@ class UserAdminController extends Controller
     public function __construct()
     {
         $this->userModel = new User();
+        $this->userGroupModel = new UserGroup();
         $this->cartModel = new Cart();
         $this->favouriteModel = new Favourite();
         $this->orderModel = new Order();
@@ -77,12 +80,48 @@ class UserAdminController extends Controller
 
     public function userAdd()
     {
-        return view('admin.addUser'); // Chuyển đến view thêm người dùng
+        $userGroups = $this->userGroupModel->userGroupAll();
+
+        return view('admin.userAdd', compact('userGroups')); // Chuyển đến view thêm người dùng
 
     }
 
     public function userStore(Request $request)
     {
+        // Fetch data from API
+        $response = Http::get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json');
+        $dataFetch = $response->json();
+        $provinceName = '';
+        $districtName = '';
+        $wardName = '';
+
+        //Lặp qua dữ liệu để lấy tên tỉnh
+        foreach ($dataFetch as $data) {
+
+            if ($data['Id'] == $request->province) {
+
+                $provinceName = $data['Name'];
+
+                // Lặp qua các huyện trong tỉnh để lấy tên huyện
+                foreach ($data['Districts'] as $district) {
+
+                    if ($district['Id'] == $request->district) {
+                        $districtName = $district['Name'];
+
+                        // Đi qua các phường của quận để lấy tên phường
+                        foreach ($district['Wards'] as $ward) {
+
+                            if ($ward['Id'] == $request->ward) {
+                                $wardName = $ward['Name'];
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
         // Xác thực dữ liệu
         $request->validate([
             'name' => 'required|string|max:255',
@@ -98,11 +137,24 @@ class UserAdminController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-
+        $user->province = $provinceName ?: $request->province; // toán tử elvis kiểm tra xem  (không rỗng, không phải null, không phải false)
+        $user->district =  $districtName ?: $request->district;
+        $user->ward = $wardName ?: $request->ward;
+        $user->status = $request->status;
+        $user->user_group_id = $request->user_group_id;
         // Xử lý upload hình ảnh
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('img', 'public');
-            $user->image = $imagePath;
+            // Lấy tên gốc của tệp
+            $image = $request->file('image');
+
+            $imageName = "{$user->id}.{$image->getClientOriginalExtension()}";
+
+            $image->move(public_path('img/'), $imageName);
+
+            $user->image = $imageName;
+
+            $user->save();
         }
 
         $user->save();
@@ -114,11 +166,46 @@ class UserAdminController extends Controller
     {
         $user = User::findOrFail($id);
         $userGroups = UserGroup::all();
-        return view('admin.editUser', compact('user', 'userGroups'));
+        return view('admin.userEdit', compact('user', 'userGroups'));
     }
 
     public function userUpdate(Request $request, $id)
     {
+        // Fetch data from API
+        $response = Http::get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json');
+        $dataFetch = $response->json();
+        $provinceName = '';
+        $districtName = '';
+        $wardName = '';
+
+        //Lặp qua dữ liệu để lấy tên tỉnh
+        foreach ($dataFetch as $data) {
+
+            if ($data['Id'] == $request->province) {
+
+                $provinceName = $data['Name'];
+
+                // Lặp qua các huyện trong tỉnh để lấy tên huyện
+                foreach ($data['Districts'] as $district) {
+
+                    if ($district['Id'] == $request->district) {
+                        $districtName = $district['Name'];
+
+                        // Đi qua các phường của quận để lấy tên phường
+                        foreach ($district['Wards'] as $ward) {
+
+                            if ($ward['Id'] == $request->ward) {
+                                $wardName = $ward['Name'];
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
         // Xác thực dữ liệu
         $request->validate([
             'name' => 'required|string|max:255',
@@ -138,12 +225,23 @@ class UserAdminController extends Controller
         }
         $user->phone = $request->phone;
 
-        // Xử lý upload hình ảnh
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('img', 'public');
-            $user->image = $imagePath;
+            // Lấy tên gốc của tệp
+            $image = $request->file('image');
+
+            $imageName = "{$user->id}.{$image->getClientOriginalExtension()}";
+
+            $image->move(public_path('img/'), $imageName);
+
+            $user->image = $imageName;
+
+            $user->save();
         }
 
+        $user->province = $provinceName ?: $request->province; // toán tử elvis kiểm tra xem  (không rỗng, không phải null, không phải false)
+        $user->district =  $districtName ?: $request->district;
+        $user->ward = $wardName ?: $request->ward;
+        $user->status = $request->status;
         $user->save();
 
         return redirect()->route('userAdmin')->with('success', 'Người dùng đã được cập nhật thành công.');

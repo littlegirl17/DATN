@@ -199,8 +199,8 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::delete('user/delete/{id}', [UserAdminController::class, 'deleteUser'])->name('user.deleteUser');
         Route::get('user/add', [UserAdminController::class, 'userAdd'])->name('user.add');
         Route::post('user/store', [UserAdminController::class, 'userStore'])->name('user.store');
-        Route::get('user/edit/{id}', [UserAdminController::class, 'userEdit'])->name('user.edit');
-        Route::post('user/update/{id}', [UserAdminController::class, 'userUpdate'])->name('user.update');
+        Route::get('user/edit/{id}', [UserAdminController::class, 'userEdit'])->name('userEditAdmin');
+        Route::put('user/update/{id}', [UserAdminController::class, 'userUpdate'])->name('user.update');
         Route::post('search-user', [UserAdminController::class, 'searchUser'])->name('searchUser');
         Route::put('update-status-user/{id}', [UserAdminController::class, 'userUpdateStatus'])->name('userUpdateStatus');
         Route::post('delete-checkbox-user', [UserAdminController::class, 'userDeleteCheckbox'])->name('checkboxDeleteUser');

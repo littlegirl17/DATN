@@ -1,5 +1,5 @@
  @extends('admin.layout.layout')
- @Section('title', 'Admin| Sửa thành viên')
+ @Section('title', 'Admin| Sửa người dùng')
  @Section('content')
 
      <div class="container-fluid">

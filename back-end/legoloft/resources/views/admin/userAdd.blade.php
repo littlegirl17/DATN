@@ -10,26 +10,56 @@
          <div class="row " style="margin-left: 1100px;">
 
          </div>
-         <form action="/admin/add-user" method="post" class="formAdmin" enctype="multipart/form-data">
-             <button class="btnFormAdd ">
-                 Lưu
-             </button>
-             <div class="form-group mt-3">
-                 <label for="title" class="form-label">Tên đăng nhập</label>
-                 <input type="text" class="form-control" id="name" name="name">
+         <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+             @csrf
+             <div class="buttonProductForm">
+                 <div class="">
+                     @if ($errors->any())
+                         @foreach ($errors->all() as $error)
+                             <div id="alert-message" class="alertDanger">{{ $error }}</div>
+                         @endforeach
+                     @endif
+                 </div>
+                 <div class="">
+                     <button type="submit" class="btnFormAdd">
+                         <p class="text m-0 p-0">Lưu</p>
+                     </button>
+                 </div>
              </div>
              <div class="form-group mt-3">
-                 <label for="title" class="form-label">Email</label>
-                 <input type="email" class="form-control" id="email" name="email">
+                 <label for="name" class="form-label">Tên người dùng</label>
+                 <input type="text" class="form-control" id="name" name="name" required>
+                 @error('name')
+                     <div class="text-danger">{{ $message }}</div>
+                 @enderror
              </div>
              <div class="form-group mt-3">
-                 <label for="title" class="form-label">Mật khẩu</label>
+                 <label for="email" class="form-label">Email</label>
+                 <input type="email" class="form-control" id="email" name="email" required>
+                 @error('email')
+                     <div class="text-danger">{{ $message }}</div>
+                 @enderror
+             </div>
+             <div class="form-group mt-3">
+                 <label for="phone" class="form-label">Số điện thoại</label>
+                 <input type="text" class="form-control" id="phone" name="phone" maxlength="15">
+                 @error('phone')
+                     <div class="text-danger">{{ $message }}</div>
+                 @enderror
+             </div>
+             <div class="form-group mt-3">
+                 <label for="password" class="form-label">Mật khẩu </label>
                  <input type="password" class="form-control" id="password" name="password">
+                 @error('password')
+                     <div class="text-danger">{{ $message }}</div>
+                 @enderror
              </div>
+
              <div class="form-group mt-3">
-                 <label for="title" class="form-label">Số điện thoại</label>
-                 <input type="number" class="form-control" id="phone" name="phone">
+                 <label for="" class="form-label">Xác nhận lại mật khẩu </label>
+                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
              </div>
+
              <div class="form-group mt-3">
                  <label for="title" class="form-label">Tỉnh thành</label>
                  <select class="form-select selectForm " name="province" id="province">
@@ -52,16 +82,24 @@
              </div>
              <div class="form-group mt-3">
                  <label for="exampleInputFile" class="label_admin">Ảnh sản phẩm</label>
-                 <div class="custom-file">
-                     <input type="file" name="image" id="HinhAnh">
-                     <div id="preview"></div>
+                 <div class="custom-file imageAdd p-3 ">
+                     <div class="imageFile">
+                         <div id="preview"><img src="{{ asset('img/lf.png') }}" alt=""></div>
+                     </div>
+                     <div class="">
+                         <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                     </div>
                  </div>
+                 @error('image')
+                     <div class="text-danger">{{ $message }}</div>
+                 @enderror
              </div>
              <div class="form-group mt-3">
                  <label for="description" class="form-label">Chọn nhóm khách hàng</label>
-                 <select class="form-select " name="category_id">
-                     <option value="0">Mặc định</option>
-                     <option value=""></option>
+                 <select class="form-select " name="user_group_id">
+                     @foreach ($userGroups as $item)
+                         <option value="{{ $item->id }}">{{ $item->name }}</option>
+                     @endforeach
                  </select>
              </div>
              <div class="form-group mt-3">

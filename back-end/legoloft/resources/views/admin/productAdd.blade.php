@@ -156,7 +156,7 @@
 
                          <div class="custom-file imageAdd p-3 ">
                              <div class="imageFile">
-                                 <div id="preview"><img src="../img/lf.png" alt=""></div>
+                                 <div id="preview"><img src="{{ asset('img/lf.png') }}" alt=""></div>
                              </div>
                              <div class="">
                                  <input type="file" name="image" id="HinhAnh" class="inputFile">
