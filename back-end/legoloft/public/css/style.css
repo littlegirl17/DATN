@@ -4350,6 +4350,30 @@ input[type=number]::-webkit-outer-spin-button {
 
 /*------------------------------- START ---------------------------------------*/
 
+canvas {
+    display: block;
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10000;
+}
+
+.container_bock {
+    width: 110%;
+    height: 100vh;
+    background-color: #000000;
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+}
+
 
 /*-------------------------------END ---------------------------------------*/
 
