@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\Favourite;
 use App\Models\Product;
+use App\Models\Assembly;
+use App\Models\Employee;
+use App\Models\Favourite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,12 +16,16 @@ class ProductController extends Controller
     private $productModel;
     private $commentModel;
     private $favouriteModel;
+    private $assemblyModel;
+    private $employeeModel;
 
     public function __construct()
     {
         $this->productModel = new Product();
         $this->commentModel = new Comment();
         $this->favouriteModel = new Favourite();
+        $this->assemblyModel = new Assembly();
+        $this->employeeModel = new Employee();
     }
 
     public function detail($slug)
@@ -28,7 +34,9 @@ class ProductController extends Controller
         $productRelated = $this->productModel->productRelated($detail);
         $productReview = $this->commentModel->productReview($detail);
         $productCountReview = $this->commentModel->productCountReview($detail);
-        return view('detail', compact('detail', 'productRelated', 'productReview', 'productCountReview'));
+        $employees = $this->employeeModel->employeeAll();
+
+        return view('detail', compact('detail', 'productRelated', 'productReview', 'productCountReview', 'employees'));
     }
 
     public function commentReview(Request $request)

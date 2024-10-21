@@ -20,6 +20,7 @@ use App\Http\Controllers\admin\ArticleAdminController;
 use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
+use App\Http\Controllers\admin\AssemblyAdminController;
 use App\Http\Controllers\admin\CategoryAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
 
@@ -111,6 +112,7 @@ Route::post('form-checkout', [CheckoutController::class, 'checkoutForm'])->name(
 Route::get('order', [CheckoutController::class, 'viewOrder'])->name('order');
 
 Route::post('buyNow', [CheckoutController::class, 'buyNow'])->name('buyNow');
+Route::post('employeeBuy', [CheckoutController::class, 'employeeBuy'])->name('employeeBuy');
 
 Route::get('detail/{slug}', [ProductController::class, 'detail'])->name('detail');
 Route::post('commentReview', [ProductController::class, 'commentReview'])->name('commentReview');
@@ -210,6 +212,11 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
     Route::middleware(['admin:userGroup'])->group(function () {
         Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
     });
+
+    Route::middleware(['admin:assembly'])->group(function () {
+        Route::get('assembly', [AssemblyAdminController::class, 'assembly'])->name('assembly');
+    });
+
 
     Route::middleware(['admin:comment'])->group(function () {
         Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');

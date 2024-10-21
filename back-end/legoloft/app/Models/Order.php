@@ -65,6 +65,11 @@ class Order extends Model
         return $this->where('user_id', $user_id)->count();
     }
 
+    public function totalUserOrder($user_id)
+    {
+        return $this->where('user_id', $user_id)->sum('total');
+    }
+
     // gọi orderProducts() trên một đơn hàng,
     // nó sẽ trả về tất cả các sản phẩm liên quan đến đơn hàng đó. Điều này giúp bạn dễ dàng lấy thông tin sản phẩm cho từng đơn hàng.
     // Mô hình Order: Đây là mô hình đại diện cho bảng đơn hàng.

@@ -84,6 +84,25 @@
                         </li>
                     @endif
 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" aria-expanded="false">
+                            <span style="width:20px">
+                                <i class="fa-solid fa-arrows-to-dot" style="color: #ffffff;font-size:20px;"></i>
+                            </span>
+                            <span class="hide-menu">Dịch vụ Lego</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="">
+                                <a class="sidebar-link" href="{{ route('assembly') }}" aria-expanded="false">
+                                    <span style="width:20px">
+                                        <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                    </span>
+                                    <span class="hide-menu">Dịch vụ lắp ráp</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                     @if (in_array('user', $permission) || in_array('userGroup', $permission))
                         <li class="sidebar-item">
                             <a class="sidebar-link" aria-expanded="false">
@@ -105,7 +124,8 @@
                                 @endif
                                 @if (in_array('userGroup', $permission))
                                     <li class="">
-                                        <a class="sidebar-link" href="{{ route('userGroup') }}" aria-expanded="false">
+                                        <a class="sidebar-link" href="{{ route('userGroup') }}"
+                                            aria-expanded="false">
                                             <span style="width:20px">
                                                 <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                             </span>

@@ -1660,6 +1660,7 @@ section {
 .detail_product_right_five {
     display: flex;
     padding: 20px 0 0 0;
+    justify-content: space-between;
 
 }
 
@@ -1667,6 +1668,7 @@ section {
     display: flex;
     flex-direction: row;
     column-gap: 10px;
+    justify-content: space-between;
 }
 
 /* From Uiverse.io by joe-watson-sbf */
@@ -4379,10 +4381,42 @@ canvas {
 
 
 
-/*------------------------------- START ---------------------------------------*/
+/*------------------------------- START ASSEMBLY---------------------------------------*/
+.lego_assembly ul {
+    display: flex;
+    justify-content: center;
+    gap: 0 1.25rem;
+    padding: 1.5rem 0;
+    flex-wrap: wrap;
+    text-align: center;
+}
 
+.lego_assembly ul li {
+    list-style: none;
+    max-width: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-/*-------------------------------END ---------------------------------------*/
+.lego_assembly ul li input[type="radio"]:checked+label {
+    padding: 2px 3px;
+    border-radius: 5px;
+    box-shadow: rgba(255, 0, 0, 0.3) 0px 0px 0px 3px;
+}
+
+.lego_assembly_img {
+    width: 100px;
+    height: 100px;
+}
+
+.lego_assembly_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*-------------------------------END ASSEMBLY---------------------------------------*/
 
 
 /*------------------------------- START ---------------------------------------*/

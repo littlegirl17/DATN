@@ -91,6 +91,69 @@
                                     Thêm vào giỏ hàng
                                 </button>
                             </div>
+
+                        </div>
+                        <div class="">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn_checkout mt-2" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">
+                                Dịch vụ lắp ráp Lego
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class=" modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Chọn nhân viên lắp ráp
+                                                lego</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('employeeBuy') }}" method="post" id="employeeForm">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="lego_assembly">
+                                                    <ul>
+                                                        @foreach ($employees as $item)
+                                                            <li>
+                                                                <input type="radio" id="employee-{{ $item->id }}"
+                                                                    name="employee" value="{{ $item->id }}" hidden>
+
+                                                                <label for="employee-{{ $item->id }}">
+                                                                    <div class="lego_assembly_img">
+                                                                        <img src="{{ asset('img/' . $item->image) }}"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <span>{{ $item->username }}</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <input type="hidden" name="employee_id" id="selectedEmployeeId">
+                                                <input type="hidden" name="product_id" value="{{ $detail->id }}">
+                                                <input type="hidden" name="name" value="{{ $detail->name }}">
+                                                <input type="hidden" name="price" value="{{ $detail->price }}">
+                                                <input type="hidden" name="priceDiscount"
+                                                    value="{{ $productDiscountPrice ? $productDiscountPrice->price : null }}">
+                                                <input type="hidden" name="image" value="{{ $detail->image }}">
+                                                <input type="hidden" id="inputQuantityHidden" name="quantity"
+                                                    value="1">
+
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Hủy</button>
+                                                <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -106,7 +169,8 @@
                             Thông số kỹ thuật
                         </button>
                     </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div class="row">
                                 <div class="col-md-9 col-sm-8 col-12">
@@ -156,7 +220,8 @@
                             Phản hồi khách hàng ({{ $productCountReview }}) đánh giá
                         </button>
                     </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div class="product_review">
                                 <ul>

@@ -387,6 +387,18 @@
             })
         });
     </script>
+    <script>
+        document.getElementById('employeeForm').addEventListener('submit', function() {
+            const selectedEmployee = document.querySelector('input[name="employee"]:checked');
+            if (!selectedEmployee) {
+                event.preventDefault();
+                alert('Vui lòng chọn một nhân viên.');
+            } else {
+                // Gán giá trị của nhân viên đã chọn vào input ẩn
+                document.getElementById('selectedEmployeeId').value = selectedEmployee.value;
+            }
+        })
+    </script>
 </body>
 
 </html>

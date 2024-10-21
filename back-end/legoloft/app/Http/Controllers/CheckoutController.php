@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Models\Assembly;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -41,7 +42,7 @@ class CheckoutController extends Controller
             // Lưu vào COOKIE - KHÔNG CẦN LOGIN
             $cart = json_decode(request()->cookie('cart'), true) ?? [];
         }
-        if (count($cart) == 0 && empty(session()->get('buyNow'))) {
+        if (count($cart) == 0 && empty(session()->get('buyNow')) && empty(session()->get('employeeAssembly'))) {
             return redirect()->route('cart');
         }
         return view('checkout', compact('cart', 'products'));
@@ -104,8 +105,8 @@ class CheckoutController extends Controller
         session()->put('iddh', $order);
 
 
-
         $buyNow = session()->get('buyNow', []);
+        $employeeAssembly = session()->get('employeeAssembly', []);
         if ($buyNow) {
             $price = $buyNow['priceDiscount'] ? $buyNow['priceDiscount'] : $buyNow['price'];
             $intoMoney = $price * $buyNow['quantity'];
@@ -118,6 +119,24 @@ class CheckoutController extends Controller
             $orderProduct->price = $price;
             $orderProduct->total = $intoMoney;
             $orderProduct->save();
+        } elseif ($employeeAssembly) {
+            $price = $employeeAssembly['priceDiscount'] ? $employeeAssembly['priceDiscount'] : $employeeAssembly['price'];
+            $intoMoney = $price * $employeeAssembly['quantity'];
+            $orderProduct = new OrderProduct();
+            $orderProduct->order_id = $order->id;
+            $orderProduct->product_id = $employeeAssembly['product_id'];
+            $orderProduct->quantity = $employeeAssembly['quantity'];
+            $orderProduct->name = $employeeAssembly['name'];
+            $orderProduct->price = $price;
+            $orderProduct->total = $intoMoney + $employeeAssembly['fee'];
+            $orderProduct->save();
+
+            $assembly = new Assembly();
+            $assembly->user_id = Auth::user()->id;
+            $assembly->product_id = $employeeAssembly['product_id'];
+            $assembly->fee = $employeeAssembly['fee'];
+            $assembly->employee_id = $employeeAssembly['employee_id'];
+            $assembly->save();
         } else {
             $cart = [];
             if (Auth::check()) {
@@ -323,6 +342,40 @@ class CheckoutController extends Controller
         ];
 
         session()->put('buyNow', $buyNowArray);
+        return redirect()->route('checkout');
+    }
+
+    public function employeeBuy(Request $request)
+    {
+        $employee_id = $request->input('employee_id');
+        $product_id = $request->input('product_id');
+        $name = $request->input('name');
+        $price = $request->input('price');
+        $priceDiscount = $request->input('priceDiscount');
+        $image = $request->input('image');
+        $quantity = $request->input('quantity');
+
+        $totalFee =  $priceDiscount ?  $priceDiscount :  $price;
+        $fee = 0;
+        if ($employee_id) {
+            $fee = 50000;
+            $totalFee += $fee;
+        }
+
+        $employeeArray = [
+            'employee_id' => $employee_id,
+            'product_id' => $product_id,
+            'name' => $name,
+            'image' => $image,
+            'price' => $price,
+            'priceDiscount' => $priceDiscount,
+            'quantity' => $quantity,
+            'totalFee' => $totalFee,
+            'fee' => $fee,
+
+        ];
+
+        session()->put('employeeAssembly', $employeeArray);
         return redirect()->route('checkout');
     }
 }

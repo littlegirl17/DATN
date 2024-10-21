@@ -47,6 +47,7 @@ class HomeController extends Controller
         $categoryChoose = $this->categoryModel->categoryChoose();
 
         session()->forget('buyNow');
+        session()->forget('employeeAssembly');
         return view('home', compact('productOutStanding',  'productDiscountSection',  'categories', 'productBestseller', 'productByCategory', 'user', 'productSoldOut', 'categoryAll', 'categoryChoose'));
     }
 

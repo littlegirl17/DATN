@@ -108,7 +108,8 @@
                                 <span>Phương thức thanh toán</span>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="momo" name="payment" value="3" style="display: none" />
+                                <input type="radio" class="payment" id="momo" name="payment" value="3"
+                                    style="display: none" />
                                 <label for="momo">
                                     <div class="checkout_main_left_three_img">
                                         <img src="img/momo.svg" alt="" />
@@ -117,7 +118,8 @@
                                 </label>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="vnpay" name="payment" value="2" style="display: none" />
+                                <input type="radio" class="payment"id="vnpay" name="payment" value="2"
+                                    style="display: none" />
                                 <label for="vnpay">
                                     <div class="checkout_main_left_three_img">
                                         <img src="img/vnpay_new.svg" alt="" />
@@ -126,7 +128,7 @@
                                 </label>
                             </div>
                             <div class="checkout_main_left_three_pttt">
-                                <input type="radio" id="cash" name="payment" value="1"
+                                <input type="radio" class="payment" id="cash" name="payment" value="1"
                                     style="display: none" />
                                 <label for="cash">
                                     <div class="checkout_main_left_three_img">
@@ -187,7 +189,54 @@
 
                                     </div>
                                 </div>
-                            @else
+                            @elseif (Session::has('employeeAssembly'))
+                                @php
+                                    $employee = Session::get('employeeAssembly');
+                                    //dd($employee['employee_id']);
+
+                                    $amount = $employee['priceDiscount']
+                                        ? $employee['priceDiscount']
+                                        : $employee['price'];
+                                    // thành tiền
+                                    $intoMoney = $amount * $employee['quantity'];
+                                    $assemblyFee = $employee['fee'];
+                                    // tổng tiền
+                                    $total = $intoMoney + $assemblyFee;
+                                @endphp
+                                <div class="row checkout_row_right">
+                                    <input type="hidden" name="product_id" value="{{ $employee['product_id'] }}">
+                                    <div class="col-md-3 col-sm-3 col-4">
+                                        <div class="img_checkout_product">
+                                            <img src="{{ asset('img/' . $employee['image']) }}" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-9 col-8">
+                                        <h5>{{ $employee['name'] }}</h5>
+                                        <p class="">Số lượng: {{ $employee['quantity'] }}</p>
+                                        @if ($employee['priceDiscount'])
+                                            <p class="pricecheckout_mobile">
+                                                <span>{{ number_format($employee['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($employee['priceDiscount'], 0, ',', '.') . 'đ' }}
+                                            </p>
+                                        @else
+                                            <p class="pricecheckout_mobile">
+                                                <span></span>{{ number_format($employee['price'], 0, ',', '.') . 'đ' }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-3 col-12 checkout_right_price">
+                                        @if ($employee['priceDiscount'])
+                                            <p class="product_box_price">
+                                                <span>{{ number_format($employee['price'], 0, ',', '.') . 'đ' }}</span>{{ number_format($employee['priceDiscount'], 0, ',', '.') . 'đ' }}
+                                            </p>
+                                        @else
+                                            <p class="product_box_price">
+                                                <span></span>{{ number_format($employee['price'], 0, ',', '.') . 'đ' }}
+                                            </p>
+                                        @endif
+
+                                    </div>
+                                </div>
+                            @elseif ($cart)
                                 @foreach ($cart as $item)
                                     @php
                                         $product = $products->where('id', $item['product_id'])->first();
@@ -251,6 +300,15 @@
                         </div>
                         <div class="checkout_main_right_total">
                             <div class="check_item_total_one">
+                                @if (Session::has('employeeAssembly'))
+                                    @php
+                                        $employee = Session::get('employeeAssembly');
+                                    @endphp
+                                    <div class="checkout_item_total">
+                                        <span>Phí lắp ráp</span>
+                                        <span>{{ number_format($employee['fee'], 0, ',', '.') . 'đ' }}</span>
+                                    </div>
+                                @endif
                                 <div class="checkout_item_total">
                                     <span>Tạm tính</span>
                                     <span>{{ number_format($total, 0, ',', '.') . 'đ' }}</span>
@@ -308,7 +366,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn_checkout">Hoàn tất đơn hàng</button>
+                                    <button class="btn_checkout" onclick="return submitPayment();">Hoàn tất đơn
+                                        hàng</button>
                                 </div>
                             </div>
                         </div>
@@ -319,4 +378,22 @@
     </div>
     <!-- END MAIN -->
 
+    <script>
+        function submitPayment() {
+            const payments = document.querySelectorAll('.payment');
+            let isChecked = false;
+
+            payments.forEach(payment => {
+                if (payment.checked) {
+                    isChecked = true;
+                }
+            });
+
+            if (!isChecked) {
+                alert('Vui lòng chọn phương thức thanh toán');
+                return false;
+            }
+
+        }
+    </script>
 @endsection

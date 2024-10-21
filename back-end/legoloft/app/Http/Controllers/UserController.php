@@ -12,14 +12,17 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\ForgetPasswordRequest;
+use App\Models\Order;
 
 class UserController extends Controller
 {
     private $userModel;
+    private $orderModel;
 
     public function __construct()
     {
         $this->userModel = new User();
+        $this->orderModel = new Order();
     }
 
     public function login(LoginValidate $request)

@@ -39,6 +39,7 @@
     <div class="container_bock">
         <div id="controls">
             <button id="addBlock">Thêm Khối LEGO</button>
+            <button id="saveBlock">Lưu Vị Trí Khối</button>
         </div>
     </div>
 
@@ -52,7 +53,6 @@
         let mouse = new THREE.Vector2();
 
         function init() {
-            // Tạo scene
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             renderer = new THREE.WebGLRenderer({
@@ -61,21 +61,19 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.querySelector('.container_bock').appendChild(renderer.domElement);
 
-            // Ánh sáng
             const light = new THREE.AmbientLight(0x404040);
             scene.add(light);
             camera.position.z = 5;
 
-            // Thêm sự kiện cho nút
             document.getElementById("addBlock").addEventListener("click", addBlock);
+            document.getElementById("saveBlock").addEventListener("click", saveSelectedBlockPosition);
+
             window.addEventListener("mousedown", onMouseDown);
             window.addEventListener("mouseup", onMouseUp);
             window.addEventListener("mousemove", onMouseMove);
             window.addEventListener("resize", onWindowResize);
 
-            // Lấy các khối từ cơ sở dữ liệu khi trang được tải
             fetchBlocksFromDB();
-
             animate();
         }
 
@@ -86,10 +84,8 @@
             });
             const block = new THREE.Mesh(geometry, material);
 
-            // Đặt vị trí khối ngẫu nhiên
             block.position.set((Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4);
 
-            // Lưu khối vào cơ sở dữ liệu
             saveBlockToDB(block.position, material.color.getHexString(), block);
 
             scene.add(block);
@@ -107,13 +103,13 @@
                         position_x: position.x,
                         position_y: position.y,
                         position_z: position.z,
-                        color: `#${color}` // Lưu màu sắc dưới dạng chuỗi hex
+                        color: `#${color}`
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    block.id = data.id; // Giả sử API trả về ID của khối
-                    console.log('Khối đã được lưu:', data);
+                    block.id = data.id;
+                    console.log('Khối đã được lưu:', block.id);
                 })
                 .catch(error => console.error('Lỗi:', error));
         }
@@ -129,15 +125,13 @@
                         });
                         const block = new THREE.Mesh(geometry, material);
 
-                        // Đặt vị trí khối
                         block.position.set(
                             parseFloat(blockData.position_x),
                             parseFloat(blockData.position_y),
                             parseFloat(blockData.position_z)
                         );
 
-                        block.id = blockData.id; // Gán ID cho khối
-
+                        block.id = blockData.id;
                         scene.add(block);
                         blocks.push(block);
                     });
@@ -154,15 +148,41 @@
 
             if (intersects.length > 0) {
                 selectedBlock = intersects[0].object;
+            } else {
+                selectedBlock = null; // Nếu không có khối nào được chọn
             }
         }
 
         function onMouseUp() {
             if (selectedBlock) {
-                // Lưu vị trí mới của khối vào cơ sở dữ liệu
-                saveBlockPositionToDB(selectedBlock);
+                // Kiểm tra xem vị trí đã thay đổi chưa
+                if (selectedBlock.hasMoved) {
+                    // Lưu vị trí mới của khối vào cơ sở dữ liệu
+                    saveBlockPositionToDB(selectedBlock);
+                }
             }
             selectedBlock = null;
+        }
+
+
+        function onMouseMove(event) {
+            if (selectedBlock) {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                raycaster.setFromCamera(mouse, camera);
+
+                const intersects = raycaster.intersectObject(new THREE.Mesh(
+                    new THREE.PlaneGeometry(1000, 1000),
+                    new THREE.MeshBasicMaterial({
+                        visible: false
+                    })
+                ));
+
+                if (intersects.length > 0) {
+                    selectedBlock.position.copy(intersects[0].point);
+                }
+            }
         }
 
         function onMouseMove(event) {
@@ -182,7 +202,16 @@
 
                 if (intersects.length > 0) {
                     selectedBlock.position.copy(intersects[0].point);
+                    selectedBlock.hasMoved = true; // Đánh dấu khối đã di chuyển
                 }
+            }
+        }
+
+        function saveSelectedBlockPosition() {
+            if (selectedBlock) {
+                saveBlockPositionToDB(selectedBlock);
+            } else {
+                console.log("Không có khối nào được chọn.");
             }
         }
 
@@ -191,8 +220,6 @@
                 console.log("Block hoặc ID của khối không tồn tại:", block);
                 return;
             }
-
-            console.log('Block ID:', block.id);
 
             fetch(`/blocks/${block.id}`, {
                     method: 'PUT',
@@ -210,16 +237,17 @@
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    return response.json(); // Chỉ parse JSON nếu phản hồi hợp lệ
+                    return response.json();
                 })
                 .then(data => {
                     console.log('Vị trí khối đã được lưu:', data);
+                    block.hasMoved = false; // Reset trạng thái sau khi lưu
                 })
                 .catch(error => {
                     console.error('Lỗi khi lưu vị trí khối:', error);
-                    console.log(error.message); // Thêm log lỗi chi tiết hơn
                 });
         }
+
 
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -234,7 +262,6 @@
 
         init();
     </script>
-
 </body>
 
 </html>
