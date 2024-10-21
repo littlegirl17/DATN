@@ -12,6 +12,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminstyle.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
 </head>
 
@@ -41,6 +43,8 @@
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/api63Tinh.js') }}"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 
     {{-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> --}}

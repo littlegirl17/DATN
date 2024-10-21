@@ -22,6 +22,15 @@ class UserGroup extends Model
         return $this->orderBy('id', 'desc')->get();
     }
 
+
+    public function userEdit($id)
+    {
+        $user = User::findOrFail($id);
+        $userGroups = UserGroup::all();
+
+        return view('admin.user.edit', compact('user', 'userGroups'));
+    }
+
     public function userGroupDefault()
     {
         return $this->where('id', 1)->first();

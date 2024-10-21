@@ -196,7 +196,14 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:user'])->group(function () {
         Route::get('userAdmin', [UserAdminController::class, 'userAdmin'])->name('userAdmin');
+        Route::delete('user/delete/{id}', [UserAdminController::class, 'deleteUser'])->name('user.deleteUser');
+        Route::get('user/add', [UserAdminController::class, 'userAdd'])->name('user.add');
+        Route::post('user/store', [UserAdminController::class, 'userStore'])->name('user.store');
+        Route::get('user/edit/{id}', [UserAdminController::class, 'userEdit'])->name('user.edit');
+        Route::post('user/update/{id}', [UserAdminController::class, 'userUpdate'])->name('user.update');
+
     });
+
 
     Route::middleware(['admin:userGroup'])->group(function () {
         Route::get('userGroup', [UserAdminController::class, 'userGroup'])->name('userGroup');
