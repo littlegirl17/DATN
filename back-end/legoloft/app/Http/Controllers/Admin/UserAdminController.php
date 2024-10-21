@@ -2,15 +2,52 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Cart;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Favourite;
 use App\Models\UserGroup;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserAdminController extends Controller
 {
+
+    private $userModel;
+    private $cartModel;
+    private $favouriteModel;
+    private $orderModel;
+
+    public function __construct()
+    {
+        $this->userModel = new User();
+        $this->cartModel = new Cart();
+        $this->favouriteModel = new Favourite();
+        $this->orderModel = new Order();
+    }
+
     /*--------------------------------------Khách hàng----------------------------------------*/
+
+    public function searchUser(Request $request)
+    {
+        //Lấy từ khóa tìm kiếm từ yêu cầu
+        $filter_email = $request->input('filter_email');
+        $filter_status = $request->input('filter_status');
+
+        $users = $this->userModel->searchUser($filter_email, $filter_status);
+
+        return view('admin.user', compact('users', 'filter_email'));
+    }
+
+
+    public function userUpdateStatus(Request $request, $id)
+    {
+        $user = $this->userModel->findOrFail($id);
+        $user->status = $request->status;
+        $user->save();
+        return response()->json(['success' => true]);
+    }
+
     public function userAdmin()
     {
         $users = User::paginate(5);
@@ -77,7 +114,7 @@ class UserAdminController extends Controller
     {
         $user = User::findOrFail($id);
         $userGroups = UserGroup::all();
-        return view('admin.editUser', compact('user','userGroups'));
+        return view('admin.editUser', compact('user', 'userGroups'));
     }
 
     public function userUpdate(Request $request, $id)
@@ -112,8 +149,30 @@ class UserAdminController extends Controller
         return redirect()->route('userAdmin')->with('success', 'Người dùng đã được cập nhật thành công.');
     }
 
-    public function userCheckboxDelete()
+    public function userDeleteCheckbox(Request $request)
     {
+        $user_id = $request->input('user_id');
+
+        if ($user_id) {
+            foreach ($user_id as $userId) {
+
+                $user = $this->userModel->findOrFail($userId);
+                $countCart = $this->cartModel->countCart($userId);
+                $countFavourite = $this->favouriteModel->countFavourite($userId);
+                $countOrder = $this->orderModel->countOrder($userId);
+
+                if ($countCart > 0) {
+                    return redirect()->route('userAdmin')->with('error', ' Cảnh báo: Khách hàng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countCart . ' giỏ hàng!');
+                } elseif ($countFavourite > 0) {
+                    return redirect()->route('userAdmin')->with('error', ' Cảnh báo: Khách hàng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countFavourite    . ' yêu thích!');
+                } elseif ($countOrder > 0) {
+                    return redirect()->route('userAdmin')->with('error', ' Cảnh báo: Khách hàng này không thể bị xóa vì nó hiện được chỉ định cho ' . $countOrder    . ' đơn hàng!');
+                } else {
+                    $user->delete();
+                }
+            }
+            return redirect()->route('userAdmin');
+        }
     }
 
     // Còn mấy function tự nhìn thêm dô nhen Nghị đặt tên cho nó chuẩn xíu nhen giống thg adminstration
@@ -126,15 +185,9 @@ class UserAdminController extends Controller
         return view('admin.userGroup');
     }
 
-    public function userGroupAdd()
-    {
-    }
+    public function userGroupAdd() {}
 
-    public function userGroupEdit()
-    {
-    }
+    public function userGroupEdit() {}
 
-    public function userGroupCheckboxDelete()
-    {
-    }
+    public function userGroupCheckboxDelete() {}
 }

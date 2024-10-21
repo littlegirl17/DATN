@@ -60,6 +60,10 @@ class Order extends Model
         return $this->hasMany(OrderProduct::class, 'order_id'); // 'order_id' là khóa ngoại trong OrderProduct
     }
 
+    public function countOrder($user_id)
+    {
+        return $this->where('user_id', $user_id)->count();
+    }
 
     // gọi orderProducts() trên một đơn hàng,
     // nó sẽ trả về tất cả các sản phẩm liên quan đến đơn hàng đó. Điều này giúp bạn dễ dàng lấy thông tin sản phẩm cho từng đơn hàng.

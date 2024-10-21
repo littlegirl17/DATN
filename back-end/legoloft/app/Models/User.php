@@ -71,4 +71,19 @@ class User extends Authenticatable
     {
         return $this->where('email', $email)->first();
     }
+
+    public function searchUser($filter_email, $filter_status)
+    {
+        $query = $this->query();
+
+        if (!is_null($filter_email)) {
+            $query->where('email', 'LIKE', "%{$filter_email}%");
+        }
+
+        if (!is_null($filter_status)) {
+            $query->where('status', '=', (int)$filter_status);
+        }
+
+        return $query->paginate(10);
+    }
 }

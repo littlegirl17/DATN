@@ -201,7 +201,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::post('user/store', [UserAdminController::class, 'userStore'])->name('user.store');
         Route::get('user/edit/{id}', [UserAdminController::class, 'userEdit'])->name('user.edit');
         Route::post('user/update/{id}', [UserAdminController::class, 'userUpdate'])->name('user.update');
-
+        Route::post('search-user', [UserAdminController::class, 'searchUser'])->name('searchUser');
+        Route::put('update-status-user/{id}', [UserAdminController::class, 'userUpdateStatus'])->name('userUpdateStatus');
+        Route::post('delete-checkbox-user', [UserAdminController::class, 'userDeleteCheckbox'])->name('checkboxDeleteUser');
     });
 
 

@@ -24,4 +24,9 @@ class Cart extends Model
     {
         return $this->where('user_id', $user_id)->orderBy('id', 'desc')->get();
     }
+
+    public function countCart($user_id)
+    {
+        return $this->where('user_id', $user_id)->count();
+    }
 }
