@@ -106,50 +106,45 @@ class OrderAdminController extends Controller
 
             return redirect()->route('admin.order')->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
         } else {
-            $statuses = $request->status; // status đuocẹ client gửi lên (chưa đc lưu vào db)
+            $statuses = $request->status; // status được client gửi lên (chưa được lưu vào db)
+
             switch ((int)$statuses) {
-                case 1: // status đucợ gửi lên (Đã xác nhận)
+                case 1: // Chờ xác nhận
                     if ($order->status != 1) {
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Chờ xác nhận"!');
                     }
                     break;
-                case 2: // status đucợ gửi lên (Đã xác nhận)
+
+                case 2: // Đã xác nhận
                     if ($order->status != 1) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Chờ xác nhận"!');
-                    }
-                    break;
-                case 3:
-                    if (in_array($statuses, [1])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Chờ xác nhận"!');
-                    } elseif (in_array($statuses, [2])) {
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã xác nhận"!');
                     }
                     break;
-                case 4:
-                    if (in_array($statuses, [1])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Chờ xác nhận"!');
-                    } elseif (in_array($statuses, [2])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã xác nhận"!');
-                    } elseif (in_array($statuses, [3])) {
+
+                case 3: // Đã vận chuyển
+                    if ($order->status != 2) {
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã vận chuyển"!');
                     }
                     break;
-                case 5:
-                    if (in_array($statuses, [1])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Chờ xác nhận"!');
-                    } elseif (in_array($statuses, [2])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã xác nhận"!');
-                    } elseif (in_array($statuses, [3])) {
-                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã vận chuyển"!');
-                    } elseif (in_array($statuses, [4])) {
+
+                case 4: // Hoàn thành
+                    if ($order->status != 3) {
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Hoàn thành"!');
                     }
                     break;
+
+                case 5: // Hủy
+                    if ($order->status != 4) {
+                        return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Hủy"!');
+                    }
+                    break;
+
                 default:
-                    # code...
+                    return redirect()->route('admin.order')->with('error', 'Trạng thái không hợp lệ!');
                     break;
             }
-            // update khi ko có lỗi
+
+            // Cập nhật trạng thái khi không có lỗi
             $order->status = $statuses;
             $order->save();
             return redirect()->route('admin.order')->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
