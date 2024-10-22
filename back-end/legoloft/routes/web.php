@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\admin\AssemblyAdminController;
 use App\Http\Controllers\admin\CategoryAdminController;
 use App\Http\Controllers\admin\CategoryArticleAdminController;
+use App\Http\Controllers\admin\EmployeeAdminController;
 
 Route::get('search', [HomeController::class, 'search'])->name('search');
 Route::get('/', [HomeController::class, 'index']);
@@ -215,8 +216,15 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:assembly'])->group(function () {
         Route::get('assembly', [AssemblyAdminController::class, 'assembly'])->name('assembly');
+        Route::get('editAssembly/{id}', [AssemblyAdminController::class, 'assemblyEdit'])->name('editAssembly');
+        Route::put('editAssembly/{id}', [AssemblyAdminController::class, 'assemblyUpdate']);
     });
 
+    Route::middleware(['admin:employee'])->group(function () {
+        Route::get('employee', [EmployeeAdminController::class, 'employee'])->name('employee');
+        Route::get('editEmployee/{id}', [EmployeeAdminController::class, 'employeeEdit'])->name('editEmployee');
+        Route::put('editEmployee/{id}', [EmployeeAdminController::class, 'employeeUpdate']);
+    });
 
     Route::middleware(['admin:comment'])->group(function () {
         Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
@@ -226,7 +234,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('order', [OrderAdminController::class, 'order'])->name('admin.order');
         Route::get('orderEdit/{id}', [OrderAdminController::class, 'orderEdit'])->name('admin.orderEdit');
         Route::post('orderUpdate/{id}', [OrderAdminController::class, 'orderUpdate'])->name('admin.orderUpdate'); // Thêm dòng này
-
+        // Route::put('orderUpdateStatusAssembly/{id}', [OrderAdminController::class, 'orderUpdateStatusAssembly'])->name('orderUpdateStatusAssembly');
     });
 
     Route::middleware(['admin:category'])->group(function () {

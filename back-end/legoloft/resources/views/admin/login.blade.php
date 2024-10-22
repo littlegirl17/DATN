@@ -48,6 +48,26 @@
                             <label for="">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" />
                         </div>
+
+                        <div class="radio-button-container">
+                            <div class="radio-button">
+                                <input type="radio" class="radio-button__input" id="radio1" name="account_type"
+                                    value="admin">
+                                <label class="radio-button__label" for="radio1">
+                                    <span class="radio-button__custom"></span>
+                                    Quản trị viên
+                                </label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" class="radio-button__input" id="radio2" name="account_type"
+                                    value="employee">
+                                <label class="radio-button__label" for="radio2">
+                                    <span class="radio-button__custom"></span>
+                                    Nhân viên
+                                </label>
+                            </div>
+
+                        </div>
                         <button type="submit" class="btn_admin_login">Đăng nhập</button>
                     </div>
                 </div>

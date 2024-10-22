@@ -132,6 +132,7 @@ class CheckoutController extends Controller
             $orderProduct->save();
 
             $assembly = new Assembly();
+            $assembly->order_id = $order->id;
             $assembly->user_id = Auth::user()->id;
             $assembly->product_id = $employeeAssembly['product_id'];
             $assembly->fee = $employeeAssembly['fee'];

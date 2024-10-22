@@ -139,6 +139,15 @@
                             </label>
                             <p> Assembly(Lắp ráp Lego)</p>
                         </div>
+                        <div class="d-flex">
+                            <label class="checkbox-btnGroup">
+                                <label for="checkbox"></label>
+                                <input type="checkbox" class="" name="permission[]" value="employee"
+                                    id="employee">
+                                <span class="checkmark"></span>
+                            </label>
+                            <p> Employee(Nhân viên)</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">

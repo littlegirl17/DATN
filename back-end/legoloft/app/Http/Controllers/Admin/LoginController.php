@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Administration;
 use App\Http\Controllers\Controller;
@@ -10,40 +11,15 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     private $administrationModel;
+    private $employeeModel;
+
 
     public function __construct()
     {
         $this->administrationModel = new Administration();
+        $this->employeeModel = new Employee();
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-
-        if (auth()->guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) { // auth()->guard('admin'): Đây là cách gọi đến guard admin, cho phép bạn xác thực người dùng thuộc loại admin.  // attempt([...]): Phương thức này cố gắng xác thực người dùng với thông tin đã cung cấp (username và password). Nếu xác thực thành công, nó sẽ trả về true.
-            $request->session()->regenerate(); // regenerate sử dụng để tạo một ID phiên mới cho người dùng tránh các cuộc tấn công
-            $admin = auth()->guard('admin')->user(); // auth:hàm toàn cục dùng để truy cập vào hệ thống xác thực // guard('admin'): guard cho phép bạn xác thực nhiều loại người dùng khác nhau, khi ban gọi f=guard bạn đang mún làm việc với guard dành riêng cho người dùng admin.  // user(): trả về thông tin của người dùng đang login hiện tại
-
-            if ($admin->status >= 1) {
-                session()->put('admin', $admin);
-                return redirect()->route('dashboard')->with('success', 'Đăng nhập quản trị thành công.');
-            } else {
-                auth()->guard('admin')->logout();
-                return redirect()->back()->with('error', 'Tài khoản quản trị của bạn đã bị khóa');
-            }
-        } else {
-            return redirect()->back()->with(['error' => 'Tên đăng nhập hoặc mật khẩu không đúng!']);
-        }
-
-        $adminCheckAccount = $this->administrationModel->administrationCheckLogin($request->username);
-
-        if (!$adminCheckAccount) {
-            return redirect()->back()->with(['error' => 'Tài khoản không tồn tại!']);
-        }
-    }
 
     public function logout(Request $request)
     {
@@ -52,5 +28,58 @@ class LoginController extends Controller
         $request->session()->regenerateToken(); // tạo một CSRF token mới
         $request->session()->flush(); // xóa tất cả dữ liệu trong phiên hiện tại.
         return redirect()->route('adminLoginForm');
+    }
+
+    /*---------------------------------------------------------------- */
+    public function login(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+            'account_type' => 'required', // Bắt buộc chọn loại tài khoản
+        ]);
+
+        $credentials = ['username' => $request->username, 'password' => $request->password];
+
+        // Xác thực dựa trên loại tài khoản
+        if ($request->account_type == 'admin') {
+            $adminCheckAccount = $this->administrationModel->administrationCheckLogin($credentials['username']);
+            if (!$adminCheckAccount) {
+                return redirect()->back()->with(['error' => 'Tài khoản không tồn tại trong hệ thống!']);
+            }
+            if (auth()->guard('admin')->attempt($credentials)) {
+                $request->session()->regenerate();
+                $admin = auth()->guard('admin')->user();
+
+                if ($admin->status >= 1) {
+                    session()->put('admin', $admin);
+                    return redirect()->route('dashboard')->with('success', 'Đăng nhập quản trị thành công.');
+                } else {
+                    auth()->guard('admin')->logout();
+                    return redirect()->back()->with('error', 'Tài khoản quản trị của bạn đã bị khóa.');
+                }
+            }
+        } elseif ($request->account_type == 'employee') {
+            $employeeCheckAccount = $this->employeeModel->employeeCheckLogin($credentials['username']);
+            if (!$employeeCheckAccount) {
+                return redirect()->back()->with(['error' => 'Tài khoản không tồn tại trong hệ thống!']);
+            }
+            if (auth()->guard('employee')->attempt($credentials)) {
+                $request->session()->regenerate();
+                $employee = auth()->guard('employee')->user();
+
+                if ($employee->status >= 1) {
+                    session()->put('employee', $employee);
+                    return redirect()->route('dashboard')->with('success', 'Đăng nhập nhân viên thành công.');
+                } else {
+                    auth()->guard('employee')->logout();
+                    return redirect()->back()->with('error', 'Tài khoản nhân viên của bạn đã bị khóa.');
+                }
+            }
+        }
+
+        // Nếu thông tin không hợp lệ
+        return redirect()->back()->with(['error' => 'Tên đăng nhập hoặc mật khẩu không đúng!']);
     }
 }

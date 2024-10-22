@@ -126,7 +126,7 @@
                                                                         <img src="{{ asset('img/' . $item->image) }}"
                                                                             alt="">
                                                                     </div>
-                                                                    <span>{{ $item->username }}</span>
+                                                                    <span>{{ $item->fullname }}</span>
                                                                 </label>
                                                             </li>
                                                         @endforeach

@@ -3,7 +3,9 @@
  @Section('content')
 
      <div class="container-fluid">
-
+         @if (session('error'))
+             <div id="alert-message" class="alertDanger">{{ session('error') }}</div>
+         @endif
          <div class="searchAdmin">
              <form id="filterFormOrder" action="" method="GET">
                  <div class="row d-flex flex-row justify-content-between align-items-center">
@@ -58,7 +60,6 @@
                          class="btn btn-success rounded-0  border-0"
                          style="background-color: {{ $status['color'] }}">{{ $status['label'] }}
                          ({{ $orderCounts[$status_id] }})
-
                      </a>
                  @endforeach
 

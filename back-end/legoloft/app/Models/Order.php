@@ -43,7 +43,16 @@ class Order extends Model
             3 => 'Thanh toán MoMo',
         ];
     }
-
+    public function statusOrder()
+    {
+        return [
+            1 => 'Chờ xác nhận',
+            2 => 'Đã xác nhận',
+            3 => 'Đang vận chuyển',
+            4 => 'Hoàn thành',
+            5 => 'Đã hủy',
+        ];
+    }
     public function viewOrderUser($id_order)
     {
         return $this->where('id', $id_order->id)->first();
