@@ -42,7 +42,6 @@ class Assembly extends Model
             1 => 'Đơn lắp mới',
             2 => 'Đang trong quá trình lắp ráp',
             3 => 'Hoàn thành lắp ráp',
-            4 => 'Hủy đơn lắp ráp',
         ];
     }
 }

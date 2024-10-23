@@ -1291,3 +1291,25 @@ table tbody tr:nth-child(even) {
     border-color: #4c8bf5;
     box-shadow: 0 0 20px #4c8bf580;
 }
+
+/**/
+.assemblyNew {
+    color: #fff;
+    background-color: #ffc506;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.assemblyDo {
+    color: #fff;
+    background-color: #ff0000;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.assemblySuccess {
+    color: #fff;
+    background-color: #0bb533;
+    padding: 8px 12px;
+    border-radius: 5px;
+}

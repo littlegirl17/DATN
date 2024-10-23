@@ -107,6 +107,7 @@ class OrderAdminController extends Controller
             return redirect()->route('admin.order')->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
         } else {
             $statuses = $request->status; // status được client gửi lên (chưa được lưu vào db)
+            //dd($order->status); //Lấy giá trị trạng thái hiện tại của đơn hàng từ cơ sở dữ liệu
 
             switch ((int)$statuses) {
                 case 1: // Chờ xác nhận
@@ -116,19 +117,19 @@ class OrderAdminController extends Controller
                     break;
 
                 case 2: // Đã xác nhận
-                    if ($order->status != 1) {
+                    if ($order->status != 1) { // nếu nó không bằng thì thực thi IF báo lỗi
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã xác nhận"!');
                     }
                     break;
-
+                    //=> nghĩa là khi nó lấy từ DB lên và ss 1=1 thì là (cho phép chuyển sang trạng thái "Đã xác nhận" nếu đơn hàng hiện tại đang ở trạng thái "Chờ xác nhận"). Nếu không, hiển thị lỗi.
                 case 3: // Đã vận chuyển
-                    if ($order->status != 2) {
+                    if ($order->status != 2) { // nếu nó không bằng thì thực thi IF báo lỗi
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Đã vận chuyển"!');
                     }
                     break;
-
+                    //=> nghĩa là khi nó lấy từ DB lên và ss 2=2 chỉ có thể chuyển sang trạng thái "Đã vận chuyển" nếu nó đang ở trạng thái "Đã xác nhận".
                 case 4: // Hoàn thành
-                    if ($order->status != 3) {
+                    if ($order->status != 3) { // nếu nó không bằng thì thực thi IF báo lỗi
                         return redirect()->route('admin.order')->with('error', 'Không thể chuyển về trạng thái "Hoàn thành"!');
                     }
                     break;
@@ -177,12 +178,12 @@ class OrderAdminController extends Controller
                         return redirect()->route('assembly')->with('error', 'Không thể chuyển sang trạng thái "Đã hủy"!');
                     }
                     break;
-                case 4: // trạng thái của assembly
-                    if (in_array($statusOrder, [1, 2, 3, 4])) {
-                        $order->status = 5;
-                        return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái, vì đơn đã bị hủy!');
-                    }
-                    break;
+                // case 4: // trạng thái của assembly
+                //     if (in_array($statusOrder, [1, 2, 3, 4])) {
+                //         $order->status = 5;
+                //         return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái, vì đơn đã bị hủy!');
+                //     }
+                //     break;
                 default:
                     # code...
                     break;

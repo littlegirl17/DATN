@@ -36,7 +36,28 @@ class AssemblyAdminController extends Controller
     {
 
         $assembly = Assembly::findOrFail($id); // Tìm người dùng theo ID
-        $assembly->status = $request->status;
+        $statues = $request->status;
+        switch ((int)$statues) {
+            case 1:
+                if ($assembly->status != 1) {
+                    return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái "đơn lắp mới"!');
+                }
+                break;
+            case 2:
+                if ($assembly->status != 1) {
+                    return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái "Đang trong quá trình lắp ráp"!');
+                }
+                break;
+            case 3:
+                if ($assembly->status != 2) {
+                    return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái "Hoàn thành lắp ráp"!');
+                }
+                break;
+            default:
+                # code...
+                break;
+        }
+        $assembly->status = $statues;
         $assembly->save();
 
         return redirect()->route('assembly')->with('success', 'Người dùng đã được cập nhật thành công.');
