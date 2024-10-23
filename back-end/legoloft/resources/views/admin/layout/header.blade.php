@@ -37,29 +37,50 @@
                             </a>
                         </li>
                     @endif
-
-                    @if (in_array('category', $permission))
+                    @if (in_array('category', $permission) || in_array('product', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('category') }}" aria-expanded="false">
+                            <a class="sidebar-link" aria-expanded="false">
                                 <span style="width:20px">
-                                    <i class="ti fa-solid fa-list ico-side" style="color: #FFFFFF;font-size:20px;"></i>
+                                    <i class="fa-solid fa-tag" style="color: #ffffff; font-size:20px;"></i>
                                 </span>
-                                <span class="hide-menu">Danh mục</span>
+                                <span class="hide-menu">Quản lý sản phẩm
+                                </span>
                             </a>
+                            <ul class="submenu">
+                                @if (in_array('category', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('category') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Danh mục</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (in_array('product', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('product') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Sản phẩm</span>
+                                        </a>
+                                    </li>
+                                    @endif @if (in_array('favourite', $permission))
+                                        <li class="">
+                                            <a class="sidebar-link" href="{{ route('userGroup') }}"
+                                                aria-expanded="false">
+                                                <span style="width:20px">
+                                                    <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                                </span>
+                                                <span class="hide-menu">Sản phẩm yêu thích</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                            </ul>
                         </li>
                     @endif
 
-                    @if (in_array('product', $permission))
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('product') }}" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="fa-brands fa-product-hunt  ico-side"
-                                        style="color: #ffffff;font-size:20px;"></i>
-                                </span>
-                                <span class="hide-menu">Sản phẩm</span>
-                            </a>
-                        </li>
-                    @endif
                     @if (in_array('coupon', $permission))
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('coupon') }}" aria-expanded="false">
@@ -107,14 +128,16 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" aria-expanded="false">
                                 <span style="width:20px">
-                                    <i class="ti fa-solid fa-user ico-side" style="color: #ffffff; font-size:20px;"></i>
+                                    <i class="ti fa-solid fa-user ico-side"
+                                        style="color: #ffffff; font-size:20px;"></i>
                                 </span>
                                 <span class="hide-menu">Khách hàng</span>
                             </a>
                             <ul class="submenu">
                                 @if (in_array('user', $permission))
                                     <li class="">
-                                        <a class="sidebar-link" href="{{ route('userAdmin') }}" aria-expanded="false">
+                                        <a class="sidebar-link" href="{{ route('userAdmin') }}"
+                                            aria-expanded="false">
                                             <span style="width:20px">
                                                 <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                             </span>
@@ -150,7 +173,8 @@
                                 @if (in_array('employee', $permission))
                                     {{-- vế 1 giá trị bạn muốn kiểm tra, vế 2 là mảng chứa các quyền --}}
                                     <li class="">
-                                        <a class="sidebar-link" href="{{ route('employee') }}" aria-expanded="false">
+                                        <a class="sidebar-link" href="{{ route('employee') }}"
+                                            aria-expanded="false">
                                             <span style="width:20px">
                                                 <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                             </span>

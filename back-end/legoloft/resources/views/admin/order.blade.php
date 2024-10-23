@@ -41,7 +41,7 @@
                          <div class="form-group mt-3">
                              <label for="title" class="form-label">Lọc tổng tiền</label>
                              <input class="form-control rounded-0" name="filter_total" placeholder="Nhập tổng tiền"
-                                 type="number">
+                                 type="text">
                          </div>
                      </div>
 
@@ -82,7 +82,7 @@
                          <!-- Chú ý: sử dụng 'orders' thay vì 'order' -->
                          <tr class="orderAdminTr" style="background: #fff">
                              <td class="">{{ $order->id }}</td>
-                             <td class="d-flex flex-column p-0 m-0">
+                             <td class="d-flex flex-column px-2 m-0">
                                  <div class="text-start m-0">
                                      <p class="m-0 p-0">Điện thoại: <strong>{{ $order->phone }}</strong></p>
                                      <p class="m-0 p-0">Tên KH: <strong>{{ $order->name }}</strong></p>

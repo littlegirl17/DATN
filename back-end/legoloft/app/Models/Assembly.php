@@ -44,4 +44,9 @@ class Assembly extends Model
             3 => 'Hoàn thành lắp ráp',
         ];
     }
+
+    public function countAssembly($employee_id)
+    {
+        return $this->where('employee_id', $employee_id)->count();
+    }
 }

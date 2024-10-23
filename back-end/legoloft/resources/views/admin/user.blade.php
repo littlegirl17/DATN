@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <div class="searchAdmin">
-            <form id="filterFormProduct" action="{{ route('searchUser') }}" method="POST">
+            <form id="filterFormUser" action="{{ route('searchUser') }}" method="POST">
                 @csrf
                 <div class="row d-flex flex-row justify-content-between align-items-center">
                     <div class="col-sm-6">

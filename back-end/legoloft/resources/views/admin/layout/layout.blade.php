@@ -61,6 +61,7 @@
     @yield('categoryArticleAdminScript')
     @yield('articleAdminScript')
     @yield('userAdminScript')
+    @yield('employeeAdminScript')
 
 
 </body>

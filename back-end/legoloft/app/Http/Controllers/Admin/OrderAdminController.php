@@ -59,7 +59,7 @@ class OrderAdminController extends Controller
             1 => ['label' => 'Chờ xác nhận', 'color' => '#FFB356'],
             2 => ['label' => 'Đã xác nhận', 'color' => '#00bcd4'],
             3 => ['label' => 'Đang vận chuyển', 'color' => '#188DD1'],
-            4 => ['label' => 'Hoàn thành', 'color' => '#07884B'],
+            4 => ['label' => 'Hoàn thành', 'color' => '#2bc500'],
             5 => ['label' => 'Đã hủy', 'color' => '#FF0000'],
         ];
     }
@@ -178,12 +178,12 @@ class OrderAdminController extends Controller
                         return redirect()->route('assembly')->with('error', 'Không thể chuyển sang trạng thái "Đã hủy"!');
                     }
                     break;
-                // case 4: // trạng thái của assembly
-                //     if (in_array($statusOrder, [1, 2, 3, 4])) {
-                //         $order->status = 5;
-                //         return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái, vì đơn đã bị hủy!');
-                //     }
-                //     break;
+                    // case 4: // trạng thái của assembly
+                    //     if (in_array($statusOrder, [1, 2, 3, 4])) {
+                    //         $order->status = 5;
+                    //         return redirect()->route('assembly')->with('error', 'Không thể chuyển về trạng thái, vì đơn đã bị hủy!');
+                    //     }
+                    //     break;
                 default:
                     # code...
                     break;

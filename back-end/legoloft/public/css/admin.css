@@ -1313,3 +1313,19 @@ table tbody tr:nth-child(even) {
     padding: 8px 12px;
     border-radius: 5px;
 }
+
+/**/
+.total-order {
+    background-color: #ffc506;
+    color: #000;
+}
+
+.total-order label {
+    color: #000;
+    font-size: 16px;
+}
+
+.total-order div {
+    padding: 10px 20px;
+
+}

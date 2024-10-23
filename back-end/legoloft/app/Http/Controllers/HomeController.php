@@ -26,7 +26,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $categoryAll = $this->categoryModel->categoryTotal();
         $productOutStanding = $this->productModel->productOutStanding();
         //$productDiscountSection = $this->productModel->productDiscountSection();
         $productBestseller = $this->productModel->productBestseller();

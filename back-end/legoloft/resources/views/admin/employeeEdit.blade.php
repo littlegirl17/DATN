@@ -22,6 +22,11 @@
 
              <div class="row">
                  <div class="form-group mt-3">
+                     <label for="title" class="form-label">Họ tên</label>
+                     <input type="text" class="form-control" id="" name="fullname"
+                         value="{{ $employee->fullname }}">
+                 </div>
+                 <div class="form-group mt-3">
                      <label for="title" class="form-label">Tên đăng nhập</label>
                      <input type="text" class="form-control" id="" name="username"
                          value="{{ $employee->username }}">

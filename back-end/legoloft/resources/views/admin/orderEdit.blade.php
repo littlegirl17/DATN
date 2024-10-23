@@ -131,16 +131,21 @@
 
                                 </td>
                                 <td colspan="1"></td>
-                                <td colspan="2" class="total-order">
-                                    <div class="form-group mt-3">
-                                        <label for="title" class="form-label">Tạm tính</label>
-                                        <input type="text" class="form-control" name=""
-                                            value="{{ number_format($order->total, 0, ',', '.') }} đ" readonly>
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <label for="title" class="form-label">Tổng tiền</label>
-                                        <p id="displayedTotalOrder">{{ number_format($order->total, 0, ',', '.') }} đ</p>
-                                        <input type="hidden" class="form-control" name="total" value="">
+                                <td colspan="2" class="m-0 p-0">
+                                    <div class="total-order">
+                                        @if ($order->assembly ? $order->assembly->fee : null)
+                                            <div class="form-group mt-3">
+                                                <label for="title" class="form-label">Phí lắp ráp: </label>
+                                                <p id="displayedTotalOrder">
+                                                    {{ number_format($order->assembly->fee, 0, ',', '.') }} đ</p>
+                                            </div>
+                                        @endif
+
+                                        <div class="form-group mt-3 ">
+                                            <label for="title" class="form-label">Tổng tiền: </label>
+                                            <p id="displayedTotalOrder">{{ number_format($order->total, 0, ',', '.') }} đ
+                                            </p>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

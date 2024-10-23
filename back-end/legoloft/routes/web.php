@@ -224,6 +224,11 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('employee', [EmployeeAdminController::class, 'employee'])->name('employee');
         Route::get('editEmployee/{id}', [EmployeeAdminController::class, 'employeeEdit'])->name('editEmployee');
         Route::put('editEmployee/{id}', [EmployeeAdminController::class, 'employeeUpdate']);
+        Route::get('employeeAdd', [EmployeeAdminController::class, 'employeeAdd'])->name('employeeAdd');
+        Route::post('employee-Add', [EmployeeAdminController::class, 'employeeAdd'])->name('employeeAddForm');
+        Route::put('updateStatusEmployee/{id}', [EmployeeAdminController::class, 'employeeUpdateStatus'])->name('employeeUpdateStatus');
+        Route::post('deleteEmployee', [EmployeeAdminController::class, 'employeeDeleteCheckbox'])->name('deleteEmployee');
+        Route::post('searchEmployee', [EmployeeAdminController::class, 'employeeSearch'])->name('searchEmployee');
     });
 
     Route::middleware(['admin:comment'])->group(function () {
@@ -239,12 +244,23 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:category'])->group(function () {
         Route::get('category', [CategoryAdminController::class, 'category'])->name('category');
+        Route::get('editCategory/{id}', [CategoryAdminController::class, 'categoryEdit'])->name('editCategory');
+        Route::put('editCategory/{id}', [CategoryAdminController::class, 'categoryUpdate'])->name('categoryUpdate');
+        Route::get('categoryAdd', [CategoryAdminController::class, 'categoryAdd'])->name('categoryAdd');
+        Route::post('category-Add', [CategoryAdminController::class, 'categoryAdd'])->name('categoryAddForm');
+        Route::put('updateStatusCategory/{id}', [CategoryAdminController::class, 'categoryUpdateStatus'])->name('categoryUpdateStatus');
+        Route::post('deleteCategory', [CategoryAdminController::class, 'categoryDeleteCheckbox'])->name('deleteCategory');
+        Route::post('searchCategory', [CategoryAdminController::class, 'categorySearch'])->name('searchCategory');
     });
 
 
     Route::middleware(['admin:coupon'])->group(function () {
         Route::get('coupon', [CouponAdminController::class, 'coupon'])->name('coupon');
     });
+
+    // Route::middleware(['admin:favourite'])->group(function () {
+    //     Route::get('favourite', [::class, 'favourite'])->name('favourite');
+    // });
 
     Route::middleware(['admin:banner'])->group(function () {
         Route::get('banner', [BannerAdminController::class, 'banner'])->name('banner');
