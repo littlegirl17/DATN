@@ -181,6 +181,7 @@
                         @php
                             $percent = ceil((($item->products->price - $item->price) / $item->products->price) * 100);
                             $productImageCollect = $item->products->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = false;
                             if (Auth::check()) {
                                 $isFavourite = $item->products->favourite
                                     ->where('user_id', Auth::id())
@@ -303,6 +304,7 @@
                                                     (($product->price - $priceDiscount) / $product->price) * 100,
                                                 );
                                                 $productImageCollect = $product->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                                                $isFavourite = false;
                                                 if (Auth::check()) {
                                                     $isFavourite = $product->favourite
                                                         ->where('user_id', Auth::id())
@@ -403,6 +405,7 @@
 
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = false;
                             if (Auth::check()) {
                                 $isFavourite = $item->favourite
                                     ->where('user_id', Auth::id())

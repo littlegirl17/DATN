@@ -22,8 +22,9 @@ use App\Http\Controllers\admin\ProductAdminController;
 use App\Http\Controllers\Admin\AdminstrationController;
 use App\Http\Controllers\admin\AssemblyAdminController;
 use App\Http\Controllers\admin\CategoryAdminController;
-use App\Http\Controllers\admin\CategoryArticleAdminController;
 use App\Http\Controllers\admin\EmployeeAdminController;
+use App\Http\Controllers\admin\FavouriteAdminController;
+use App\Http\Controllers\admin\CategoryArticleAdminController;
 
 Route::get('search', [HomeController::class, 'search'])->name('search');
 Route::get('/', [HomeController::class, 'index']);
@@ -118,7 +119,7 @@ Route::post('employeeBuy', [CheckoutController::class, 'employeeBuy'])->name('em
 Route::get('detail/{slug}', [ProductController::class, 'detail'])->name('detail');
 Route::post('commentReview', [ProductController::class, 'commentReview'])->name('commentReview');
 Route::get('viewFavourite', [ProductController::class, 'viewFavourite'])->name('viewFavourite');
-Route::post('favourite', [ProductController::class, 'favourite'])->name('favourite');
+Route::post('favourite', [ProductController::class, 'favourite'])->name('favouriteForm');
 
 
 
@@ -184,7 +185,7 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('categoryArticleAdd', [CategoryArticleAdminController::class, 'categoryArticleAdd'])->name('categoryArticleAdd');
         Route::post('/admin/category/article/bulk-delete', [CategoryArticleAdminController::class, 'bulkDelete'])->name('categoryArticleBulkDelete');
-        Route::put('categories/update-status/{id}', [CategoryArticleAdminController::class, 'updateStatus'])->name('categoryUpdateStatus');
+        Route::put('categories/update-status/{id}', [CategoryArticleAdminController::class, 'updateStatus'])->name('categoryArticleUpdateStatus');
     });
 
     Route::middleware(['admin:article'])->group(function () {
@@ -233,6 +234,8 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:comment'])->group(function () {
         Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
+        Route::put('updateStatusComment/{id}', [CommentAdminController::class, 'commentUpdateStatus'])->name('commentUpdateStatus');
+        Route::post('searchComment', [CommentAdminController::class, 'commentSearch'])->name('searchComment');
     });
 
     Route::middleware(['admin:order'])->group(function () {
@@ -258,9 +261,11 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('coupon', [CouponAdminController::class, 'coupon'])->name('coupon');
     });
 
-    // Route::middleware(['admin:favourite'])->group(function () {
-    //     Route::get('favourite', [::class, 'favourite'])->name('favourite');
-    // });
+    Route::middleware(['admin:favourite'])->group(function () {
+        Route::get('favourite', [FavouriteAdminController::class, 'favourite'])->name('favourite');
+        Route::put('updateStatusFavourite/{id}', [FavouriteAdminController::class, 'favouriteUpdateStatus'])->name('favouriteUpdateStatus');
+        Route::post('searchFavourite', [FavouriteAdminController::class, 'favouriteSearch'])->name('searchFavourite');
+    });
 
     Route::middleware(['admin:banner'])->group(function () {
         Route::get('banner', [BannerAdminController::class, 'banner'])->name('banner');

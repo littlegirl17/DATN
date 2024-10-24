@@ -62,8 +62,9 @@
     @yield('articleAdminScript')
     @yield('userAdminScript')
     @yield('employeeAdminScript')
-
-
+    @yield('categoryAdminScript')
+    @yield('favouriteAdminScript')
+    @yield('commentAdminScript')
 </body>
 
 </html>

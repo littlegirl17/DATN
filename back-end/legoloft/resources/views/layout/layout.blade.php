@@ -166,7 +166,7 @@
         function addFavourite(id) {
             var user_id = '{{ Auth::check() ? Auth::user()->id : 0 }}';
             $.ajax({
-                url: '{{ route('favourite') }}',
+                url: '{{ route('favouriteForm') }}',
                 type: 'POST',
                 data: {
                     product_id: id,

@@ -164,6 +164,15 @@
                              </label>
                              <p> Employee(Nhân viên)</p>
                          </div>
+                         <div class="d-flex">
+                             <label class="checkbox-btnGroup">
+                                 <label for="checkbox"></label>
+                                 <input type="checkbox" class="" name="permission[]" value="favourite"
+                                     id="" {{ in_array('favourite', $permissionGroupGet) ? 'checked' : '' }}>
+                                 <span class="checkmark"></span>
+                             </label>
+                             <p> Favourite(Sản phẩm yêu thích)</p>
+                         </div>
                      </div>
                  </div>
                  <div class="col-md-6">

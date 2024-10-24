@@ -51,6 +51,10 @@ class Product extends Model
         return $this->orderBy('id', 'desc')->paginate(10); // Phân trang với 10 sản phẩm mỗi trang
     }
 
+    public function productFavouriteAll()
+    {
+        return $this->orderBy('id', 'desc')->get();
+    }
 
     public function productByCategory($category_id)
     {
@@ -108,5 +112,10 @@ class Product extends Model
     public function searchProductHome($name)
     {
         return $this->where('name', 'LIKE', "%{$name}%")->where('status', 1)->orderBy('id', 'desc')->paginate(12);
+    }
+
+    public function countProduct($category_id)
+    {
+        return $this->where('category_id', $category_id)->count();
     }
 }

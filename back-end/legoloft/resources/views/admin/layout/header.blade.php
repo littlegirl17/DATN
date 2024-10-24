@@ -37,7 +37,7 @@
                             </a>
                         </li>
                     @endif
-                    @if (in_array('category', $permission) || in_array('product', $permission))
+                    @if (in_array('category', $permission) || in_array('product', $permission) || in_array('comment', $permission))
                         <li class="sidebar-item">
                             <a class="sidebar-link" aria-expanded="false">
                                 <span style="width:20px">
@@ -66,17 +66,28 @@
                                             <span class="hide-menu">Sản phẩm</span>
                                         </a>
                                     </li>
-                                    @endif @if (in_array('favourite', $permission))
-                                        <li class="">
-                                            <a class="sidebar-link" href="{{ route('userGroup') }}"
-                                                aria-expanded="false">
-                                                <span style="width:20px">
-                                                    <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
-                                                </span>
-                                                <span class="hide-menu">Sản phẩm yêu thích</span>
-                                            </a>
-                                        </li>
-                                    @endif
+                                @endif
+                                @if (in_array('favourite', $permission))
+                                    <li class="">
+                                        <a class="sidebar-link" href="{{ route('favourite') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
+                                            </span>
+                                            <span class="hide-menu">Sản phẩm yêu thích</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (in_array('comment', $permission))
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="{{ route('comment') }}" aria-expanded="false">
+                                            <span style="width:20px">
+                                                <i class="ti fa-regular fa-message ico-side"
+                                                    style="color: #FFFFFF;font-size:20px;"></i>
+                                            </span>
+                                            <span class="hide-menu">Bình luận</span>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                     @endif
@@ -241,17 +252,7 @@
                             </ul>
                         </li>
                     @endif
-                    @if (in_array('comment', $permission))
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('comment') }}" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="ti fa-regular fa-message ico-side"
-                                        style="color: #FFFFFF;font-size:20px;"></i>
-                                </span>
-                                <span class="hide-menu">Bình luận</span>
-                            </a>
-                        </li>
-                    @endif
+
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('adminLogout') }}" aria-expanded="false">
                             <span style="width:20px">

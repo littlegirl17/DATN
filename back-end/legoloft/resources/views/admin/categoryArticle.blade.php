@@ -159,7 +159,7 @@
 
         function updateStatusCategoryArticle(category_id, status, label) {
             $.ajax({
-                url: '{{ route('categoryUpdateStatus', ':id') }}'.replace(':id', category_id),
+                url: '{{ route('categoryArticleUpdateStatus', ':id') }}'.replace(':id', category_id),
                 type: 'PUT',
                 data: {
                     '_token': '{{ csrf_token() }}',

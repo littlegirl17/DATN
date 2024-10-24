@@ -323,6 +323,7 @@
 
                             $percent = ceil((($item->price - $priceDiscount) / $item->price) * 100);
                             $productImageCollect = $item->productImage->pluck('images'); // pluck lấy một tập hợp các giá trị của trường cụ thể
+                            $isFavourite = false;
                             if (Auth::check()) {
                                 $isFavourite = $item->favourite
                                     ->where('user_id', Auth::id())
