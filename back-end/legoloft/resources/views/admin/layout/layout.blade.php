@@ -65,6 +65,8 @@
     @yield('categoryAdminScript')
     @yield('favouriteAdminScript')
     @yield('commentAdminScript')
+    @yield('couponAdminScript')
+
 </body>
 
 </html>

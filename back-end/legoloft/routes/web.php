@@ -259,6 +259,13 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
 
     Route::middleware(['admin:coupon'])->group(function () {
         Route::get('coupon', [CouponAdminController::class, 'coupon'])->name('coupon');
+        Route::get('editCoupon/{id}', [CouponAdminController::class, 'couponEdit'])->name('editCoupon');
+        Route::put('editCoupon/{id}', [CouponAdminController::class, 'couponUpdate']);
+        Route::get('couponAdd', [CouponAdminController::class, 'couponAdd'])->name('couponAdd');
+        Route::post('coupon-Add', [CouponAdminController::class, 'couponAdd'])->name('couponAddForm');
+        Route::put('updateStatusCoupon/{id}', [CouponAdminController::class, 'couponUpdateStatus'])->name('couponUpdateStatus');
+        Route::post('deleteCouponAdmin', [CouponAdminController::class, 'couponDeleteCheckbox'])->name('deleteCouponAdmin');
+        Route::post('searchCoupon', [CouponAdminController::class, 'couponSearch'])->name('searchCoupon');
     });
 
     Route::middleware(['admin:favourite'])->group(function () {

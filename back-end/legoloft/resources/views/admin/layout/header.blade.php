@@ -11,7 +11,7 @@
                     alt="close-window--v1" />
             </div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="" class="text-nowrap logo-img mt-4">
+                <a href="{{ route('dashboard') }}" class="text-nowrap logo-img mt-4">
                     <img src="../img/legoloft.png" width="180" alt="" />
                 </a>
 
