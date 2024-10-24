@@ -42,7 +42,8 @@
                         </div>
                         <div class="form_admin_item">
                             <label for="">Tên đăng nhập</label>
-                            <input type="text" name="username" placeholder="Nhập tên đăng nhập" />
+                            <input type="text" name="username" placeholder="Nhập tên đăng nhập"
+                                value="{{ old('username') }}" />
                         </div>
                         <div class="form_admin_item">
                             <label for="">Mật khẩu</label>
@@ -83,7 +84,15 @@
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', () => {
+            const type = document.querySelector('input[name="account_type"]:checked');
 
+            if (!type) {
+                alert('Vui lòng chọn loại tài khoản.');
+            }
+        })
+    </script>
 </body>
 
 </html>
