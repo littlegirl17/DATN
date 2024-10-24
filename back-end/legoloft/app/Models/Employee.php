@@ -22,7 +22,7 @@ class Employee extends Authenticatable
 
     public function employeeAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
     public function employeeCheckLogin($username)
     {

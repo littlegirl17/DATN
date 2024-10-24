@@ -42,7 +42,7 @@ class Favourite extends Model
 
     public function favouriteAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 
     public function searchFavourite($filter_name, $filter_user, $filter_status)

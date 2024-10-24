@@ -116,6 +116,9 @@
 
                     </tbody>
                 </table>
+                <nav class="navPhanTrang">
+                    {{ $employees->links() }}
+                </nav>
             </div>
         </form>
     </div>

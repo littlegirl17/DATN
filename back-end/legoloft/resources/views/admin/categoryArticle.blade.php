@@ -134,14 +134,10 @@
         </div>
 
         </table>
-    </div>
-    </div>
+        <nav class="navPhanTrang">
+            {{ $CA->links() }}
+        </nav>
 
-    <nav class="navPhanTrang">
-        <ul class="pagination">
-            <li></li>
-        </ul>
-    </nav>
     </div>
 
 @endsection

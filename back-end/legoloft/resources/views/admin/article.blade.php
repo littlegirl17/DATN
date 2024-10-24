@@ -107,15 +107,13 @@
                          @endforeach
                      </tbody>
                  </table>
+                 <nav class="navPhanTrang">
+                     {{ $atc->links() }}
+                 </nav>
              </div>
          </form>
 
 
-         <nav class="navPhanTrang">
-             <ul class="pagination">
-                 <li></li>
-             </ul>
-         </nav>
      </div>
 
 

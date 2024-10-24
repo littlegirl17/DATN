@@ -27,7 +27,7 @@ class Coupon extends Model
 
     public function couponAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 
 

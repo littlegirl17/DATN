@@ -18,6 +18,6 @@ class AdministrationGroup extends Model
 
     public function administrationGroupAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 }

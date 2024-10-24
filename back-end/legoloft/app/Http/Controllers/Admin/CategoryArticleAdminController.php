@@ -32,7 +32,7 @@ class CategoryArticleAdminController extends Controller
             $query->where('status', $request->filter_status);
         }
         // Lấy danh sách danh mục
-        $CA = $query->orderBy('id', 'desc')->get();
+        $CA = $query->orderBy('id', 'desc')->paginate(8);
 
         return view('admin.categoryArticle', compact('CA'));
     }

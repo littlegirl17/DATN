@@ -74,6 +74,9 @@
 
                     </tbody>
                 </table>
+                <nav class="navPhanTrang">
+                    {{ $assemblys->links() }}
+                </nav>
             </div>
         </form>
     </div>

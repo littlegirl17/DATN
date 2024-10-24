@@ -39,12 +39,17 @@
                     @endif
                     @if (in_array('category', $permission) || in_array('product', $permission) || in_array('comment', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="fa-solid fa-tag" style="color: #ffffff; font-size:20px;"></i>
-                                </span>
-                                <span class="hide-menu">Quản lý sản phẩm
-                                </span>
+                            <a class="sidebar-link d-flex justify-content-between" aria-expanded="false">
+                                <div class="d-flex">
+                                    <span style="width:20px">
+                                        <i class="fa-solid fa-tag" style="color: #ffffff; font-size:20px;"></i>
+                                    </span>
+                                    <span class="hide-menu ps-2">Quản lý sản phẩm
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <i class="fa-solid fa-chevron-down " style="color: #ffffff;"></i>
+                                </div>
                             </a>
                             <ul class="submenu">
                                 @if (in_array('category', $permission))
@@ -81,8 +86,7 @@
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="{{ route('comment') }}" aria-expanded="false">
                                             <span style="width:20px">
-                                                <i class="ti fa-regular fa-message ico-side"
-                                                    style="color: #FFFFFF;font-size:20px;"></i>
+                                                <i class="fa-solid fa-angles-right" style="color: #ffffff;"></i>
                                             </span>
                                             <span class="hide-menu">Bình luận</span>
                                         </a>
@@ -137,12 +141,17 @@
                     </li>
                     @if (in_array('user', $permission) || in_array('userGroup', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="ti fa-solid fa-user ico-side"
-                                        style="color: #ffffff; font-size:20px;"></i>
-                                </span>
-                                <span class="hide-menu">Khách hàng</span>
+                            <a class="sidebar-link  d-flex justify-content-between" aria-expanded="false">
+                                <div class="d-flex">
+                                    <span style="width:20px">
+                                        <i class="ti fa-solid fa-user ico-side"
+                                            style="color: #ffffff; font-size:20px;"></i>
+                                    </span>
+                                    <span class="hide-menu  ps-2">Khách hàng</span>
+                                </div>
+                                <div class="">
+                                    <i class="fa-solid fa-chevron-down " style="color: #ffffff;"></i>
+                                </div>
                             </a>
                             <ul class="submenu">
                                 @if (in_array('user', $permission))
@@ -174,11 +183,16 @@
                     @if (in_array('administration', $permission) || in_array('administrationGroup', $permission))
 
                         <li class="sidebar-item">
-                            <a class="sidebar-link" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="fa-solid fa-users" style="color: #ffffff;"></i>
-                                </span>
-                                <span class="hide-menu">Người dùng</span>
+                            <a class="sidebar-link  d-flex justify-content-between" aria-expanded="false">
+                                <div class="d-flex">
+                                    <span style="width:20px">
+                                        <i class="fa-solid fa-users" style="color: #ffffff;"></i>
+                                    </span>
+                                    <span class="hide-menu  ps-2">Người dùng</span>
+                                </div>
+                                <div class="">
+                                    <i class="fa-solid fa-chevron-down " style="color: #ffffff;"></i>
+                                </div>
                             </a>
                             <ul class="submenu">
                                 @if (in_array('employee', $permission))
@@ -221,11 +235,16 @@
                     @endif
                     @if (in_array('article', $permission) || in_array('categoryArticle', $permission))
                         <li class="sidebar-item">
-                            <a class="sidebar-link" aria-expanded="false">
-                                <span style="width:20px">
-                                    <i class="fa-solid fa-newspaper" style="color: #ffffff; font-size:20px;"></i>
-                                </span>
-                                <span class="hide-menu">Bài viết - blog</span>
+                            <a class="sidebar-link  d-flex justify-content-between" aria-expanded="false">
+                                <div class="d-flex">
+                                    <span style="width:20px">
+                                        <i class="fa-solid fa-newspaper" style="color: #ffffff; font-size:20px;"></i>
+                                    </span>
+                                    <span class="hide-menu  ps-2">Bài viết - blog</span>
+                                </div>
+                                <div class="">
+                                    <i class="fa-solid fa-chevron-down " style="color: #ffffff;"></i>
+                                </div>
                             </a>
                             <ul class="submenu">
                                 @if (in_array('categoryArticle', $permission))

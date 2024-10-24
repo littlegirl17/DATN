@@ -37,7 +37,7 @@ class Comment extends Model
 
     public function commentAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 
     public function searchComment($filter_name, $filter_rating, $filter_status)

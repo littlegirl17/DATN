@@ -154,6 +154,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::post('deleteProduct', [ProductAdminController::class, 'productDeleteCheckbox'])->name('deleteProduct');
         Route::put('updateStatusProduct/{id}', [ProductAdminController::class, 'productUpdateStatus'])->name('productUpdateStatus');
         Route::post('searchProduct', [ProductAdminController::class, 'productSearch'])->name('searchProduct');
+        Route::get('searchProduct', function () {
+            return redirect()->route('product');
+        })->name('searchProduct');
         Route::get('productDeleteImages/{product_id}', [ProductAdminController::class, 'productDeleteImages'])->name('productDeleteImages');
         Route::get('productDeleteDiscount/{id}', [ProductAdminController::class, 'productDeleteDiscount'])->name('productDeleteDiscount');
     });
@@ -166,7 +169,10 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('editAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdate']);
         Route::post('deleteAdminstration', [AdminstrationController::class, 'adminstrationDeleteCheckbox'])->name('deleteAdminstration');
         Route::put('updateStatusAdminstration/{id}', [AdminstrationController::class, 'adminstrationUpdateStatus'])->name('adminstrationUpdateStatus');
-        Route::get('searchAdminstration', [AdminstrationController::class, 'administrationSearch'])->name('searchAdminstration');
+        Route::post('searchAdminstration', [AdminstrationController::class, 'administrationSearch'])->name('searchAdminstration');
+        Route::get('searchAdminstration', function () {
+            return redirect()->route('adminstration');
+        })->name('searchAdminstration');
     });
 
     Route::middleware(['admin:administrationGroup'])->group(function () {
@@ -206,6 +212,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::get('user/edit/{id}', [UserAdminController::class, 'userEdit'])->name('userEditAdmin');
         Route::put('user/update/{id}', [UserAdminController::class, 'userUpdate'])->name('user.update');
         Route::post('search-user', [UserAdminController::class, 'searchUser'])->name('searchUser');
+        Route::get('search-user', function () {
+            return redirect()->route('userAdmin');
+        })->name('searchUser');
         Route::put('update-status-user/{id}', [UserAdminController::class, 'userUpdateStatus'])->name('userUpdateStatus');
         Route::post('delete-checkbox-user', [UserAdminController::class, 'userDeleteCheckbox'])->name('checkboxDeleteUser');
     });
@@ -230,12 +239,18 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('updateStatusEmployee/{id}', [EmployeeAdminController::class, 'employeeUpdateStatus'])->name('employeeUpdateStatus');
         Route::post('deleteEmployee', [EmployeeAdminController::class, 'employeeDeleteCheckbox'])->name('deleteEmployee');
         Route::post('searchEmployee', [EmployeeAdminController::class, 'employeeSearch'])->name('searchEmployee');
+        Route::get('searchEmployee', function () {
+            return redirect()->route('employee');
+        })->name('searchEmployee');
     });
 
     Route::middleware(['admin:comment'])->group(function () {
         Route::get('comment', [CommentAdminController::class, 'comment'])->name('comment');
         Route::put('updateStatusComment/{id}', [CommentAdminController::class, 'commentUpdateStatus'])->name('commentUpdateStatus');
         Route::post('searchComment', [CommentAdminController::class, 'commentSearch'])->name('searchComment');
+        Route::get('searchComment', function () {
+            return redirect()->route('comment');
+        })->name('searchComment');
     });
 
     Route::middleware(['admin:order'])->group(function () {
@@ -254,6 +269,9 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('updateStatusCategory/{id}', [CategoryAdminController::class, 'categoryUpdateStatus'])->name('categoryUpdateStatus');
         Route::post('deleteCategory', [CategoryAdminController::class, 'categoryDeleteCheckbox'])->name('deleteCategory');
         Route::post('searchCategory', [CategoryAdminController::class, 'categorySearch'])->name('searchCategory');
+        Route::get('searchCategory', function () {
+            return redirect()->route('category');
+        })->name('searchCategory');
     });
 
 
@@ -266,12 +284,18 @@ Route::prefix('admin')->middleware('admin')->group(function () { // prefix: đư
         Route::put('updateStatusCoupon/{id}', [CouponAdminController::class, 'couponUpdateStatus'])->name('couponUpdateStatus');
         Route::post('deleteCouponAdmin', [CouponAdminController::class, 'couponDeleteCheckbox'])->name('deleteCouponAdmin');
         Route::post('searchCoupon', [CouponAdminController::class, 'couponSearch'])->name('searchCoupon');
+        Route::get('searchCoupon', function () {
+            return redirect()->route('coupon');
+        })->name('searchCoupon');
     });
 
     Route::middleware(['admin:favourite'])->group(function () {
         Route::get('favourite', [FavouriteAdminController::class, 'favourite'])->name('favourite');
         Route::put('updateStatusFavourite/{id}', [FavouriteAdminController::class, 'favouriteUpdateStatus'])->name('favouriteUpdateStatus');
         Route::post('searchFavourite', [FavouriteAdminController::class, 'favouriteSearch'])->name('searchFavourite');
+        Route::get('searchFavourite', function () {
+            return redirect()->route('favourite');
+        })->name('searchFavourite');
     });
 
     Route::middleware(['admin:banner'])->group(function () {

@@ -98,7 +98,9 @@
                  </table>
              </div>
          </form>
-
+         <nav class="navPhanTrang">
+             {{ $favourites->links() }}
+         </nav>
      </div>
 
 

@@ -98,6 +98,9 @@
 
                      </tbody>
                  </table>
+                 <nav class="navPhanTrang">
+                     {{ $comments->links() }}
+                 </nav>
              </div>
          </form>
 

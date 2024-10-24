@@ -131,14 +131,13 @@
                          @endforeach
                      </tbody>
                  </table>
+                 <nav class="navPhanTrang">
+                     {{ $coupons->links() }}
+                 </nav>
              </div>
          </form>
 
-         <nav class="navPhanTrang">
-             <ul class="pagination">
-                 <li></li>
-             </ul>
-         </nav>
+
      </div>
 
  @endsection

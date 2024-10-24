@@ -28,7 +28,7 @@ class Assembly extends Model
 
     public function assemblyAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 
     public function assmblyOrderId($order_id)

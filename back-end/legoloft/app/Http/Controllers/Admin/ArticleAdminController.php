@@ -29,7 +29,7 @@ class ArticleAdminController extends Controller
         if ($request->filled('filter_status')) {
             $query->where('status', $request->filter_status);
         }
-        $atc = $query->orderBy('id', 'desc')->get();
+        $atc = $query->orderBy('id', 'desc')->paginate(8);
         // dd($article);
         return view('admin.article', compact('atc'));
     }
@@ -127,14 +127,14 @@ class ArticleAdminController extends Controller
         return redirect()->route('article')->with('success', 'Đã xóa bài viết thành công!');
     }
 
-public function updateStatusArticle(Request $request, $id)
-{
-    $article = Article::findOrFail($id);
-    $article->status = $request->status;
-    $article->save();
+    public function updateStatusArticle(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->status = $request->status;
+        $article->save();
 
-    return response()->json(['success' => true]);
-}
+        return response()->json(['success' => true]);
+    }
 
 
     public function articleUpdate() {}

@@ -163,11 +163,12 @@
              </div>
          </form>
 
-         <nav class="navPhanTrang">
-             <ul class="pagination">
-                 <li></li>
-             </ul>
-         </nav>
+         <div class="div_nav_pagination">
+             <nav class="nav_pagination">
+                 {{ $categoriAdmin->links() }}
+             </nav>
+         </div>
+
      </div>
 
  @endsection

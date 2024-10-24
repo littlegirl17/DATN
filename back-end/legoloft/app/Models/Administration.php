@@ -29,7 +29,7 @@ class Administration extends Authenticatable
 
     public function administrationAll()
     {
-        return $this->orderBy('id', 'desc')->get();
+        return $this->orderBy('id', 'desc')->paginate(8);
     }
 
     public function searchAdministration($fillter_name, $filter_adminGroup)

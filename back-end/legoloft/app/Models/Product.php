@@ -48,7 +48,7 @@ class Product extends Model
 
     public function productAll()
     {
-        return $this->orderBy('id', 'desc')->paginate(10); // Phân trang với 10 sản phẩm mỗi trang
+        return $this->orderBy('id', 'desc')->paginate(8); // Phân trang với 10 sản phẩm mỗi trang
     }
 
     public function productFavouriteAll()

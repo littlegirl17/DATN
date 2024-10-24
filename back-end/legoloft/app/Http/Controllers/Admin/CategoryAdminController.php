@@ -20,7 +20,9 @@ class CategoryAdminController extends Controller
 
     public function category()
     {
-        $categoriAdmin = Categories::with(['categories_children', 'categories_children.product'])->whereNull('parent_id')->get();
+        $categoriAdmin = Categories::with(['categories_children', 'categories_children.product'])
+            ->whereNull('parent_id')
+            ->paginate(8);
         // Khởi tạo các biến để tránh lỗi Undefined variable
         $filter_name = '';
         $filter_category_id = '';
@@ -126,6 +128,7 @@ class CategoryAdminController extends Controller
 
     public function categorySearch(Request $request)
     {
+
         //Lấy từ khóa tìm kiếm từ yêu cầu
         $filter_name = $request->input('filter_name');
         $filter_category_id = $request->input('filter_category_id');
